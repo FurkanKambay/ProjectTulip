@@ -1,4 +1,5 @@
 using System;
+using Game.Items;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
@@ -9,16 +10,15 @@ namespace Game
     {
         public static Inventory Instance { get; private set; }
 
-        public Tile HotbarSelectedTile { get; private set; }
+        public IUsable HotbarSelected { get; private set; }
 
-        [SerializeField] private Tile[] hotbar = new Tile[9];
-
+        private readonly IUsable[] hotbar = new IUsable[9];
         private Inputs inputs;
 
         public void OnHotbar(InputAction.CallbackContext context)
         {
             int index = Convert.ToInt32(context.control.name);
-            HotbarSelectedTile = hotbar[index];
+            HotbarSelected = hotbar[index - 1];
         }
 
         private void Awake()
@@ -30,8 +30,19 @@ namespace Game
             }
 
             Instance = this;
-            HotbarSelectedTile = hotbar[0];
+
             inputs = new Inputs();
+            InitializeHotbar();
+        }
+
+        private void InitializeHotbar()
+        {
+            hotbar[0] = new Pickaxe();
+            hotbar[1] = new Block { Tile = Resources.Load<Tile>("Tiles/stone") };
+            hotbar[2] = new Block { Tile = Resources.Load<Tile>("Tiles/dirt") };
+            hotbar[3] = new Block { Tile = Resources.Load<Tile>("Tiles/sand") };
+            hotbar[4] = new Block { Tile = Resources.Load<Tile>("Tiles/ice") };
+            HotbarSelected = hotbar[0];
         }
 
         private void OnEnable()
@@ -44,8 +55,8 @@ namespace Game
 
         private void OnValidate()
         {
-            if (hotbar.Length != 9)
-                Array.Resize(ref hotbar, 9);
+            // if (hotbar.Length != 9)
+            //     Array.Resize(ref hotbar, 9);
         }
     }
 }

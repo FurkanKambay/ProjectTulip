@@ -1,3 +1,4 @@
+using Game.Items;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
@@ -22,9 +23,10 @@ namespace Game
         private void Update()
         {
             if (Mouse.current.leftButton.isPressed)
-                tilemap.SetTile(cellPosition, Inventory.Instance.HotbarSelectedTile);
-            else if (Mouse.current.rightButton.isPressed)
-                tilemap.SetTile(cellPosition, null);
+            {
+                IUsable selected = Inventory.Instance.HotbarSelected;
+                selected?.Use(tilemap, cellPosition);
+            }
         }
 
         private void Awake()

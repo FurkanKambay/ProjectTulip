@@ -21746,13 +21746,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dbac43252630dd499875c6a60daacdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hotbar:
-  - {fileID: 0}
-  - {fileID: 11400000, guid: 96fe6c2b87622674493d10a40a1b9a9e, type: 2}
-  - {fileID: 11400000, guid: e5a9fe71ffcff984b83d4223e34d168f, type: 2}
-  - {fileID: 11400000, guid: d4d97f167f77e864f95837bb0a479812, type: 2}
-  - {fileID: 11400000, guid: e321a5ac9da9c6246903e2a0d603c3e9, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
