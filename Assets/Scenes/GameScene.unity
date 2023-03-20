@@ -21614,7 +21614,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1811697906}
+  - component: {fileID: 1811697908}
   - component: {fileID: 1811697907}
+  - component: {fileID: 1811697909}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -21650,6 +21652,107 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilemap: {fileID: 1737950992}
-  dirtTile: {fileID: 11400000, guid: e5a9fe71ffcff984b83d4223e34d168f, type: 2}
-  stoneTile: {fileID: 11400000, guid: 96fe6c2b87622674493d10a40a1b9a9e, type: 2}
-  sandTile: {fileID: 11400000, guid: d4d97f167f77e864f95837bb0a479812, type: 2}
+--- !u!114 &1811697908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1811697905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: a92862044b24ac64ba40ebf339dc22ab, type: 3}
+  m_NotificationBehavior: 3
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 34efa198-d7db-4bb4-b0a6-d4e67c5182dc
+    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b7f18492-1588-4f59-a0dc-8b8ee6a1528d
+    m_ActionName: Player/Pointer[/Mouse/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 414a515b-d6b2-4989-91a3-f7b3f2037ce7
+    m_ActionName: Player/Fire[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1811697909}
+        m_TargetAssemblyTypeName: Game.Inventory, Assembly-CSharp
+        m_MethodName: OnHotbar
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 15d474b5-0a1d-4cc8-a772-782223094d03
+    m_ActionName: Player/Hotbar[/Keyboard/1,/Keyboard/2,/Keyboard/3,/Keyboard/4,/Keyboard/5,/Keyboard/6,/Keyboard/7,/Keyboard/8,/Keyboard/9]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: aa3bd068-8c3d-445d-bc68-25deb1e94494
+    m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 216b1a27-bdf9-4cb6-bfec-a44a0f18c525
+    m_ActionName: UI/Submit[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 68ad0bee-5771-4b03-9148-2cc4ca1d2b3e
+    m_ActionName: UI/Cancel[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: de3b4e98-054f-493a-a7e3-61d1029d522a
+    m_ActionName: UI/Point[/Mouse/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 658b5aaf-7843-4e6a-b66f-1da26d2e557a
+    m_ActionName: UI/Click[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9d1e21c5-cdb1-414a-abb5-b9d313920565
+    m_ActionName: UI/RightClick[/Mouse/rightButton]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!114 &1811697909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1811697905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dbac43252630dd499875c6a60daacdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hotbar:
+  - {fileID: 0}
+  - {fileID: 11400000, guid: 96fe6c2b87622674493d10a40a1b9a9e, type: 2}
+  - {fileID: 11400000, guid: e5a9fe71ffcff984b83d4223e34d168f, type: 2}
+  - {fileID: 11400000, guid: d4d97f167f77e864f95837bb0a479812, type: 2}
+  - {fileID: 11400000, guid: e321a5ac9da9c6246903e2a0d603c3e9, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
