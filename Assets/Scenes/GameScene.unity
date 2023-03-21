@@ -280,12 +280,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fdfdff2c1ac25943b5f45bf68fb38e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zoom:
-    value: 10
-    <Min>k__BackingField: 10
-    <Max>k__BackingField: 10
-  offset: {x: 0, y: 1.45}
   player: {fileID: 272834251}
+  offset: {x: 0, y: 1.45}
+  zoom:
+    value: 12
+    <Min>k__BackingField: 5
+    <Max>k__BackingField: 40
+    <Sensitivity>k__BackingField: 0.01
+    <Speed>k__BackingField: 10
 --- !u!1 &618674674
 GameObject:
   m_ObjectHideFlags: 0
