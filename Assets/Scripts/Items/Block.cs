@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.Tilemaps;
 
 namespace Game.Items
@@ -8,8 +8,6 @@ namespace Game.Items
         public Tile Tile;
 
         public void Use(Tilemap tilemap, Vector3Int cellPosition)
-        {
-            tilemap.SetTile(cellPosition, Tile);
-        }
+            => tilemap.SetTile(cellPosition, Tile);
     }
 }

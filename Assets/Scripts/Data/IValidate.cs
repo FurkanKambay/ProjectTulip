@@ -6,7 +6,7 @@ namespace Game.Data
     {
         void OnValidate();
 
-        void ISerializationCallbackReceiver.OnBeforeSerialize() => this.OnValidate();
+        void ISerializationCallbackReceiver.OnBeforeSerialize() => OnValidate();
         void ISerializationCallbackReceiver.OnAfterDeserialize() {}
     }
 }
