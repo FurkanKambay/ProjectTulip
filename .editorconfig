@@ -9,6 +9,9 @@ insert_final_newline = true
 trim_trailing_whitespace = true
 
 [*.cs]
+dotnet_diagnostic.IDE0051.severity = none
+dotnet_diagnostic.IDE1006.severity = none
+
 #### .NET Coding Conventions ####
 
 # Organize usings

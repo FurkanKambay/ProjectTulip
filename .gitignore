@@ -67,6 +67,7 @@ ExportedObj/
 
 # Visual Studio Code files
 .vscode/*
+!.vscode/analyzers/
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
