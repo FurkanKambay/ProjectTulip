@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
 
-namespace Game
+namespace Game.Player
 {
     public class TileModifier : MonoBehaviour
     {

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
 
-namespace Game
+namespace Game.Player
 {
     public class Inventory : MonoBehaviour
     {
@@ -52,11 +52,5 @@ namespace Game
         }
 
         private void OnDisable() => inputs.Disable();
-
-        private void OnValidate()
-        {
-            // if (hotbar.Length != 9)
-            //     Array.Resize(ref hotbar, 9);
-        }
     }
 }
