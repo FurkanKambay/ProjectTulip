@@ -134,12 +134,21 @@ PrefabInstance:
       propertyPath: tilemap
       value: 
       objectReference: {fileID: 1737950992}
+    - target: {fileID: 4907415819856181673, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
+      propertyPath: tilemap
+      value: 
+      objectReference: {fileID: 1737950992}
     - target: {fileID: 8291246366843984804, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
+--- !u!4 &272834251 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8291246366843984804, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
+  m_PrefabInstance: {fileID: 272834250}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,6 +161,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
+  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -227,7 +237,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 8
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -258,6 +268,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fdfdff2c1ac25943b5f45bf68fb38e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zoom:
+    value: 10
+    <Min>k__BackingField: 10
+    <Max>k__BackingField: 10
+  offset: {x: 0, y: 1.45}
+  player: {fileID: 272834251}
 --- !u!1 &618674674
 GameObject:
   m_ObjectHideFlags: 0
