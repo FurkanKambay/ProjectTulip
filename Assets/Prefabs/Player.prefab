@@ -195,6 +195,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilemap: {fileID: 0}
+  useTime: 0.5
 --- !u!114 &868025074711396792
 MonoBehaviour:
   m_ObjectHideFlags: 0
