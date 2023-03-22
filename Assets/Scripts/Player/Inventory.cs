@@ -13,7 +13,7 @@ namespace Game.Player
         public IUsable HotbarSelected { get; private set; }
 
         private readonly IUsable[] hotbar = new IUsable[9];
-        private Inputs inputs;
+        private InputActions input;
 
         public void OnHotbar(InputAction.CallbackContext context)
         {
@@ -31,8 +31,9 @@ namespace Game.Player
 
             Instance = this;
 
-            inputs = new Inputs();
             InitializeHotbar();
+            input = new InputActions();
+            input.Player.Hotbar.performed += OnHotbar;
         }
 
         private void InitializeHotbar()
@@ -45,12 +46,7 @@ namespace Game.Player
             HotbarSelected = hotbar[0];
         }
 
-        private void OnEnable()
-        {
-            inputs.Enable();
-            inputs.Player.Hotbar.performed += OnHotbar;
-        }
-
-        private void OnDisable() => inputs.Disable();
+        private void OnEnable() => input.Enable();
+        private void OnDisable() => input.Disable();
     }
 }

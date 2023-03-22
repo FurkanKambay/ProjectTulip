@@ -10,7 +10,7 @@ namespace Game.Player
         [SerializeField] private Tilemap tilemap;
 
         private new Camera camera;
-        private Inputs inputs;
+        private InputActions input;
         private Vector3Int cellPosition;
 
         public void OnPoint(InputAction.CallbackContext context)
@@ -32,15 +32,11 @@ namespace Game.Player
         private void Awake()
         {
             camera = Camera.main;
-            inputs = new Inputs();
+            input = new InputActions();
+            input.Player.Point.performed += OnPoint;
         }
 
-        private void OnEnable()
-        {
-            inputs.Enable();
-            inputs.Player.Point.performed += OnPoint;
-        }
-
-        private void OnDisable() => inputs.Disable();
+        private void OnEnable() => input.Enable();
+        private void OnDisable() => input.Disable();
     }
 }

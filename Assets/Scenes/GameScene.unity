@@ -123,32 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &272834250
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1933008781765881334, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
-      propertyPath: tilemap
-      value: 
-      objectReference: {fileID: 1737950992}
-    - target: {fileID: 4907415819856181673, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
-      propertyPath: tilemap
-      value: 
-      objectReference: {fileID: 1737950992}
-    - target: {fileID: 8291246366843984804, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
---- !u!4 &272834251 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8291246366843984804, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
-  m_PrefabInstance: {fileID: 272834250}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,7 +254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fdfdff2c1ac25943b5f45bf68fb38e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 272834251}
+  player: {fileID: 1105140274}
   offset: {x: 0, y: 1.45}
   zoom:
     value: 12
@@ -444,6 +418,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1105140267
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8291246366843984804, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8720202020251607731, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
+      propertyPath: tilemap
+      value: 
+      objectReference: {fileID: 1737950992}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
+--- !u!4 &1105140274 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8291246366843984804, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
+  m_PrefabInstance: {fileID: 1105140267}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1737950989
 GameObject:
   m_ObjectHideFlags: 0
