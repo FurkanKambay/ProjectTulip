@@ -1,0 +1,30 @@
+using UnityEngine;
+using UnityEngine.Serialization;
+
+namespace Game.Data
+{
+    [CreateAssetMenu(menuName = "Data/Jump")]
+    public class JumpData : ScriptableObject
+    {
+        [Range(0, 10f)] public float jumpHeight = 5f;
+        [Range(0, 3f)] public float timeToJumpApex = .5f;
+        [Range(0, 100f)] public float maxFallSpeed = 10f;
+
+        [Header("Jump Cutoff")]
+        public bool hasVariableJumpHeight;
+
+        [Range(0, 100f), Tooltip("Gravity multiplier when you let go of jump")]
+        public float jumpCutOff;
+
+        [Header("Feeling")]
+        [Range(0, .5f)] public float coyoteTime = 0.15f;
+        [Range(0, 1f)] public float jumpBuffer = 0.15f;
+
+        [Header("Gravity Multipliers")]
+        [Range(0, 100f), Tooltip("Gravity multiplier to apply when going up")]
+        public float upwardGravityMultiplier = 1f;
+
+        [Range(-100f, 1000f), Tooltip("Gravity multiplier to apply when coming down")]
+        public float downwardGravityMultiplier = 2f;
+    }
+}
