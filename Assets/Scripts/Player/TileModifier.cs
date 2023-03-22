@@ -9,34 +9,13 @@ namespace Game.Player
     {
         [SerializeField] private Tilemap tilemap;
 
-        private new Camera camera;
-        private InputActions input;
-        private Vector3Int cellPosition;
-
-        public void OnPoint(InputAction.CallbackContext context)
+        private void OnFire(InputAction.CallbackContext context)
         {
-            Vector2 mousePosition = context.ReadValue<Vector2>();
-            Vector3 worldPosition = camera.ScreenToWorldPoint(mousePosition);
-            cellPosition = tilemap.WorldToCell(worldPosition);
+            IUsable selected = Inventory.Instance.HotbarSelected;
+            Vector2 mouse = Input.Instance.MouseWorldPoint;
+            selected?.Use(tilemap, tilemap.WorldToCell(mouse));
         }
 
-        private void Update()
-        {
-            if (Mouse.current.leftButton.isPressed)
-            {
-                IUsable selected = Inventory.Instance.HotbarSelected;
-                selected?.Use(tilemap, cellPosition);
-            }
-        }
-
-        private void Awake()
-        {
-            camera = Camera.main;
-            input = new InputActions();
-            input.Player.Point.performed += OnPoint;
-        }
-
-        private void OnEnable() => input.Enable();
-        private void OnDisable() => input.Disable();
+        private void Start() => Input.Actions.Player.Fire.performed += OnFire;
     }
 }
