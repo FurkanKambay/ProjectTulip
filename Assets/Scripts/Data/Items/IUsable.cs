@@ -1,7 +1,7 @@
 using Game.Player;
 using UnityEngine;
 
-namespace Game.Items
+namespace Game.Data.Items
 {
     public interface IUsable
     {

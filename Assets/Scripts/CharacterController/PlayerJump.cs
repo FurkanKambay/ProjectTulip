@@ -1,5 +1,4 @@
-using System;
-using Game.Data;
+using Game.Data.Gameplay;
 using UnityEngine;
 using UnityEngine.InputSystem;
 

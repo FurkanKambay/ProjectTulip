@@ -2,7 +2,7 @@ using Game.Data.Tiles;
 using Game.Player;
 using UnityEngine;
 
-namespace Game.Items
+namespace Game.Data.Items
 {
     [CreateAssetMenu(fileName = "Pickaxe", menuName = "Items/Pickaxe")]
     public class Pickaxe : ScriptableObject, IUsable

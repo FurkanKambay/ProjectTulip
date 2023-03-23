@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Game.Items;
+using Game.Data.Items;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 

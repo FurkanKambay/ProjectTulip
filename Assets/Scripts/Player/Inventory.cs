@@ -1,5 +1,5 @@
+using Game.Data.Items;
 using Game.Data.Tiles;
-using Game.Items;
 using UnityEngine;
 
 namespace Game.Player
@@ -16,7 +16,7 @@ namespace Game.Player
 
         private void Start()
         {
-            hotbar[0] = Resources.Load<Pickaxe>("Pickaxe");
+            hotbar[0] = Resources.Load<Pickaxe>("Tools/Pickaxe");
             hotbar[1] = Resources.Load<BlockTile>("Tiles/stone");
             hotbar[2] = Resources.Load<BlockTile>("Tiles/dirt");
             hotbar[3] = Resources.Load<BlockTile>("Tiles/sand");

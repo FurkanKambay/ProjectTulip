@@ -1,7 +1,6 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace Game.Data
+namespace Game.Data.Gameplay
 {
     [CreateAssetMenu(menuName = "Data/Jump")]
     public class JumpData : ScriptableObject
