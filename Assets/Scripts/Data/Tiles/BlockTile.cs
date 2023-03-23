@@ -13,7 +13,10 @@ namespace Game.Data.Tiles
 
         [Header("Data")]
         public int hardness = 50;
+
+        [Header("Sounds")]
         public AudioClip hitSound;
+        public AudioClip placeSound;
 
         private static Dictionary<Vector3Int, int> DamageMap => World.Instance.TileDamageMap;
         private static Tilemap Tilemap => World.Instance.Tilemap;
@@ -21,12 +24,14 @@ namespace Game.Data.Tiles
         public void Use(Vector3Int cellPosition)
         {
             BlockTile block = Tilemap.GetTile<BlockTile>(cellPosition);
-            if (block && block != this)
-            {
-                Inventory.Instance.ActivePickaxe.Use(cellPosition);
-                return;
-            }
 
+            if (block == this)
+                return;
+
+            if (block)
+                Inventory.Instance.ActivePickaxe.Use(cellPosition);
+
+            AudioSource.PlayClipAtPoint(placeSound, Tilemap.CellToWorld(cellPosition));
             Tilemap.SetTile(cellPosition, this);
         }
 
