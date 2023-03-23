@@ -1,3 +1,4 @@
+using System.Linq;
 using Game.Data.Items;
 using Game.Data.Tiles;
 using UnityEngine;
@@ -10,6 +11,8 @@ namespace Game.Player
 
         public IUsable HotbarSelected { get; private set; }
 
+        public Pickaxe ActivePickaxe => hotbar.First(usable => usable is Pickaxe) as Pickaxe;
+
         private readonly IUsable[] hotbar = new IUsable[9];
 
         private void OnHotbarSelected(int index) => HotbarSelected = hotbar[index];
@@ -17,10 +20,10 @@ namespace Game.Player
         private void Start()
         {
             hotbar[0] = Resources.Load<Pickaxe>("Tools/Pickaxe");
-            hotbar[1] = Resources.Load<BlockTile>("Tiles/stone");
-            hotbar[2] = Resources.Load<BlockTile>("Tiles/dirt");
-            hotbar[3] = Resources.Load<BlockTile>("Tiles/sand");
-            hotbar[4] = Resources.Load<BlockTile>("Tiles/ice");
+            hotbar[1] = Resources.Load<BlockTile>("Tiles/Stone");
+            hotbar[2] = Resources.Load<BlockTile>("Tiles/Dirt");
+            hotbar[3] = Resources.Load<BlockTile>("Tiles/Sand");
+            hotbar[4] = Resources.Load<BlockTile>("Tiles/Ice");
 
             HotbarSelected = hotbar[0];
             Input.Instance.HotbarSelected += OnHotbarSelected;
