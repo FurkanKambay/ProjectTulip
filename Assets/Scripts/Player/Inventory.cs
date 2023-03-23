@@ -9,23 +9,22 @@ namespace Game.Player
     {
         public static Inventory Instance { get; private set; }
 
+        public IUsable[] Hotbar { get; } = new IUsable[9];
         public IUsable HotbarSelected { get; private set; }
 
-        public Pickaxe ActivePickaxe => hotbar.First(usable => usable is Pickaxe) as Pickaxe;
+        public Pickaxe ActivePickaxe => Hotbar.First(usable => usable is Pickaxe) as Pickaxe;
 
-        private readonly IUsable[] hotbar = new IUsable[9];
-
-        private void OnHotbarSelected(int index) => HotbarSelected = hotbar[index];
+        private void OnHotbarSelected(int index) => HotbarSelected = Hotbar[index];
 
         private void Start()
         {
-            hotbar[0] = Resources.Load<Pickaxe>("Tools/Pickaxe");
-            hotbar[1] = Resources.Load<BlockTile>("Tiles/Stone");
-            hotbar[2] = Resources.Load<BlockTile>("Tiles/Dirt");
-            hotbar[3] = Resources.Load<BlockTile>("Tiles/Sand");
-            hotbar[4] = Resources.Load<BlockTile>("Tiles/Ice");
+            Hotbar[0] = Resources.Load<Pickaxe>("Tools/Pickaxe");
+            Hotbar[1] = Resources.Load<BlockTile>("Tiles/Stone");
+            Hotbar[2] = Resources.Load<BlockTile>("Tiles/Dirt");
+            Hotbar[3] = Resources.Load<BlockTile>("Tiles/Sand");
+            Hotbar[4] = Resources.Load<BlockTile>("Tiles/Ice");
 
-            HotbarSelected = hotbar[0];
+            HotbarSelected = Hotbar[0];
             Input.Instance.HotbarSelected += OnHotbarSelected;
         }
 
