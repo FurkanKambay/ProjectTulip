@@ -1,5 +1,4 @@
 using Game.Data.Tiles;
-using Game.Player;
 using UnityEngine;
 
 namespace Game.Data.Items
@@ -12,12 +11,12 @@ namespace Game.Data.Items
         public int power = 50;
         [SerializeField] private float useTime = .5f;
 
-        public void Use(TileModifier modifier, Vector3Int cellPosition)
+        public void Use(Vector3Int cellPosition)
         {
-            BlockTile block = modifier.Tilemap.GetTile<BlockTile>(cellPosition);
+            BlockTile block = World.Instance.Tilemap.GetTile<BlockTile>(cellPosition);
             if (!block) return;
 
-            block.GetHit(power, modifier, cellPosition);
+            block.GetHit(power, cellPosition);
         }
     }
 }

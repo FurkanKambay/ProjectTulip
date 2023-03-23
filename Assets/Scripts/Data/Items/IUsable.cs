@@ -1,4 +1,3 @@
-using Game.Player;
 using UnityEngine;
 
 namespace Game.Data.Items
@@ -8,6 +7,6 @@ namespace Game.Data.Items
         [Tooltip("Time in seconds between uses")]
         float UseTime { get; }
 
-        void Use(TileModifier modifier, Vector3Int cellPosition);
+        void Use(Vector3Int cellPosition);
     }
 }
