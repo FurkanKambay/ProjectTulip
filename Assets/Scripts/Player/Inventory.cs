@@ -1,14 +1,13 @@
 using System.Linq;
 using Game.Data.Items;
 using Game.Data.Tiles;
+using Game.Helpers;
 using UnityEngine;
 
 namespace Game.Player
 {
-    public class Inventory : MonoBehaviour
+    public class Inventory : Singleton<Inventory>
     {
-        public static Inventory Instance { get; private set; }
-
         public IUsable[] Hotbar { get; } = new IUsable[9];
         public IUsable HotbarSelected { get; private set; }
 
@@ -26,17 +25,6 @@ namespace Game.Player
 
             HotbarSelected = Hotbar[0];
             Input.Instance.HotbarSelected += OnHotbarSelected;
-        }
-
-        private void Awake()
-        {
-            if (Instance != null)
-            {
-                Destroy(this);
-                return;
-            }
-
-            Instance = this;
         }
     }
 }

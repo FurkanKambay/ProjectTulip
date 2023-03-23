@@ -1,12 +1,12 @@
 using System;
+using Game.Helpers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Game.Player
 {
-    public class Input : MonoBehaviour
+    public class Input : Singleton<Input>
     {
-        public static Input Instance { get; private set; }
         public static InputActions Actions => Instance.actions ?? (Instance.actions = new InputActions());
 
         public Action<int> HotbarSelected;
@@ -22,15 +22,9 @@ namespace Game.Player
         private void OnPoint(InputAction.CallbackContext context)
             => screenPoint = context.ReadValue<Vector2>();
 
-        private void Awake()
+        protected override void Awake()
         {
-            if (Instance != null)
-            {
-                Destroy(this);
-                return;
-            }
-
-            Instance = this;
+            base.Awake();
 
             mainCamera = Camera.main;
             Actions.Player.Hotbar.performed += OnHotbar;
