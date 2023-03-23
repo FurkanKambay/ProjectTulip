@@ -10,6 +10,7 @@ namespace Game.Data.Tiles
     public class BlockTile : CustomTile, IUsable
     {
         public float UseTime => .25f;
+        public Sprite Icon => sprite;
 
         [Header("Data")]
         public int hardness = 50;

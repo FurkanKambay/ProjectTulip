@@ -7,7 +7,11 @@ namespace Game.Data.Items
     public class Pickaxe : ScriptableObject, IUsable
     {
         public float UseTime => useTime;
+        public Sprite Icon => icon;
 
+        [SerializeField] private Sprite icon;
+
+        [Header("Data")]
         public int power = 50;
         [SerializeField] private float useTime = .5f;
 
