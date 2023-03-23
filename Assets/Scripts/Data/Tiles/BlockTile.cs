@@ -30,7 +30,10 @@ namespace Game.Data.Tiles
                 return;
 
             if (block)
+            {
                 Inventory.Instance.ActivePickaxe.Use(cellPosition);
+                return;
+            }
 
             AudioSource.PlayClipAtPoint(placeSound, Tilemap.CellToWorld(cellPosition));
             Tilemap.SetTile(cellPosition, this);
