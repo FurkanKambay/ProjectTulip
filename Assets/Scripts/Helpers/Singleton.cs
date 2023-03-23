@@ -20,7 +20,6 @@ namespace Game.Helpers
             }
 
             instance = this as T;
-            DontDestroyOnLoad(gameObject);
         }
     }
 }

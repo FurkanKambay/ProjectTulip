@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 namespace Game.Player
 {
-    public class Input : Singleton<Input>
+    public class Input : PersistentSingleton<Input>
     {
         public static InputActions Actions => Instance.actions ?? (Instance.actions = new InputActions());
 
