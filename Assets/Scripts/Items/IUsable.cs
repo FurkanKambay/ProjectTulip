@@ -1,10 +1,13 @@
+using Game.Player;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 namespace Game.Items
 {
     public interface IUsable
     {
-        void Use(Tilemap tilemap, Vector3Int cellPosition);
+        [Tooltip("Time in seconds between uses")]
+        float UseTime { get; }
+
+        void Use(TileModifier modifier, Vector3Int cellPosition);
     }
 }

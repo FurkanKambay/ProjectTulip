@@ -1,11 +1,23 @@
+using Game.Data.Tiles;
+using Game.Player;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 namespace Game.Items
 {
-    public class Pickaxe : IUsable
+    [CreateAssetMenu(fileName = "Pickaxe", menuName = "Items/Pickaxe")]
+    public class Pickaxe : ScriptableObject, IUsable
     {
-        public void Use(Tilemap tilemap, Vector3Int cellPosition)
-            => tilemap.SetTile(cellPosition, null);
+        public float UseTime => useTime;
+
+        public int power = 50;
+        [SerializeField] private float useTime = .5f;
+
+        public void Use(TileModifier modifier, Vector3Int cellPosition)
+        {
+            BlockTile block = modifier.Tilemap.GetTile<BlockTile>(cellPosition);
+            if (!block) return;
+
+            block.GetHit(power, modifier, cellPosition);
+        }
     }
 }
