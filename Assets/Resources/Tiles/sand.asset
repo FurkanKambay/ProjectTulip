@@ -16,3 +16,4 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 1}
   colliderType: 2
   hardness: 50
+  hitSound: {fileID: 8300000, guid: 3606e9b211edbb14b875e6848fff1274, type: 3}
