@@ -4,22 +4,17 @@ namespace Game.Helpers
 {
     public abstract class Singleton<T> : MonoBehaviour where T : Component
     {
-        private static T instance;
+        protected static T instance;
 
-        public static T Instance => instance
-            ? instance
-            : instance
-                = FindObjectOfType<T>() ?? new GameObject { name = typeof(T).Name }.AddComponent<T>();
+        public static T Instance =>
+            instance ??= FindObjectOfType<T>() ?? new GameObject { name = typeof(T).Name }.AddComponent<T>();
 
         protected virtual void Awake()
         {
-            if (instance != null)
-            {
+            if (instance == null)
+                instance = this as T;
+            else
                 Destroy(gameObject);
-                return;
-            }
-
-            instance = this as T;
         }
     }
 }

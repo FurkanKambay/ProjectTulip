@@ -6,8 +6,15 @@ namespace Game.Helpers
     {
         protected override void Awake()
         {
-            base.Awake();
-            DontDestroyOnLoad(gameObject);
+            if (instance == null)
+            {
+                instance = this as T;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }
