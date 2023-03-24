@@ -15,13 +15,13 @@ namespace Game.Player
             IUsable item = inventory.HotbarSelected;
 
             timeSinceLastUse += Time.deltaTime;
-            if (timeSinceLastUse < item.UseTime) return;
+            if (timeSinceLastUse < item?.UseTime) return;
 
             if (!Input.Actions.Player.Fire.IsPressed()) return;
             timeSinceLastUse = 0;
 
             Vector2 mouse = Input.Instance.MouseWorldPoint;
-            item.Use(World.Instance.Tilemap.WorldToCell(mouse), inventory.ActivePickaxe);
+            item?.Use(World.Instance.Tilemap.WorldToCell(mouse), inventory.ActivePickaxe);
         }
     }
 }
