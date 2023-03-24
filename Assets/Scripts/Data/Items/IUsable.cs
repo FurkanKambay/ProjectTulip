@@ -8,6 +8,6 @@ namespace Game.Data.Items
         float UseTime { get; }
         Sprite Icon { get; }
 
-        void Use(Vector3Int cellPosition);
+        void Use(Vector3Int cellPosition, Pickaxe pickaxe);
     }
 }

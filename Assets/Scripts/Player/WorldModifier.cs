@@ -5,11 +5,14 @@ namespace Game.Player
 {
     public class WorldModifier : MonoBehaviour
     {
+        private Inventory inventory;
         private float timeSinceLastUse;
+
+        private void Awake() => inventory = GetComponent<Inventory>();
 
         private void Update()
         {
-            IUsable item = Inventory.Instance.HotbarSelected;
+            IUsable item = inventory.HotbarSelected;
 
             timeSinceLastUse += Time.deltaTime;
             if (timeSinceLastUse < item.UseTime) return;
@@ -18,7 +21,7 @@ namespace Game.Player
             timeSinceLastUse = 0;
 
             Vector2 mouse = Input.Instance.MouseWorldPoint;
-            item.Use(World.Instance.Tilemap.WorldToCell(mouse));
+            item.Use(World.Instance.Tilemap.WorldToCell(mouse), inventory.ActivePickaxe);
         }
     }
 }

@@ -2,12 +2,11 @@ using System;
 using System.Linq;
 using Game.Data.Items;
 using Game.Data.Tiles;
-using Game.Helpers;
 using UnityEngine;
 
 namespace Game.Player
 {
-    public class Inventory : Singleton<Inventory>
+    public class Inventory : MonoBehaviour
     {
         public IUsable[] Hotbar { get; } = new IUsable[9];
         public IUsable HotbarSelected => Hotbar[hotbarSelectedIndex];

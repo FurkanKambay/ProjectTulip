@@ -22,7 +22,7 @@ namespace Game.Data.Tiles
         private static Dictionary<Vector3Int, int> DamageMap => World.Instance.TileDamageMap;
         private static Tilemap Tilemap => World.Instance.Tilemap;
 
-        public void Use(Vector3Int cellPosition)
+        public void Use(Vector3Int cellPosition, Pickaxe pickaxe)
         {
             BlockTile block = Tilemap.GetTile<BlockTile>(cellPosition);
 
@@ -31,7 +31,7 @@ namespace Game.Data.Tiles
 
             if (block)
             {
-                Inventory.Instance.ActivePickaxe.Use(cellPosition);
+                pickaxe.Use(cellPosition);
                 return;
             }
 
