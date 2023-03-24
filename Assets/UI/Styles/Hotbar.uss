@@ -3,3 +3,9 @@
     justify-content: center;
     align-items: flex-start;
 }
+
+.selected > Button {
+    background-color: #778899;
+    border-color: midnightblue;
+    border-width: 2px;
+}

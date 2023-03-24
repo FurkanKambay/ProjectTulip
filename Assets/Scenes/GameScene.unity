@@ -490,6 +490,7 @@ GameObject:
   m_Component:
   - component: {fileID: 708079355}
   - component: {fileID: 708079354}
+  - component: {fileID: 708079356}
   m_Layer: 5
   m_Name: Hotbar
   m_TagString: Untagged
@@ -528,6 +529,19 @@ Transform:
   m_Father: {fileID: 122205217}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &708079356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708079353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72704d37797ebee40afab671ba602024, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventory: {fileID: 1105140268}
 --- !u!1001 &1105140267
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -545,6 +559,17 @@ PrefabInstance:
       objectReference: {fileID: 1737950992}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
+--- !u!114 &1105140268 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4266250971387899883, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
+  m_PrefabInstance: {fileID: 1105140267}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dbac43252630dd499875c6a60daacdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1105140274 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8291246366843984804, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
