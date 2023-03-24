@@ -1,0 +1,20 @@
+.hotbar-slot {
+    justify-content: center;
+    align-items: center;
+    margin-left: 4px;
+    margin-right: 4px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    width: 32px;
+    height: 32px;
+}
+
+.hotbar-slot-icon {
+    /*background-image: url('project://database/Assets/Sprites/Blocks.png?fileID=367657785&guid=9a414bae96f14a342a3014c9fa4dbb0a&type=3#dirt');*/
+    width: 16px;
+    height: 16px;
+}
