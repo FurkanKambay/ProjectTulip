@@ -7,9 +7,9 @@ namespace Game.Player
 {
     public class Input : PersistentSingleton<Input>
     {
-        public static InputActions Actions => Instance.actions ?? (Instance.actions = new InputActions());
+        public static InputActions Actions => Instance.actions ??= new InputActions();
 
-        public Action<int> HotbarSelected;
+        public event Action<int> HotbarSelected;
         public Vector2 MouseWorldPoint => mainCamera.ScreenToWorldPoint(screenPoint);
 
         private InputActions actions;
