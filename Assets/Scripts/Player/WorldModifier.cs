@@ -11,20 +11,22 @@ namespace Game.Player
 
         private float timeSinceLastUse;
 
+        private static World World => World.Instance;
+
         private void Awake()
         {
             inventory = GetComponent<Inventory>();
             audioSource = GetComponent<AudioSource>();
 
-            World.Instance.BlockPlaced += PlayPlaceSound;
-            World.Instance.BlockHit += PlayHitSound;
-            World.Instance.BlockDestroyed += PlayHitSound;
+            World.BlockPlaced += PlayPlaceSound;
+            World.BlockHit += PlayHitSound;
+            World.BlockDestroyed += PlayHitSound;
         }
 
         private void Update()
         {
             IUsable item = inventory.HotbarSelected;
-            Vector3Int cell = World.Instance.WorldToCell(Input.Instance.MouseWorldPoint);
+            Vector3Int cell = World.WorldToCell(Input.Instance.MouseWorldPoint);
 
             timeSinceLastUse += Time.deltaTime;
             if (item == null || timeSinceLastUse <= item.UseTime) return;
@@ -32,7 +34,11 @@ namespace Game.Player
             if (!Input.Actions.Player.Fire.IsPressed()) return;
 
             timeSinceLastUse = 0;
-            item.Use(cell, inventory.ActivePickaxe);
+
+            if (item is Pickaxe)
+                World.DamageBlock(cell, inventory.ActivePickaxe.power);
+            else if (item is BlockTile block)
+                World.PlaceBlock(cell, block, inventory.ActivePickaxe.power);
         }
 
         private void PlayPlaceSound(Vector3Int cell, BlockTile block) => audioSource.PlayOneShot(block.placeSound);

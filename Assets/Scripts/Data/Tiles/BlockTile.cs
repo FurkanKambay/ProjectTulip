@@ -15,8 +15,5 @@ namespace Game.Data.Tiles
         [Header("Sounds")]
         public AudioClip hitSound;
         public AudioClip placeSound;
-
-        public void Use(Vector3Int cell, Pickaxe pickaxe)
-            => World.Instance.PlaceBlock(cell, this, pickaxe.power);
     }
 }
