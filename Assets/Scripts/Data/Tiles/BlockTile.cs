@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Game.Data.Items;
-using Game.Player;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -35,7 +34,6 @@ namespace Game.Data.Tiles
                 return;
             }
 
-            AudioSource.PlayClipAtPoint(placeSound, Tilemap.CellToWorld(cellPosition));
             Tilemap.SetTile(cellPosition, this);
         }
 
@@ -43,8 +41,6 @@ namespace Game.Data.Tiles
         {
             if (!DamageMap.ContainsKey(cell))
                 DamageMap.Add(cell, 0);
-
-            AudioSource.PlayClipAtPoint(hitSound, Tilemap.CellToWorld(cell));
 
             int damageTaken = DamageMap[cell] += damage;
             if (damageTaken >= hardness)
