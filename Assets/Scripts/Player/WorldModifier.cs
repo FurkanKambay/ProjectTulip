@@ -20,24 +20,26 @@ namespace Game.Player
         private void Update()
         {
             IUsable item = inventory.HotbarSelected;
-            if (item == null) return;
-
             Vector3Int cell = World.Instance.Tilemap.WorldToCell(Input.Instance.MouseWorldPoint);
             BlockTile block = World.Instance.Tilemap.GetTile<BlockTile>(cell);
 
             timeSinceLastUse += Time.deltaTime;
-            if (timeSinceLastUse <= item.UseTime) return;
+            if (item == null || timeSinceLastUse <= item.UseTime) return;
 
             if (!Input.Actions.Player.Fire.IsPressed()) return;
+            if (block == item as BlockTile || (item is Pickaxe && !block)) return;
 
+            timeSinceLastUse = 0;
+            PlaySound(block, item);
+            item.Use(cell, inventory.ActivePickaxe);
+        }
+
+        private void PlaySound(BlockTile block, IUsable item)
+        {
             if (block)
                 audioSource.PlayOneShot(block.hitSound);
             else if (item is BlockTile tile)
                 audioSource.PlayOneShot(tile.placeSound);
-
-            timeSinceLastUse = 0;
-
-            item.Use(cell, inventory.ActivePickaxe);
         }
     }
 }
