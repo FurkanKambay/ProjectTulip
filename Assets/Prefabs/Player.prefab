@@ -210,7 +210,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  boxSize: {x: 1.125, y: 0.8}
+  boxSize: {x: 1.11, y: 0.8}
 --- !u!114 &6853449593728978369
 MonoBehaviour:
   m_ObjectHideFlags: 0
