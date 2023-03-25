@@ -1,4 +1,3 @@
-using Game.Data.Tiles;
 using UnityEngine;
 
 namespace Game.Data.Items
@@ -15,12 +14,7 @@ namespace Game.Data.Items
         public int power = 50;
         [SerializeField] private float useTime = .5f;
 
-        public void Use(Vector3Int cell, Pickaxe pickaxe = null)
-        {
-            BlockTile block = World.Instance.GetBlock(cell);
-            if (!block) return;
-
-            World.Instance.DamageBlock(cell, power);
-        }
+        public void Use(Vector3Int cell, Pickaxe pickaxe)
+            => World.Instance.DamageBlock(cell, power);
     }
 }

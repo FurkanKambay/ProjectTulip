@@ -17,13 +17,6 @@ namespace Game.Data.Tiles
         public AudioClip placeSound;
 
         public void Use(Vector3Int cell, Pickaxe pickaxe)
-        {
-            BlockTile block = World.Instance.GetBlock(cell);
-
-            if (block && block != this)
-                pickaxe.Use(cell);
-            else
-                World.Instance.PlaceBlock(cell, this);
-        }
+            => World.Instance.PlaceBlock(cell, this, pickaxe.power);
     }
 }

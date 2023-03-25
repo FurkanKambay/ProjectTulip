@@ -17,9 +17,14 @@ namespace Game
         public event Action<Vector3Int, BlockTile> BlockHit;
         public event Action<Vector3Int, BlockTile> BlockDestroyed;
 
-        public void DamageBlock(Vector3Int cell, int damage)
+        /// <summary>
+        /// Damages a block at the given cell.
+        /// </summary>
+        /// <param name="invokeDestroyEvent">Whether to invoke the BlockDestroyed event.</param>
+        /// <returns>Whether the block is destroyed.</returns>
+        public bool DamageBlock(Vector3Int cell, int damage, bool invokeDestroyEvent = true)
         {
-            if (!tilemap.HasTile(cell)) return;
+            if (!tilemap.HasTile(cell)) return false;
             if (!TileDamageMap.ContainsKey(cell))
                 TileDamageMap.Add(cell, 0);
 
@@ -30,22 +35,34 @@ namespace Game
             if (damageTaken < hardness)
             {
                 BlockHit?.Invoke(cell, block);
-                return;
+                return false;
             }
 
-            BlockDestroyed?.Invoke(cell, block);
+            if (invokeDestroyEvent)
+                BlockDestroyed?.Invoke(cell, block);
+
             tilemap.SetTile(cell, null);
             TileDamageMap.Remove(cell);
+            return true;
         }
 
-        public void PlaceBlock(Vector3Int cell, BlockTile newBlock)
+        /// <summary>
+        /// Places a block at the given cell.
+        /// </summary>
+        /// <param name="damage">Damage amount if cell is not empty.</param>
+        /// <returns>Whether the block was placed successfully.</returns>
+        public bool PlaceBlock(Vector3Int cell, BlockTile newBlock, int damage = 0)
         {
             BlockTile block = GetBlock(cell);
-            if (block) return;
+            if (block == newBlock) return false;
+
+            if (block && !DamageBlock(cell, damage, invokeDestroyEvent: false))
+                return false;
 
             tilemap.SetTile(cell, newBlock);
             TileDamageMap.Remove(cell);
             BlockPlaced?.Invoke(cell, newBlock);
+            return true;
         }
 
         public int GetTileDamage(Vector3Int cell)
