@@ -15,12 +15,12 @@ namespace Game.Data.Items
         public int power = 50;
         [SerializeField] private float useTime = .5f;
 
-        public void Use(Vector3Int cellPosition, Pickaxe pickaxe = null)
+        public void Use(Vector3Int cell, Pickaxe pickaxe = null)
         {
-            BlockTile block = World.Instance.Tilemap.GetTile<BlockTile>(cellPosition);
+            BlockTile block = World.Instance.GetBlock(cell);
             if (!block) return;
 
-            block.GetHit(power, cellPosition);
+            World.Instance.DamageBlock(cell, power);
         }
     }
 }

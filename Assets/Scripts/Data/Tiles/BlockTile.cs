@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using Game.Data.Items;
+﻿using Game.Data.Items;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 namespace Game.Data.Tiles
 {
@@ -18,33 +16,14 @@ namespace Game.Data.Tiles
         public AudioClip hitSound;
         public AudioClip placeSound;
 
-        private static Dictionary<Vector3Int, int> DamageMap => World.Instance.TileDamageMap;
-        private static Tilemap Tilemap => World.Instance.Tilemap;
-
-        public void Use(Vector3Int cellPosition, Pickaxe pickaxe)
+        public void Use(Vector3Int cell, Pickaxe pickaxe)
         {
-            BlockTile block = Tilemap.GetTile<BlockTile>(cellPosition);
+            BlockTile block = World.Instance.GetBlock(cell);
 
-            if (block == this)
-                return;
-
-            if (block)
-            {
-                pickaxe.Use(cellPosition);
-                return;
-            }
-
-            Tilemap.SetTile(cellPosition, this);
-        }
-
-        public void GetHit(int damage, Vector3Int cell)
-        {
-            if (!DamageMap.ContainsKey(cell))
-                DamageMap.Add(cell, 0);
-
-            int damageTaken = DamageMap[cell] += damage;
-            if (damageTaken >= hardness)
-                Tilemap.SetTile(cell, null);
+            if (block && block != this)
+                pickaxe.Use(cell);
+            else
+                World.Instance.PlaceBlock(cell, this);
         }
     }
 }
