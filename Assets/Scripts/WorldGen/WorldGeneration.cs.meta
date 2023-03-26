@@ -3,7 +3,10 @@ guid: 62ed8242be214804f9fbc016c9e8a43d
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - tilemap: {instanceID: 0}
+  - dirt: {fileID: 11400000, guid: 6b98d82ba77a4344a946251215359108, type: 2}
+  - stone: {fileID: 11400000, guid: 6d3857252a8becc409275c487eef4913, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

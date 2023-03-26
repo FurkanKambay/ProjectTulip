@@ -1,3 +1,14 @@
-﻿fileFormatVersion: 2
+fileFormatVersion: 2
 guid: ec2778eec103403f8cae777705b279c9
-timeCreated: 1679531617
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - sprite: {instanceID: 0}
+  - hitSound: {fileID: 8300000, guid: 3606e9b211edbb14b875e6848fff1274, type: 3}
+  - placeSound: {fileID: 8300000, guid: 3606e9b211edbb14b875e6848fff1274, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
