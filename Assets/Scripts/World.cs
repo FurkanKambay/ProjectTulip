@@ -69,6 +69,9 @@ namespace Game
             => TileDamageMap.TryGetValue(cell, out int damage) ? damage : 0;
 
         public Vector3Int WorldToCell(Vector3 worldPosition) => tilemap.WorldToCell(worldPosition);
+        public Vector3 CellCenter(Vector3Int cell) => tilemap.GetCellCenterWorld(cell);
+
+        public bool HasBlock(Vector3Int cell) => tilemap.HasTile(cell);
         public BlockTile GetBlock(Vector3Int cell) => tilemap.GetTile<BlockTile>(cell);
         public BlockTile GetBlock(Vector3 worldPosition) => GetBlock(WorldToCell(worldPosition));
     }
