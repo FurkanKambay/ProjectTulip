@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec2778eec103403f8cae777705b279c9, type: 3}
   m_Name: Ice
   m_EditorClassIdentifier: 
-  sprite: {fileID: -1831525665, guid: 9a414bae96f14a342a3014c9fa4dbb0a, type: 3}
+  sprite: {fileID: -67848399, guid: 37534994979949b4794941afda42964c, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
   colliderType: 2
-  hardness: 150
+  hardness: 120
   hitSound: {fileID: 8300000, guid: e7d2bbf70020d5c40b078af2edb15953, type: 3}
   placeSound: {fileID: 8300000, guid: 3606e9b211edbb14b875e6848fff1274, type: 3}
