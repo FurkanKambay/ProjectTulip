@@ -42,7 +42,7 @@ namespace Game.CharacterController
             pressingKey = directionX != 0;
 
             if (pressingKey)
-                spriteRenderer.flipX = directionX > 0;
+                spriteRenderer.flipX = directionX < 0;
 
             desiredVelocity = new Vector2(directionX, 0f) * Mathf.Max(data.maxSpeed - data.friction, 0f);
         }
