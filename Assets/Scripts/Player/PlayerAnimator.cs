@@ -1,5 +1,4 @@
-﻿using System;
-using Game.Data.Items;
+﻿using Game.Data.Items;
 using UnityEngine;
 
 namespace Game.Player

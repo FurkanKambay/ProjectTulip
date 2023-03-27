@@ -13,6 +13,7 @@ namespace Game.Player
 
         private Inventory inventory;
         private AudioSource audioSource;
+        private BoxCollider2D playerCollider;
 
         private float timeSinceLastUse;
         private Vector3Int focusedCell;
@@ -23,6 +24,7 @@ namespace Game.Player
         {
             inventory = GetComponent<Inventory>();
             audioSource = GetComponent<AudioSource>();
+            playerCollider = GetComponent<BoxCollider2D>();
 
             World.BlockPlaced += PlayPlaceSound;
             World.BlockHit += PlayHitSound;
@@ -37,6 +39,7 @@ namespace Game.Player
             timeSinceLastUse += Time.deltaTime;
             if (item == null || timeSinceLastUse <= item.UseTime) return;
 
+            if (IntersectsPlayer(cell)) return;
             if (!Input.Actions.Player.Fire.IsPressed()) return;
             timeSinceLastUse = 0;
 
@@ -48,15 +51,21 @@ namespace Game.Player
 
         private Vector3Int SetFocusedCell()
         {
-            Vector3Int cell = World.WorldToCell(Input.Instance.MouseWorldPoint);
+            Vector3Int mouseCell = World.WorldToCell(Input.Instance.MouseWorldPoint);
 
-            if (!smartCursor && cell != focusedCell)
+            if (!smartCursor && mouseCell != focusedCell)
             {
-                focusedCell = cell;
-                CellFocusChanged?.Invoke(cell);
+                focusedCell = mouseCell;
+                CellFocusChanged?.Invoke(mouseCell);
             }
 
-            return cell;
+            return mouseCell;
+        }
+
+        private bool IntersectsPlayer(Vector3Int cell)
+        {
+            Bounds mouseCellBounds = World.CellBoundsWorld(cell);
+            return playerCollider.bounds.Intersects(mouseCellBounds);
         }
 
         private void PlayPlaceSound(Vector3Int cell, BlockTile block) => audioSource.PlayOneShot(block.placeSound);
