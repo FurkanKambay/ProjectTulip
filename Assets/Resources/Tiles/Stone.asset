@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec2778eec103403f8cae777705b279c9, type: 3}
   m_Name: Stone
   m_EditorClassIdentifier: 
-  sprite: {fileID: 1413761265, guid: 37534994979949b4794941afda42964c, type: 3}
-  color: {r: 1, g: 1, b: 1, a: 1}
-  colliderType: 2
+  m_DefaultSprite: {fileID: 1413761265, guid: 37534994979949b4794941afda42964c, type: 3}
+  m_DefaultGameObject: {fileID: 0}
+  m_DefaultColliderType: 2
+  m_TilingRules: []
   hardness: 100
   hitSound: {fileID: 8300000, guid: 15973416e7cb7184d929b8290dd7fb2b, type: 3}
   placeSound: {fileID: 8300000, guid: 3606e9b211edbb14b875e6848fff1274, type: 3}
