@@ -52,7 +52,7 @@ namespace Game.WorldGen
 
         private void OnValidate()
         {
-            if (!Application.isPlaying) return;
+            if (Application.isEditor) return;
 
             ResetTilemapTransform();
             SetTiles();
