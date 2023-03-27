@@ -10,6 +10,8 @@ namespace Game.Data.Tiles
         public float UseTime => .25f;
         public Sprite Icon => m_DefaultSprite;
 
+        public Color color = Color.white;
+
         [Header("Data")]
         public int hardness = 50;
 
@@ -23,6 +25,12 @@ namespace Game.Data.Tiles
             TilingRuleOutput.Neighbor.This => tile != null,
             _ => base.RuleMatch(neighbor, tile)
         };
+
+        public override void GetTileData(Vector3Int location, ITilemap tilemap, ref TileData tileData)
+        {
+            tileData.color = this.color;
+            base.GetTileData(location, tilemap, ref tileData);
+        }
 
         public class Neighbor : RuleTile.TilingRuleOutput.Neighbor
         {

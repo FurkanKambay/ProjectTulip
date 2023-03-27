@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 37534994979949b4794941afda42964c
+guid: ef7b919bed58fcc42a5a05ba9e91e9d2
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -67,7 +67,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 128
+    maxTextureSize: 2048
     resizeAlgorithm: 1
     textureFormat: -1
     textureCompression: 0
@@ -105,13 +105,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Dirt
+      name: soil0
       rect:
         serializedVersion: 2
         x: 0
         y: 32
-        width: 32
-        height: 32
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -119,20 +119,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b978640998dd06d488ef47717d4a26f9
-      internalID: -234908535
+      spriteID: 52cb92f1a7e7feb4d8043a8f14fc3640
+      internalID: -502003605
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Stone
+      name: soil1
       rect:
         serializedVersion: 2
-        x: 32
+        x: 16
         y: 32
-        width: 32
-        height: 32
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,20 +140,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5a3d9d630ec6cfb4a83cc084a225471e
-      internalID: 1413761265
+      spriteID: 2f404f931a0d5fa41b1e859eec2c1c07
+      internalID: -377399160
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Deepstone
+      name: soil2
       rect:
         serializedVersion: 2
-        x: 64
-        y: 32
-        width: 32
-        height: 32
+        x: 0
+        y: 16
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -161,20 +161,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d67c4f218b8c0c04e92fae5ceda92d13
-      internalID: -1739254055
+      spriteID: 46672b378d5c65a458c6618dccd57dd0
+      internalID: 56449353
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ice
+      name: soil3
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a672bbdfb173a14ba7d3689ea6dd8a4
+      internalID: 182452556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: soil4
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
-        height: 32
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -182,20 +203,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7c89aeb471882e74e99f6913baa781bd
-      internalID: -67848399
+      spriteID: e13b1e19f7a1616458dc650ceb9fed64
+      internalID: 893340062
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sandstone
+      name: soil5
       rect:
         serializedVersion: 2
-        x: 32
+        x: 16
         y: 0
-        width: 32
-        height: 32
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -203,29 +224,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 44b9518ca154fa14c8dfd146efe53102
-      internalID: 693805228
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Hellstone
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3b5b2726713eacb438cf87d30b82cfa1
-      internalID: 1306692375
+      spriteID: 39f8ccaf72c53564883bb519f6a43d0b
+      internalID: -1151661481
       vertices: []
       indices: 
       edges: []
@@ -241,12 +241,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Deepstone: -1739254055
-      Dirt: -234908535
-      Hellstone: 1306692375
-      Ice: -67848399
-      Sandstone: 693805228
-      Stone: 1413761265
+      soil0: -502003605
+      soil1: -377399160
+      soil2: 56449353
+      soil3: 182452556
+      soil4: 893340062
+      soil5: -1151661481
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

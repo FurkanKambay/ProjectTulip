@@ -31,8 +31,7 @@ namespace Game.Player
             Hotbar[0] = Resources.Load<Pickaxe>("Tools/Pickaxe");
             Hotbar[1] = Resources.Load<BlockTile>("Tiles/Stone");
             Hotbar[2] = Resources.Load<BlockTile>("Tiles/Dirt");
-            Hotbar[3] = Resources.Load<BlockTile>("Tiles/Sandstone");
-            Hotbar[4] = Resources.Load<BlockTile>("Tiles/Ice");
+            Hotbar[3] = Resources.Load<BlockTile>("Tiles/Aquatic");
 
             HotbarModified?.Invoke();
         }

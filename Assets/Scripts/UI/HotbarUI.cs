@@ -1,4 +1,5 @@
 using Game.Data.Items;
+using Game.Data.Tiles;
 using Game.Player;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -20,6 +21,7 @@ namespace Game.UI
             {
                 Image image = root[i].Q<Image>();
                 image.sprite = Hotbar[i]?.Icon;
+                image.tintColor = Hotbar[i] is BlockTile block ? block.color : Color.white;
             }
         }
 
