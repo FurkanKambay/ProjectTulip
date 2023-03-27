@@ -11,15 +11,22 @@ namespace Game
         [SerializeField] private float speed = 100;
 
         private new SpriteRenderer renderer;
+        private WorldModifier worldModifier;
         private Vector3 targetPosition;
+        private Vector3Int highlightedCell;
 
-        private void Awake() => renderer = GetComponent<SpriteRenderer>();
+        private void OnCellFocusChanged(Vector3Int cell)
+            => highlightedCell = cell;
+
+        private void Awake()
+        {
+            renderer = GetComponent<SpriteRenderer>();
+            worldModifier = inventory.GetComponent<WorldModifier>();
+        }
 
         private void Update()
         {
-            Vector2 mouse = Player.Input.Instance.MouseWorldPoint;
-            Vector3Int cell = World.Instance.WorldToCell(mouse);
-            bool hasBlock = World.Instance.HasBlock(cell);
+            bool hasBlock = World.Instance.HasBlock(highlightedCell);
 
             renderer.enabled = inventory.HotbarSelected switch {
                 Pickaxe => hasBlock,
@@ -27,10 +34,14 @@ namespace Game
                 _ => false
             };
 
-            targetPosition = World.Instance.CellCenter(cell);
+            if (!renderer.enabled) return;
+            targetPosition = World.Instance.CellCenter(highlightedCell);
         }
 
         private void LateUpdate()
             => transform.position = Vector3.Lerp(transform.position, targetPosition, speed * Time.deltaTime);
+
+        private void OnEnable() => worldModifier.CellFocusChanged += OnCellFocusChanged;
+        private void OnDisable() => worldModifier.CellFocusChanged -= OnCellFocusChanged;
     }
 }
