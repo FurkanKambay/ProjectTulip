@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -9,8 +7,13 @@ namespace Game.WorldGen
     {
         [Header("References")]
         [SerializeField] private Tilemap tilemap;
+
         [SerializeField] private TileBase dirt;
         [SerializeField] private TileBase stone;
+        [SerializeField] private TileBase deepstone;
+        [SerializeField] private TileBase jungle;
+        [SerializeField] private TileBase flesh;
+        [SerializeField] private TileBase aquatic;
 
         [Header("Settings")]
         public int width = 100;
@@ -21,8 +24,15 @@ namespace Game.WorldGen
         [Range(.02f, .25f)] public float densityFactor = .1f;
         [SerializeField] private AnimationCurve heightDensityCurve;
 
-        [Header("Separations")]
+        [Header("Earth Layers")]
         public int dirtLayerHeight = 10;
+        public int stoneLayerHeight = 10;
+
+        [Header("Biomes")]
+        public int aquaticBiomeWidth = 10;
+        public int starterBiomeWidth = 10;
+        public int jungleBiomeWidth = 10;
+        public int fleshBiomeWidth = 10;
 
         private float[,] PerlinNoise => perlinNoise ??= CalculateNoise();
         private float[,] perlinNoise;
@@ -35,8 +45,17 @@ namespace Game.WorldGen
 
                 for (int x = 0; x < width; x++)
                 {
+                    TileBase biomeSoil = x < aquaticBiomeWidth ? aquatic
+                        : x < aquaticBiomeWidth + starterBiomeWidth ? dirt
+                        : x < aquaticBiomeWidth + starterBiomeWidth + jungleBiomeWidth ? jungle
+                        : x < aquaticBiomeWidth + starterBiomeWidth + jungleBiomeWidth + fleshBiomeWidth ? flesh
+                        : dirt;
+
                     TileBase tile = PerlinNoise[x, y] > densityCutoff ? null
-                        : height - y < dirtLayerHeight ? dirt : stone;
+                        : height - y < dirtLayerHeight ? biomeSoil
+                        : height - y < stoneLayerHeight ? stone
+                        : deepstone;
+
                     tilemap.SetTile(new Vector3Int(x, y, 0), tile);
                 }
             }
