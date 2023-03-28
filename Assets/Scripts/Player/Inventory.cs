@@ -11,7 +11,7 @@ namespace Game.Player
         public IUsable[] Hotbar { get; } = new IUsable[9];
         public IUsable HotbarSelected => Hotbar[hotbarSelectedIndex];
         public int HotbarSelectedIndex => hotbarSelectedIndex;
-        public Pickaxe ActivePickaxe => Hotbar.First(u => u is Pickaxe) as Pickaxe;
+        public Pickaxe ActivePickaxe => Hotbar.OfType<Pickaxe>().First();
 
         public event Action<int> HotbarSelectionChanged;
         public event Action HotbarModified;
