@@ -13,9 +13,9 @@ namespace Game
         private new SpriteRenderer renderer;
         private WorldModifier worldModifier;
         private Vector3 targetPosition;
-        private Vector3Int highlightedCell;
+        private Vector3Int? highlightedCell;
 
-        private void OnCellFocusChanged(Vector3Int cell)
+        private void OnCellFocusChanged(Vector3Int? cell)
             => highlightedCell = cell;
 
         private void Awake()
@@ -26,16 +26,18 @@ namespace Game
 
         private void Update()
         {
-            bool hasBlock = World.Instance.HasBlock(highlightedCell);
+            Vector3Int cell = highlightedCell.GetValueOrDefault();
+            bool hasBlock = World.Instance.HasBlock(cell);
 
-            renderer.enabled = inventory.HotbarSelected switch {
+            renderer.enabled = highlightedCell.HasValue && inventory.HotbarSelected switch
+            {
                 Pickaxe => hasBlock,
                 BlockTile => !hasBlock,
                 _ => false
             };
 
             if (!renderer.enabled) return;
-            targetPosition = World.Instance.CellCenter(highlightedCell);
+            targetPosition = World.Instance.CellCenter(cell);
         }
 
         private void LateUpdate()

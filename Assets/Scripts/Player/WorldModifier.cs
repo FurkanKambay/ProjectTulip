@@ -7,16 +7,18 @@ namespace Game.Player
 {
     public class WorldModifier : MonoBehaviour
     {
+        public float range = 5f;
         public bool smartCursor;
 
-        public event Action<Vector3Int> CellFocusChanged;
+        public event Action<Vector3Int?> CellFocusChanged;
 
         private Inventory inventory;
         private AudioSource audioSource;
         private BoxCollider2D playerCollider;
 
         private float timeSinceLastUse;
-        private Vector3Int focusedCell;
+        private Vector3Int? focusedCell;
+        private Vector3Int playerCell;
 
         private static World World => World.Instance;
 
@@ -34,32 +36,40 @@ namespace Game.Player
         private void Update()
         {
             IUsable item = inventory.HotbarSelected;
-            Vector3Int cell = SetFocusedCell();
+            playerCell = World.WorldToCell(transform.position);
 
             timeSinceLastUse += Time.deltaTime;
             if (item == null || timeSinceLastUse <= item.UseTime) return;
 
-            if (IntersectsPlayer(cell)) return;
+            SetFocusedCell();
+            if (!focusedCell.HasValue) return;
+            if (IntersectsPlayer(focusedCell.Value)) return;
             if (!Input.Actions.Player.Fire.IsPressed()) return;
+
             timeSinceLastUse = 0;
 
             if (item is Pickaxe)
-                World.DamageBlock(cell, inventory.ActivePickaxe.power);
+                World.DamageBlock(focusedCell.Value, inventory.ActivePickaxe.power);
             else if (item is BlockTile block)
-                World.PlaceBlock(cell, block, inventory.ActivePickaxe.power);
+                World.PlaceBlock(focusedCell.Value, block, inventory.ActivePickaxe.power);
         }
 
-        private Vector3Int SetFocusedCell()
+        private void SetFocusedCell()
         {
             Vector3Int mouseCell = World.WorldToCell(Input.Instance.MouseWorldPoint);
 
-            if (!smartCursor && mouseCell != focusedCell)
+            if (smartCursor) return;
+
+            if (Vector3Int.Distance(playerCell, mouseCell) > range)
             {
-                focusedCell = mouseCell;
-                CellFocusChanged?.Invoke(mouseCell);
+                focusedCell = null;
+                CellFocusChanged?.Invoke(focusedCell);
+                return;
             }
 
-            return mouseCell;
+            if (focusedCell == mouseCell) return;
+            focusedCell = mouseCell;
+            CellFocusChanged?.Invoke(focusedCell);
         }
 
         private bool IntersectsPlayer(Vector3Int cell)
