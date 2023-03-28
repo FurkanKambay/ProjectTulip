@@ -15,7 +15,7 @@ PlayerSettings:
   companyName: Furkan Kambay
   productName: Terra
   defaultCursor: {fileID: 2800000, guid: a19eac1ab359ad342b193d47ba3c0476, type: 3}
-  cursorHotspot: {x: 0, y: 0}
+  cursorHotspot: {x: 5, y: 1}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
   m_ShowUnitySplashScreen: 1
   m_ShowUnitySplashLogo: 1
