@@ -9,13 +9,22 @@ namespace Game
 {
     public class World : Singleton<World>
     {
-        [SerializeField] private Tilemap tilemap;
+        public Tilemap Tilemap { get; private set; }
+
+        [SerializeField] public Transform worldContainer;
+        [SerializeField] private Tilemap tilemapPrefab;
 
         private Dictionary<Vector3Int, int> TileDamageMap { get; } = new();
 
         public event Action<Vector3Int, BlockTile> BlockPlaced;
         public event Action<Vector3Int, BlockTile> BlockHit;
         public event Action<Vector3Int, BlockTile> BlockDestroyed;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            Tilemap = Instantiate(tilemapPrefab, worldContainer);
+        }
 
         /// <summary>
         /// Damages a block at the given cell.
@@ -24,7 +33,7 @@ namespace Game
         /// <returns>Whether the block is destroyed.</returns>
         public bool DamageBlock(Vector3Int cell, int damage, bool invokeDestroyEvent = true)
         {
-            if (!tilemap.HasTile(cell)) return false;
+            if (!Tilemap.HasTile(cell)) return false;
 
             if (!TileDamageMap.ContainsKey(cell))
                 TileDamageMap.Add(cell, 0);
@@ -42,7 +51,7 @@ namespace Game
             if (invokeDestroyEvent)
                 BlockDestroyed?.Invoke(cell, block);
 
-            tilemap.SetTile(cell, null);
+            Tilemap.SetTile(cell, null);
             TileDamageMap.Remove(cell);
             return true;
         }
@@ -60,7 +69,7 @@ namespace Game
             if (block && !DamageBlock(cell, damage, invokeDestroyEvent: false))
                 return false;
 
-            tilemap.SetTile(cell, newBlock);
+            Tilemap.SetTile(cell, newBlock);
             TileDamageMap.Remove(cell);
             BlockPlaced?.Invoke(cell, newBlock);
             return true;
@@ -69,12 +78,12 @@ namespace Game
         public int GetTileDamage(Vector3Int cell)
             => TileDamageMap.TryGetValue(cell, out int damage) ? damage : 0;
 
-        public Vector3Int WorldToCell(Vector3 worldPosition) => tilemap.WorldToCell(worldPosition);
-        public Vector3 CellCenter(Vector3Int cell) => tilemap.GetCellCenterWorld(cell);
-        public Bounds CellBoundsWorld(Vector3Int cell) => new(CellCenter(cell), tilemap.GetBoundsLocal(cell).size);
+        public Vector3Int WorldToCell(Vector3 worldPosition) => Tilemap.WorldToCell(worldPosition);
+        public Vector3 CellCenter(Vector3Int cell) => Tilemap.GetCellCenterWorld(cell);
+        public Bounds CellBoundsWorld(Vector3Int cell) => new(CellCenter(cell), Tilemap.GetBoundsLocal(cell).size);
 
-        public bool HasBlock(Vector3Int cell) => tilemap.HasTile(cell);
-        public BlockTile GetBlock(Vector3Int cell) => tilemap.GetTile<BlockTile>(cell);
+        public bool HasBlock(Vector3Int cell) => Tilemap.HasTile(cell);
+        public BlockTile GetBlock(Vector3Int cell) => Tilemap.GetTile<BlockTile>(cell);
         public BlockTile GetBlock(Vector3 worldPosition) => GetBlock(WorldToCell(worldPosition));
     }
 }

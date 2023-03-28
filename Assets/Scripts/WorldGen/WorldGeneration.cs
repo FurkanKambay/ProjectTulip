@@ -6,7 +6,6 @@ namespace Game.WorldGen
 {
     public class WorldGeneration : MonoBehaviour
     {
-        [SerializeField] private Tilemap tilemap;
         [SerializeField] private WorldData data;
 
         private float[,] PerlinNoise => perlinNoise ??= CalculateNoise();
@@ -31,7 +30,7 @@ namespace Game.WorldGen
                         : data.height - y < data.stoneLayerHeight ? data.stone
                         : data.deepstone;
 
-                    tilemap.SetTile(new Vector3Int(x, y, 0), tile);
+                    World.Instance.Tilemap.SetTile(new Vector3Int(x, y, 0), tile);
                 }
             }
         }
@@ -39,7 +38,7 @@ namespace Game.WorldGen
         [ContextMenu("Reassign All Tiles")]
         private void ReassignAll()
         {
-            tilemap.ClearAllTiles();
+            World.Instance.Tilemap.ClearAllTiles();
             ResetTilemapTransform();
             SetTiles();
         }
@@ -80,15 +79,15 @@ namespace Game.WorldGen
 
         private void ResetTilemapTransform()
         {
-            tilemap.size = new Vector3Int(data.width, data.height, 1);
-            tilemap.CompressBounds();
-            tilemap.transform.position = new Vector3(-data.width / 2f, -data.height, 0);
+            World.Instance.Tilemap.size = new Vector3Int(data.width, data.height, 1);
+            World.Instance.Tilemap.CompressBounds();
+            World.Instance.Tilemap.transform.position = new Vector3(-data.width / 2f, -data.height, 0);
         }
 
         [ContextMenu("Reset Tilemap")]
         private void ResetTilemap()
         {
-            tilemap.ClearAllTiles();
+            World.Instance.Tilemap.ClearAllTiles();
             ResetTilemapTransform();
         }
     }

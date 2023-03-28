@@ -1,3 +1,13 @@
-﻿fileFormatVersion: 2
+fileFormatVersion: 2
 guid: 2578b4d5d1c444c3b7c7c3b109fad6dc
-timeCreated: 1679560685
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - worldContainer: {instanceID: 0}
+  - tilemapPrefab: {fileID: 5093018205530781823, guid: c0ac8f8831286d34aa5fffb209dfaccf, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
