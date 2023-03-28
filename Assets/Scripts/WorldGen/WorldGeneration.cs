@@ -1,3 +1,4 @@
+using Game.Data;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -5,56 +6,30 @@ namespace Game.WorldGen
 {
     public class WorldGeneration : MonoBehaviour
     {
-        [Header("References")]
         [SerializeField] private Tilemap tilemap;
-
-        [SerializeField] private TileBase dirt;
-        [SerializeField] private TileBase stone;
-        [SerializeField] private TileBase deepstone;
-        [SerializeField] private TileBase jungle;
-        [SerializeField] private TileBase flesh;
-        [SerializeField] private TileBase aquatic;
-
-        [Header("Settings")]
-        public int width = 100;
-        public int height = 100;
-        public Vector2 perlinOffset;
-
-        [Header("Density Settings")]
-        [Range(.02f, .25f)] public float densityFactor = .1f;
-        [SerializeField] private AnimationCurve heightDensityCurve;
-
-        [Header("Earth Layers")]
-        public int dirtLayerHeight = 10;
-        public int stoneLayerHeight = 10;
-
-        [Header("Biomes")]
-        public int aquaticBiomeWidth = 10;
-        public int starterBiomeWidth = 10;
-        public int jungleBiomeWidth = 10;
-        public int fleshBiomeWidth = 10;
+        [SerializeField] private WorldData data;
 
         private float[,] PerlinNoise => perlinNoise ??= CalculateNoise();
         private float[,] perlinNoise;
 
         private void SetTiles()
         {
-            for (int y = 0; y < height; y++)
+            for (int y = 0; y < data.height; y++)
             {
-                float densityCutoff = heightDensityCurve.Evaluate(y / (float)height);
+                float densityCutoff = data.heightDensityCurve.Evaluate(y / (float)data.height);
 
-                for (int x = 0; x < width; x++)
+                for (int x = 0; x < data.width; x++)
                 {
-                    TileBase biomeSoil = x < aquaticBiomeWidth ? aquatic
-                        : x < aquaticBiomeWidth + starterBiomeWidth ? dirt
-                        : x < aquaticBiomeWidth + starterBiomeWidth + jungleBiomeWidth ? jungle
-                        : x < aquaticBiomeWidth + starterBiomeWidth + jungleBiomeWidth + fleshBiomeWidth ? flesh
-                        : dirt;
+                    TileBase biomeSoil = x < data.aquaticBiomeWidth ? data.aquatic
+                        : x < data.aquaticBiomeWidth + data.starterBiomeWidth ? data.dirt
+                        : x < data.aquaticBiomeWidth + data.starterBiomeWidth + data.jungleBiomeWidth ? data.jungle
+                        : x < data.aquaticBiomeWidth + data.starterBiomeWidth + data.jungleBiomeWidth + data.fleshBiomeWidth ? data.flesh
+                        : data.dirt;
 
                     TileBase tile = PerlinNoise[x, y] > densityCutoff ? null
-                        : height - y < dirtLayerHeight ? biomeSoil
-                        : height - y < stoneLayerHeight ? stone
-                        : deepstone;
+                        : data.height - y < data.dirtLayerHeight ? biomeSoil
+                        : data.height - y < data.stoneLayerHeight ? data.stone
+                        : data.deepstone;
 
                     tilemap.SetTile(new Vector3Int(x, y, 0), tile);
                 }
@@ -81,17 +56,17 @@ namespace Game.WorldGen
 
         private float[,] CalculateNoise()
         {
-            float[,] noise = new float[width, height];
+            float[,] noise = new float[data.width, data.height];
             float y = 0f;
 
-            while (y < height)
+            while (y < data.height)
             {
                 float x = 0f;
-                while (x < width)
+                while (x < data.width)
                 {
                     float sample = Mathf.PerlinNoise(
-                        perlinOffset.x + (x / width * (width * densityFactor)),
-                        perlinOffset.y + (y / height * (height * densityFactor)));
+                        data.perlinOffset.x + (x / data.width * (data.width * data.densityFactor)),
+                        data.perlinOffset.y + (y / data.height * (data.height * data.densityFactor)));
 
                     noise[(int)x, (int)y] = sample;
                     x++;
@@ -105,9 +80,9 @@ namespace Game.WorldGen
 
         private void ResetTilemapTransform()
         {
-            tilemap.size = new Vector3Int(width, height, 1);
+            tilemap.size = new Vector3Int(data.width, data.height, 1);
             tilemap.CompressBounds();
-            tilemap.transform.position = new Vector3(-width / 2f, -height, 0);
+            tilemap.transform.position = new Vector3(-data.width / 2f, -data.height, 0);
         }
 
         [ContextMenu("Reset Tilemap")]
