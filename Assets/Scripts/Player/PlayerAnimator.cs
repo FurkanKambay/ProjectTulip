@@ -1,5 +1,4 @@
-﻿using Game.Data.Items;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Game.Player
 {
@@ -12,27 +11,35 @@ namespace Game.Player
 
         private Animator animator;
         private Inventory inventory;
+        private WorldModifier worldModifier;
 
         private void Awake()
         {
             animator = GetComponent<Animator>();
             inventory = GetComponentInParent<Inventory>();
+            worldModifier = GetComponentInParent<WorldModifier>();
         }
 
         private void Start()
         {
-            inventory.HotbarSelectionChanged += _ => OnHotbarSelection(inventory.HotbarSelected);
-            OnHotbarSelection(inventory.HotbarSelected);
+            inventory.HotbarSelectionChanged += OnHotbarSelection;
+            OnHotbarSelection(inventory.HotbarSelectedIndex);
         }
 
-        private void OnHotbarSelection(IUsable item)
-            => animator.SetFloat(animAttackSpeed, 1 / item.UseTime);
+        private void OnHotbarSelection(int index)
+        {
+            float? useTime = inventory.HotbarSelected?.UseTime;
+            if (useTime.HasValue)
+                animator.SetFloat(animAttackSpeed, 1f / useTime.Value);
+        }
 
         private void Update()
         {
+            bool canPlayAttack = worldModifier.FocusedCell.HasValue && Input.Actions.Player.Fire.inProgress;
+            animator.SetBool(animAttack, canPlayAttack);
+
             animator.SetFloat(animSpeed, Mathf.Abs(Input.Actions.Player.MoveX.ReadValue<float>()));
             animator.SetBool(animJump, Input.Actions.Player.Jump.inProgress);
-            animator.SetBool(animAttack, Input.Actions.Player.Fire.inProgress);
         }
     }
 }
