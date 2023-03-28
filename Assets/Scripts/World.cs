@@ -25,6 +25,7 @@ namespace Game
         public bool DamageBlock(Vector3Int cell, int damage, bool invokeDestroyEvent = true)
         {
             if (!tilemap.HasTile(cell)) return false;
+
             if (!TileDamageMap.ContainsKey(cell))
                 TileDamageMap.Add(cell, 0);
 

@@ -60,6 +60,8 @@ namespace Game.Player
 
             timeSinceLastUse = 0;
 
+            if (!item.CanUseOnBlock(World.GetBlock(FocusedCell.Value))) return;
+
             if (item is Pickaxe)
                 World.DamageBlock(FocusedCell.Value, inventory.ActivePickaxe.power);
             else if (item is BlockTile block)

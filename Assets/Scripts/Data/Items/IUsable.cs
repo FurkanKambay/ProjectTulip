@@ -1,3 +1,4 @@
+using Game.Data.Tiles;
 using UnityEngine;
 
 namespace Game.Data.Items
@@ -8,5 +9,7 @@ namespace Game.Data.Items
         float UseTime { get; }
         Sprite Icon { get; }
         float IconScale { get; }
+
+        bool CanUseOnBlock(BlockTile block);
     }
 }

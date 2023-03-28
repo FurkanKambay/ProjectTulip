@@ -21,6 +21,8 @@ namespace Game.Data.Tiles
         public AudioClip hitSound;
         public AudioClip placeSound;
 
+        public bool CanUseOnBlock(BlockTile block) => block != this;
+
         public override bool RuleMatch(int neighbor, TileBase tile) => neighbor switch
         {
             TilingRuleOutput.Neighbor.NotThis => tile == null,
