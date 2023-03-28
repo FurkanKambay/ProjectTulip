@@ -7,5 +7,6 @@ namespace Game.Data.Items
         [Tooltip("Time in seconds between uses")]
         float UseTime { get; }
         Sprite Icon { get; }
+        float IconScale { get; }
     }
 }

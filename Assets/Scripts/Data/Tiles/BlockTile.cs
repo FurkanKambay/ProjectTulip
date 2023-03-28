@@ -9,8 +9,10 @@ namespace Game.Data.Tiles
     {
         public float UseTime => .25f;
         public Sprite Icon => m_DefaultSprite;
+        public float IconScale => iconScale;
 
         public Color color = Color.white;
+        [SerializeField] private float iconScale = 1f;
 
         [Header("Data")]
         public int hardness = 50;

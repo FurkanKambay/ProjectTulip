@@ -7,8 +7,10 @@ namespace Game.Data.Items
     {
         public float UseTime => useTime;
         public Sprite Icon => icon;
+        public float IconScale => iconScale;
 
         [SerializeField] private Sprite icon;
+        [SerializeField] private float iconScale = 1f;
 
         [Header("Data")]
         public int power = 50;

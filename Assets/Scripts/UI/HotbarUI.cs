@@ -21,6 +21,9 @@ namespace Game.UI
             {
                 Image image = root[i].Q<Image>();
                 image.sprite = Hotbar[i]?.Icon;
+
+                if (Hotbar[i] == null) return;
+                image.transform.scale = Vector3.one * Hotbar[i].IconScale;
                 image.tintColor = Hotbar[i] is BlockTile block ? block.color : Color.white;
             }
         }
