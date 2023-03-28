@@ -14,7 +14,6 @@
 }
 
 .hotbar-slot-icon {
-    /*background-image: url('project://database/Assets/Sprites/Blocks.png?fileID=367657785&guid=9a414bae96f14a342a3014c9fa4dbb0a&type=3#dirt');*/
     width: 16px;
     height: 16px;
 }
