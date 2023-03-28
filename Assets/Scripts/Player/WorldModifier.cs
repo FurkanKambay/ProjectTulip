@@ -7,6 +7,7 @@ namespace Game.Player
 {
     public class WorldModifier : MonoBehaviour
     {
+        [SerializeField] private Vector2 hotspotOffset;
         public float range = 5f;
         public bool smartCursor;
 
@@ -31,7 +32,8 @@ namespace Game.Player
 
         private float timeSinceLastUse;
         private Vector3Int? focusedCell;
-        private Vector3Int playerCell;
+        private Vector2 rangePath;
+        private Vector3 hitpoint;
 
         private static World World => World.Instance;
 
@@ -70,18 +72,42 @@ namespace Game.Player
 
         private void AssignCells()
         {
-            playerCell = World.WorldToCell(transform.position);
-            MouseCell = World.WorldToCell(Input.Instance.MouseWorldPoint);
-            FocusedCell = Vector3Int.Distance(playerCell, MouseCell) <= range ? MouseCell : null;
+            Vector3 mouseWorld = Input.Instance.MouseWorldPoint;
+            MouseCell = World.WorldToCell(mouseWorld);
+
+            Vector2 hotspot = (Vector2)transform.position + hotspotOffset;
+            rangePath = Vector2.ClampMagnitude((Vector2)mouseWorld - hotspot, range);
+
+            if (!smartCursor || inventory.HotbarSelected is not Pickaxe)
+            {
+                float distance = Vector3.Distance(hotspot, mouseWorld);
+                FocusedCell = distance <= range ? MouseCell : null;
+                return;
+            }
+
+            RaycastHit2D hit = Physics2D.Raycast(
+                hotspot, rangePath, range,
+                LayerMask.GetMask("World"));
+
+            hitpoint = hit.point - (hit.normal * 0.1f);
+            FocusedCell = hit.collider ? World.WorldToCell(hitpoint) : null;
         }
 
         private bool IntersectsPlayer(Vector3Int cell)
-        {
-            Bounds mouseCellBounds = World.CellBoundsWorld(cell);
-            return playerCollider.bounds.Intersects(mouseCellBounds);
-        }
+            => playerCollider.bounds.Intersects(World.CellBoundsWorld(cell));
 
         private void PlayPlaceSound(Vector3Int cell, BlockTile block) => audioSource.PlayOneShot(block.placeSound);
         private void PlayHitSound(Vector3Int cell, BlockTile block) => audioSource.PlayOneShot(block.hitSound);
+
+        private void OnDrawGizmosSelected()
+        {
+            Vector2 hotspot = (Vector2)transform.position + hotspotOffset;
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(hotspot,  hotspot + rangePath);
+
+            Gizmos.color = Color.green;
+            Gizmos.DrawSphere(hitpoint, .1f);
+        }
     }
 }

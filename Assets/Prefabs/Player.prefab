@@ -230,6 +230,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3e487889f14636458692cc46f41321d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hotspotOffset: {x: 0, y: 1}
+  range: 5
   smartCursor: 0
 --- !u!114 &868025074711396792
 MonoBehaviour:
