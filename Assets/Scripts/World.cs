@@ -11,8 +11,7 @@ namespace Game
     {
         public Tilemap Tilemap { get; private set; }
 
-        [SerializeField] public Transform worldContainer;
-        [SerializeField] private Tilemap tilemapPrefab;
+        [SerializeField] public Transform worldPrefab;
 
         private Dictionary<Vector3Int, int> TileDamageMap { get; } = new();
 
@@ -23,7 +22,7 @@ namespace Game
         protected override void Awake()
         {
             base.Awake();
-            Tilemap = Instantiate(tilemapPrefab, worldContainer);
+            Tilemap = Instantiate(worldPrefab).GetComponentInChildren<Tilemap>();
         }
 
         /// <summary>
