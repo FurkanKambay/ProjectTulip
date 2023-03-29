@@ -7,11 +7,12 @@ namespace Game
 {
     public class CellHighlighter : MonoBehaviour
     {
-        [SerializeField] private Inventory inventory;
         [SerializeField] private float speed = 100;
 
         private new SpriteRenderer renderer;
+        private Inventory inventory;
         private WorldModifier worldModifier;
+
         private Vector3 targetPosition;
         private Vector3Int? highlightedCell;
 
@@ -21,7 +22,8 @@ namespace Game
         private void Awake()
         {
             renderer = GetComponent<SpriteRenderer>();
-            worldModifier = inventory.GetComponent<WorldModifier>();
+            inventory = GetComponentInParent<Inventory>();
+            worldModifier = GetComponentInParent<WorldModifier>();
         }
 
         private void Update()
