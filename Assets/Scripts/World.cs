@@ -9,17 +9,15 @@ namespace Game
 {
     public class World : Singleton<World>
     {
-        public Tilemap Tilemap { get; private set; }
+        public Tilemap Tilemap => tilemap;
 
-        [SerializeField] public Transform worldPrefab;
+        [SerializeField] private Tilemap tilemap;
 
         private Dictionary<Vector3Int, int> TileDamageMap { get; } = new();
 
         public event Action<Vector3Int, BlockTile> BlockPlaced;
         public event Action<Vector3Int, BlockTile> BlockHit;
         public event Action<Vector3Int, BlockTile> BlockDestroyed;
-
-        private void Start() => Tilemap = Instantiate(worldPrefab).GetComponentInChildren<Tilemap>();
 
         /// <summary>
         /// Damages a block at the given cell.
