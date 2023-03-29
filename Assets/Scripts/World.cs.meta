@@ -4,8 +4,7 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - worldContainer: {instanceID: 0}
-  - tilemapPrefab: {fileID: 5093018205530781823, guid: c0ac8f8831286d34aa5fffb209dfaccf, type: 3}
+  - worldPrefab: {fileID: 2489349404884572451, guid: f424f79dcd083e14b805387a89e2929f, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

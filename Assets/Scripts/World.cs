@@ -19,11 +19,7 @@ namespace Game
         public event Action<Vector3Int, BlockTile> BlockHit;
         public event Action<Vector3Int, BlockTile> BlockDestroyed;
 
-        protected override void Awake()
-        {
-            base.Awake();
-            Tilemap = Instantiate(worldPrefab).GetComponentInChildren<Tilemap>();
-        }
+        private void Start() => Tilemap = Instantiate(worldPrefab).GetComponentInChildren<Tilemap>();
 
         /// <summary>
         /// Damages a block at the given cell.
