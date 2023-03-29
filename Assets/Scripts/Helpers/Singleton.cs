@@ -13,7 +13,7 @@ namespace Game.Helpers
         {
             if (instance == null)
                 instance = this as T;
-            else
+            else if (instance != this)
                 Destroy(gameObject);
         }
     }
