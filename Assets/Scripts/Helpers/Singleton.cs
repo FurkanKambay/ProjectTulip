@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace Game.Helpers
 {
@@ -7,14 +7,22 @@ namespace Game.Helpers
         protected static T instance;
 
         public static T Instance =>
-            instance ??= FindObjectOfType<T>() ?? new GameObject { name = typeof(T).Name }.AddComponent<T>();
+            instance ??= FindObjectOfType<T>() ?? new GameObject
+            {
+                name = typeof(T).Name,
+                hideFlags = HideFlags.NotEditable
+            }.AddComponent<T>();
 
         protected virtual void Awake()
         {
-            if (instance == null)
-                instance = this as T;
-            else if (instance != this)
+            if (instance != null && instance != this)
+            {
                 Destroy(gameObject);
+                return;
+            }
+
+            instance = this as T;
+            gameObject.hideFlags = HideFlags.NotEditable;
         }
     }
 }

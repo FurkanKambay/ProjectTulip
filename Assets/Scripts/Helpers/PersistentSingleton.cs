@@ -6,15 +6,15 @@ namespace Game.Helpers
     {
         protected override void Awake()
         {
-            if (instance == null)
-            {
-                instance = this as T;
-                DontDestroyOnLoad(gameObject);
-            }
-            else if (instance != this)
+            if (instance != null && instance != this)
             {
                 Destroy(gameObject);
+                return;
             }
+
+            instance = this as T;
+            DontDestroyOnLoad(gameObject);
+            gameObject.hideFlags = HideFlags.NotEditable;
         }
     }
 }
