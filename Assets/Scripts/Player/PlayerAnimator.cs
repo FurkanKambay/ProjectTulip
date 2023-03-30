@@ -13,8 +13,12 @@ namespace Game.Player
         private Inventory inventory;
         private WorldModifier worldModifier;
 
+        private InputActions.PlayerActions playerActions;
+
         private void Awake()
         {
+            playerActions = Input.Actions.Player;
+
             animator = GetComponent<Animator>();
             inventory = GetComponentInParent<Inventory>();
             worldModifier = GetComponentInParent<WorldModifier>();
@@ -35,11 +39,11 @@ namespace Game.Player
 
         private void Update()
         {
-            bool canPlayAttack = worldModifier.FocusedCell.HasValue && Input.Actions.Player.Fire.inProgress;
+            bool canPlayAttack = worldModifier.FocusedCell.HasValue && playerActions.Fire.inProgress;
             animator.SetBool(animAttack, canPlayAttack);
 
-            animator.SetFloat(animSpeed, Mathf.Abs(Input.Actions.Player.MoveX.ReadValue<float>()));
-            animator.SetBool(animJump, Input.Actions.Player.Jump.inProgress);
+            animator.SetFloat(animSpeed, Mathf.Abs(playerActions.MoveX.ReadValue<float>()));
+            animator.SetBool(animJump, playerActions.Jump.inProgress);
         }
     }
 }

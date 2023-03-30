@@ -16,11 +16,14 @@ namespace Game
         private Vector3 targetPosition;
         private Vector3Int? highlightedCell;
 
+        private World world;
+
         private void OnCellFocusChanged(Vector3Int? cell)
             => highlightedCell = cell;
 
         private void Awake()
         {
+            world = World.Instance;
             renderer = GetComponent<SpriteRenderer>();
             inventory = GetComponentInParent<Inventory>();
             worldModifier = GetComponentInParent<WorldModifier>();
@@ -29,7 +32,7 @@ namespace Game
         private void Update()
         {
             Vector3Int cell = highlightedCell.GetValueOrDefault();
-            bool hasBlock = World.Instance.HasBlock(cell);
+            bool hasBlock = world.HasBlock(cell);
 
             renderer.enabled = highlightedCell.HasValue && inventory.HotbarSelected switch
             {
@@ -39,7 +42,7 @@ namespace Game
             };
 
             if (!renderer.enabled) return;
-            targetPosition = World.Instance.CellCenter(cell);
+            targetPosition = world.CellCenter(cell);
         }
 
         private void LateUpdate()

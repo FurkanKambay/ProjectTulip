@@ -35,17 +35,21 @@ namespace Game.Player
         private Vector2 rangePath;
         private Vector3 hitpoint;
 
-        private static World World => World.Instance;
+        private Input input;
+        private World world;
 
         private void Awake()
         {
+            input = Input.Instance;
+            world = World.Instance;
+
             inventory = GetComponent<Inventory>();
             audioSource = GetComponent<AudioSource>();
             playerCollider = GetComponent<BoxCollider2D>();
 
-            World.BlockPlaced += PlayPlaceSound;
-            World.BlockHit += PlayHitSound;
-            World.BlockDestroyed += PlayHitSound;
+            world.BlockPlaced += PlayPlaceSound;
+            world.BlockHit += PlayHitSound;
+            world.BlockDestroyed += PlayHitSound;
         }
 
         private void Update()
@@ -62,18 +66,18 @@ namespace Game.Player
 
             timeSinceLastUse = 0;
 
-            if (!item.CanUseOnBlock(World.GetBlock(FocusedCell.Value))) return;
+            if (!item.CanUseOnBlock(world.GetBlock(FocusedCell.Value))) return;
 
             if (item is Pickaxe)
-                World.DamageBlock(FocusedCell.Value, inventory.ActivePickaxe.power);
+                world.DamageBlock(FocusedCell.Value, inventory.ActivePickaxe.power);
             else if (item is BlockTile block)
-                World.PlaceBlock(FocusedCell.Value, block, inventory.ActivePickaxe.power);
+                world.PlaceBlock(FocusedCell.Value, block, inventory.ActivePickaxe.power);
         }
 
         private void AssignCells()
         {
-            Vector3 mouseWorld = Input.Instance.MouseWorldPoint;
-            MouseCell = World.WorldToCell(mouseWorld);
+            Vector3 mouseWorld = input.MouseWorldPoint;
+            MouseCell = world.WorldToCell(mouseWorld);
 
             Vector2 hotspot = (Vector2)transform.position + hotspotOffset;
             rangePath = Vector2.ClampMagnitude((Vector2)mouseWorld - hotspot, range);
@@ -90,11 +94,11 @@ namespace Game.Player
                 LayerMask.GetMask("World"));
 
             hitpoint = hit.point - (hit.normal * 0.1f);
-            FocusedCell = hit.collider ? World.WorldToCell(hitpoint) : null;
+            FocusedCell = hit.collider ? world.WorldToCell(hitpoint) : null;
         }
 
         private bool IntersectsPlayer(Vector3Int cell)
-            => playerCollider.bounds.Intersects(World.CellBoundsWorld(cell));
+            => playerCollider.bounds.Intersects(world.CellBoundsWorld(cell));
 
         private void PlayPlaceSound(Vector3Int cell, BlockTile block) => audioSource.PlayOneShot(block.placeSound);
         private void PlayHitSound(Vector3Int cell, BlockTile block) => audioSource.PlayOneShot(block.hitSound);
