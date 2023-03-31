@@ -1,13 +1,13 @@
-﻿using Game.Data.Items;
+﻿using Game.Data.Interfaces;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 namespace Game.Data.Tiles
 {
     [CreateAssetMenu(fileName = "Block", menuName = "Items/Block")]
-    public class BlockTile : RuleTile<BlockTile.Neighbor>, IUsable
+    public class BlockTile : RuleTile<BlockTile.Neighbor>, ITool
     {
-        public float UseTime => .25f;
+        public float Cooldown => .25f;
         public Sprite Icon => m_DefaultSprite;
         public float IconScale => iconScale;
 

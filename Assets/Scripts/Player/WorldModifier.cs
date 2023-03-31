@@ -1,4 +1,5 @@
 using System;
+using Game.Data.Interfaces;
 using Game.Data.Items;
 using Game.Data.Tiles;
 using UnityEngine;
@@ -54,11 +55,11 @@ namespace Game.Player
 
         private void Update()
         {
-            IUsable item = inventory.HotbarSelected;
+            var item = inventory.HotbarSelected as ITool;
             AssignCells();
 
             timeSinceLastUse += Time.deltaTime;
-            if (item == null || timeSinceLastUse <= item.UseTime) return;
+            if (item == null || timeSinceLastUse <= item.Cooldown) return;
 
             if (!FocusedCell.HasValue) return;
             if (IntersectsPlayer(FocusedCell.Value)) return;

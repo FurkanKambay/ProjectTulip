@@ -32,9 +32,9 @@ namespace Game.Player
 
         private void OnHotbarSelection(int index)
         {
-            float? useTime = inventory.HotbarSelected?.UseTime;
-            if (useTime.HasValue)
-                animator.SetFloat(animAttackSpeed, 1f / useTime.Value);
+            float? cooldown = inventory.HotbarSelected?.Cooldown;
+            if (cooldown.HasValue)
+                animator.SetFloat(animAttackSpeed, 1f / cooldown.Value);
         }
 
         private void Update()

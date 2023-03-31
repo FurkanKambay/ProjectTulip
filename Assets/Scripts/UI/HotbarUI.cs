@@ -1,4 +1,4 @@
-using Game.Data.Items;
+using Game.Data.Interfaces;
 using Game.Data.Tiles;
 using Game.Player;
 using UnityEngine;

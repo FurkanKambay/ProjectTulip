@@ -1,12 +1,13 @@
+using Game.Data.Interfaces;
 using Game.Data.Tiles;
 using UnityEngine;
 
 namespace Game.Data.Items
 {
     [CreateAssetMenu(fileName = "Pickaxe", menuName = "Items/Pickaxe")]
-    public class Pickaxe : ScriptableObject, IUsable
+    public class Pickaxe : ScriptableObject, ITool
     {
-        public float UseTime => useTime;
+        public float Cooldown => cooldown;
         public Sprite Icon => icon;
         public float IconScale => iconScale;
 
@@ -15,7 +16,7 @@ namespace Game.Data.Items
 
         [Header("Data")]
         public int power = 50;
-        [SerializeField] private float useTime = .5f;
+        [SerializeField] private float cooldown = .5f;
 
         public bool CanUseOnBlock(BlockTile block) => block;
     }
