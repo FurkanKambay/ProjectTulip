@@ -8,10 +8,10 @@ namespace Game
     public class CellHighlighter : MonoBehaviour
     {
         [SerializeField] private float speed = 100;
+        [SerializeField] private WorldModifier worldModifier;
 
         private new SpriteRenderer renderer;
         private Inventory inventory;
-        private WorldModifier worldModifier;
 
         private Vector3 targetPosition;
         private Vector3Int? highlightedCell;
@@ -25,8 +25,7 @@ namespace Game
         {
             world = World.Instance;
             renderer = GetComponent<SpriteRenderer>();
-            inventory = GetComponentInParent<Inventory>();
-            worldModifier = GetComponentInParent<WorldModifier>();
+            inventory = worldModifier.GetComponent<Inventory>();
         }
 
         private void Update()
