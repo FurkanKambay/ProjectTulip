@@ -118,9 +118,9 @@ GameObject:
   - component: {fileID: 270610127142405494}
   - component: {fileID: 7560684870690709998}
   - component: {fileID: 1755906629218326450}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Wizard
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
