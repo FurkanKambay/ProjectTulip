@@ -117,6 +117,7 @@ GameObject:
   - component: {fileID: 8291246366843984804}
   - component: {fileID: 270610127142405494}
   - component: {fileID: 7560684870690709998}
+  - component: {fileID: 1755906629218326450}
   m_Layer: 6
   m_Name: Wizard
   m_TagString: Player
@@ -187,3 +188,17 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &1755906629218326450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2859632988072890709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 992d83c1bd31b8b41aec2663aa6ead9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 100
