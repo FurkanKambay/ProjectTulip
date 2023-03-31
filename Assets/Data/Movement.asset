@@ -15,9 +15,9 @@ MonoBehaviour:
   maxSpeed: 10
   friction: 4
   useAcceleration: 1
-  maxAcceleration: 24
+  maxAcceleration: 30
   maxDeceleration: 80
   maxTurnSpeed: 80
-  maxAirAcceleration: 22
+  maxAirAcceleration: 50
   maxAirDeceleration: 20
   maxAirTurnSpeed: 80
