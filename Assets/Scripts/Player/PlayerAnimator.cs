@@ -1,4 +1,4 @@
-﻿using Game.Data.Interfaces;
+using Game.Data.Interfaces;
 using UnityEngine;
 
 namespace Game.Player
@@ -34,15 +34,19 @@ namespace Game.Player
         private void OnHotbarSelection(int index)
         {
             if (inventory.HotbarSelected is not IUsable item) return;
-            float cooldown = item.Cooldown;
-            animator.SetFloat(animAttackSpeed, 1f / cooldown);
+            animator.SetFloat(animAttackSpeed, 1f / item.Cooldown);
         }
 
         private void Update()
         {
-            bool canPlayAttack = worldModifier.FocusedCell.HasValue && playerActions.Fire.inProgress;
-            animator.SetBool(animAttack, canPlayAttack);
+            bool canPlayAttack = inventory.HotbarSelected switch
+            {
+                ITool => worldModifier.FocusedCell.HasValue && playerActions.Fire.inProgress,
+                IWeapon => playerActions.Fire.inProgress,
+                _ => false
+            };
 
+            animator.SetBool(animAttack, canPlayAttack);
             animator.SetFloat(animSpeed, Mathf.Abs(playerActions.MoveX.ReadValue<float>()));
             animator.SetBool(animJump, playerActions.Jump.inProgress);
         }
