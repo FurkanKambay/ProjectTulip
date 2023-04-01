@@ -1,19 +1,20 @@
 using System;
 using System.Linq;
+using Game.Data;
 using Game.Data.Interfaces;
 using Game.Data.Items;
-using Game.Data.Tiles;
 using UnityEngine;
 
 namespace Game.Player
 {
     public class Inventory : MonoBehaviour
     {
-        public IItem[] Hotbar { get; } = new IItem[9];
+        public IItem[] Hotbar { get; private set; }
         public IItem HotbarSelected => Hotbar[HotbarSelectedIndex];
         public int HotbarSelectedIndex { get; private set; }
-
         public Pickaxe FirstPickaxe => Hotbar.OfType<Pickaxe>().First();
+
+        [SerializeField] private HotbarData hotbarData;
 
         public event Action<int> HotbarSelectionChanged;
         public event Action HotbarModified;
@@ -29,11 +30,7 @@ namespace Game.Player
 
         private void Awake()
         {
-            Hotbar[0] = Resources.Load<Pickaxe>("Tools/Pickaxe");
-            Hotbar[1] = Resources.Load<BlockTile>("Tiles/Stone");
-            Hotbar[2] = Resources.Load<BlockTile>("Tiles/Dirt");
-            Hotbar[3] = Resources.Load<BlockTile>("Tiles/Aquatic");
-
+            Hotbar = hotbarData.hotbar.Cast<IItem>().ToArray();
             HotbarModified?.Invoke();
         }
 
