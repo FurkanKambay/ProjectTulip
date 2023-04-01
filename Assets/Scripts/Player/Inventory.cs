@@ -10,21 +10,20 @@ namespace Game.Player
     public class Inventory : MonoBehaviour
     {
         public IUsable[] Hotbar { get; } = new IUsable[9];
-        public IUsable HotbarSelected => Hotbar[hotbarSelectedIndex];
-        public int HotbarSelectedIndex => hotbarSelectedIndex;
-        public Pickaxe ActivePickaxe => Hotbar.OfType<Pickaxe>().First();
+        public IUsable HotbarSelected => Hotbar[HotbarSelectedIndex];
+        public int HotbarSelectedIndex { get; private set; }
+
+        public Pickaxe FirstPickaxe => Hotbar.OfType<Pickaxe>().First();
 
         public event Action<int> HotbarSelectionChanged;
         public event Action HotbarModified;
 
-        private int hotbarSelectedIndex;
-
         private void OnHotbarSelected(int index)
         {
-            if (index == hotbarSelectedIndex)
+            if (index == HotbarSelectedIndex)
                 return;
 
-            hotbarSelectedIndex = index;
+            HotbarSelectedIndex = index;
             HotbarSelectionChanged?.Invoke(index);
         }
 
@@ -41,7 +40,7 @@ namespace Game.Player
         private void OnEnable()
         {
             Input.Instance.HotbarSelected += OnHotbarSelected;
-            HotbarSelectionChanged?.Invoke(hotbarSelectedIndex);
+            HotbarSelectionChanged?.Invoke(HotbarSelectedIndex);
         }
 
         private void OnDisable() => Input.Instance.HotbarSelected -= OnHotbarSelected;
