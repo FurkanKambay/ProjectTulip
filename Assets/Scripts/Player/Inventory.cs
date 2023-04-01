@@ -9,8 +9,8 @@ namespace Game.Player
 {
     public class Inventory : MonoBehaviour
     {
-        public IUsable[] Hotbar { get; } = new IUsable[9];
-        public IUsable HotbarSelected => Hotbar[HotbarSelectedIndex];
+        public IItem[] Hotbar { get; } = new IItem[9];
+        public IItem HotbarSelected => Hotbar[HotbarSelectedIndex];
         public int HotbarSelectedIndex { get; private set; }
 
         public Pickaxe FirstPickaxe => Hotbar.OfType<Pickaxe>().First();

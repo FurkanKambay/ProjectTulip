@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Game.Data.Interfaces;
+using UnityEngine;
 
 namespace Game.Player
 {
@@ -32,9 +33,9 @@ namespace Game.Player
 
         private void OnHotbarSelection(int index)
         {
-            float? cooldown = inventory.HotbarSelected?.Cooldown;
-            if (cooldown.HasValue)
-                animator.SetFloat(animAttackSpeed, 1f / cooldown.Value);
+            if (inventory.HotbarSelected is not IUsable item) return;
+            float cooldown = item.Cooldown;
+            animator.SetFloat(animAttackSpeed, 1f / cooldown);
         }
 
         private void Update()

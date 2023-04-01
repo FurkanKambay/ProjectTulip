@@ -1,4 +1,3 @@
-using Game.Data.Interfaces;
 using Game.Data.Tiles;
 using Game.Player;
 using UnityEngine;
@@ -13,18 +12,16 @@ namespace Game.UI
 
         [SerializeField] private Inventory inventory;
 
-        private IUsable[] Hotbar => inventory.Hotbar;
-
         private void OnHotbarModified()
         {
-            for (int i = 0; i < Hotbar.Length; i++)
+            for (int i = 0; i < inventory.Hotbar.Length; i++)
             {
                 Image image = root[i].Q<Image>();
-                image.sprite = Hotbar[i]?.Icon;
+                image.sprite = inventory.Hotbar[i]?.Icon;
 
-                if (Hotbar[i] == null) return;
-                image.transform.scale = Vector3.one * Hotbar[i].IconScale;
-                image.tintColor = Hotbar[i] is BlockTile block ? block.color : Color.white;
+                if (inventory.Hotbar[i] == null) return;
+                image.transform.scale = Vector3.one * inventory.Hotbar[i].IconScale;
+                image.tintColor = inventory.Hotbar[i] is BlockTile block ? block.color : Color.white;
             }
         }
 
