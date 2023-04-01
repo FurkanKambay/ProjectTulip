@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ad214e76725c4fa284a9f26c1076f0fb, type: 3}
-  m_Name: Weapon
+  m_Name: Sword
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: aefe230d2c55c7649a7569a20813f16e, type: 3}
-  iconScale: 1
+  icon: {fileID: 21300000, guid: 6ffa5bbe096b80b47b54227fd97b22ad, type: 3}
+  iconScale: 1.5
   damage: 10
   range: 1.5
   cooldown: 0.5
