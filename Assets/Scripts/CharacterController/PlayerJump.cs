@@ -8,6 +8,8 @@ namespace Game.CharacterController
     {
         public JumpData data;
 
+        public bool CurrentlyJumping => currentlyJumping;
+
         [Header("Components")]
         private Rigidbody2D body;
         private GroundChecker ground;

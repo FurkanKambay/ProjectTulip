@@ -9,6 +9,8 @@ namespace Game.CharacterController
     {
         public MovementData data;
 
+        public Vector2 Velocity => velocity;
+
         [Header("Calculations")]
         private float directionX;
         private Vector2 desiredVelocity;
