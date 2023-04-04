@@ -57,7 +57,7 @@ namespace Game.CharacterController
         {
             SetGravity();
 
-            onGround = ground.IsOnGround;
+            onGround = ground.IsGrounded;
 
             if (data.jumpBuffer > 0)
             {

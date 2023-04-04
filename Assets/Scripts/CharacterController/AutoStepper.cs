@@ -33,7 +33,7 @@ namespace Game.CharacterController
 
         private void Update()
         {
-            if (!ground.IsOnGround) return;
+            if (!ground.IsGrounded) return;
             StepType step = CanStepUp();
 
             if (step == StepType.None)

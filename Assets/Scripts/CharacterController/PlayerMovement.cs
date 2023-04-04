@@ -52,7 +52,7 @@ namespace Game.CharacterController
 
         private void FixedUpdate()
         {
-            onGround = ground.IsOnGround;
+            onGround = ground.IsGrounded;
             velocity = body.velocity;
 
             if (data.useAcceleration)
