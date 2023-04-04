@@ -3,7 +3,8 @@ guid: 1dbac43252630dd499875c6a60daacdf
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - hotbarData: {fileID: 11400000, guid: 1265edbba7f76c84ba1e9ba37adf7f80, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

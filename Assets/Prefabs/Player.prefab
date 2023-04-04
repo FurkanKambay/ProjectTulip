@@ -136,7 +136,6 @@ GameObject:
   - component: {fileID: 868025074711396792}
   - component: {fileID: 6853449593728978369}
   - component: {fileID: 2983539864245086620}
-  - component: {fileID: 1549720188394090416}
   - component: {fileID: 2110289315241148991}
   m_Layer: 6
   m_Name: Player
@@ -318,6 +317,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hotbarData: {fileID: 11400000, guid: 1265edbba7f76c84ba1e9ba37adf7f80, type: 2}
+  weaponHitMask:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &8720202020251607731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -376,22 +378,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: f39354fa9ff53cf40af11ca8a3802dee, type: 2}
---- !u!114 &1549720188394090416
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2859632988072890709}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be49605a98e97be4f8107b2403c172b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 9b57593f7b5cd0541984229247126e42, type: 2}
-  hitMask:
-    serializedVersion: 2
-    m_Bits: 128
 --- !u!114 &2110289315241148991
 MonoBehaviour:
   m_ObjectHideFlags: 0

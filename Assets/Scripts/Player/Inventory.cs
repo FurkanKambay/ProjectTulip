@@ -3,6 +3,7 @@ using System.Linq;
 using Game.Data;
 using Game.Data.Interfaces;
 using Game.Data.Items;
+using Game.Gameplay;
 using UnityEngine;
 
 namespace Game.Player
@@ -15,6 +16,9 @@ namespace Game.Player
         public Pickaxe FirstPickaxe => Hotbar.OfType<Pickaxe>().First();
 
         [SerializeField] private HotbarData hotbarData;
+        [SerializeField] private LayerMask weaponHitMask;
+
+        private MeleeWeapon meleeWeapon;
 
         public event Action<int> HotbarSelectionChanged;
         public event Action HotbarModified;
@@ -25,11 +29,29 @@ namespace Game.Player
                 return;
 
             HotbarSelectedIndex = index;
+            PrepareSelectedItem();
+
             HotbarSelectionChanged?.Invoke(index);
+        }
+
+        private void PrepareSelectedItem()
+        {
+            if (HotbarSelected is not WeaponData weapon)
+            {
+                meleeWeapon.enabled = false;
+                return;
+            }
+
+            meleeWeapon.enabled = true;
+            meleeWeapon.data = weapon;
         }
 
         private void Awake()
         {
+            meleeWeapon = gameObject.AddComponent<MeleeWeapon>();
+            meleeWeapon.enabled = false;
+            meleeWeapon.hitMask = weaponHitMask;
+
             Hotbar = hotbarData.hotbar.Cast<IItem>().ToArray();
             HotbarModified?.Invoke();
         }
