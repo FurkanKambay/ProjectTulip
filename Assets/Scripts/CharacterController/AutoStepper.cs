@@ -87,7 +87,7 @@ namespace Game.CharacterController
             return velocity > 0 ? StepType.Right : StepType.Left;
         }
 
-        private void OnDrawGizmos()
+        private void OnDrawGizmosSelected()
         {
             if (!targetPosition.HasValue) return;
             Gizmos.color = Color.green;

@@ -12,6 +12,7 @@ namespace Game.Gameplay
 
         private new SpriteRenderer renderer;
         private float timeSinceLastUse;
+        private int aimDirectionSign;
 
         private void Awake() => renderer = GetComponentInChildren<SpriteRenderer>();
 
@@ -35,30 +36,26 @@ namespace Game.Gameplay
         private Health CheckAttackBox(Vector2 mouseWorld)
         {
             Vector2 position = transform.position;
-            float directionSign = Mathf.Sign((mouseWorld - position).x);
-
-            renderer.flipX = directionSign < 0;
+            aimDirectionSign = Math.Sign((mouseWorld - position).x);
+            renderer.flipX = aimDirectionSign < 0;
 
             Collider2D hit = Physics2D.OverlapBox(
-                position + new Vector2(data.Range / 2f * directionSign, 1f),
+                position + new Vector2(data.Range / 2f * aimDirectionSign, 1f),
                 new Vector2(data.Range, 1f),
                 default,
                 hitMask);
 
-            return hit != null ? hit.GetComponent<Health>() : null;
+            return hit ? hit.GetComponent<Health>() : null;
         }
 
-        private void OnDrawGizmos()
+        private void OnDrawGizmosSelected()
         {
-            if (!Application.isPlaying) return;
+            if (!enabled) return;
 
             Vector2 position = transform.position;
-            Vector2 mouseWorld = Input.Instance.MouseWorldPoint;
-
-            float directionSign = Mathf.Sign((mouseWorld - position).x);
 
             var box = new Vector3(data.Range, 1f, 1f);
-            var offset = new Vector3(box.x / 2f * directionSign, 1f);
+            var offset = new Vector3(box.x / 2f * aimDirectionSign, 1f);
 
             Gizmos.color = Color.red;
             Gizmos.DrawWireCube((Vector3)position + offset, box);
