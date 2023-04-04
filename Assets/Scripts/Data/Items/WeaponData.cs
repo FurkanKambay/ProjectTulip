@@ -9,6 +9,7 @@ namespace Game.Data.Items
         public float Damage => damage;
         public float Range => range;
         public float Cooldown => cooldown;
+        public bool CanMultiHit => canMultiHit;
 
         public Sprite Icon => icon;
         public float IconScale => iconScale;
@@ -20,5 +21,6 @@ namespace Game.Data.Items
         [SerializeField] private float damage = 1f;
         [SerializeField] private float range = 1f;
         [SerializeField] private float cooldown = .5f;
+        [SerializeField] private bool canMultiHit;
     }
 }

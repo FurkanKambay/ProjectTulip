@@ -15,5 +15,6 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 6ffa5bbe096b80b47b54227fd97b22ad, type: 3}
   iconScale: 1.5
   damage: 10
-  range: 1.5
+  range: 2
   cooldown: 0.5
+  canMultiHit: 1

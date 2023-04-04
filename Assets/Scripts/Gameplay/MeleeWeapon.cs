@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Game.Data.Items;
 using UnityEngine;
 using Input = Game.Player.Input;
@@ -28,24 +30,36 @@ namespace Game.Gameplay
             if (timeSinceLastUse <= data.Cooldown) return;
             timeSinceLastUse = 0f;
 
-            Health health = CheckAttackBox(Input.Instance.MouseWorldPoint);
-            if (health)
-                health.TakeDamage(data.Damage);
+            IEnumerable<Health> healths = CheckAttackBox(Input.Instance.MouseWorldPoint);
+
+            foreach (Health health in healths)
+            {
+                if (health)
+                    health.TakeDamage(data.Damage);
+            }
         }
 
-        private Health CheckAttackBox(Vector2 mouseWorld)
+        private IEnumerable<Health> CheckAttackBox(Vector2 mouseWorld)
         {
             Vector2 position = transform.position;
             aimDirectionSign = Math.Sign((mouseWorld - position).x);
             renderer.flipX = aimDirectionSign < 0;
 
-            Collider2D hit = Physics2D.OverlapBox(
-                position + new Vector2(data.Range / 2f * aimDirectionSign, 1f),
-                new Vector2(data.Range, 1f),
-                default,
-                hitMask);
+            Vector2 point = position + new Vector2(data.Range / 2f * aimDirectionSign, 1f);
+            var size = new Vector2(data.Range, 1f);
 
-            return hit ? hit.GetComponent<Health>() : null;
+            if (data.CanMultiHit)
+            {
+                // TODO: limit the amount of hits?
+                Collider2D[] allHits = Physics2D.OverlapBoxAll(point, size, default, hitMask);
+                return allHits.Select(hit => hit.GetComponent<Health>());
+            }
+            else
+            {
+                // TODO: find the closest hit instead?
+                Collider2D hit = Physics2D.OverlapBox(point, size, default, hitMask);
+                return new[] { hit ? hit.GetComponent<Health>() : null };
+            }
         }
 
         private void OnDrawGizmosSelected()
