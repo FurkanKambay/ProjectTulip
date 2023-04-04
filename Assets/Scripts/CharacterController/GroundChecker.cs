@@ -7,15 +7,24 @@ namespace Game.CharacterController
         public bool IsOnGround { get; private set; }
 
         [SerializeField] private LayerMask groundLayer;
-        [SerializeField] private Vector2 boxSize;
+        [SerializeField] private float checkHeight = .5f;
+        [SerializeField] private float offset = .5f;
 
-        private void FixedUpdate() => IsOnGround = Physics2D.OverlapBox(
-            transform.position, boxSize, 0, groundLayer);
+        private Vector2 LeftSide => transform.position - (Vector3.right * offset);
+        private Vector2 RightSide => transform.position + (Vector3.right * offset);
+
+        private void FixedUpdate()
+        {
+            bool left = Physics2D.Raycast(LeftSide, Vector2.down, checkHeight, groundLayer);
+            bool right = Physics2D.Raycast(RightSide, Vector2.down, checkHeight, groundLayer);
+            IsOnGround = left || right;
+        }
 
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = IsOnGround ? Color.green : Color.red;
-            Gizmos.DrawWireCube(transform.position, boxSize);
+            Gizmos.DrawLine(LeftSide, LeftSide + (Vector2.down * checkHeight));
+            Gizmos.DrawLine(RightSide, RightSide + (Vector2.down * checkHeight));
         }
     }
 }
