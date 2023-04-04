@@ -106,6 +106,8 @@ namespace Game.Player
 
         private void OnDrawGizmosSelected()
         {
+            if (!smartCursor) return;
+
             Vector2 hotspot = (Vector2)transform.position + hotspotOffset;
 
             Gizmos.color = Color.red;
