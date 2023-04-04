@@ -12,7 +12,7 @@ namespace Game.Data.Gameplay
         [Header("Jump Cutoff")]
         public bool hasVariableJumpHeight;
 
-        [Range(0, 100f), Tooltip("Gravity multiplier when you let go of jump")]
+        [Range(.5f, 20f), Tooltip("Gravity multiplier when you let go of jump")]
         public float jumpCutOff;
 
         [Header("Feeling")]
@@ -20,10 +20,10 @@ namespace Game.Data.Gameplay
         [Range(0, 1f)] public float jumpBuffer = 0.15f;
 
         [Header("Gravity Multipliers")]
-        [Range(0, 100f), Tooltip("Gravity multiplier to apply when going up")]
+        [Range(0, 10f), Tooltip("Gravity multiplier to apply when going up")]
         public float upwardGravityMultiplier = 1f;
 
-        [Range(-100f, 1000f), Tooltip("Gravity multiplier to apply when coming down")]
+        [Range(0, 30f), Tooltip("Gravity multiplier to apply when coming down")]
         public float downwardGravityMultiplier = 2f;
     }
 }
