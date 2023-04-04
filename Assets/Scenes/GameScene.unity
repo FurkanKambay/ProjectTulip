@@ -456,7 +456,7 @@ MonoBehaviour:
   tracking:
     <Offset>k__BackingField: {x: 0, y: 1.45}
     <Speed>k__BackingField: {x: 4, y: 4}
-    <SnapValue>k__BackingField: 0.5
+    <SnapValue>k__BackingField: 0.01
   zoom:
     target: 12
     <Min>k__BackingField: 5
