@@ -10,9 +10,9 @@ namespace Game.Gameplay
         private static readonly int animHurt = Animator.StringToHash("hurt");
         private static readonly int animDie = Animator.StringToHash("die");
 
-        private void OnDamageTaken(float amount) => animator.SetTrigger(animHurt);
+        private void OnDamageTaken(DamageEventArgs _) => animator.SetTrigger(animHurt);
 
-        private void OnDied()
+        private void OnDied(DamageEventArgs _)
         {
             animator.SetTrigger(animDie);
             DestroyAfterAnimation(.5f);

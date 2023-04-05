@@ -12,11 +12,16 @@ namespace Game.Gameplay
         public WeaponData data;
         public LayerMask hitMask;
 
+        private Health playerHealth;
         private new SpriteRenderer renderer;
         private float timeSinceLastUse;
         private int aimDirectionSign;
 
-        private void Awake() => renderer = GetComponentInChildren<SpriteRenderer>();
+        private void Awake()
+        {
+            playerHealth = GetComponent<Health>();
+            renderer = GetComponentInChildren<SpriteRenderer>();
+        }
 
         private void Update()
         {
@@ -30,12 +35,12 @@ namespace Game.Gameplay
             if (timeSinceLastUse <= data.Cooldown) return;
             timeSinceLastUse = 0f;
 
-            IEnumerable<Health> healths = CheckAttackBox(Input.Instance.MouseWorldPoint);
+            IEnumerable<Health> targets = CheckAttackBox(Input.Instance.MouseWorldPoint);
 
-            foreach (Health health in healths)
+            foreach (Health target in targets)
             {
-                if (health)
-                    health.TakeDamage(data.Damage);
+                if (!target) continue;
+                target.TakeDamage(data.Damage, playerHealth);
             }
         }
 

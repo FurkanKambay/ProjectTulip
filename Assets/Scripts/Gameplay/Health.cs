@@ -14,19 +14,21 @@ namespace Game.Gameplay
             set => currentHealth = Mathf.Min(value, maxHealth);
         }
 
-        public event Action<float> DamageTaken;
-        public event Action Died;
+        public event Action<DamageEventArgs> DamageTaken;
+        public event Action<DamageEventArgs> Died;
 
         [ContextMenu("Take Damage")]
-        public void TakeDamage() => TakeDamage(10f);
+        public void TakeDamage() => TakeDamage(10f, this);
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(float damage, Health source)
         {
             CurrentHealth -= damage;
-            DamageTaken?.Invoke(damage);
+
+            var eventArgs = new DamageEventArgs(damage, source, this);
+            DamageTaken?.Invoke(eventArgs);
 
             if (CurrentHealth <= 0)
-                Died?.Invoke();
+                Died?.Invoke(eventArgs);
         }
     }
 }
