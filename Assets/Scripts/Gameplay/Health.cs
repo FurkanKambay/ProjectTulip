@@ -27,8 +27,9 @@ namespace Game.Gameplay
             var eventArgs = new DamageEventArgs(damage, source, this);
             DamageTaken?.Invoke(eventArgs);
 
-            if (CurrentHealth <= 0)
-                Died?.Invoke(eventArgs);
+            if (CurrentHealth > 0) return;
+            Died?.Invoke(eventArgs);
+            enabled = false;
         }
     }
 }
