@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 91d50cdd3177424c814056577cacd808, type: 3}
-  m_Name: Default Hotbar
+  m_Name: Hotbar - Combat Test
   m_EditorClassIdentifier: 
   hotbar:
-  - {fileID: 11400000, guid: c478888b16953144286cffad52968cc0, type: 2}
   - {fileID: 11400000, guid: 9b57593f7b5cd0541984229247126e42, type: 2}
-  - {fileID: 11400000, guid: 6d3857252a8becc409275c487eef4913, type: 2}
-  - {fileID: 11400000, guid: 6b98d82ba77a4344a946251215359108, type: 2}
+  - {fileID: 11400000, guid: a8bb0906d948d4341a37fd2b33eb06e0, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
