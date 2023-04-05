@@ -7,6 +7,7 @@ namespace Game.Gameplay
     {
         public float maxHealth = 100f;
         [SerializeField] private float currentHealth = 100f;
+        public bool showHealthBar = true;
 
         public float CurrentHealth
         {
@@ -16,9 +17,6 @@ namespace Game.Gameplay
 
         public event Action<DamageEventArgs> DamageTaken;
         public event Action<DamageEventArgs> Died;
-
-        [ContextMenu("Take Damage")]
-        public void TakeDamage() => TakeDamage(10f, this);
 
         public void TakeDamage(float damage, Health source)
         {
@@ -31,5 +29,10 @@ namespace Game.Gameplay
             Died?.Invoke(eventArgs);
             enabled = false;
         }
+
+        [ContextMenu("Take Damage")]
+        public void TakeDamage() => TakeDamage(10f, this);
+
+        private void OnValidate() => CurrentHealth = currentHealth;
     }
 }

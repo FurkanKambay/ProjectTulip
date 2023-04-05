@@ -7,10 +7,10 @@ namespace Game.UI
 {
     public class HotbarUI : MonoBehaviour
     {
+        [SerializeField] private Inventory inventory;
+
         private UIDocument document;
         private VisualElement root;
-
-        [SerializeField] private Inventory inventory;
 
         private void OnHotbarModified()
         {
