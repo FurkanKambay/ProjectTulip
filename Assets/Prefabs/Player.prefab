@@ -390,9 +390,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7afe272b9283491fbd9e998a37c1bf5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stepHeight: 1.1
-  stepWidth: 0.5
-  stepSpeed: {x: 100, y: 100}
+  stepHeight: 1.2
+  stepWidth: 0.2
+  stepSpeed: {x: 20, y: 20}
   velocityThreshold: 1
   range: 0.5
   offset: {x: 0, y: 0.2, z: 0}
