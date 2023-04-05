@@ -34,7 +34,7 @@ namespace Game.Player
         private float timeSinceLastUse;
         private Vector3Int? focusedCell;
         private Vector2 rangePath;
-        private Vector3 hitpoint;
+        private Vector3 hitPoint;
 
         private Input input;
         private World world;
@@ -94,8 +94,8 @@ namespace Game.Player
                 hotspot, rangePath, range,
                 LayerMask.GetMask("World"));
 
-            hitpoint = hit.point - (hit.normal * 0.1f);
-            FocusedCell = hit.collider ? world.WorldToCell(hitpoint) : null;
+            hitPoint = hit.point - (hit.normal * 0.1f);
+            FocusedCell = hit.collider ? world.WorldToCell(hitPoint) : null;
         }
 
         private bool IntersectsPlayer(Vector3Int cell)
@@ -114,7 +114,7 @@ namespace Game.Player
             Gizmos.DrawLine(hotspot,  hotspot + rangePath);
 
             Gizmos.color = Color.green;
-            Gizmos.DrawSphere(hitpoint, .1f);
+            Gizmos.DrawSphere(hitPoint, .1f);
         }
     }
 }
