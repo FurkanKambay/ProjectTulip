@@ -217,3 +217,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: {fileID: 1755906629218326450}
   animator: {fileID: 6461720170399778386}
+  hurtSound: {fileID: 8300000, guid: 4185b80d93d7b2242858e714c6fa05aa, type: 3}
+  dieSound: {fileID: 0}

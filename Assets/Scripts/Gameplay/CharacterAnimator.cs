@@ -6,14 +6,21 @@ namespace Game.Gameplay
     {
         [SerializeField] private Health health;
         [SerializeField] private Animator animator;
+        [SerializeField] private AudioClip hurtSound;
+        [SerializeField] private AudioClip dieSound;
 
         private static readonly int animHurt = Animator.StringToHash("hurt");
         private static readonly int animDie = Animator.StringToHash("die");
 
-        private void OnDamageTaken(DamageEventArgs _) => animator.SetTrigger(animHurt);
-
-        private void OnDied(DamageEventArgs _)
+        private void OnDamageTaken(DamageEventArgs damage)
         {
+            if (hurtSound) AudioSource.PlayClipAtPoint(hurtSound, damage.Source.transform.position);
+            animator.SetTrigger(animHurt);
+        }
+
+        private void OnDied(DamageEventArgs damage)
+        {
+            if (dieSound) AudioSource.PlayClipAtPoint(dieSound, damage.Source.transform.position);
             animator.SetTrigger(animDie);
             DestroyAfterAnimation(.5f);
         }
