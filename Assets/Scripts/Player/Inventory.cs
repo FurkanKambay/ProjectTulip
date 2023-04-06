@@ -48,12 +48,12 @@ namespace Game.Player
 
         private void Awake()
         {
-            meleeWeapon = gameObject.AddComponent<MeleeWeapon>();
-            meleeWeapon.enabled = false;
-            meleeWeapon.hitMask = weaponHitMask;
-
             Hotbar = hotbarData.hotbar.Cast<IItem>().ToArray();
             HotbarModified?.Invoke();
+
+            meleeWeapon = gameObject.AddComponent<MeleeWeapon>();
+            meleeWeapon.enabled = HotbarSelected is WeaponData;
+            meleeWeapon.hitMask = weaponHitMask;
         }
 
         private void OnEnable()
