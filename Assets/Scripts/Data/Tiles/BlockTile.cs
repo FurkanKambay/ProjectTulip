@@ -25,8 +25,8 @@ namespace Game.Data.Tiles
 
         public override bool RuleMatch(int neighbor, TileBase tile) => neighbor switch
         {
-            TilingRuleOutput.Neighbor.NotThis => tile == null,
-            TilingRuleOutput.Neighbor.This => tile != null,
+            Neighbor.Null => tile == null,
+            Neighbor.NotNull => tile != null,
             _ => base.RuleMatch(neighbor, tile)
         };
 
