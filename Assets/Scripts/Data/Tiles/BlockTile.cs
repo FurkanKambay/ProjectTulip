@@ -14,7 +14,7 @@ namespace Game.Data.Tiles
         public Color color = Color.white;
         [SerializeField] private float iconScale = 1f;
 
-        [Header("Data")]
+        [Header("Block Data")]
         public int hardness = 50;
 
         [Header("Sounds")]

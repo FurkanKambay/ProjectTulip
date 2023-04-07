@@ -7,4 +7,14 @@ namespace Game.Data.Interfaces
         Sprite Icon { get; }
         float IconScale { get; }
     }
+
+    public abstract class Item : ScriptableObject, IItem
+    {
+        public Sprite Icon => icon;
+        public float IconScale => iconScale;
+
+        [Header("Item Data")]
+        [SerializeField] private Sprite icon;
+        [SerializeField] private float iconScale = 1f;
+    }
 }
