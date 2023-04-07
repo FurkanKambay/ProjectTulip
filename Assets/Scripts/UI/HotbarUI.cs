@@ -1,3 +1,4 @@
+using Game.Data.Interfaces;
 using Game.Data.Tiles;
 using Game.Player;
 using UnityEngine;
@@ -14,14 +15,15 @@ namespace Game.UI
 
         private void OnHotbarModified()
         {
-            for (int i = 0; i < inventory.Hotbar.Length; i++)
+            IItem[] items = inventory.Items;
+            for (int i = 0; i < items.Length; i++)
             {
                 Image image = root[i].Q<Image>();
-                image.sprite = inventory.Hotbar[i]?.Icon;
+                image.sprite = items[i]?.Icon;
 
-                if (inventory.Hotbar[i] == null) return;
-                image.transform.scale = Vector3.one * inventory.Hotbar[i].IconScale;
-                image.tintColor = inventory.Hotbar[i] is BlockTile block ? block.color : Color.white;
+                if (items[i] == null) return;
+                image.transform.scale = Vector3.one * items[i].IconScale;
+                image.tintColor = items[i] is BlockTile block ? block.color : Color.white;
             }
         }
 

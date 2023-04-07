@@ -10,10 +10,10 @@ namespace Game.Player
 {
     public class Inventory : MonoBehaviour
     {
-        public IItem[] Hotbar { get; private set; }
-        public IItem HotbarSelected => Hotbar[HotbarSelectedIndex];
+        public IItem[] Items { get; private set; }
+        public IItem HotbarSelected => Items[HotbarSelectedIndex];
         public int HotbarSelectedIndex { get; private set; }
-        public Pickaxe FirstPickaxe => Hotbar.OfType<Pickaxe>().First();
+        public Pickaxe FirstPickaxe => Items.OfType<Pickaxe>().First();
 
         [SerializeField] private HotbarData hotbarData;
         [SerializeField] private LayerMask weaponHitMask;
@@ -48,7 +48,7 @@ namespace Game.Player
 
         private void Awake()
         {
-            Hotbar = hotbarData.hotbar.Cast<IItem>().ToArray();
+            Items = hotbarData.hotbar.Cast<IItem>().ToArray();
             HotbarModified?.Invoke();
 
             meleeWeapon = gameObject.AddComponent<MeleeWeapon>();
