@@ -53,7 +53,7 @@ namespace Game.Gameplay
             Vector2 point = position + new Vector2(data.Range / 2f * aimDirectionSign, 1f);
             var size = new Vector2(data.Range, 1f);
 
-            if (data.CanMultiHit)
+            if (data.MultiTarget)
             {
                 // TODO: limit the amount of hits?
                 Collider2D[] allHits = Physics2D.OverlapBoxAll(point, size, default, hitMask);

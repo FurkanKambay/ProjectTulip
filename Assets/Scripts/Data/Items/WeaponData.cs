@@ -6,8 +6,8 @@ namespace Game.Data.Items
     [CreateAssetMenu(fileName = "Weapon", menuName = "Items/Weapon")]
     public class WeaponData : Weapon
     {
-        public bool CanMultiHit => canMultiHit;
+        public bool MultiTarget => multiTarget;
 
-        [SerializeField] bool canMultiHit;
+        [SerializeField] bool multiTarget;
     }
 }
