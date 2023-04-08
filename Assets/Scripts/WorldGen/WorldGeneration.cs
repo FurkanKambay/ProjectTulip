@@ -6,8 +6,8 @@ namespace Game.WorldGen
 {
     public class WorldGeneration : MonoBehaviour
     {
-        [SerializeField] private WorldData data;
-        [SerializeField] private Tilemap tilemap;
+        [SerializeField] WorldData data;
+        [SerializeField] Tilemap tilemap;
 
         private float[,] PerlinNoise => perlinNoise ??= CalculateNoise();
         private float[,] perlinNoise;

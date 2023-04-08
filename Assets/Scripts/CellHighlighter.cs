@@ -7,8 +7,8 @@ namespace Game
 {
     public class CellHighlighter : MonoBehaviour
     {
-        [SerializeField] private float speed = 100;
-        [SerializeField] private WorldModifier worldModifier;
+        [SerializeField] float speed = 100;
+        [SerializeField] WorldModifier worldModifier;
 
         private new SpriteRenderer renderer;
         private Inventory inventory;

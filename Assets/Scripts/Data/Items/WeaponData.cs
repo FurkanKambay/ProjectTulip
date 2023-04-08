@@ -8,6 +8,6 @@ namespace Game.Data.Items
     {
         public bool CanMultiHit => canMultiHit;
 
-        [SerializeField] private bool canMultiHit;
+        [SerializeField] bool canMultiHit;
     }
 }

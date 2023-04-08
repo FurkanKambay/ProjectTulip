@@ -6,15 +6,15 @@ namespace Game.CharacterController
     public class AutoStepper : MonoBehaviour
     {
         [Header("Step")]
-        [SerializeField] private float stepHeight = 1f;
-        [SerializeField] private float stepWidth;
-        [SerializeField] private Vector2 stepSpeed = Vector2.one;
+        [SerializeField] float stepHeight = 1f;
+        [SerializeField] float stepWidth;
+        [SerializeField] Vector2 stepSpeed = Vector2.one;
 
         [Header("Thresholds")]
-        [SerializeField] private float velocityThreshold = .1f;
-        [SerializeField] private float range = .5f;
+        [SerializeField] float velocityThreshold = .1f;
+        [SerializeField] float range = .5f;
 
-        [SerializeField] private Vector3 offset = (Vector3.up * .5f);
+        [SerializeField] Vector3 offset = (Vector3.up * .5f);
 
         private World world;
         private PlayerMovement movement;

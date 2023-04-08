@@ -15,8 +15,8 @@ namespace Game.Player
         public int HotbarSelectedIndex { get; private set; }
         public Pickaxe FirstPickaxe => Items.OfType<Pickaxe>().First();
 
-        [SerializeField] private HotbarData hotbarData;
-        [SerializeField] private LayerMask weaponHitMask;
+        [SerializeField] HotbarData hotbarData;
+        [SerializeField] LayerMask weaponHitMask;
 
         private MeleeWeapon meleeWeapon;
 

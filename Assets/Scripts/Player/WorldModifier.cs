@@ -8,7 +8,7 @@ namespace Game.Player
 {
     public class WorldModifier : MonoBehaviour
     {
-        [SerializeField] private Vector2 hotspotOffset;
+        [SerializeField] Vector2 hotspotOffset;
         public float range = 5f;
         public bool smartCursor;
 

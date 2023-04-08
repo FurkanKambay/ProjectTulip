@@ -11,7 +11,7 @@ namespace Game
     {
         public Tilemap Tilemap => tilemap;
 
-        [SerializeField] private Tilemap tilemap;
+        [SerializeField] Tilemap tilemap;
 
         private Dictionary<Vector3Int, int> TileDamageMap { get; } = new();
 

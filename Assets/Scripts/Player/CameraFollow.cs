@@ -7,7 +7,7 @@ namespace Game.Player
 {
     public class CameraFollow : MonoBehaviour
     {
-        [SerializeField] private Transform player;
+        [SerializeField] Transform player;
 
         public TrackingOptions tracking;
         public ZoomOptions zoom;
@@ -57,7 +57,7 @@ namespace Game.Player
         [Serializable]
         public class ZoomOptions : IValidate
         {
-            [SerializeField] private float target = 10f;
+            [SerializeField] float target = 10f;
 
             public float Target
             {

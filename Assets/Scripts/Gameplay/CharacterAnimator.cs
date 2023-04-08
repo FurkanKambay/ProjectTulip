@@ -4,10 +4,10 @@ namespace Game.Gameplay
 {
     public class CharacterAnimator : MonoBehaviour
     {
-        [SerializeField] private Health health;
-        [SerializeField] private Animator animator;
-        [SerializeField] private AudioClip hurtSound;
-        [SerializeField] private AudioClip dieSound;
+        [SerializeField] Health health;
+        [SerializeField] Animator animator;
+        [SerializeField] AudioClip hurtSound;
+        [SerializeField] AudioClip dieSound;
 
         private static readonly int animHurt = Animator.StringToHash("hurt");
         private static readonly int animDie = Animator.StringToHash("die");

@@ -6,7 +6,7 @@ namespace Game.Gameplay
     public class Health : MonoBehaviour
     {
         public float maxHealth = 100f;
-        [SerializeField] private float currentHealth = 100f;
+        [SerializeField] float currentHealth = 100f;
         public bool showHealthBar = true;
 
         public float CurrentHealth

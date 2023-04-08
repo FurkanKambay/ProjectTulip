@@ -14,7 +14,7 @@ namespace Game.Data.Interfaces
         public float IconScale => iconScale;
 
         [Header("Item Data")]
-        [SerializeField] private Sprite icon;
-        [SerializeField] private float iconScale = 1f;
+        [SerializeField] Sprite icon;
+        [SerializeField] float iconScale = 1f;
     }
 }

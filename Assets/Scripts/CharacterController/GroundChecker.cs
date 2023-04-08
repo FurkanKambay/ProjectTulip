@@ -6,9 +6,9 @@ namespace Game.CharacterController
     {
         public bool IsGrounded { get; private set; }
 
-        [SerializeField] private LayerMask groundLayer;
-        [SerializeField] private float checkHeight = .5f;
-        [SerializeField] private float offset = .5f;
+        [SerializeField] LayerMask groundLayer;
+        [SerializeField] float checkHeight = .5f;
+        [SerializeField] float offset = .5f;
 
         private Vector2 LeftSide => transform.position - (Vector3.right * offset);
         private Vector2 RightSide => transform.position + (Vector3.right * offset);

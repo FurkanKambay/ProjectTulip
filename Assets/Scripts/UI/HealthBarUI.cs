@@ -6,7 +6,7 @@ namespace Game.UI
 {
     public class HealthBarUI : MonoBehaviour
     {
-        [SerializeField] private float changeSpeed = 10f;
+        [SerializeField] float changeSpeed = 10f;
 
         private Health health;
         private SpriteRenderer healthBarSprite;

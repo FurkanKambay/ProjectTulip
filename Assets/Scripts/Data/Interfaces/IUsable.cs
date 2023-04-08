@@ -12,6 +12,6 @@ namespace Game.Data.Interfaces
         public float Cooldown => cooldown;
 
         [Header("Usable Data")]
-        [SerializeField] private float cooldown = .5f;
+        [SerializeField] float cooldown = .5f;
     }
 }

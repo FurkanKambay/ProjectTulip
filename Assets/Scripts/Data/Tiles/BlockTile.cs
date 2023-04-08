@@ -12,7 +12,7 @@ namespace Game.Data.Tiles
         public float IconScale => iconScale;
 
         public Color color = Color.white;
-        [SerializeField] private float iconScale = 1f;
+        [SerializeField] float iconScale = 1f;
 
         [Header("Block Data")]
         public int hardness = 50;
