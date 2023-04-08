@@ -18,6 +18,6 @@ namespace Game.Data.Interfaces
         [Header("Item Data")]
         [SerializeField] Sprite icon;
         [SerializeField] float iconScale = 1f;
-        [SerializeField] int maxAmount = 1;
+        [SerializeField, Min(1)] int maxAmount = 1;
     }
 }

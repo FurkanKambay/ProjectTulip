@@ -8,7 +8,7 @@ namespace Game.Data.Interfaces
         public float Range => range;
 
         [Header("Weapon Data")]
-        [SerializeField] float damage = 1f;
-        [SerializeField] float range = 1f;
+        [SerializeField, Min(0)] float damage = 1f;
+        [SerializeField, Min(0)] float range = 1f;
     }
 }

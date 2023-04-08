@@ -7,8 +7,10 @@ namespace Game.Data.Items
     [CreateAssetMenu(fileName = "Pickaxe", menuName = "Items/Pickaxe")]
     public sealed class Pickaxe : Usable, ITool
     {
+        public int Power => power;
+
         [Header("Pickaxe Data")]
-        public int power = 50;
+        [SerializeField, Min(0)] int power = 50;
 
         public bool CanUseOnBlock(BlockTile block) => block;
     }
