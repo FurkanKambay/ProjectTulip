@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using Game.Data;
-using Game.Data.Interfaces;
 using Game.Data.Items;
 using Game.Gameplay;
 using UnityEngine;
@@ -10,10 +9,10 @@ namespace Game.Player
 {
     public class Inventory : MonoBehaviour
     {
-        public IItem[] Items { get; private set; }
-        public IItem HotbarSelected => Items[HotbarSelectedIndex];
+        public ItemStack[] Items { get; private set; }
+        public ItemStack HotbarSelected => Items[HotbarSelectedIndex];
         public int HotbarSelectedIndex { get; private set; }
-        public Pickaxe FirstPickaxe => Items.OfType<Pickaxe>().First();
+        public Pickaxe FirstPickaxe => Items.Select(s => s.Item).OfType<Pickaxe>().First();
 
         [SerializeField] HotbarData hotbarData;
         [SerializeField] LayerMask weaponHitMask;
@@ -36,7 +35,7 @@ namespace Game.Player
 
         private void PrepareSelectedItem()
         {
-            if (HotbarSelected is not WeaponData weapon)
+            if (HotbarSelected?.Item is not WeaponData weapon)
             {
                 wielder.enabled = false;
                 return;
@@ -48,11 +47,11 @@ namespace Game.Player
 
         private void Awake()
         {
-            Items = hotbarData.hotbar.Cast<IItem>().ToArray();
+            Items = hotbarData.hotbar.Select(so => so ? new ItemStack(so) : null).ToArray();
             HotbarModified?.Invoke();
 
             wielder = gameObject.AddComponent<WeaponWielder>();
-            wielder.enabled = HotbarSelected is WeaponData;
+            wielder.enabled = HotbarSelected?.Item is WeaponData;
             wielder.hitMask = weaponHitMask;
         }
 

@@ -33,7 +33,7 @@ namespace Game
             Vector3Int cell = highlightedCell.GetValueOrDefault();
             bool hasBlock = world.HasBlock(cell);
 
-            renderer.enabled = highlightedCell.HasValue && inventory.HotbarSelected switch
+            renderer.enabled = highlightedCell.HasValue && inventory.HotbarSelected?.Item switch
             {
                 Pickaxe => hasBlock,
                 BlockTile => !hasBlock,

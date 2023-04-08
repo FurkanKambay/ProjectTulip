@@ -38,13 +38,13 @@ namespace Game.Player
 
         private void OnHotbarSelection(int index)
         {
-            if (inventory.HotbarSelected is not IUsable item) return;
+            if (inventory.HotbarSelected?.Item is not IUsable item) return;
             animator.SetFloat(animAttackSpeed, 1f / item.Cooldown);
         }
 
         private void Update()
         {
-            bool canPlayAttack = inventory.HotbarSelected switch
+            bool canPlayAttack = inventory.HotbarSelected?.Item switch
             {
                 ITool => worldModifier && worldModifier.FocusedCell.HasValue && playerActions.Fire.inProgress,
                 Weapon => playerActions.Fire.inProgress,

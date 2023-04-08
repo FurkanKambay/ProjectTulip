@@ -55,7 +55,7 @@ namespace Game.Player
 
         private void Update()
         {
-            var item = inventory.HotbarSelected as ITool;
+            var item = inventory.HotbarSelected?.Item as ITool;
             AssignCells();
 
             timeSinceLastUse += Time.deltaTime;
@@ -83,7 +83,7 @@ namespace Game.Player
             Vector2 hotspot = (Vector2)transform.position + hotspotOffset;
             rangePath = Vector2.ClampMagnitude((Vector2)mouseWorld - hotspot, range);
 
-            if (!smartCursor || inventory.HotbarSelected is not Pickaxe)
+            if (!smartCursor || inventory.HotbarSelected?.Item is not Pickaxe)
             {
                 float distance = Vector3.Distance(hotspot, mouseWorld);
                 FocusedCell = distance <= range ? MouseCell : null;
