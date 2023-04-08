@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: aefe230d2c55c7649a7569a20813f16e, type: 3}
   iconScale: 1.5
-  power: 50
+  maxAmount: 1
   cooldown: 0.4
+  power: 50
