@@ -8,6 +8,7 @@ namespace Game.WorldGen
     {
         [SerializeField] WorldData data;
         [SerializeField] Tilemap tilemap;
+        [SerializeField] Tilemap backgroundTilemap;
 
         private float[,] PerlinNoise => perlinNoise ??= CalculateNoise();
         private float[,] perlinNoise;
@@ -32,6 +33,7 @@ namespace Game.WorldGen
                         : data.deepstone;
 
                     tilemap.SetTile(new Vector3Int(x, y, 0), tile);
+                    backgroundTilemap.SetTile(new Vector3Int(x, y, 0), data.backgroundDirt);
                 }
             }
         }
@@ -83,6 +85,7 @@ namespace Game.WorldGen
             tilemap.size = new Vector3Int(data.width, data.height, 1);
             tilemap.CompressBounds();
             tilemap.transform.position = new Vector3(-data.width / 2f, -data.height, 0);
+            backgroundTilemap.transform.position = new Vector3(-data.width / 2f, -data.height, 0);
         }
 
         [ContextMenu("Reset Tilemap")]

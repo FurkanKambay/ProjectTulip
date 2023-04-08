@@ -23,6 +23,9 @@ namespace Game.Data
         public BlockTile flesh;
         public BlockTile aquatic;
 
+        [Header("Background Tiles")]
+        public BlockTile backgroundDirt;
+
         [Header("Earth Layers")]
         public int dirtLayerHeight = 10;
         public int stoneLayerHeight = 10;

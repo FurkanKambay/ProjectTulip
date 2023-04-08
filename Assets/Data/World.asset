@@ -64,6 +64,7 @@ MonoBehaviour:
   jungle: {fileID: 11400000, guid: e99b46e4602fc664aa53ec39e5cf8eb0, type: 2}
   flesh: {fileID: 11400000, guid: 83fd31381f6e35946bd52d74382baccf, type: 2}
   aquatic: {fileID: 11400000, guid: c570c7444c490794a819b1e7c9a4b16c, type: 2}
+  backgroundDirt: {fileID: 11400000, guid: 0491a0de59d86f9408b7f2902c563f0e, type: 2}
   dirtLayerHeight: 20
   stoneLayerHeight: 50
   aquaticBiomeWidth: 70

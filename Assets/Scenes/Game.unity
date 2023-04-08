@@ -321,6 +321,11 @@ Tilemap:
   m_CorrespondingSourceObject: {fileID: 7216450001828290536, guid: f424f79dcd083e14b805387a89e2929f, type: 3}
   m_PrefabInstance: {fileID: 414399565}
   m_PrefabAsset: {fileID: 0}
+--- !u!1839735485 &414399567 stripped
+Tilemap:
+  m_CorrespondingSourceObject: {fileID: 7173102642003252303, guid: f424f79dcd083e14b805387a89e2929f, type: 3}
+  m_PrefabInstance: {fileID: 414399565}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -967,3 +972,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 30e1e234c9d6a5f4a8fef293ef378762, type: 2}
   tilemap: {fileID: 414399566}
+  backgroundTilemap: {fileID: 414399567}
