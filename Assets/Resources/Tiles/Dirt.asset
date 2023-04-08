@@ -115,6 +115,7 @@ MonoBehaviour:
     m_RuleTransform: 0
   color: {r: 0.95, g: 0.5769667, b: 0.39045, a: 1}
   iconScale: 1
+  maxAmount: 999
   hardness: 50
   hitSound: {fileID: 8300000, guid: 3606e9b211edbb14b875e6848fff1274, type: 3}
   placeSound: {fileID: 8300000, guid: 3606e9b211edbb14b875e6848fff1274, type: 3}

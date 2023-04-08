@@ -8,11 +8,14 @@ namespace Game.Data.Tiles
     public class BlockTile : RuleTile<BlockTile.Neighbor>, ITool
     {
         public float Cooldown => .25f;
+
         public Sprite Icon => m_DefaultSprite;
         public float IconScale => iconScale;
+        public int MaxAmount => maxAmount;
 
         public Color color = Color.white;
         [SerializeField] float iconScale = 1f;
+        [SerializeField] private int maxAmount = 999;
 
         [Header("Block Data")]
         public int hardness = 50;
