@@ -7,7 +7,7 @@ using Input = Game.Player.Input;
 
 namespace Game.Gameplay
 {
-    public class MeleeWeapon : MonoBehaviour
+    public class WeaponWielder : MonoBehaviour
     {
         public WeaponData data;
         public LayerMask hitMask;

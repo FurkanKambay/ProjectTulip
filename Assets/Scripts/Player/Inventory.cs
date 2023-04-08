@@ -18,7 +18,7 @@ namespace Game.Player
         [SerializeField] HotbarData hotbarData;
         [SerializeField] LayerMask weaponHitMask;
 
-        private MeleeWeapon meleeWeapon;
+        private WeaponWielder wielder;
 
         public event Action<int> HotbarSelectionChanged;
         public event Action HotbarModified;
@@ -38,12 +38,12 @@ namespace Game.Player
         {
             if (HotbarSelected is not WeaponData weapon)
             {
-                meleeWeapon.enabled = false;
+                wielder.enabled = false;
                 return;
             }
 
-            meleeWeapon.enabled = true;
-            meleeWeapon.data = weapon;
+            wielder.enabled = true;
+            wielder.data = weapon;
         }
 
         private void Awake()
@@ -51,9 +51,9 @@ namespace Game.Player
             Items = hotbarData.hotbar.Cast<IItem>().ToArray();
             HotbarModified?.Invoke();
 
-            meleeWeapon = gameObject.AddComponent<MeleeWeapon>();
-            meleeWeapon.enabled = HotbarSelected is WeaponData;
-            meleeWeapon.hitMask = weaponHitMask;
+            wielder = gameObject.AddComponent<WeaponWielder>();
+            wielder.enabled = HotbarSelected is WeaponData;
+            wielder.hitMask = weaponHitMask;
         }
 
         private void OnEnable()
