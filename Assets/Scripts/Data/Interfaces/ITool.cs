@@ -6,9 +6,4 @@ namespace Game.Data.Interfaces
     {
         bool CanUseOnBlock(BlockTile block);
     }
-
-    public abstract class Tool : Usable, ITool
-    {
-        public virtual bool CanUseOnBlock(BlockTile block) => block;
-    }
 }
