@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Game.Data;
+using Game.Data.Interfaces;
 using Game.Data.Items;
 using Game.Gameplay;
 using UnityEngine;
@@ -21,6 +22,81 @@ namespace Game.Player
 
         public event Action<int> HotbarSelectionChanged;
         public event Action HotbarModified;
+
+        public bool RemoveItem(IItem item, int amount)
+        {
+            int firstIndex = GetFirstItemIndex(item);
+            if (firstIndex < 0) return false;
+
+            ItemStack first = Items[firstIndex];
+            if (first.Amount < amount) return false;
+
+            if (first.Amount - amount == 0)
+                Items[firstIndex] = null;
+
+            first.Amount -= amount;
+            HotbarModified?.Invoke();
+
+            return true;
+        }
+
+        public int AddItem(IItem item, int amount)
+        {
+            int remaining = amount;
+            while (remaining > 0)
+            {
+                int index = GetFirstItemIndex(item);
+                if (index < 0) index = CreateNewStack(item);
+                if (index < 0)
+                {
+                    Debug.LogWarning("Inventory full");
+                    return amount;
+                }
+
+                remaining = AddToExistingStack(index, remaining);
+            }
+
+            if (remaining == 0) HotbarModified?.Invoke();
+            return remaining;
+        }
+
+        private int AddToExistingStack(int stackIndex, int amount)
+        {
+            ItemStack stack = Items[stackIndex];
+            int total = stack.Amount + amount;
+            stack.Amount += amount;
+
+            return total > stack.Item.MaxAmount ? total - stack.Item.MaxAmount : 0;
+        }
+
+        private int CreateNewStack(IItem item)
+        {
+            int firstEmpty = GetFirstEmptyIndex();
+            if (firstEmpty < 0) return -1;
+
+            Items[firstEmpty] = new ItemStack(item, 0);
+            return firstEmpty;
+        }
+
+        private int GetFirstItemIndex(IItem item)
+        {
+            for (int i = 0; i < Items.Length; i++)
+            {
+                if (Items[i]?.Item == item && Items[i].Amount < item?.MaxAmount)
+                    return i;
+            }
+            return -1;
+        }
+
+        private int GetFirstEmptyIndex()
+        {
+            for (int i = 0; i < Items.Length; i++)
+            {
+                if (Items[i]?.Item is null)
+                    return i;
+            }
+            return -1;
+        }
 
         private void OnHotbarSelected(int index)
         {
