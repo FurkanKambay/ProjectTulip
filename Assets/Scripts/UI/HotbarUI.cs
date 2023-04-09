@@ -11,6 +11,7 @@ namespace Game.UI
     {
         [SerializeField] Inventory inventory;
 
+        private AudioSource audioSource;
         private UIDocument document;
         private VisualElement root;
 
@@ -38,6 +39,7 @@ namespace Game.UI
 
         private void OnHotbarSelectionChanged(int index)
         {
+            audioSource.Play();
             for (int i = 0; i < root.childCount; i++)
             {
                 if (i == index)
@@ -49,6 +51,7 @@ namespace Game.UI
 
         private void Awake()
         {
+            audioSource = GetComponent<AudioSource>();
             document = GetComponent<UIDocument>();
             root = document.rootVisualElement[0];
         }
