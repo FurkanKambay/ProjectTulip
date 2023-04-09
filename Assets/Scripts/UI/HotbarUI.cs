@@ -19,8 +19,14 @@ namespace Game.UI
             ItemStack[] items = inventory.Items;
             for (int i = 0; i < items.Length; i++)
             {
-                IItem item = items[i]?.Item;
-                Image image = root[i].Q<Image>();
+                VisualElement button = root[i];
+                Label label = button.Q<Label>();
+                Image image = button.Q<Image>();
+
+                ItemStack slot = items[i];
+                IItem item = slot?.Item;
+
+                label.text = slot?.Amount.ToString() ?? "";
                 image.sprite = item?.Icon;
 
                 if (item == null) return;
