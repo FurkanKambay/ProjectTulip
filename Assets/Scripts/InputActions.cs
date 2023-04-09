@@ -91,6 +91,15 @@ namespace Game
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Zoom"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""6ab72c7a-0200-49ee-8da7-33ed96d5dd54"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -324,6 +333,39 @@ namespace Game
                     ""action"": ""Scroll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Plus Minus"",
+                    ""id"": ""137f8cbe-d72a-437d-a4be-7a84f6be1b9f"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Zoom"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""435b49bb-4239-49f7-8dcd-74b3d6cb02bb"",
+                    ""path"": ""<Keyboard>/numpadMinus"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Zoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""93d4fc40-1898-4811-b634-21b43c886420"",
+                    ""path"": ""<Keyboard>/numpadPlus"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Zoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -748,6 +790,7 @@ namespace Game
             m_Player_Hotbar = m_Player.FindAction("Hotbar", throwIfNotFound: true);
             m_Player_ToggleSmartCursor = m_Player.FindAction("Toggle Smart Cursor", throwIfNotFound: true);
             m_Player_Scroll = m_Player.FindAction("Scroll", throwIfNotFound: true);
+            m_Player_Zoom = m_Player.FindAction("Zoom", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -824,6 +867,7 @@ namespace Game
         private readonly InputAction m_Player_Hotbar;
         private readonly InputAction m_Player_ToggleSmartCursor;
         private readonly InputAction m_Player_Scroll;
+        private readonly InputAction m_Player_Zoom;
         public struct PlayerActions
         {
             private @InputActions m_Wrapper;
@@ -835,6 +879,7 @@ namespace Game
             public InputAction @Hotbar => m_Wrapper.m_Player_Hotbar;
             public InputAction @ToggleSmartCursor => m_Wrapper.m_Player_ToggleSmartCursor;
             public InputAction @Scroll => m_Wrapper.m_Player_Scroll;
+            public InputAction @Zoom => m_Wrapper.m_Player_Zoom;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -865,6 +910,9 @@ namespace Game
                 @Scroll.started += instance.OnScroll;
                 @Scroll.performed += instance.OnScroll;
                 @Scroll.canceled += instance.OnScroll;
+                @Zoom.started += instance.OnZoom;
+                @Zoom.performed += instance.OnZoom;
+                @Zoom.canceled += instance.OnZoom;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -890,6 +938,9 @@ namespace Game
                 @Scroll.started -= instance.OnScroll;
                 @Scroll.performed -= instance.OnScroll;
                 @Scroll.canceled -= instance.OnScroll;
+                @Zoom.started -= instance.OnZoom;
+                @Zoom.performed -= instance.OnZoom;
+                @Zoom.canceled -= instance.OnZoom;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -1029,6 +1080,7 @@ namespace Game
             void OnHotbar(InputAction.CallbackContext context);
             void OnToggleSmartCursor(InputAction.CallbackContext context);
             void OnScroll(InputAction.CallbackContext context);
+            void OnZoom(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {

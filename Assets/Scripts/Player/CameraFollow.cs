@@ -19,7 +19,9 @@ namespace Game.Player
         private void Update()
         {
             tracking.Target = player.position + (Vector3)tracking.Offset;
-            // zoom.Target -= Mouse.current.scroll.y.value * zoom.Sensitivity;
+
+            float zoomDelta = Input.Actions.Player.Zoom.ReadValue<float>();
+            zoom.Target -= zoomDelta * zoom.Sensitivity;
         }
 
         private void LateUpdate()
