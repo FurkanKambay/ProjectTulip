@@ -44,6 +44,8 @@ namespace Game.Player
             input = Input.Instance;
             world = World.Instance;
 
+            Input.Actions.Player.ToggleSmartCursor.performed += ctx => smartCursor = !smartCursor;
+
             inventory = GetComponent<Inventory>();
             audioSource = GetComponent<AudioSource>();
             playerCollider = GetComponent<BoxCollider2D>();

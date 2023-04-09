@@ -73,6 +73,15 @@ namespace Game
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Toggle Smart Cursor"",
+                    ""type"": ""Button"",
+                    ""id"": ""aa21ef8f-92e8-44fe-becb-6cfc13f69931"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -282,6 +291,17 @@ namespace Game
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""95e62724-6e54-416f-814d-d8cf6117076a"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Toggle Smart Cursor"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -706,6 +726,7 @@ namespace Game
             m_Player_Point = m_Player.FindAction("Point", throwIfNotFound: true);
             m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
             m_Player_Hotbar = m_Player.FindAction("Hotbar", throwIfNotFound: true);
+            m_Player_ToggleSmartCursor = m_Player.FindAction("Toggle Smart Cursor", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -780,6 +801,7 @@ namespace Game
         private readonly InputAction m_Player_Point;
         private readonly InputAction m_Player_Fire;
         private readonly InputAction m_Player_Hotbar;
+        private readonly InputAction m_Player_ToggleSmartCursor;
         public struct PlayerActions
         {
             private @InputActions m_Wrapper;
@@ -789,6 +811,7 @@ namespace Game
             public InputAction @Point => m_Wrapper.m_Player_Point;
             public InputAction @Fire => m_Wrapper.m_Player_Fire;
             public InputAction @Hotbar => m_Wrapper.m_Player_Hotbar;
+            public InputAction @ToggleSmartCursor => m_Wrapper.m_Player_ToggleSmartCursor;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -813,6 +836,9 @@ namespace Game
                 @Hotbar.started += instance.OnHotbar;
                 @Hotbar.performed += instance.OnHotbar;
                 @Hotbar.canceled += instance.OnHotbar;
+                @ToggleSmartCursor.started += instance.OnToggleSmartCursor;
+                @ToggleSmartCursor.performed += instance.OnToggleSmartCursor;
+                @ToggleSmartCursor.canceled += instance.OnToggleSmartCursor;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -832,6 +858,9 @@ namespace Game
                 @Hotbar.started -= instance.OnHotbar;
                 @Hotbar.performed -= instance.OnHotbar;
                 @Hotbar.canceled -= instance.OnHotbar;
+                @ToggleSmartCursor.started -= instance.OnToggleSmartCursor;
+                @ToggleSmartCursor.performed -= instance.OnToggleSmartCursor;
+                @ToggleSmartCursor.canceled -= instance.OnToggleSmartCursor;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -969,6 +998,7 @@ namespace Game
             void OnPoint(InputAction.CallbackContext context);
             void OnFire(InputAction.CallbackContext context);
             void OnHotbar(InputAction.CallbackContext context);
+            void OnToggleSmartCursor(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {
