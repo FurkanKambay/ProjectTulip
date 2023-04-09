@@ -18,7 +18,7 @@ MonoBehaviour:
   m_TilingRules: []
   color: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 1}
   iconScale: 1.2
-  maxAmount: 999
+  maxAmount: 99
   hardness: 20
   hitSound: {fileID: 8300000, guid: 3606e9b211edbb14b875e6848fff1274, type: 3}
   placeSound: {fileID: 8300000, guid: 3606e9b211edbb14b875e6848fff1274, type: 3}
