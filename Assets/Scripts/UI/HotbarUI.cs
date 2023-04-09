@@ -26,7 +26,8 @@ namespace Game.UI
                 ItemStack slot = items[i];
                 IItem item = slot?.Item;
 
-                label.text = slot?.Amount.ToString() ?? "";
+                label.visible = item is { MaxAmount: > 1 };
+                label.text = slot?.Amount.ToString();
                 image.sprite = item?.Icon;
 
                 if (item == null) continue;
