@@ -12,7 +12,7 @@ namespace Game.Data
         public int Amount
         {
             get => amount;
-            set => amount = Mathf.Clamp(value, 1, Item.MaxAmount);
+            set => amount = Mathf.Clamp(value, 0, Item.MaxAmount);
         }
 
         public ItemStack(IItem item, int amount = 1)
