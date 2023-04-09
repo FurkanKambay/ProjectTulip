@@ -25,18 +25,32 @@ namespace Game.Player
 
         public bool RemoveItem(IItem item, int amount)
         {
-            int firstIndex = GetFirstItemIndex(item);
-            if (firstIndex < 0) return false;
+            int remaining = amount;
+            while (remaining > 0)
+            {
+                int index = HotbarSelected.Item == item
+                    ? HotbarSelectedIndex
+                    : GetFirstItemIndex(item, allowAny: true);
 
-            ItemStack first = Items[firstIndex];
-            if (first.Amount < amount) return false;
+                if (index < 0)
+                {
+                    HotbarModified?.Invoke();
+                    break;
+                }
 
-            if (first.Amount - amount == 0)
-                Items[firstIndex] = null;
+                ItemStack stack = Items[index];
+                int oldAmount = stack.Amount;
+                stack.Amount -= remaining;
+                remaining -= oldAmount - stack.Amount;
 
-            first.Amount -= amount;
+                if (stack.Amount == 0)
+                    Items[index] = null;
+            }
+
+            if (remaining > 0)
+                return false;
+
             HotbarModified?.Invoke();
-
             return true;
         }
 
@@ -45,7 +59,7 @@ namespace Game.Player
             int remaining = amount;
             while (remaining > 0)
             {
-                int index = GetFirstItemIndex(item);
+                int index = GetFirstItemIndex(item, allowAny: false);
                 if (index < 0) index = CreateNewStack(item);
                 if (index < 0)
                 {
@@ -78,11 +92,11 @@ namespace Game.Player
             return firstEmpty;
         }
 
-        private int GetFirstItemIndex(IItem item)
+        private int GetFirstItemIndex(IItem item, bool allowAny = false)
         {
             for (int i = 0; i < Items.Length; i++)
             {
-                if (Items[i]?.Item == item && Items[i].Amount < item?.MaxAmount)
+                if (Items[i]?.Item == item && (allowAny || Items[i].Amount < item?.MaxAmount))
                     return i;
             }
             return -1;
