@@ -46,8 +46,8 @@ namespace Game.Player
         {
             bool canPlayAttack = inventory.HotbarSelected?.Item switch
             {
-                ITool => worldModifier && worldModifier.FocusedCell.HasValue && playerActions.Fire.inProgress,
-                Weapon => playerActions.Fire.inProgress,
+                ITool => worldModifier && worldModifier.FocusedCell.HasValue && playerActions.Use.inProgress,
+                Weapon => playerActions.Use.inProgress,
                 _ => false
             };
 

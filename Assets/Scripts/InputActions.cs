@@ -57,7 +57,7 @@ namespace Game
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Fire"",
+                    ""name"": ""Use"",
                     ""type"": ""Button"",
                     ""id"": ""414a515b-d6b2-4989-91a3-f7b3f2037ce7"",
                     ""expectedControlType"": ""Button"",
@@ -158,7 +158,7 @@ namespace Game
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
-                    ""action"": ""Fire"",
+                    ""action"": ""Use"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -169,7 +169,7 @@ namespace Game
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Fire"",
+                    ""action"": ""Use"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -180,7 +180,7 @@ namespace Game
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Touch"",
-                    ""action"": ""Fire"",
+                    ""action"": ""Use"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -724,7 +724,7 @@ namespace Game
             m_Player_MoveX = m_Player.FindAction("Move X", throwIfNotFound: true);
             m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
             m_Player_Point = m_Player.FindAction("Point", throwIfNotFound: true);
-            m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
+            m_Player_Use = m_Player.FindAction("Use", throwIfNotFound: true);
             m_Player_Hotbar = m_Player.FindAction("Hotbar", throwIfNotFound: true);
             m_Player_ToggleSmartCursor = m_Player.FindAction("Toggle Smart Cursor", throwIfNotFound: true);
             // UI
@@ -799,7 +799,7 @@ namespace Game
         private readonly InputAction m_Player_MoveX;
         private readonly InputAction m_Player_Jump;
         private readonly InputAction m_Player_Point;
-        private readonly InputAction m_Player_Fire;
+        private readonly InputAction m_Player_Use;
         private readonly InputAction m_Player_Hotbar;
         private readonly InputAction m_Player_ToggleSmartCursor;
         public struct PlayerActions
@@ -809,7 +809,7 @@ namespace Game
             public InputAction @MoveX => m_Wrapper.m_Player_MoveX;
             public InputAction @Jump => m_Wrapper.m_Player_Jump;
             public InputAction @Point => m_Wrapper.m_Player_Point;
-            public InputAction @Fire => m_Wrapper.m_Player_Fire;
+            public InputAction @Use => m_Wrapper.m_Player_Use;
             public InputAction @Hotbar => m_Wrapper.m_Player_Hotbar;
             public InputAction @ToggleSmartCursor => m_Wrapper.m_Player_ToggleSmartCursor;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -830,9 +830,9 @@ namespace Game
                 @Point.started += instance.OnPoint;
                 @Point.performed += instance.OnPoint;
                 @Point.canceled += instance.OnPoint;
-                @Fire.started += instance.OnFire;
-                @Fire.performed += instance.OnFire;
-                @Fire.canceled += instance.OnFire;
+                @Use.started += instance.OnUse;
+                @Use.performed += instance.OnUse;
+                @Use.canceled += instance.OnUse;
                 @Hotbar.started += instance.OnHotbar;
                 @Hotbar.performed += instance.OnHotbar;
                 @Hotbar.canceled += instance.OnHotbar;
@@ -852,9 +852,9 @@ namespace Game
                 @Point.started -= instance.OnPoint;
                 @Point.performed -= instance.OnPoint;
                 @Point.canceled -= instance.OnPoint;
-                @Fire.started -= instance.OnFire;
-                @Fire.performed -= instance.OnFire;
-                @Fire.canceled -= instance.OnFire;
+                @Use.started -= instance.OnUse;
+                @Use.performed -= instance.OnUse;
+                @Use.canceled -= instance.OnUse;
                 @Hotbar.started -= instance.OnHotbar;
                 @Hotbar.performed -= instance.OnHotbar;
                 @Hotbar.canceled -= instance.OnHotbar;
@@ -996,7 +996,7 @@ namespace Game
             void OnMoveX(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
             void OnPoint(InputAction.CallbackContext context);
-            void OnFire(InputAction.CallbackContext context);
+            void OnUse(InputAction.CallbackContext context);
             void OnHotbar(InputAction.CallbackContext context);
             void OnToggleSmartCursor(InputAction.CallbackContext context);
         }

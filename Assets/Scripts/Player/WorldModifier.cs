@@ -65,7 +65,7 @@ namespace Game.Player
 
             if (!FocusedCell.HasValue) return;
             if (IntersectsPlayer(FocusedCell.Value)) return;
-            if (!Input.Actions.Player.Fire.IsPressed()) return;
+            if (!Input.Actions.Player.Use.IsPressed()) return;
 
             timeSinceLastUse = 0;
 

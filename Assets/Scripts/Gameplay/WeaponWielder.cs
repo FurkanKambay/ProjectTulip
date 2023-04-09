@@ -26,7 +26,7 @@ namespace Game.Gameplay
         private void Update()
         {
             timeSinceLastUse += Time.deltaTime;
-            if (Input.Actions.Player.Fire.inProgress)
+            if (Input.Actions.Player.Use.inProgress)
                 Attack();
         }
 
