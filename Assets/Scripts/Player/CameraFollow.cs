@@ -19,7 +19,7 @@ namespace Game.Player
         private void Update()
         {
             tracking.Target = player.position + (Vector3)tracking.Offset;
-            zoom.Target -= Mouse.current.scroll.y.value * zoom.Sensitivity;
+            // zoom.Target -= Mouse.current.scroll.y.value * zoom.Sensitivity;
         }
 
         private void LateUpdate()

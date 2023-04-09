@@ -5,6 +5,7 @@ using Game.Data.Interfaces;
 using Game.Data.Items;
 using Game.Gameplay;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Game.Player
 {
@@ -12,7 +13,14 @@ namespace Game.Player
     {
         public ItemStack[] Items { get; private set; }
         public ItemStack HotbarSelected => Items[HotbarSelectedIndex];
-        public int HotbarSelectedIndex { get; private set; }
+
+        private int hotbarSelectedIndex;
+        public int HotbarSelectedIndex
+        {
+            get => hotbarSelectedIndex;
+            private set => hotbarSelectedIndex = Mathf.Clamp(value, 0, Items.Length - 1);
+        }
+
         public Pickaxe FirstPickaxe => Items.Select(s => s.Item).OfType<Pickaxe>().First();
 
         [SerializeField] HotbarData hotbarData;
@@ -119,8 +127,7 @@ namespace Game.Player
 
             HotbarSelectedIndex = index;
             PrepareSelectedItem();
-
-            HotbarSelectionChanged?.Invoke(index);
+            HotbarSelectionChanged?.Invoke(HotbarSelectedIndex);
         }
 
         private void PrepareSelectedItem()
@@ -147,10 +154,23 @@ namespace Game.Player
 
         private void OnEnable()
         {
+            Input.Actions.Player.Scroll.performed += OnScroll;
             Input.Instance.HotbarSelected += OnHotbarSelected;
             HotbarSelectionChanged?.Invoke(HotbarSelectedIndex);
         }
 
-        private void OnDisable() => Input.Instance.HotbarSelected -= OnHotbarSelected;
+        private void OnScroll(InputAction.CallbackContext context)
+        {
+            float delta = context.ReadValue<float>();
+            if (delta == 0) return;
+
+            OnHotbarSelected(HotbarSelectedIndex - Math.Sign(delta));
+        }
+
+        private void OnDisable()
+        {
+            Input.Instance.HotbarSelected -= OnHotbarSelected;
+            Input.Actions.Player.Scroll.performed -= OnScroll;
+        }
     }
 }

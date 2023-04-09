@@ -82,6 +82,15 @@ namespace Game
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Scroll"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""03dc9117-bf14-4211-9f56-6145c3201c7c"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -302,6 +311,17 @@ namespace Game
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Toggle Smart Cursor"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ff7b8aa9-4bc0-48e6-87e5-16e9a95310d6"",
+                    ""path"": ""<Mouse>/scroll/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Scroll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -727,6 +747,7 @@ namespace Game
             m_Player_Use = m_Player.FindAction("Use", throwIfNotFound: true);
             m_Player_Hotbar = m_Player.FindAction("Hotbar", throwIfNotFound: true);
             m_Player_ToggleSmartCursor = m_Player.FindAction("Toggle Smart Cursor", throwIfNotFound: true);
+            m_Player_Scroll = m_Player.FindAction("Scroll", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -802,6 +823,7 @@ namespace Game
         private readonly InputAction m_Player_Use;
         private readonly InputAction m_Player_Hotbar;
         private readonly InputAction m_Player_ToggleSmartCursor;
+        private readonly InputAction m_Player_Scroll;
         public struct PlayerActions
         {
             private @InputActions m_Wrapper;
@@ -812,6 +834,7 @@ namespace Game
             public InputAction @Use => m_Wrapper.m_Player_Use;
             public InputAction @Hotbar => m_Wrapper.m_Player_Hotbar;
             public InputAction @ToggleSmartCursor => m_Wrapper.m_Player_ToggleSmartCursor;
+            public InputAction @Scroll => m_Wrapper.m_Player_Scroll;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -839,6 +862,9 @@ namespace Game
                 @ToggleSmartCursor.started += instance.OnToggleSmartCursor;
                 @ToggleSmartCursor.performed += instance.OnToggleSmartCursor;
                 @ToggleSmartCursor.canceled += instance.OnToggleSmartCursor;
+                @Scroll.started += instance.OnScroll;
+                @Scroll.performed += instance.OnScroll;
+                @Scroll.canceled += instance.OnScroll;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -861,6 +887,9 @@ namespace Game
                 @ToggleSmartCursor.started -= instance.OnToggleSmartCursor;
                 @ToggleSmartCursor.performed -= instance.OnToggleSmartCursor;
                 @ToggleSmartCursor.canceled -= instance.OnToggleSmartCursor;
+                @Scroll.started -= instance.OnScroll;
+                @Scroll.performed -= instance.OnScroll;
+                @Scroll.canceled -= instance.OnScroll;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -999,6 +1028,7 @@ namespace Game
             void OnUse(InputAction.CallbackContext context);
             void OnHotbar(InputAction.CallbackContext context);
             void OnToggleSmartCursor(InputAction.CallbackContext context);
+            void OnScroll(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {
