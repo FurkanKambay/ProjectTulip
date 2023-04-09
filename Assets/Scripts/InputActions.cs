@@ -48,6 +48,15 @@ namespace Game
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""Dash"",
+                    ""type"": ""Button"",
+                    ""id"": ""d6873f80-64a1-493f-9001-bde5cd625ef8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Point"",
                     ""type"": ""PassThrough"",
                     ""id"": ""b7f18492-1588-4f59-a0dc-8b8ee6a1528d"",
@@ -366,6 +375,17 @@ namespace Game
                     ""action"": ""Zoom"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3c317e6e-0bfa-4177-a44e-144ea34f9047"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -785,6 +805,7 @@ namespace Game
             m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
             m_Player_MoveX = m_Player.FindAction("Move X", throwIfNotFound: true);
             m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
+            m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
             m_Player_Point = m_Player.FindAction("Point", throwIfNotFound: true);
             m_Player_Use = m_Player.FindAction("Use", throwIfNotFound: true);
             m_Player_Hotbar = m_Player.FindAction("Hotbar", throwIfNotFound: true);
@@ -862,6 +883,7 @@ namespace Game
         private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
         private readonly InputAction m_Player_MoveX;
         private readonly InputAction m_Player_Jump;
+        private readonly InputAction m_Player_Dash;
         private readonly InputAction m_Player_Point;
         private readonly InputAction m_Player_Use;
         private readonly InputAction m_Player_Hotbar;
@@ -874,6 +896,7 @@ namespace Game
             public PlayerActions(@InputActions wrapper) { m_Wrapper = wrapper; }
             public InputAction @MoveX => m_Wrapper.m_Player_MoveX;
             public InputAction @Jump => m_Wrapper.m_Player_Jump;
+            public InputAction @Dash => m_Wrapper.m_Player_Dash;
             public InputAction @Point => m_Wrapper.m_Player_Point;
             public InputAction @Use => m_Wrapper.m_Player_Use;
             public InputAction @Hotbar => m_Wrapper.m_Player_Hotbar;
@@ -895,6 +918,9 @@ namespace Game
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
+                @Dash.started += instance.OnDash;
+                @Dash.performed += instance.OnDash;
+                @Dash.canceled += instance.OnDash;
                 @Point.started += instance.OnPoint;
                 @Point.performed += instance.OnPoint;
                 @Point.canceled += instance.OnPoint;
@@ -923,6 +949,9 @@ namespace Game
                 @Jump.started -= instance.OnJump;
                 @Jump.performed -= instance.OnJump;
                 @Jump.canceled -= instance.OnJump;
+                @Dash.started -= instance.OnDash;
+                @Dash.performed -= instance.OnDash;
+                @Dash.canceled -= instance.OnDash;
                 @Point.started -= instance.OnPoint;
                 @Point.performed -= instance.OnPoint;
                 @Point.canceled -= instance.OnPoint;
@@ -1075,6 +1104,7 @@ namespace Game
         {
             void OnMoveX(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
+            void OnDash(InputAction.CallbackContext context);
             void OnPoint(InputAction.CallbackContext context);
             void OnUse(InputAction.CallbackContext context);
             void OnHotbar(InputAction.CallbackContext context);
