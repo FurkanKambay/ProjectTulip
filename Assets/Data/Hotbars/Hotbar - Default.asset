@@ -15,7 +15,7 @@ MonoBehaviour:
   hotbar:
   - {fileID: 11400000, guid: c478888b16953144286cffad52968cc0, type: 2}
   - {fileID: 11400000, guid: 9b57593f7b5cd0541984229247126e42, type: 2}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 5efcb26fcf7c35443bfebf105a319f3d, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
