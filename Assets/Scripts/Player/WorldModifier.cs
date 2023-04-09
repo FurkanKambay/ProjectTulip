@@ -71,10 +71,10 @@ namespace Game.Player
 
             if (!item.CanUseOnBlock(world.GetBlock(FocusedCell.Value))) return;
 
-            if (item is Pickaxe)
+            if (item is Pickaxe pickaxe)
             {
                 BlockTile block = world.GetBlock(FocusedCell.Value);
-                if (world.DamageBlock(FocusedCell.Value, inventory.FirstPickaxe.Power))
+                if (world.DamageBlock(FocusedCell.Value, pickaxe.Power))
                     inventory.AddItem(block, 1);
             }
             else if (item is BlockTile block)

@@ -152,13 +152,6 @@ namespace Game.Player
             wielder.hitMask = weaponHitMask;
         }
 
-        private void OnEnable()
-        {
-            Input.Actions.Player.Scroll.performed += OnScroll;
-            Input.Instance.HotbarSelected += OnHotbarSelected;
-            HotbarSelectionChanged?.Invoke(HotbarSelectedIndex);
-        }
-
         private void OnScroll(InputAction.CallbackContext context)
         {
             float delta = context.ReadValue<float>();
@@ -167,10 +160,17 @@ namespace Game.Player
             OnHotbarSelected(HotbarSelectedIndex - Math.Sign(delta));
         }
 
+        private void OnEnable()
+        {
+            Input.Actions.Player.Scroll.performed += OnScroll;
+            Input.Instance.HotbarSelected += OnHotbarSelected;
+            HotbarSelectionChanged?.Invoke(HotbarSelectedIndex);
+        }
+
         private void OnDisable()
         {
-            Input.Instance.HotbarSelected -= OnHotbarSelected;
             Input.Actions.Player.Scroll.performed -= OnScroll;
+            Input.Instance.HotbarSelected -= OnHotbarSelected;
         }
     }
 }
