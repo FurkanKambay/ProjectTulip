@@ -29,7 +29,7 @@ namespace Game.UI
                 label.text = slot?.Amount.ToString() ?? "";
                 image.sprite = item?.Icon;
 
-                if (item == null) return;
+                if (item == null) continue;
                 image.transform.scale = Vector3.one * item.IconScale;
                 image.tintColor = item is BlockTile block ? block.color : Color.white;
             }
