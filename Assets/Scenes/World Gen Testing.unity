@@ -161,7 +161,7 @@ MonoBehaviour:
   height: 256
   surfaceHeight: 50
   wallCutoff: 0.45
-  neighborCutoffSteps: 040000000400000004000000
+  neighborCutoffSteps: 030000000300000002000000
 --- !u!4 &249065391
 Transform:
   m_ObjectHideFlags: 0
