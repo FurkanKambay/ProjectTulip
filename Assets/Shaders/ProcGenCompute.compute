@@ -7,6 +7,8 @@ float height;
 float wall_cutoff;
 int neighbor_cutoff;
 
+int surface_height;
+
 inline float rand(const float2 uv)
 {
     return frac(sin(dot(uv, float2(12.9898, 78.233))) * 43758.5453);
@@ -74,7 +76,7 @@ int get_neighbor_count(const int grid_x, const int grid_y)
                     wall_count += result[index(x, y)];
             }
             else {
-                wall_count++;
+                wall_count += y < height - surface_height ? 1 : 0;
             }
         }
     }
@@ -98,7 +100,9 @@ void cs_main(uint3 id : SV_DispatchThreadID)
 {
     const float n = simple_noise(id.xy, 1.0);
 
-    if (id.x == 0 || id.x == width - 1 || id.y == 0 || id.y == height - 1)
+    if (id.y > height - surface_height)
+        result[index(id.x, id.y)] = 0;
+    else if (id.x == 0 || id.x == width - 1 || id.y == 0 || id.y == height - 1)
         result[index(id.x, id.y)] = 1;
     else
         result[index(id.x, id.y)] = n < wall_cutoff ? 0 : 1;

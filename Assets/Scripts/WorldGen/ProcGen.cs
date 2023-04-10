@@ -20,6 +20,7 @@ namespace Game.WorldGen
         [SerializeField] private int height = 128;
 
         [Header("Settings")]
+        [SerializeField] private int surfaceHeight = 50;
         [SerializeField, Range(0, 1)] private float wallCutoff = .5f;
         [SerializeField] private int[] neighborCutoffSteps;
 
@@ -34,14 +35,17 @@ namespace Game.WorldGen
             buffer = new ComputeBuffer(width * height, sizeof(int));
 
             int indexMain = computeShader.FindKernel("cs_main");
+            int indexSmooth = computeShader.FindKernel("cs_smooth");
+
             computeShader.SetBuffer(indexMain, "result", buffer);
             computeShader.SetFloat("width", width);
             computeShader.SetFloat("height", height);
             computeShader.SetFloat("wall_cutoff", wallCutoff);
-            computeShader.Dispatch(indexMain, width / 8, height / 8, 1);
+            computeShader.SetInt("surface_height", surfaceHeight);
 
-            int indexSmooth = computeShader.FindKernel("cs_smooth");
             computeShader.SetBuffer(indexSmooth, "result", buffer);
+
+            computeShader.Dispatch(indexMain, width / 8, height / 8, 1);
 
             for (int i = 0; i < neighborCutoffSteps?.Length; i++)
             {
@@ -70,6 +74,7 @@ namespace Game.WorldGen
         {
             width = xFactor * 8;
             height = yFactor * 8;
+            surfaceHeight = Mathf.Clamp(surfaceHeight, 0, height);
 
             Array.Resize(ref data, width * height);
             Generate();
