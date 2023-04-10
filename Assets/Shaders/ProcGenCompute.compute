@@ -4,7 +4,6 @@
 RWBuffer<int> result;
 float width;
 float height;
-
 float wall_cutoff;
 int neighbor_cutoff;
 
@@ -13,7 +12,7 @@ inline float rand(const float2 uv)
     return frac(sin(dot(uv, float2(12.9898, 78.233))) * 43758.5453);
 }
 
-inline float interpolate(float a, float b, float t)
+inline float interpolate(const float a, const float b, const float t)
 {
     return (1.0 - t) * a + (t * b);
 }

@@ -7,17 +7,22 @@ namespace Game.WorldGen
     {
         public ComputeShader computeShader;
 
+        [Header("Resolution")]
         [SerializeField, Range(1, 128)] private int xFactor;
         [SerializeField, Range(1, 128)] private int yFactor;
-        [SerializeField, Range(8, 1024)] private int width = 128;
-        [SerializeField, Range(8, 1024)] private int height = 128;
+
+        [Header("Preview")]
+        [SerializeField] private int width = 128;
+        [SerializeField] private int height = 128;
+
+        [Header("Settings")]
         [SerializeField, Range(0, 1)] private float wallCutoff = .5f;
         [SerializeField] private int[] neighborCutoffSteps;
 
         private ComputeBuffer buffer;
         private float[] data;
 
-        private void Start() => Generate();
+        private void Update() => Generate();
 
         [ContextMenu("Generate")]
         private void Generate()
