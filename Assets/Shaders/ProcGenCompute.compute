@@ -1,0 +1,15 @@
+#pragma kernel cs_main
+
+RWTexture2D<float4> result;
+
+float resolution_x;
+float resolution_y;
+
+[numthreads(8,8,1)]
+void cs_main(uint3 id : SV_DispatchThreadID)
+{
+    float x = id.x / resolution_x;
+    float y = id.y / resolution_y;
+
+    result[id.xy] = float4(x, y, 0, 0);
+}
