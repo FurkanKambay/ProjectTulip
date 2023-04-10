@@ -7,6 +7,10 @@ namespace Game.WorldGen
     {
         public ComputeShader computeShader;
 
+        [Header("Colors")]
+        [SerializeField] Color emptyColor = new(0, 100, 150);
+        [SerializeField] Color groundColor = new(20, 20, 20);
+
         [Header("Resolution")]
         [SerializeField, Range(1, 128)] private int xFactor;
         [SerializeField, Range(1, 128)] private int yFactor;
@@ -57,7 +61,7 @@ namespace Game.WorldGen
                 int y = i / width;
                 float value = data[i];
 
-                Gizmos.color = value == 0 ? Color.black : Color.white;
+                Gizmos.color = value == 0 ? emptyColor : groundColor;
                 Gizmos.DrawCube(new Vector3(x, y, 0), Vector3.one * 1f);
             }
         }

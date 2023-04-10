@@ -153,6 +153,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   computeShader: {fileID: 7200000, guid: 04ae933984b4e984a9eb4c158ce2c0c5, type: 3}
+  emptyColor: {r: 0.1462264, g: 0.7311565, b: 1, a: 1}
+  groundColor: {r: 0.2735849, g: 0.09830641, b: 0.068396226, a: 1}
   xFactor: 16
   yFactor: 16
   width: 128
