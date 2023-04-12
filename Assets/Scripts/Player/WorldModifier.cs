@@ -44,7 +44,7 @@ namespace Game.Player
             input = Input.Instance;
             world = World.Instance;
 
-            Input.Actions.Player.ToggleSmartCursor.performed += ctx => smartCursor = !smartCursor;
+            Input.Actions.Player.ToggleSmartCursor.performed += _ => smartCursor = !smartCursor;
 
             inventory = GetComponent<Inventory>();
             audioSource = GetComponent<AudioSource>();
@@ -117,7 +117,7 @@ namespace Game.Player
             Vector2 hotspot = (Vector2)transform.position + hotspotOffset;
 
             Gizmos.color = Color.red;
-            Gizmos.DrawLine(hotspot,  hotspot + rangePath);
+            Gizmos.DrawLine(hotspot, hotspot + rangePath);
 
             Gizmos.color = Color.green;
             Gizmos.DrawSphere(hitPoint, .1f);

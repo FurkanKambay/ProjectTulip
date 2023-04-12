@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Game.Data.Tiles;
 using Game.Helpers;
@@ -28,8 +28,7 @@ namespace Game
         {
             if (!Tilemap.HasTile(cell)) return false;
 
-            if (!TileDamageMap.ContainsKey(cell))
-                TileDamageMap.Add(cell, 0);
+            TileDamageMap.TryAdd(cell, 0);
 
             BlockTile block = GetBlock(cell);
             int damageTaken = TileDamageMap[cell] += damage;
