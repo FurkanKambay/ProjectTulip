@@ -1,7 +1,7 @@
 using System;
 using Game.Data;
+using Game.Input;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Game.Player
 {
@@ -20,7 +20,7 @@ namespace Game.Player
         {
             tracking.Target = player.position + (Vector3)tracking.Offset;
 
-            float zoomDelta = Input.Actions.Player.Zoom.ReadValue<float>();
+            float zoomDelta = InputHelper.Actions.Player.Zoom.ReadValue<float>();
             zoom.Target -= zoomDelta * zoom.Sensitivity;
         }
 

@@ -4,6 +4,7 @@ using Game.Data;
 using Game.Data.Interfaces;
 using Game.Data.Items;
 using Game.Gameplay;
+using Game.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -162,15 +163,15 @@ namespace Game.Player
 
         private void OnEnable()
         {
-            Input.Actions.Player.Scroll.performed += OnScroll;
-            Input.Instance.HotbarSelected += OnHotbarSelected;
+            InputHelper.Actions.Player.Scroll.performed += OnScroll;
+            InputHelper.Instance.HotbarSelected += OnHotbarSelected;
             HotbarSelectionChanged?.Invoke(HotbarSelectedIndex);
         }
 
         private void OnDisable()
         {
-            Input.Actions.Player.Scroll.performed -= OnScroll;
-            Input.Instance.HotbarSelected -= OnHotbarSelected;
+            InputHelper.Actions.Player.Scroll.performed -= OnScroll;
+            InputHelper.Instance.HotbarSelected -= OnHotbarSelected;
         }
     }
 }

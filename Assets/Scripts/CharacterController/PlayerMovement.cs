@@ -1,5 +1,6 @@
 using System;
 using Game.Data.Gameplay;
+using Game.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -36,7 +37,7 @@ namespace Game.CharacterController
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         }
 
-        private void Start() => Player.Input.Actions.Player.MoveX.performed += OnMoveX;
+        private void Start() => InputHelper.Actions.Player.MoveX.performed += OnMoveX;
 
         private void OnMoveX(InputAction.CallbackContext context) => directionX = context.ReadValue<float>();
 

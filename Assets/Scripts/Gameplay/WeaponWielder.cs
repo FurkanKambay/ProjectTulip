@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Game.Data.Items;
+using Game.Input;
 using UnityEngine;
-using Input = Game.Player.Input;
 
 namespace Game.Gameplay
 {
@@ -26,7 +26,7 @@ namespace Game.Gameplay
         private void Update()
         {
             timeSinceLastUse += Time.deltaTime;
-            if (Input.Actions.Player.Use.inProgress)
+            if (InputHelper.Actions.Player.Use.inProgress)
                 Attack();
         }
 
@@ -35,7 +35,7 @@ namespace Game.Gameplay
             if (timeSinceLastUse <= data.Cooldown) return;
             timeSinceLastUse = 0f;
 
-            IEnumerable<Health> targets = CheckAttackBox(Input.Instance.MouseWorldPoint);
+            IEnumerable<Health> targets = CheckAttackBox(InputHelper.Instance.MouseWorldPoint);
 
             foreach (Health target in targets)
             {

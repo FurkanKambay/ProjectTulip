@@ -1,6 +1,6 @@
+using Game.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Input = Game.Player.Input;
 
 namespace Game.CharacterController
 {
@@ -19,7 +19,7 @@ namespace Game.CharacterController
         private void Update()
         {
             timeSinceLastDash += Time.deltaTime;
-            bool dashing = Input.Actions.Player.Dash.IsInProgress();
+            bool dashing = InputHelper.Actions.Player.Dash.IsInProgress();
             if (!dashing || timeSinceLastDash < dashCooldown) return;
 
             timeSinceLastDash = 0f;
@@ -30,7 +30,7 @@ namespace Game.CharacterController
 
         private void Awake()
         {
-            movement = Input.Actions.Player.MoveX;
+            movement = InputHelper.Actions.Player.MoveX;
             body = GetComponent<Rigidbody2D>();
         }
     }

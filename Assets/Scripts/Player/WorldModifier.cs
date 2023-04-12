@@ -2,6 +2,7 @@ using System;
 using Game.Data.Interfaces;
 using Game.Data.Items;
 using Game.Data.Tiles;
+using Game.Input;
 using UnityEngine;
 
 namespace Game.Player
@@ -36,15 +37,15 @@ namespace Game.Player
         private Vector2 rangePath;
         private Vector3 hitPoint;
 
-        private Input input;
+        private InputHelper input;
         private World world;
 
         private void Awake()
         {
-            input = Input.Instance;
+            input = InputHelper.Instance;
             world = World.Instance;
 
-            Input.Actions.Player.ToggleSmartCursor.performed += _ => smartCursor = !smartCursor;
+            InputHelper.Actions.Player.ToggleSmartCursor.performed += _ => smartCursor = !smartCursor;
 
             inventory = GetComponent<Inventory>();
             audioSource = GetComponent<AudioSource>();
@@ -65,7 +66,7 @@ namespace Game.Player
 
             if (!FocusedCell.HasValue) return;
             if (world.CellIntersects(FocusedCell.Value, playerCollider.bounds)) return;
-            if (!Input.Actions.Player.Use.IsPressed()) return;
+            if (!InputHelper.Actions.Player.Use.IsPressed()) return;
 
             timeSinceLastUse = 0;
 

@@ -1,5 +1,6 @@
 using Game.CharacterController;
 using Game.Data.Interfaces;
+using Game.Input;
 using UnityEngine;
 
 namespace Game.Player
@@ -21,7 +22,7 @@ namespace Game.Player
 
         private void Awake()
         {
-            playerActions = Input.Actions.Player;
+            playerActions = InputHelper.Actions.Player;
 
             animator = GetComponent<Animator>();
             inventory = GetComponentInParent<Inventory>();

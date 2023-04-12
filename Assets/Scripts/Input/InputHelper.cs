@@ -3,9 +3,9 @@ using Game.Helpers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Game.Player
+namespace Game.Input
 {
-    public class Input : PersistentSingleton<Input>
+    public class InputHelper : PersistentSingleton<InputHelper>
     {
         public static InputActions Actions => Instance.actions ??= new InputActions();
 

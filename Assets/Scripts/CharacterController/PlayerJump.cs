@@ -1,4 +1,5 @@
 using Game.Data.Gameplay;
+using Game.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -37,8 +38,8 @@ namespace Game.CharacterController
 
         private void Start()
         {
-            Player.Input.Actions.Player.Jump.started += OnJump;
-            Player.Input.Actions.Player.Jump.canceled += OnJump;
+            InputHelper.Actions.Player.Jump.started += OnJump;
+            InputHelper.Actions.Player.Jump.canceled += OnJump;
         }
 
         public void OnJump(InputAction.CallbackContext context)

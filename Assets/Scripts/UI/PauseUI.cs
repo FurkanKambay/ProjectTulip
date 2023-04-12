@@ -1,9 +1,9 @@
+using Game.Input;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.UIElements;
-using Input = Game.Player.Input;
 
 namespace Game.UI
 {
@@ -23,8 +23,8 @@ namespace Game.UI
             root.Q<Button>("SettingsButton").RegisterCallback<ClickEvent>(OnSettingsClicked);
             root.Q<Button>("SaveButton").RegisterCallback<ClickEvent>(OnSaveClicked);
 
-            Input.Actions.Player.Menu.performed += OnPaused;
-            Input.Actions.UI.Cancel.performed += OnResumed;
+            InputHelper.Actions.Player.Menu.performed += OnPaused;
+            InputHelper.Actions.UI.Cancel.performed += OnResumed;
         }
 
         private void Start() => SetState(false);
@@ -36,14 +36,14 @@ namespace Game.UI
 
             if (value)
             {
-                Input.Actions.Player.Disable();
-                Input.Actions.UI.Enable();
+                InputHelper.Actions.Player.Disable();
+                InputHelper.Actions.UI.Enable();
                 Time.timeScale = 0;
             }
             else
             {
-                Input.Actions.Player.Enable();
-                Input.Actions.UI.Disable();
+                InputHelper.Actions.Player.Enable();
+                InputHelper.Actions.UI.Disable();
                 Time.timeScale = 1;
             }
         }
