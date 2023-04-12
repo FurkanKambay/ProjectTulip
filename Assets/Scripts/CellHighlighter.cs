@@ -12,6 +12,7 @@ namespace Game
 
         private new SpriteRenderer renderer;
         private Inventory inventory;
+        private BoxCollider2D playerCollider;
 
         private Vector3 targetPosition;
         private Vector3Int? highlightedCell;
@@ -26,17 +27,19 @@ namespace Game
             world = World.Instance;
             renderer = GetComponent<SpriteRenderer>();
             inventory = worldModifier.GetComponent<Inventory>();
+            playerCollider = worldModifier.GetComponent<BoxCollider2D>();
         }
 
         private void Update()
         {
             Vector3Int cell = highlightedCell.GetValueOrDefault();
             bool hasBlock = world.HasBlock(cell);
+            bool notOccupied = !world.CellIntersects(cell, playerCollider.bounds);
 
             renderer.enabled = highlightedCell.HasValue && inventory.HotbarSelected?.Item switch
             {
                 Pickaxe => hasBlock,
-                BlockTile => !hasBlock,
+                BlockTile => !hasBlock && notOccupied,
                 _ => false
             };
 

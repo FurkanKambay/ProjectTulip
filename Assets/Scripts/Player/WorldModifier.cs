@@ -64,7 +64,7 @@ namespace Game.Player
             if (item == null || timeSinceLastUse <= item.Cooldown) return;
 
             if (!FocusedCell.HasValue) return;
-            if (IntersectsPlayer(FocusedCell.Value)) return;
+            if (world.CellIntersects(FocusedCell.Value, playerCollider.bounds)) return;
             if (!Input.Actions.Player.Use.IsPressed()) return;
 
             timeSinceLastUse = 0;
@@ -106,9 +106,6 @@ namespace Game.Player
             hitPoint = hit.point - (hit.normal * 0.1f);
             FocusedCell = hit.collider ? world.WorldToCell(hitPoint) : null;
         }
-
-        private bool IntersectsPlayer(Vector3Int cell)
-            => playerCollider.bounds.Intersects(world.CellBoundsWorld(cell));
 
         private void PlayPlaceSound(Vector3Int cell, BlockTile block) => audioSource.PlayOneShot(block.placeSound);
         private void PlayHitSound(Vector3Int cell, BlockTile block) => audioSource.PlayOneShot(block.hitSound);

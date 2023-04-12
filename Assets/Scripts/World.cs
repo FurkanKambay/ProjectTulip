@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Game.Data.Tiles;
 using Game.Helpers;
@@ -70,6 +70,9 @@ namespace Game
 
         public int GetTileDamage(Vector3Int cell)
             => TileDamageMap.TryGetValue(cell, out int damage) ? damage : 0;
+
+        public bool CellIntersects(Vector3Int cell, Bounds other)
+            => CellBoundsWorld(cell).Intersects(other);
 
         public Vector3Int WorldToCell(Vector3 worldPosition) => Tilemap.WorldToCell(worldPosition);
         public Vector3 CellCenter(Vector3Int cell) => Tilemap.GetCellCenterWorld(cell);
