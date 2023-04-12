@@ -109,6 +109,15 @@ namespace Game
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Menu"",
+                    ""type"": ""Button"",
+                    ""id"": ""eff8b17e-66ce-4996-b40e-b35803eb8853"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -384,6 +393,17 @@ namespace Game
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4837f135-55b8-4f61-9dc3-d8ca42a56fb2"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Menu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -812,6 +832,7 @@ namespace Game
             m_Player_ToggleSmartCursor = m_Player.FindAction("Toggle Smart Cursor", throwIfNotFound: true);
             m_Player_Scroll = m_Player.FindAction("Scroll", throwIfNotFound: true);
             m_Player_Zoom = m_Player.FindAction("Zoom", throwIfNotFound: true);
+            m_Player_Menu = m_Player.FindAction("Menu", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -890,6 +911,7 @@ namespace Game
         private readonly InputAction m_Player_ToggleSmartCursor;
         private readonly InputAction m_Player_Scroll;
         private readonly InputAction m_Player_Zoom;
+        private readonly InputAction m_Player_Menu;
         public struct PlayerActions
         {
             private @InputActions m_Wrapper;
@@ -903,6 +925,7 @@ namespace Game
             public InputAction @ToggleSmartCursor => m_Wrapper.m_Player_ToggleSmartCursor;
             public InputAction @Scroll => m_Wrapper.m_Player_Scroll;
             public InputAction @Zoom => m_Wrapper.m_Player_Zoom;
+            public InputAction @Menu => m_Wrapper.m_Player_Menu;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -939,6 +962,9 @@ namespace Game
                 @Zoom.started += instance.OnZoom;
                 @Zoom.performed += instance.OnZoom;
                 @Zoom.canceled += instance.OnZoom;
+                @Menu.started += instance.OnMenu;
+                @Menu.performed += instance.OnMenu;
+                @Menu.canceled += instance.OnMenu;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -970,6 +996,9 @@ namespace Game
                 @Zoom.started -= instance.OnZoom;
                 @Zoom.performed -= instance.OnZoom;
                 @Zoom.canceled -= instance.OnZoom;
+                @Menu.started -= instance.OnMenu;
+                @Menu.performed -= instance.OnMenu;
+                @Menu.canceled -= instance.OnMenu;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -1111,6 +1140,7 @@ namespace Game
             void OnToggleSmartCursor(InputAction.CallbackContext context);
             void OnScroll(InputAction.CallbackContext context);
             void OnZoom(InputAction.CallbackContext context);
+            void OnMenu(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {
