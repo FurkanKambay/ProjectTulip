@@ -1,7 +1,6 @@
 using Game.Data;
 using Game.Data.Interfaces;
 using Game.Data.Tiles;
-using Game.Player;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -9,7 +8,7 @@ namespace Game.UI
 {
     public class HotbarUI : MonoBehaviour
     {
-        [SerializeField] Inventory inventory;
+        [SerializeField] InventoryBase inventory;
 
         private AudioSource audioSource;
         private UIDocument document;

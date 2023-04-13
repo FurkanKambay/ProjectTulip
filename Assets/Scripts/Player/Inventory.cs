@@ -10,27 +10,33 @@ using UnityEngine.InputSystem;
 
 namespace Game.Player
 {
-    public class Inventory : MonoBehaviour
+    public sealed class Inventory : InventoryBase
     {
-        public ItemStack[] Items { get; private set; }
-        public ItemStack HotbarSelected => Items[HotbarSelectedIndex];
+        public override ItemStack[] Items { get; protected set; }
+        public override ItemStack HotbarSelected => Items[HotbarSelectedIndex];
 
         private int hotbarSelectedIndex;
-        public int HotbarSelectedIndex
+        public override int HotbarSelectedIndex
         {
             get => hotbarSelectedIndex;
-            private set => hotbarSelectedIndex = Mathf.Clamp(value, 0, Items.Length - 1);
+            protected set => hotbarSelectedIndex = Mathf.Clamp(value, 0, Items.Length - 1);
         }
 
         public Pickaxe FirstPickaxe => Items.Select(s => s.Item).OfType<Pickaxe>().First();
+
+        public override ItemStack this[int index]
+        {
+            get => Items[index];
+            set => Items[index] = value;
+        }
 
         [SerializeField] HotbarData hotbarData;
         [SerializeField] LayerMask weaponHitMask;
 
         private WeaponWielder wielder;
 
-        public event Action<int> HotbarSelectionChanged;
-        public event Action HotbarModified;
+        public override event Action<int> HotbarSelectionChanged;
+        public override event Action HotbarModified;
 
         public bool RemoveItem(IItem item, int amount)
         {
