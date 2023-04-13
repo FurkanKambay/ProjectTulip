@@ -9,7 +9,7 @@ namespace Game.CharacterController
         public float dashSpeed = 10f;
         public float dashCooldown = 0.5f;
 
-        [SerializeField] private ForceMode2D forceMode;
+        [SerializeField] ForceMode2D forceMode;
 
         private Rigidbody2D body;
         private InputAction movement;

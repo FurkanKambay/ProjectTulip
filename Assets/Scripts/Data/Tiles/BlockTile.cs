@@ -15,7 +15,7 @@ namespace Game.Data.Tiles
 
         public Color color = Color.white;
         [SerializeField] float iconScale = 1f;
-        [SerializeField, Min(1)] private int maxAmount = 999;
+        [SerializeField, Min(1)] int maxAmount = 999;
 
         [Header("Block Data")]
         public int hardness = 50;

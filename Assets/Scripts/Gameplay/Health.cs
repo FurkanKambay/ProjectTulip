@@ -6,14 +6,14 @@ namespace Game.Gameplay
 {
     public class Health : MonoBehaviour, IHealth
     {
-        [SerializeField] float maxHealth = 100f;
+        [SerializeField, Min(0)] float maxHealth = 100f;
         [SerializeField] float currentHealth = 100f;
 
         public float MaxHealth => maxHealth;
         public float CurrentHealth
         {
             get => currentHealth;
-            set => currentHealth = Mathf.Min(value, MaxHealth);
+            set => currentHealth = Mathf.Clamp(value, 0, MaxHealth);
         }
 
         public event Action<DamageEventArgs> DamageTaken;

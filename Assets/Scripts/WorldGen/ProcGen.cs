@@ -12,17 +12,17 @@ namespace Game.WorldGen
         [SerializeField] Color groundColor = new(20, 20, 20);
 
         [Header("Resolution")]
-        [SerializeField, Range(1, 128)] private int xFactor;
-        [SerializeField, Range(1, 128)] private int yFactor;
+        [SerializeField, Range(1, 128)] int xFactor;
+        [SerializeField, Range(1, 128)] int yFactor;
 
         [Header("Preview")]
-        [SerializeField] private int width = 128;
-        [SerializeField] private int height = 128;
+        [SerializeField] int width = 128;
+        [SerializeField] int height = 128;
 
         [Header("Settings")]
-        [SerializeField] private int surfaceHeight = 50;
-        [SerializeField, Range(0, 1)] private float wallCutoff = .5f;
-        [SerializeField] private int[] neighborCutoffSteps;
+        [SerializeField] int surfaceHeight = 50;
+        [SerializeField, Range(0, 1)] float wallCutoff = .5f;
+        [SerializeField] int[] neighborCutoffSteps;
 
         private ComputeBuffer buffer;
         private float[] data;
