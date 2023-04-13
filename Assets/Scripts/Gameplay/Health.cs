@@ -1,18 +1,19 @@
 using System;
+using Game.Data.Interfaces;
 using UnityEngine;
 
 namespace Game.Gameplay
 {
-    public class Health : MonoBehaviour
+    public class Health : MonoBehaviour, IHealth
     {
-        public float maxHealth = 100f;
+        [SerializeField] float maxHealth = 100f;
         [SerializeField] float currentHealth = 100f;
-        public bool showHealthBar = true;
 
+        public float MaxHealth => maxHealth;
         public float CurrentHealth
         {
             get => currentHealth;
-            set => currentHealth = Mathf.Min(value, maxHealth);
+            set => currentHealth = Mathf.Min(value, MaxHealth);
         }
 
         public event Action<DamageEventArgs> DamageTaken;

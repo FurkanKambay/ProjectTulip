@@ -1,5 +1,4 @@
-﻿using System;
-using Game.Gameplay;
+﻿using Game.Data.Interfaces;
 using UnityEngine;
 
 namespace Game.UI
@@ -7,8 +6,9 @@ namespace Game.UI
     public class HealthBarUI : MonoBehaviour
     {
         [SerializeField] float changeSpeed = 10f;
+        [SerializeField] private bool showBar = true;
 
-        private Health health;
+        private IHealth health;
         private SpriteRenderer healthBarSprite;
         private float targetValue;
 
@@ -16,21 +16,18 @@ namespace Game.UI
 
         private void Awake()
         {
-            health = GetComponentInParent<Health>();
+            health = GetComponentInParent<IHealth>();
             healthBarSprite = GetComponent<SpriteRenderer>();
             healthBarSprite.enabled = false;
-            targetValue = health.maxHealth;
+            targetValue = health.MaxHealth;
         }
 
         private void Update()
         {
-            bool isFull = Math.Abs(health.CurrentHealth - health.maxHealth) < .01f;
-            healthBarSprite.enabled = health.showHealthBar && !isFull;
+            healthBarSprite.enabled = showBar && health.IsHurt;
+            if (!showBar) return;
 
-            if (!health.showHealthBar) return;
-
-            float value = health.CurrentHealth / health.maxHealth;
-            targetValue = Mathf.Lerp(targetValue, value, changeSpeed * Time.deltaTime);
+            targetValue = Mathf.Lerp(targetValue, health.Ratio, changeSpeed * Time.deltaTime);
             healthBarSprite.material.SetFloat(healthShaderValue, targetValue);
         }
     }
