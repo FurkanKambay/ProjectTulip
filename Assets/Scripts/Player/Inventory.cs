@@ -31,7 +31,6 @@ namespace Game.Player
         }
 
         [SerializeField] HotbarData hotbarData;
-        [SerializeField] LayerMask weaponHitMask;
 
         private WeaponWielder wielder;
 
@@ -154,9 +153,8 @@ namespace Game.Player
             Items = hotbarData.hotbar.Select(so => so ? new ItemStack(so) : null).ToArray();
             HotbarModified?.Invoke();
 
-            wielder = gameObject.AddComponent<WeaponWielder>();
+            wielder = GetComponent<WeaponWielder>();
             wielder.enabled = HotbarSelected?.Item is WeaponData;
-            wielder.hitMask = weaponHitMask;
         }
 
         private void OnScroll(InputAction.CallbackContext context)

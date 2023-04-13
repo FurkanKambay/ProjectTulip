@@ -106,7 +106,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &6074248624756913443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,6 +132,7 @@ GameObject:
   - component: {fileID: 7672628218196146449}
   - component: {fileID: 932277356281954448}
   - component: {fileID: 4266250971387899883}
+  - component: {fileID: 6482861320932609866}
   - component: {fileID: 8720202020251607731}
   - component: {fileID: 868025074711396792}
   - component: {fileID: 6853449593728978369}
@@ -174,6 +174,25 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -207,6 +226,12 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 6200000, guid: 6ee3b5dc8b31a6e44bb9622d0e24683c, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
   m_Interpolate: 1
   m_SleepingMode: 0
   m_CollisionDetection: 1
@@ -321,7 +346,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 100
-  showHealthBar: 1
 --- !u!114 &4266250971387899883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -335,7 +359,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hotbarData: {fileID: 11400000, guid: 1265edbba7f76c84ba1e9ba37adf7f80, type: 2}
-  weaponHitMask:
+--- !u!114 &6482861320932609866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2859632988072890709}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be49605a98e97be4f8107b2403c172b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 9b57593f7b5cd0541984229247126e42, type: 2}
+  hitMask:
     serializedVersion: 2
     m_Bits: 128
 --- !u!114 &8720202020251607731
@@ -527,11 +564,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   changeSpeed: 10
+  showBar: 1
 --- !u!1001 &9089751927518434556
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 8291246366843984804}
     m_Modifications:
     - target: {fileID: 1290479430052182172, guid: ebe0699985b138c4a831fe155f0ae23e, type: 3}
@@ -555,6 +594,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ebe0699985b138c4a831fe155f0ae23e, type: 3}
 --- !u!4 &5007282566472200706 stripped
 Transform:
