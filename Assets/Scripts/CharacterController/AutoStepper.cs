@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.Data.Interfaces;
 using UnityEngine;
 
 namespace Game.CharacterController
@@ -17,7 +18,7 @@ namespace Game.CharacterController
         [SerializeField] Vector3 offset = (Vector3.up * .5f);
 
         private World world;
-        private Movement movement;
+        private IMovement movement;
         private GroundChecker ground;
         private Rigidbody2D body;
 
@@ -26,7 +27,7 @@ namespace Game.CharacterController
         private void Awake()
         {
             world = World.Instance;
-            movement = GetComponent<Movement>();
+            movement = GetComponent<IMovement>();
             ground = GetComponent<GroundChecker>();
             body = GetComponent<Rigidbody2D>();
         }

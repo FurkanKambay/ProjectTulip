@@ -1,15 +1,17 @@
 using System;
 using Game.Data.Gameplay;
+using Game.Data.Interfaces;
 using UnityEngine;
 
 namespace Game.CharacterController
 {
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(GroundChecker))]
-    public class Movement : MonoBehaviour
+    public class Movement : MonoBehaviour, IMovement
     {
         public MovementData data;
-        [HideInInspector] public float input;
+
+        public Vector2 Input { get; set; }
 
         public Vector2 Velocity => velocity;
         public Vector2 DesiredVelocity => desiredVelocity;
@@ -39,12 +41,12 @@ namespace Game.CharacterController
 
         private void Update()
         {
-            anyMovement = input != 0;
+            anyMovement = Input.x != 0;
 
             if (anyMovement)
-                spriteRenderer.flipX = input < 0;
+                spriteRenderer.flipX = Input.x < 0;
 
-            desiredVelocity = new Vector2(input, 0f) * Mathf.Max(data.maxSpeed - data.friction, 0f);
+            desiredVelocity = Input * Mathf.Max(data.maxSpeed - data.friction, 0f);
         }
 
         private void FixedUpdate()
@@ -69,7 +71,7 @@ namespace Game.CharacterController
             maxSpeedChange = anyMovement switch
             {
                 // ReSharper disable once CompareOfFloatsByEqualityOperator
-                true when Mathf.Sign(input) != Mathf.Sign(velocity.x) => turnSpeed * Time.deltaTime,
+                true when Mathf.Sign(Input.x) != Mathf.Sign(velocity.x) => turnSpeed * Time.deltaTime,
                 true => acceleration * Time.deltaTime,
                 _ => deceleration * Time.deltaTime
             };

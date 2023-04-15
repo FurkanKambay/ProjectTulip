@@ -15,7 +15,7 @@ namespace Game.Player
         private Animator animator;
         private Inventory inventory;
         private WorldModifier worldModifier;
-        private Movement movement;
+        private IMovement movement;
         private PlayerJump playerJump;
 
         private InputActions.PlayerActions playerActions;
@@ -27,7 +27,7 @@ namespace Game.Player
             animator = GetComponent<Animator>();
             inventory = GetComponentInParent<Inventory>();
             worldModifier = GetComponentInParent<WorldModifier>();
-            movement = GetComponentInParent<Movement>();
+            movement = GetComponentInParent<IMovement>();
             playerJump = GetComponentInParent<PlayerJump>();
         }
 
