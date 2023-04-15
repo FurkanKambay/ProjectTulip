@@ -17,7 +17,7 @@ namespace Game.CharacterController
         [SerializeField] Vector3 offset = (Vector3.up * .5f);
 
         private World world;
-        private PlayerMovement movement;
+        private Movement movement;
         private GroundChecker ground;
         private Rigidbody2D body;
 
@@ -26,7 +26,7 @@ namespace Game.CharacterController
         private void Awake()
         {
             world = World.Instance;
-            movement = GetComponent<PlayerMovement>();
+            movement = GetComponent<Movement>();
             ground = GetComponent<GroundChecker>();
             body = GetComponent<Rigidbody2D>();
         }

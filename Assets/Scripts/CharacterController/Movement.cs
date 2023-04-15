@@ -1,20 +1,20 @@
 using System;
 using Game.Data.Gameplay;
-using Game.Input;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Game.CharacterController
 {
-    public class PlayerMovement : MonoBehaviour
+    [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(GroundChecker))]
+    public class Movement : MonoBehaviour
     {
         public MovementData data;
+        [HideInInspector] public float input;
 
         public Vector2 Velocity => velocity;
         public Vector2 DesiredVelocity => desiredVelocity;
 
         [Header("Calculations")]
-        private float directionX;
         private Vector2 desiredVelocity;
         private Vector2 velocity;
         private float maxSpeedChange;
@@ -24,7 +24,7 @@ namespace Game.CharacterController
 
         [Header("Current State")]
         private bool onGround;
-        private bool pressingKey;
+        private bool anyMovement;
 
         private Rigidbody2D body;
         private SpriteRenderer spriteRenderer;
@@ -37,18 +37,14 @@ namespace Game.CharacterController
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         }
 
-        private void Start() => InputHelper.Actions.Player.MoveX.performed += OnMoveX;
-
-        private void OnMoveX(InputAction.CallbackContext context) => directionX = context.ReadValue<float>();
-
         private void Update()
         {
-            pressingKey = directionX != 0;
+            anyMovement = input != 0;
 
-            if (pressingKey)
-                spriteRenderer.flipX = directionX < 0;
+            if (anyMovement)
+                spriteRenderer.flipX = input < 0;
 
-            desiredVelocity = new Vector2(directionX, 0f) * Mathf.Max(data.maxSpeed - data.friction, 0f);
+            desiredVelocity = new Vector2(input, 0f) * Mathf.Max(data.maxSpeed - data.friction, 0f);
         }
 
         private void FixedUpdate()
@@ -70,10 +66,10 @@ namespace Game.CharacterController
             deceleration = onGround ? data.maxDeceleration : data.maxAirDeceleration;
             turnSpeed = onGround ? data.maxTurnSpeed : data.maxAirTurnSpeed;
 
-            maxSpeedChange = pressingKey switch
+            maxSpeedChange = anyMovement switch
             {
                 // ReSharper disable once CompareOfFloatsByEqualityOperator
-                true when Mathf.Sign(directionX) != Mathf.Sign(velocity.x) => turnSpeed * Time.deltaTime,
+                true when Mathf.Sign(input) != Mathf.Sign(velocity.x) => turnSpeed * Time.deltaTime,
                 true => acceleration * Time.deltaTime,
                 _ => deceleration * Time.deltaTime
             };

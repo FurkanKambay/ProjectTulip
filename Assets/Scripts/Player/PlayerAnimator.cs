@@ -15,7 +15,7 @@ namespace Game.Player
         private Animator animator;
         private Inventory inventory;
         private WorldModifier worldModifier;
-        private PlayerMovement playerMovement;
+        private Movement movement;
         private PlayerJump playerJump;
 
         private InputActions.PlayerActions playerActions;
@@ -27,7 +27,7 @@ namespace Game.Player
             animator = GetComponent<Animator>();
             inventory = GetComponentInParent<Inventory>();
             worldModifier = GetComponentInParent<WorldModifier>();
-            playerMovement = GetComponentInParent<PlayerMovement>();
+            movement = GetComponentInParent<Movement>();
             playerJump = GetComponentInParent<PlayerJump>();
         }
 
@@ -53,7 +53,7 @@ namespace Game.Player
             };
 
             animator.SetBool(animAttack, canPlayAttack);
-            animator.SetFloat(animSpeed, Mathf.Abs(playerMovement.Velocity.x));
+            animator.SetFloat(animSpeed, Mathf.Abs(movement.Velocity.x));
             animator.SetBool(animJump, playerJump.CurrentlyJumping);
         }
     }
