@@ -119,9 +119,9 @@ GameObject:
   - component: {fileID: 7554820057982354231}
   - component: {fileID: 7554820057982354224}
   - component: {fileID: 7554820057982354225}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: NPC
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -140,7 +140,7 @@ Transform:
   m_Children:
   - {fileID: 4091483515435726690}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1731939783602691552
 BoxCollider2D:
