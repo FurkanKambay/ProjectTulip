@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 17360023}
   - component: {fileID: 17360024}
   - component: {fileID: 17360025}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Pause Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -195,7 +195,7 @@ GameObject:
   - component: {fileID: 122205217}
   - component: {fileID: 122205218}
   - component: {fileID: 122205219}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: GUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
