@@ -1,26 +1,6 @@
 {
+    "explorer.excludeGitIgnore": true,
     "files.exclude": {
-        "**/.git": true,
-        "**/.DS_Store": true,
-        "**/*.meta": true,
-        "**/*.*.meta": true,
-        "**/*.sln": true,
-        "**/*.csproj": true,
-        "**/*.unityproj": true,
-        "**/*.fbx": true,
-        "**/*.FBX": true,
-        "**/*.tga": true,
-        "**/obj": true,
-        "**/Library": true,
-        "**/ProjectSettings": true,
-        "**/Temp": true,
-        "**/Logs": true,
-        "**/UserSettings": true,
-        "**/.idea": true,
-        "**/.vscode": true,
-        "**/*.cubemap": false,
-        "**/*.prefab": false,
-        "**/*.unity": false,
-        "**/*.mat": false
+        "UIElementsSchema/": true
     }
 }

@@ -1,103 +1,95 @@
-* text=auto
+[attr]lfs                   -text filter=lfs diff=lfs merge=lfs
+[attr]unity-yaml            text merge=unityyamlmerge linguist-language=yaml
 
-.* eol=lf
-*.cs eol=lf diff=csharp
-*.md eol=lf diff=markdown
-*.json eol=lf
-*.txt eol=lf
+*                           text=auto eol=lf
+*.cs                        text diff=csharp
+*.md                        text diff=markdown
 
-# Unity files
-*.meta eol=lf merge=unityyamlmerge
-*.unity eol=lf merge=unityyamlmerge
-*.asset eol=lf merge=unityyamlmerge
-*.prefab eol=lf merge=unityyamlmerge
-*.mat eol=lf merge=unityyamlmerge
-*.anim eol=lf merge=unityyamlmerge
-*.controller eol=lf merge=unityyamlmerge
-*.overrideController eol=lf merge=unityyamlmerge
-*.physicMaterial eol=lf merge=unityyamlmerge
-*.physicsMaterial2D eol=lf merge=unityyamlmerge
-*.playable eol=lf merge=unityyamlmerge
-*.mask eol=lf merge=unityyamlmerge
-*.brush eol=lf merge=unityyamlmerge
-*.flare eol=lf merge=unityyamlmerge
-*.fontsettings eol=lf merge=unityyamlmerge
-*.guiskin eol=lf merge=unityyamlmerge
-*.giparams eol=lf merge=unityyamlmerge
-*.renderTexture eol=lf merge=unityyamlmerge
-*.spriteatlas eol=lf merge=unityyamlmerge
-*.terrainlayer eol=lf merge=unityyamlmerge
-*.mixer eol=lf merge=unityyamlmerge
-*.shadervariants eol=lf merge=unityyamlmerge
+# Unity shader files
+*.cginc                     text
+*.compute                   text linguist-language=hlsl
+*.raytrace                  text linguist-language=hlsl
+*.shader                    text
+
+# Unity JSON files
+*.asmdef                    text linguist-language=json
+*.asmref                    text linguist-language=json
+*.index                     text linguist-language=json
+*.inputactions              text linguist-language=json
+*.shadergraph               text linguist-language=json
+*.shadersubgraph            text linguist-language=json
+
+# Unity UI Toolkit files
+*.tss                       text linguist-language=css diff=css
+*.uss                       text linguist-language=css diff=css
+*.uxml                      text linguist-language=xml linguist-detectable
+
+# Unity YAML files
+*.anim                      unity-yaml
+*.asset                     unity-yaml
+*.brush                     unity-yaml
+*.controller                unity-yaml
+*.cubemap                   unity-yaml
+*.flare                     unity-yaml
+*.fontsettings              unity-yaml
+*.giparams                  unity-yaml
+*.guiskin                   unity-yaml
+*.lighting                  unity-yaml
+*.mask                      unity-yaml
+*.mat                       unity-yaml
+*.meta                      unity-yaml
+*.mixer                     unity-yaml
+*.overrideController        unity-yaml
+*.physicMaterial            unity-yaml
+*.physicsMaterial2D         unity-yaml
+*.playable                  unity-yaml
+*.prefab                    unity-yaml
+*.preset                    unity-yaml
+*.renderTexture             unity-yaml
+*.scenetemplate             unity-yaml
+*.shadervariants            unity-yaml
+*.signal                    unity-yaml
+*.spriteatlas               unity-yaml
+*.spriteatlasv2             unity-yaml
+*.terrainlayer              unity-yaml
+*.unity                     unity-yaml
+
+# Hide settings and plugins from GitHub stats and diffs
+Assets/Plugins/**           linguist-generated
+Packages/packages-lock.json linguist-generated
 
 # Image formats
-*.psd filter=lfs diff=lfs merge=lfs -text
-*.jpg filter=lfs diff=lfs merge=lfs -text
-*.png filter=lfs diff=lfs merge=lfs -text
-*.gif filter=lfs diff=lfs merge=lfs -text
-*.bmp filter=lfs diff=lfs merge=lfs -text
-*.tga filter=lfs diff=lfs merge=lfs -text
-*.tiff filter=lfs diff=lfs merge=lfs -text
-*.tif filter=lfs diff=lfs merge=lfs -text
-*.iff filter=lfs diff=lfs merge=lfs -text
-*.pict filter=lfs diff=lfs merge=lfs -text
-*.dds filter=lfs diff=lfs merge=lfs -text
-*.xcf filter=lfs diff=lfs merge=lfs -text
+*.exr                       lfs
+*.hdr                       lfs
+*.jpg                       lfs
+*.png                       lfs
+*.psd                       lfs
+*.tga                       lfs
+*.xcf                       lfs
 
 # Audio formats
-*.mp3 filter=lfs diff=lfs merge=lfs -text
-*.ogg filter=lfs diff=lfs merge=lfs -text
-*.wav filter=lfs diff=lfs merge=lfs -text
-*.aiff filter=lfs diff=lfs merge=lfs -text
-*.aif filter=lfs diff=lfs merge=lfs -text
-*.mod filter=lfs diff=lfs merge=lfs -text
-*.it filter=lfs diff=lfs merge=lfs -text
-*.s3m filter=lfs diff=lfs merge=lfs -text
-*.xm filter=lfs diff=lfs merge=lfs -text
+*.flac                      lfs
+*.ogg                       lfs
+*.wav                       lfs
 
 # Video formats
-*.mov filter=lfs diff=lfs merge=lfs -text
-*.avi filter=lfs diff=lfs merge=lfs -text
-*.asf filter=lfs diff=lfs merge=lfs -text
-*.mpg filter=lfs diff=lfs merge=lfs -text
-*.mpeg filter=lfs diff=lfs merge=lfs -text
-*.mp4 filter=lfs diff=lfs merge=lfs -text
+*.mp4                       lfs
+*.ogv                       lfs
+*.vp8                       lfs
+*.webm                      lfs
 
 # 3D formats
-*.fbx filter=lfs diff=lfs merge=lfs -text
-*.obj filter=lfs diff=lfs merge=lfs -text
-*.max filter=lfs diff=lfs merge=lfs -text
-*.blend filter=lfs diff=lfs merge=lfs -text
-*.dae filter=lfs diff=lfs merge=lfs -text
-*.mb filter=lfs diff=lfs merge=lfs -text
-*.ma filter=lfs diff=lfs merge=lfs -text
-*.3ds filter=lfs diff=lfs merge=lfs -text
-*.dfx filter=lfs diff=lfs merge=lfs -text
-*.c4d filter=lfs diff=lfs merge=lfs -text
-*.lwo filter=lfs diff=lfs merge=lfs -text
-*.lwo2 filter=lfs diff=lfs merge=lfs -text
-*.abc filter=lfs diff=lfs merge=lfs -text
-*.3dm filter=lfs diff=lfs merge=lfs -text
+*.dae                       lfs
+*.dxf                       lfs
+*.fbx                       lfs
+*.obj                       lfs
 
 # Build
-*.dll filter=lfs diff=lfs merge=lfs -text
-*.pdb filter=lfs diff=lfs merge=lfs -text
-*.mdb filter=lfs diff=lfs merge=lfs -text
+*.dll                       lfs
+*.pdb                       lfs
 
 # Packaging
-*.zip filter=lfs diff=lfs merge=lfs -text
-*.7z filter=lfs diff=lfs merge=lfs -text
-*.gz filter=lfs diff=lfs merge=lfs -text
-*.rar filter=lfs diff=lfs merge=lfs -text
-*.tar filter=lfs diff=lfs merge=lfs -text
-
-# Collapse Unity-generated files on GitHub
-*.asset linguist-generated
-*.mat linguist-generated
-*.meta linguist-generated
-*.prefab linguist-generated
-*.unity linguist-generated
-
-# Vendored paths
-Assets/Plugins/** linguist-vendored
-UIElementsSchema/** linguist-vendored
+*.7z                        lfs
+*.gz                        lfs
+*.tar                       lfs
+*.zip                       lfs
