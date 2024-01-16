@@ -162,7 +162,6 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2526430196951330804}
-  - {fileID: 5007282566472200706}
   - {fileID: 7872146977082120335}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -579,41 +578,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   changeSpeed: 10
   showBar: 1
---- !u!1001 &9089751927518434556
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 8291246366843984804}
-    m_Modifications:
-    - target: {fileID: 1290479430052182172, guid: ebe0699985b138c4a831fe155f0ae23e, type: 3}
-      propertyPath: m_Name
-      value: Spot Light
-      objectReference: {fileID: 0}
-    - target: {fileID: 4276231347694757630, guid: ebe0699985b138c4a831fe155f0ae23e, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4276231347694757630, guid: ebe0699985b138c4a831fe155f0ae23e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4276231347694757630, guid: ebe0699985b138c4a831fe155f0ae23e, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.45
-      objectReference: {fileID: 0}
-    - target: {fileID: 4276231347694757630, guid: ebe0699985b138c4a831fe155f0ae23e, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: ebe0699985b138c4a831fe155f0ae23e, type: 3}
---- !u!4 &5007282566472200706 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4276231347694757630, guid: ebe0699985b138c4a831fe155f0ae23e, type: 3}
-  m_PrefabInstance: {fileID: 9089751927518434556}
-  m_PrefabAsset: {fileID: 0}
