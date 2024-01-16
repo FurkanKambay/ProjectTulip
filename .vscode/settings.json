@@ -2,6 +2,14 @@
     "explorer.excludeGitIgnore": true,
     "files.exclude": {
         "**/*.meta": true,
-        "UIElementsSchema/": true
+        "UIElementsSchema/": true,
+        "Assets/Plugins": true
+    },
+    "files.readonlyInclude": {
+        "**/*.asset": true,
+        "**/*.meta": true,
+        "**/*.prefab": true,
+        "**/*.unity": true,
+        "Packages/packages-lock.json": true
     }
 }
