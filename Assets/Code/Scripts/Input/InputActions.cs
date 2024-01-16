@@ -66,6 +66,15 @@ namespace Game.Input
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""8f4a9f01-bc33-48b4-ba2c-67de32c559e0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Use"",
                     ""type"": ""Button"",
                     ""id"": ""414a515b-d6b2-4989-91a3-f7b3f2037ce7"",
@@ -404,6 +413,17 @@ namespace Game.Input
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Menu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8f56b361-7a4b-47db-8d6b-c0029d541b1d"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -827,6 +847,7 @@ namespace Game.Input
             m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
             m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
             m_Player_Point = m_Player.FindAction("Point", throwIfNotFound: true);
+            m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
             m_Player_Use = m_Player.FindAction("Use", throwIfNotFound: true);
             m_Player_Hotbar = m_Player.FindAction("Hotbar", throwIfNotFound: true);
             m_Player_ToggleSmartCursor = m_Player.FindAction("Toggle Smart Cursor", throwIfNotFound: true);
@@ -906,6 +927,7 @@ namespace Game.Input
         private readonly InputAction m_Player_Jump;
         private readonly InputAction m_Player_Dash;
         private readonly InputAction m_Player_Point;
+        private readonly InputAction m_Player_Interact;
         private readonly InputAction m_Player_Use;
         private readonly InputAction m_Player_Hotbar;
         private readonly InputAction m_Player_ToggleSmartCursor;
@@ -920,6 +942,7 @@ namespace Game.Input
             public InputAction @Jump => m_Wrapper.m_Player_Jump;
             public InputAction @Dash => m_Wrapper.m_Player_Dash;
             public InputAction @Point => m_Wrapper.m_Player_Point;
+            public InputAction @Interact => m_Wrapper.m_Player_Interact;
             public InputAction @Use => m_Wrapper.m_Player_Use;
             public InputAction @Hotbar => m_Wrapper.m_Player_Hotbar;
             public InputAction @ToggleSmartCursor => m_Wrapper.m_Player_ToggleSmartCursor;
@@ -947,6 +970,9 @@ namespace Game.Input
                 @Point.started += instance.OnPoint;
                 @Point.performed += instance.OnPoint;
                 @Point.canceled += instance.OnPoint;
+                @Interact.started += instance.OnInteract;
+                @Interact.performed += instance.OnInteract;
+                @Interact.canceled += instance.OnInteract;
                 @Use.started += instance.OnUse;
                 @Use.performed += instance.OnUse;
                 @Use.canceled += instance.OnUse;
@@ -981,6 +1007,9 @@ namespace Game.Input
                 @Point.started -= instance.OnPoint;
                 @Point.performed -= instance.OnPoint;
                 @Point.canceled -= instance.OnPoint;
+                @Interact.started -= instance.OnInteract;
+                @Interact.performed -= instance.OnInteract;
+                @Interact.canceled -= instance.OnInteract;
                 @Use.started -= instance.OnUse;
                 @Use.performed -= instance.OnUse;
                 @Use.canceled -= instance.OnUse;
@@ -1135,6 +1164,7 @@ namespace Game.Input
             void OnJump(InputAction.CallbackContext context);
             void OnDash(InputAction.CallbackContext context);
             void OnPoint(InputAction.CallbackContext context);
+            void OnInteract(InputAction.CallbackContext context);
             void OnUse(InputAction.CallbackContext context);
             void OnHotbar(InputAction.CallbackContext context);
             void OnToggleSmartCursor(InputAction.CallbackContext context);

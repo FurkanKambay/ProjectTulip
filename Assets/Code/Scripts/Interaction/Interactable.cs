@@ -15,7 +15,7 @@ namespace Game.Interaction
         private InputHelper input;
         private bool isHovering;
 
-        private void OnClick(InputAction.CallbackContext context)
+        private void HandleInteract(InputAction.CallbackContext context)
         {
             if (!isHovering) return;
             Interacted?.Invoke();
@@ -26,8 +26,8 @@ namespace Game.Interaction
         // TODO: highlight sprite outline
         private void Update() => isHovering = trigger.OverlapPoint(input.MouseWorldPoint);
 
-        private void OnEnable() => InputHelper.Actions.Player.Use.performed += OnClick;
-        private void OnDisable() => InputHelper.Actions.Player.Use.performed -= OnClick;
+        private void OnEnable() => InputHelper.Actions.Player.Interact.performed += HandleInteract;
+        private void OnDisable() => InputHelper.Actions.Player.Interact.performed -= HandleInteract;
 
         private void OnValidate()
         {
