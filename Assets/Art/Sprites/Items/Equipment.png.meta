@@ -110,22 +110,22 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Katana
+      name: Sword
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 96
         width: 32
         height: 32
       alignment: 9
-      pivot: {x: 0.5, y: 0.09375}
+      pivot: {x: 0.5, y: 0.125}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 10c071ad8bcec1947851dbb0ea25238a
-      internalID: 1861140112
+      spriteID: 9f58f60e3562cd2479f73a999e059655
+      internalID: 1899919932
       vertices: []
       indices: 
       edges: []
@@ -135,17 +135,17 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 0
+        y: 96
         width: 32
         height: 32
       alignment: 9
-      pivot: {x: 0.5, y: 0.09375}
+      pivot: {x: 0.5, y: 0.125}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 64c7d189fd0f1b54eaeced9c9fb827a9
+      spriteID: 0c5fccae784905c44bc5e24fe1f1487f
       internalID: -1312279058
       vertices: []
       indices: 
@@ -162,8 +162,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Katana: 1861140112
       Pickaxe: -1312279058
+      Sword: 1899919932
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
