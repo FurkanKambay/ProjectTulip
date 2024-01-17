@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Game.Data;
 using Game.Data.Tiles;
 using Game.Helpers;
 using UnityEngine;
@@ -20,13 +21,13 @@ namespace Game
         public event Action<Vector3Int, BlockTile> BlockDestroyed;
 
         /// <summary>
-        /// Damages a block at the given cell.
+        /// Damages a block at the given cell coordinates.
         /// </summary>
-        /// <param name="invokeDestroyEvent">Whether to invoke the BlockDestroyed event.</param>
-        /// <returns>Whether the block is destroyed.</returns>
-        public bool DamageBlock(Vector3Int cell, int damage, bool invokeDestroyEvent = true)
+        /// <returns>Whether the block was destroyed.</returns>
+        public InventoryModification DamageBlock(Vector3Int cell, int damage)
         {
-            if (!Tilemap.HasTile(cell)) return false;
+            if (!Tilemap.HasTile(cell))
+                return InventoryModification.Empty;
 
             TileDamageMap.TryAdd(cell, 0);
 
@@ -37,38 +38,32 @@ namespace Game
             if (damageTaken < hardness)
             {
                 BlockHit?.Invoke(cell, block);
-                return false;
+                return InventoryModification.Empty;
             }
-
-            if (invokeDestroyEvent)
-                BlockDestroyed?.Invoke(cell, block);
 
             Tilemap.SetTile(cell, null);
             TileDamageMap.Remove(cell);
-            return true;
+            BlockDestroyed?.Invoke(cell, block);
+            return new InventoryModification(toAdd: new ItemStack(item: block));
         }
 
         /// <summary>
-        /// Places a block at the given cell.
+        /// Tries to place a block at the given cell coordinates.
         /// </summary>
-        /// <param name="damage">Damage amount if cell is not empty.</param>
         /// <returns>Whether the block was placed successfully.</returns>
-        public bool PlaceBlock(Vector3Int cell, BlockTile newBlock, int damage = 0)
+        public InventoryModification PlaceBlock(Vector3Int cell, BlockTile newBlock)
         {
-            BlockTile block = GetBlock(cell);
-            if (block == newBlock) return false;
-
-            if (block && !DamageBlock(cell, damage, invokeDestroyEvent: false))
-                return false;
+            if (Tilemap.HasTile(cell))
+                return InventoryModification.Empty;
 
             Tilemap.SetTile(cell, newBlock);
             TileDamageMap.Remove(cell);
             BlockPlaced?.Invoke(cell, newBlock);
-            return true;
+            return new InventoryModification(toRemove: new ItemStack(item: newBlock));
         }
 
         public int GetTileDamage(Vector3Int cell)
-            => TileDamageMap.TryGetValue(cell, out int damage) ? damage : 0;
+            => TileDamageMap.GetValueOrDefault(cell, 0);
 
         public bool CellIntersects(Vector3Int cell, Bounds other)
             => CellBoundsWorld(cell).Intersects(other);

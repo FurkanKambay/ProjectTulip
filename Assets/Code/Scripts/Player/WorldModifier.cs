@@ -1,4 +1,5 @@
 using System;
+using Game.Data;
 using Game.Data.Interfaces;
 using Game.Data.Items;
 using Game.Data.Tiles;
@@ -70,19 +71,16 @@ namespace Game.Player
 
             timeSinceLastUse = 0;
 
-            if (!item.CanUseOnBlock(world.GetBlock(FocusedCell.Value))) return;
+            BlockTile blockTile = world.GetBlock(FocusedCell.Value);
+            if (!item.CanUseOnBlock(blockTile)) return;
 
-            if (item is Pickaxe pickaxe)
+            inventory.ApplyModification(item.Type switch
             {
-                BlockTile block = world.GetBlock(FocusedCell.Value);
-                if (world.DamageBlock(FocusedCell.Value, pickaxe.Power))
-                    inventory.AddItem(block, 1);
-            }
-            else if (item is BlockTile block)
-            {
-                if (world.PlaceBlock(FocusedCell.Value, block, inventory.FirstPickaxe.Power))
-                    inventory.RemoveItem(block, 1);
-            }
+                ItemType.Block => world.PlaceBlock(FocusedCell.Value, item as BlockTile),
+                ItemType.Wall => InventoryModification.Empty,
+                ItemType.Pickaxe => world.DamageBlock(FocusedCell.Value, ((Pickaxe)item).Power),
+                _ => InventoryModification.Empty
+            });
         }
 
         private void AssignCells()

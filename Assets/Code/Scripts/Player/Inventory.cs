@@ -16,13 +16,12 @@ namespace Game.Player
         public override ItemStack HotbarSelected => Items[HotbarSelectedIndex];
 
         private int hotbarSelectedIndex;
+
         public override int HotbarSelectedIndex
         {
             get => hotbarSelectedIndex;
             protected set => hotbarSelectedIndex = Mathf.Clamp(value, 0, Items.Length - 1);
         }
-
-        public Pickaxe FirstPickaxe => Items.Select(s => s.Item).OfType<Pickaxe>().First();
 
         public override ItemStack this[int index]
         {
@@ -37,8 +36,31 @@ namespace Game.Player
         public override event Action<int> HotbarSelectionChanged;
         public override event Action HotbarModified;
 
-        public bool RemoveItem(IItem item, int amount)
+        /// <summary>
+        /// Applies the <see cref="InventoryModification"/> to the inventory by first removing the items in
+        /// <see cref="InventoryModification.ToRemove"/>, then adding items to the inventory from
+        /// <see cref="InventoryModification.ToAdd"/>.
+        /// </summary>
+        /// <param name="modification">The item stacks to remove from and add to the inventory.</param>
+        /// <returns>The remaining item stacks that could not be removed or added.</returns>
+        public InventoryModification ApplyModification(InventoryModification modification)
         {
+            var notRemoved = new ItemStack(modification.ToRemove?.Item, RemoveItem(modification.ToRemove));
+            var notAdded = new ItemStack(modification.ToAdd?.Item, AddItem(modification.ToAdd));
+
+            return new InventoryModification(
+                modification.WouldRemove ? notRemoved : null,
+                modification.WouldAdd ? notAdded : null
+            );
+        }
+
+        internal int AddItem(ItemStack itemStack) => AddItem(itemStack.Item, itemStack.Amount);
+        internal int RemoveItem(ItemStack itemStack) => RemoveItem(itemStack.Item, itemStack.Amount);
+
+        internal int RemoveItem(IItem item, int amount)
+        {
+            if (item == null || amount <= 0) return amount;
+
             int remaining = amount;
             while (remaining > 0)
             {
@@ -61,15 +83,16 @@ namespace Game.Player
                     Items[index] = null;
             }
 
-            if (remaining > 0)
-                return false;
+            if (remaining == 0)
+                HotbarModified?.Invoke();
 
-            HotbarModified?.Invoke();
-            return true;
+            return remaining;
         }
 
-        public int AddItem(IItem item, int amount)
+        internal int AddItem(IItem item, int amount)
         {
+            if (item == null || amount <= 0) return amount;
+
             int remaining = amount;
             while (remaining > 0)
             {
@@ -77,14 +100,16 @@ namespace Game.Player
                 if (index < 0) index = CreateNewStack(item);
                 if (index < 0)
                 {
-                    Debug.LogWarning("Inventory full");
+                    // Inventory full
                     return amount;
                 }
 
                 remaining = AddToExistingStack(index, remaining);
             }
 
-            if (remaining == 0) HotbarModified?.Invoke();
+            if (remaining == 0)
+                HotbarModified?.Invoke();
+
             return remaining;
         }
 
@@ -113,6 +138,7 @@ namespace Game.Player
                 if (Items[i]?.Item == item && (allowAny || Items[i].Amount < item?.MaxAmount))
                     return i;
             }
+
             return -1;
         }
 
@@ -123,6 +149,7 @@ namespace Game.Player
                 if (Items[i]?.Item is null)
                     return i;
             }
+
             return -1;
         }
 
