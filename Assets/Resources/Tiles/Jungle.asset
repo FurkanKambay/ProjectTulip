@@ -116,6 +116,7 @@ MonoBehaviour:
   color: {r: 0.0141509175, g: 1, b: 0.39136198, a: 1}
   name: Jungle Dirt
   description: A patch of dirt from the jungle.
+  type: 0
   iconScale: 1
   maxAmount: 99
   hardness: 50

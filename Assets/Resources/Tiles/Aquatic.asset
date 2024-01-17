@@ -116,6 +116,7 @@ MonoBehaviour:
   color: {r: 0, g: 0.7582536, b: 1, a: 1}
   name: Aquatic Dirt
   description: A patch of dirt that is aquatic.
+  type: 0
   iconScale: 1
   maxAmount: 99
   hardness: 120

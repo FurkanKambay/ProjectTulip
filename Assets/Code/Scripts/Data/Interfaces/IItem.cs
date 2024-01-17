@@ -6,6 +6,7 @@ namespace Game.Data.Interfaces
     {
         string Name { get; }
         string Description { get; }
+        ItemType Type { get; }
         Sprite Icon { get; }
         float IconScale { get; }
         int MaxAmount { get; }
@@ -15,6 +16,7 @@ namespace Game.Data.Interfaces
     {
         public string Name => name;
         public string Description => description;
+        public ItemType Type => type;
         public Sprite Icon => icon;
         public float IconScale => iconScale;
         public int MaxAmount => maxAmount;
@@ -22,8 +24,17 @@ namespace Game.Data.Interfaces
         [Header("Item Data")]
         [SerializeField] new string name;
         [SerializeField, Multiline] string description;
+        [SerializeField] ItemType type;
         [SerializeField] Sprite icon;
         [SerializeField] float iconScale = 1f;
         [SerializeField, Min(1)] int maxAmount = 1;
+    }
+
+    public enum ItemType
+    {
+        Block,
+        Wall,
+        Pickaxe,
+        Weapon
     }
 }

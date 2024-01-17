@@ -11,6 +11,7 @@ namespace Game.Data.Tiles
 
         public string Name => name;
         public string Description => description;
+        public ItemType Type => type;
         public Sprite Icon => m_DefaultSprite;
         public float IconScale => iconScale;
         public int MaxAmount => maxAmount;
@@ -19,6 +20,7 @@ namespace Game.Data.Tiles
 
         [SerializeField] new string name;
         [SerializeField, Multiline] string description;
+        [SerializeField] ItemType type;
         [SerializeField] float iconScale = 1f;
         [SerializeField, Min(1)] int maxAmount = 999;
 

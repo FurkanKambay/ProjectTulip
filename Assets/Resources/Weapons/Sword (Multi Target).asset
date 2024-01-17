@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Broad Sword
   description: A sword capable of hitting multiple targets.
+  type: 3
   icon: {fileID: 1899919932, guid: c8834629caf834b43a4462ab2b3b36f7, type: 3}
   iconScale: 2
   maxAmount: 1
