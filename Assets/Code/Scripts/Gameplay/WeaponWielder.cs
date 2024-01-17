@@ -57,7 +57,7 @@ namespace Game.Gameplay
             if (data.IsMultiTarget)
             {
                 _ = Physics2D.OverlapBoxNonAlloc(point, attackBoxSize, default, hits, hitMask);
-                return hits.Select(hit => hit.GetComponent<Health>());
+                return hits.Select(hit => hit ? hit.GetComponent<Health>() : null);
             }
 
             // TODO: find the closest hit instead?

@@ -33,7 +33,7 @@ namespace Game.Gameplay
 
         public void ChargeAndSwing(TweenCallback onCharge = null, TweenCallback onSwing = null)
         {
-            if (timeSinceLastUse <= Current.Cooldown) return;
+            if (timeSinceLastUse <= Current?.Cooldown) return;
             if (state != ItemSwingState.Ready) return;
             timeSinceLastUse = 0f;
 
