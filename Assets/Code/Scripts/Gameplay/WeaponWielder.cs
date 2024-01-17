@@ -51,20 +51,19 @@ namespace Game.Gameplay
             renderer.flipX = aimDirectionSign < 0;
 
             Vector2 point = position + new Vector2(data.Range / 2f * aimDirectionSign, 1f);
-            var size = new Vector2(data.Range, 1f);
+            var attackBoxSize = new Vector2(data.Range, 1f);
 
-            if (data.MultiTarget)
+            var hits = new Collider2D[9];
+            if (data.IsMultiTarget)
             {
-                // TODO: limit the amount of hits?
-                Collider2D[] allHits = Physics2D.OverlapBoxAll(point, size, default, hitMask);
-                return allHits.Select(hit => hit.GetComponent<Health>());
+                _ = Physics2D.OverlapBoxNonAlloc(point, attackBoxSize, default, hits, hitMask);
+                return hits.Select(hit => hit.GetComponent<Health>());
             }
-            else
-            {
-                // TODO: find the closest hit instead?
-                Collider2D hit = Physics2D.OverlapBox(point, size, default, hitMask);
-                return new[] { hit ? hit.GetComponent<Health>() : null };
-            }
+
+            // TODO: find the closest hit instead?
+            _ = Physics2D.OverlapBoxNonAlloc(point, attackBoxSize, default, hits, hitMask);
+            Collider2D singleHit = hits[0];
+            return new[] { singleHit ? singleHit.GetComponent<Health>() : null };
         }
 
         private void OnDrawGizmosSelected()
