@@ -9,11 +9,16 @@ namespace Game.Data.Tiles
     {
         public float Cooldown => .25f;
 
+        public string Name => name;
+        public string Description => description;
         public Sprite Icon => m_DefaultSprite;
         public float IconScale => iconScale;
         public int MaxAmount => maxAmount;
 
         public Color color = Color.white;
+
+        [SerializeField] new string name;
+        [SerializeField, Multiline] string description;
         [SerializeField] float iconScale = 1f;
         [SerializeField, Min(1)] int maxAmount = 999;
 
@@ -39,6 +44,7 @@ namespace Game.Data.Tiles
             base.GetTileData(location, tilemap, ref tileData);
         }
 
+        // ReSharper disable once ClassNeverInstantiated.Global
         public class Neighbor : RuleTile.TilingRuleOutput.Neighbor
         {
             public const int Null = 3;

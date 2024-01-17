@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad214e76725c4fa284a9f26c1076f0fb, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
+  name: Sword
+  description: A regular sword.
   icon: {fileID: 1899919932, guid: c8834629caf834b43a4462ab2b3b36f7, type: 3}
   iconScale: 2
   maxAmount: 1

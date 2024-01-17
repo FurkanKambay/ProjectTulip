@@ -114,6 +114,8 @@ MonoBehaviour:
     - {x: 0, y: -1, z: 0}
     m_RuleTransform: 0
   color: {r: 0, g: 0.7582536, b: 1, a: 1}
+  name: Aquatic Dirt
+  description: A patch of dirt that is aquatic.
   iconScale: 1
   maxAmount: 99
   hardness: 120

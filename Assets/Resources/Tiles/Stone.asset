@@ -114,6 +114,8 @@ MonoBehaviour:
     - {x: 0, y: -1, z: 0}
     m_RuleTransform: 0
   color: {r: 0.695, g: 1, b: 0.95425, a: 1}
+  name: Stone
+  description: Stone.
   iconScale: 1
   maxAmount: 99
   hardness: 100
