@@ -4,8 +4,8 @@ namespace Game.Data
     {
         public static readonly InventoryModification Empty = new();
 
-        public bool WouldRemove => ToRemove?.Amount > 0;
-        public bool WouldAdd => ToAdd?.Amount > 0;
+        public bool WouldRemove => ToRemove is { IsValid: true };
+        public bool WouldAdd => ToAdd is { IsValid: true };
         public bool WouldModify => WouldAdd || WouldRemove;
 
         public readonly ItemStack ToRemove;

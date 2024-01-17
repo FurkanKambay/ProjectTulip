@@ -116,7 +116,7 @@ MonoBehaviour:
   color: {r: 0.695, g: 1, b: 0.95425, a: 1}
   name: Stone
   description: Stone.
-  type: 0
+  type: 1
   iconScale: 1
   maxAmount: 99
   hardness: 100

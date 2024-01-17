@@ -116,7 +116,7 @@ MonoBehaviour:
   color: {r: 0.46226418, g: 0.46226418, b: 0.46226418, a: 1}
   name: Deepstone
   description: Stone that is deep.
-  type: 0
+  type: 1
   iconScale: 1
   maxAmount: 99
   hardness: 150

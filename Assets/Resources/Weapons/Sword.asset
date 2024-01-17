@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Sword
   description: A regular sword.
-  type: 3
+  type: 4
   icon: {fileID: 1899919932, guid: c8834629caf834b43a4462ab2b3b36f7, type: 3}
   iconScale: 2
   maxAmount: 1
   cooldown: 0.5
   damage: 10
   range: 2
-  multiTarget: 0
+  isMultiTarget: 0

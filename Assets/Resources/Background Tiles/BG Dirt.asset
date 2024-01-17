@@ -19,7 +19,7 @@ MonoBehaviour:
   color: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 1}
   name: Dirt Wall
   description: A patch of dirt wall.
-  type: 1
+  type: 2
   iconScale: 1.2
   maxAmount: 99
   hardness: 20

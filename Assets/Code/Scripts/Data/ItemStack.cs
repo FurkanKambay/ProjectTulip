@@ -6,18 +6,20 @@ namespace Game.Data
 {
     public class ItemStack
     {
+        public bool IsValid => Item != null && Amount > 0;
+
         public IItem Item { get; }
 
         private int amount;
         public int Amount
         {
             get => amount;
-            set => amount = Mathf.Clamp(value, 0, Item.MaxAmount);
+            set => amount = Mathf.Clamp(value, 0, Item?.MaxAmount ?? 0);
         }
 
         public ItemStack(IItem item, int amount = 1)
         {
-            Item = item ?? throw new ArgumentNullException(nameof(item));
+            Item = item;
             Amount = amount;
         }
 

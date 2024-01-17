@@ -116,7 +116,7 @@ MonoBehaviour:
   color: {r: 0.95, g: 0.5769667, b: 0.39045, a: 1}
   name: Dirt
   description: A patch of dirt.
-  type: 0
+  type: 1
   iconScale: 1
   maxAmount: 99
   hardness: 50

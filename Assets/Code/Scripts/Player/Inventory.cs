@@ -47,15 +47,19 @@ namespace Game.Player
         {
             var notRemoved = new ItemStack(modification.ToRemove?.Item, RemoveItem(modification.ToRemove));
             var notAdded = new ItemStack(modification.ToAdd?.Item, AddItem(modification.ToAdd));
-
-            return new InventoryModification(
-                modification.WouldRemove ? notRemoved : null,
-                modification.WouldAdd ? notAdded : null
-            );
+            return !modification.WouldModify
+                ? InventoryModification.Empty
+                : new InventoryModification(
+                    modification.WouldRemove ? notRemoved : null,
+                    modification.WouldAdd ? notAdded : null
+                );
         }
 
-        internal int AddItem(ItemStack itemStack) => AddItem(itemStack.Item, itemStack.Amount);
-        internal int RemoveItem(ItemStack itemStack) => RemoveItem(itemStack.Item, itemStack.Amount);
+        internal int RemoveItem(ItemStack itemStack)
+            => itemStack is { IsValid: true } ? RemoveItem(itemStack.Item, itemStack.Amount) : 0;
+
+        internal int AddItem(ItemStack itemStack)
+            => itemStack is { IsValid: true } ? AddItem(itemStack.Item, itemStack.Amount) : 0;
 
         internal int RemoveItem(IItem item, int amount)
         {
