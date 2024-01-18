@@ -46,8 +46,14 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Characters
+  - name: NPC
     uniqueID: 98709275
+    locked: 0
+  - name: Enemy
+    uniqueID: 1297104123
+    locked: 0
+  - name: Player
+    uniqueID: 102921957
     locked: 0
   - name: Overlay
     uniqueID: 4016270629
