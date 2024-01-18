@@ -19,13 +19,13 @@ namespace Game.Gameplay
 
         private void FixedUpdate() => animator.SetFloat(animSpeed, Mathf.Abs(movement.Velocity.x));
 
-        private void OnDamageTaken(DamageEventArgs damage)
+        private void HandleHurt(DamageEventArgs damage)
         {
             if (hurtSound) AudioSource.PlayClipAtPoint(hurtSound, damage.Source.transform.position);
             animator.SetTrigger(animHurt);
         }
 
-        private void OnDied(DamageEventArgs damage)
+        private void HandleDied(DamageEventArgs damage)
         {
             if (dieSound) AudioSource.PlayClipAtPoint(dieSound, damage.Source.transform.position);
             animator.SetTrigger(animDie);
@@ -47,14 +47,14 @@ namespace Game.Gameplay
 
         private void OnEnable()
         {
-            health.DamageTaken += OnDamageTaken;
-            health.Died += OnDied;
+            health.OnHurt += HandleHurt;
+            health.OnDie += HandleDied;
         }
 
         private void OnDisable()
         {
-            health.DamageTaken -= OnDamageTaken;
-            health.Died -= OnDied;
+            health.OnHurt -= HandleHurt;
+            health.OnDie -= HandleDied;
         }
     }
 }

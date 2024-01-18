@@ -9,17 +9,17 @@ namespace Game.Input
     {
         public static InputActions Actions => Instance.actions ??= new InputActions();
 
-        public event Action<int> HotbarSelected;
+        public event Action<int> OnSelectHotbar;
         public Vector2 MouseWorldPoint => mainCamera.ScreenToWorldPoint(screenPoint);
 
         private InputActions actions;
         private Camera mainCamera;
         private Vector2 screenPoint;
 
-        private void OnHotbar(InputAction.CallbackContext context)
-            => HotbarSelected?.Invoke(Convert.ToInt32(context.control.name) - 1);
+        private void HandleInputHotbar(InputAction.CallbackContext context)
+            => OnSelectHotbar?.Invoke(Convert.ToInt32(context.control.name) - 1);
 
-        private void OnPoint(InputAction.CallbackContext context)
+        private void HandleInputPoint(InputAction.CallbackContext context)
             => screenPoint = context.ReadValue<Vector2>();
 
         protected override void Awake()
@@ -27,8 +27,8 @@ namespace Game.Input
             base.Awake();
 
             mainCamera = Camera.main;
-            Actions.Player.Hotbar.performed += OnHotbar;
-            Actions.Player.Point.performed += OnPoint;
+            Actions.Player.Hotbar.performed += HandleInputHotbar;
+            Actions.Player.Point.performed += HandleInputPoint;
         }
 
         private void OnEnable() => Actions.Enable();

@@ -19,7 +19,7 @@ namespace Game
 
         private World world;
 
-        private void OnCellFocusChanged(Vector3Int? cell)
+        private void HandleCellFocusChanged(Vector3Int? cell)
             => highlightedCell = cell;
 
         private void Awake()
@@ -50,7 +50,7 @@ namespace Game
         private void LateUpdate()
             => transform.position = Vector3.Lerp(transform.position, targetPosition, speed * Time.deltaTime);
 
-        private void OnEnable() => worldModifier.CellFocusChanged += OnCellFocusChanged;
-        private void OnDisable() => worldModifier.CellFocusChanged -= OnCellFocusChanged;
+        private void OnEnable() => worldModifier.OnChangeCellFocus += HandleCellFocusChanged;
+        private void OnDisable() => worldModifier.OnChangeCellFocus -= HandleCellFocusChanged;
     }
 }

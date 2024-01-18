@@ -10,24 +10,25 @@ namespace Game.Gameplay
         [SerializeField] float currentHealth = 100f;
 
         public float MaxHealth => maxHealth;
+
         public float CurrentHealth
         {
             get => currentHealth;
             set => currentHealth = Mathf.Clamp(value, 0, MaxHealth);
         }
 
-        public event Action<DamageEventArgs> DamageTaken;
-        public event Action<DamageEventArgs> Died;
+        public event Action<DamageEventArgs> OnHurt;
+        public event Action<DamageEventArgs> OnDie;
 
         public void TakeDamage(float damage, Health source)
         {
             CurrentHealth -= damage;
 
             var eventArgs = new DamageEventArgs(damage, source, this);
-            DamageTaken?.Invoke(eventArgs);
+            OnHurt?.Invoke(eventArgs);
 
             if (CurrentHealth > 0) return;
-            Died?.Invoke(eventArgs);
+            OnDie?.Invoke(eventArgs);
             enabled = false;
         }
 

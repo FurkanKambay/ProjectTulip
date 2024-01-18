@@ -23,11 +23,11 @@ namespace Game.Player
             {
                 if (focusedCell == value) return;
                 focusedCell = value;
-                CellFocusChanged?.Invoke(focusedCell);
+                OnChangeCellFocus?.Invoke(focusedCell);
             }
         }
 
-        public event Action<Vector3Int?> CellFocusChanged;
+        public event Action<Vector3Int?> OnChangeCellFocus;
 
         private Inventory inventory;
         private AudioSource audioSource;
@@ -52,9 +52,9 @@ namespace Game.Player
             audioSource = GetComponent<AudioSource>();
             playerCollider = GetComponent<BoxCollider2D>();
 
-            world.BlockPlaced += PlayPlaceSound;
-            world.BlockHit += PlayHitSound;
-            world.BlockDestroyed += PlayHitSound;
+            world.OnPlaceBlock += PlayPlaceSound;
+            world.OnHitBlock += PlayHitSound;
+            world.OnDestroyBlock += PlayHitSound;
         }
 
         private void Update()

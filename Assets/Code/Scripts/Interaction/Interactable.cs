@@ -10,7 +10,7 @@ namespace Game.Interaction
     {
         [SerializeField] BoxCollider2D trigger;
 
-        public event Action Interacted;
+        public event Action OnInteract;
 
         private InputHelper input;
         private bool isHovering;
@@ -18,7 +18,7 @@ namespace Game.Interaction
         private void HandleInteract(InputAction.CallbackContext context)
         {
             if (!isHovering) return;
-            Interacted?.Invoke();
+            OnInteract?.Invoke();
         }
 
         private void Awake() => input = InputHelper.Instance;

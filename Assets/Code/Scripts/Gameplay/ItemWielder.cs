@@ -136,8 +136,8 @@ namespace Game.Gameplay
             itemVisual.localEulerAngles = Vector3.forward * readyAngle;
         }
 
-        private void OnEnable() => inventory.HotbarSelectionChanged += UpdateItemSprite;
-        private void OnDisable() => inventory.HotbarSelectionChanged -= UpdateItemSprite;
+        private void OnEnable() => inventory.OnChangeHotbarSelection += UpdateItemSprite;
+        private void OnDisable() => inventory.OnChangeHotbarSelection -= UpdateItemSprite;
     }
 
     internal enum ItemSwingState

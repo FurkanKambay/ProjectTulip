@@ -11,8 +11,8 @@ namespace Game.Data.Interfaces
         ItemStack HotbarSelected { get; }
         int HotbarSelectedIndex { get; }
 
-        event Action HotbarModified;
-        event Action<int> HotbarSelectionChanged;
+        event Action OnModifyHotbar;
+        event Action<int> OnChangeHotbarSelection;
     }
 
     public abstract class InventoryBase : MonoBehaviour, IInventory
@@ -21,7 +21,7 @@ namespace Game.Data.Interfaces
         public abstract ItemStack HotbarSelected { get; }
         public abstract int HotbarSelectedIndex { get; protected set; }
         public abstract ItemStack this[int index] { get; set; }
-        public abstract event Action HotbarModified;
-        public abstract event Action<int> HotbarSelectionChanged;
+        public abstract event Action OnModifyHotbar;
+        public abstract event Action<int> OnChangeHotbarSelection;
     }
 }

@@ -57,14 +57,14 @@ namespace Game.UI
 
         private void OnEnable()
         {
-            inventory.HotbarModified += OnHotbarModified;
-            inventory.HotbarSelectionChanged += OnHotbarSelectionChanged;
+            inventory.OnModifyHotbar += OnHotbarModified;
+            inventory.OnChangeHotbarSelection += OnHotbarSelectionChanged;
         }
 
         private void OnDisable()
         {
-            inventory.HotbarModified -= OnHotbarModified;
-            inventory.HotbarSelectionChanged -= OnHotbarSelectionChanged;
+            inventory.OnModifyHotbar -= OnHotbarModified;
+            inventory.OnChangeHotbarSelection -= OnHotbarSelectionChanged;
         }
     }
 }

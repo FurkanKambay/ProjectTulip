@@ -29,8 +29,8 @@ namespace Game.Player
 
         [SerializeField] HotbarData hotbarData;
 
-        public override event Action<int> HotbarSelectionChanged;
-        public override event Action HotbarModified;
+        public override event Action<int> OnChangeHotbarSelection;
+        public override event Action OnModifyHotbar;
 
         /// <summary>
         /// Applies the <see cref="InventoryModification"/> to the inventory by first removing the items in
@@ -70,7 +70,7 @@ namespace Game.Player
 
                 if (index < 0)
                 {
-                    HotbarModified?.Invoke();
+                    OnModifyHotbar?.Invoke();
                     break;
                 }
 
@@ -84,7 +84,7 @@ namespace Game.Player
             }
 
             if (remaining == 0)
-                HotbarModified?.Invoke();
+                OnModifyHotbar?.Invoke();
 
             return remaining;
         }
@@ -108,7 +108,7 @@ namespace Game.Player
             }
 
             if (remaining == 0)
-                HotbarModified?.Invoke();
+                OnModifyHotbar?.Invoke();
 
             return remaining;
         }
@@ -153,19 +153,19 @@ namespace Game.Player
             return -1;
         }
 
-        private void OnHotbarSelected(int index)
+        private void HandleHotbarSelected(int index)
         {
             if (index == HotbarSelectedIndex)
                 return;
 
             HotbarSelectedIndex = index;
-            HotbarSelectionChanged?.Invoke(HotbarSelectedIndex);
+            OnChangeHotbarSelection?.Invoke(HotbarSelectedIndex);
         }
 
         private void Awake()
         {
             Items = hotbarData.hotbar.Select(so => so ? new ItemStack(so) : null).ToArray();
-            HotbarModified?.Invoke();
+            OnModifyHotbar?.Invoke();
         }
 
         private void OnScroll(InputAction.CallbackContext context)
@@ -173,20 +173,20 @@ namespace Game.Player
             float delta = context.ReadValue<float>();
             if (delta == 0) return;
 
-            OnHotbarSelected(HotbarSelectedIndex - Math.Sign(delta));
+            HandleHotbarSelected(HotbarSelectedIndex - Math.Sign(delta));
         }
 
         private void OnEnable()
         {
             InputHelper.Actions.Player.Scroll.performed += OnScroll;
-            InputHelper.Instance.HotbarSelected += OnHotbarSelected;
-            HotbarSelectionChanged?.Invoke(HotbarSelectedIndex);
+            InputHelper.Instance.OnSelectHotbar += HandleHotbarSelected;
+            OnChangeHotbarSelection?.Invoke(HotbarSelectedIndex);
         }
 
         private void OnDisable()
         {
             InputHelper.Actions.Player.Scroll.performed -= OnScroll;
-            InputHelper.Instance.HotbarSelected -= OnHotbarSelected;
+            InputHelper.Instance.OnSelectHotbar -= HandleHotbarSelected;
         }
     }
 }

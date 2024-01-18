@@ -16,9 +16,9 @@ namespace Game
 
         private Dictionary<Vector3Int, int> TileDamageMap { get; } = new();
 
-        public event Action<Vector3Int, BlockTile> BlockPlaced;
-        public event Action<Vector3Int, BlockTile> BlockHit;
-        public event Action<Vector3Int, BlockTile> BlockDestroyed;
+        public event Action<Vector3Int, BlockTile> OnPlaceBlock;
+        public event Action<Vector3Int, BlockTile> OnHitBlock;
+        public event Action<Vector3Int, BlockTile> OnDestroyBlock;
 
         /// <summary>
         /// Damages a block at the given cell coordinates.
@@ -37,13 +37,13 @@ namespace Game
 
             if (damageTaken < hardness)
             {
-                BlockHit?.Invoke(cell, block);
+                OnHitBlock?.Invoke(cell, block);
                 return InventoryModification.Empty;
             }
 
             Tilemap.SetTile(cell, null);
             TileDamageMap.Remove(cell);
-            BlockDestroyed?.Invoke(cell, block);
+            OnDestroyBlock?.Invoke(cell, block);
             return new InventoryModification(toAdd: new ItemStack(item: block));
         }
 
@@ -58,7 +58,7 @@ namespace Game
 
             Tilemap.SetTile(cell, newBlock);
             TileDamageMap.Remove(cell);
-            BlockPlaced?.Invoke(cell, newBlock);
+            OnPlaceBlock?.Invoke(cell, newBlock);
             return new InventoryModification(toRemove: new ItemStack(item: newBlock));
         }
 
