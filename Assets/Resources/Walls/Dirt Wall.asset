@@ -23,5 +23,5 @@ MonoBehaviour:
   iconScale: 1.2
   maxAmount: 99
   hardness: 20
-  hitSound: {fileID: 8300000, guid: 3606e9b211edbb14b875e6848fff1274, type: 3}
-  placeSound: {fileID: 8300000, guid: 3606e9b211edbb14b875e6848fff1274, type: 3}
+  hitSound: {fileID: 8300000, guid: 1c58ef9024d97c946911c88ce0b23e68, type: 3}
+  placeSound: {fileID: 8300000, guid: 06a72ce793aec6e47acd9cd16493da2c, type: 3}

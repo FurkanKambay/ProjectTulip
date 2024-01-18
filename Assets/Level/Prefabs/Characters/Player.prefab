@@ -449,10 +449,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7510b374231144b5bc8a2f704017c6d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hurtSound: {fileID: 8300000, guid: 4185b80d93d7b2242858e714c6fa05aa, type: 3}
-  dieSound: {fileID: 8300000, guid: 4185b80d93d7b2242858e714c6fa05aa, type: 3}
-  chargeSound: {fileID: 0}
-  swingSound: {fileID: 0}
+  hurtSound: {fileID: 8300000, guid: d80a10ccd98f50d4ca4c823716892e82, type: 3}
+  dieSound: {fileID: 8300000, guid: 659e24525ad238340ab7fe7416ef1f4d, type: 3}
+  chargeSound: {fileID: 8300000, guid: ff63ff1c802c5f143854fc90988d9746, type: 3}
+  swingSound: {fileID: 8300000, guid: 926f3331a9a8440468c8797da8bdb532, type: 3}
 --- !u!82 &210714920771637297
 AudioSource:
   m_ObjectHideFlags: 0

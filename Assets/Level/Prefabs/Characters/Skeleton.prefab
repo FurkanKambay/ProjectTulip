@@ -334,8 +334,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42c4603604fd42608b358258f353d561, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hurtSound: {fileID: 8300000, guid: 4185b80d93d7b2242858e714c6fa05aa, type: 3}
-  dieSound: {fileID: 8300000, guid: 4185b80d93d7b2242858e714c6fa05aa, type: 3}
+  hurtSound: {fileID: 8300000, guid: 9c9d0c42db7ad844199181c53108352c, type: 3}
+  dieSound: {fileID: 8300000, guid: e3c885f39a4f04f4c8ad904e97743e29, type: 3}
 --- !u!82 &7114080759001476472
 AudioSource:
   m_ObjectHideFlags: 0
