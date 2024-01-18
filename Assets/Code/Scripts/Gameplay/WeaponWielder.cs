@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Game.Data.Interfaces;
 using Game.Data.Items;
 using Game.Input;
 using UnityEngine;
@@ -9,13 +10,14 @@ namespace Game.Gameplay
 {
     public class WeaponWielder : MonoBehaviour
     {
-        public WeaponData data;
         public LayerMask hitMask;
 
         private Health playerHealth;
         private ItemWielder itemWielder;
         private new SpriteRenderer renderer;
         private int aimDirectionSign;
+
+        private WeaponData weaponData;
 
         private void Awake()
         {
@@ -24,14 +26,17 @@ namespace Game.Gameplay
             renderer = GetComponentInChildren<SpriteRenderer>();
         }
 
-        private void Attack()
+        private void Attack(IUsable usable)
         {
+            if (usable is not WeaponData weapon) return;
+            weaponData = weapon;
+
             IEnumerable<Health> targets = CheckAttackBox(InputHelper.Instance.MouseWorldPoint);
 
             foreach (Health target in targets)
             {
                 if (!target) continue;
-                target.TakeDamage(data.Damage, playerHealth);
+                target.TakeDamage(weaponData.Damage, playerHealth);
             }
         }
 
@@ -41,11 +46,11 @@ namespace Game.Gameplay
             aimDirectionSign = Math.Sign((mouseWorld - position).x);
             renderer.flipX = aimDirectionSign < 0;
 
-            Vector2 point = position + new Vector2(data.Range / 2f * aimDirectionSign, 1f);
-            var attackBoxSize = new Vector2(data.Range, 1f);
+            Vector2 point = position + new Vector2(weaponData.Range / 2f * aimDirectionSign, 1f);
+            var attackBoxSize = new Vector2(weaponData.Range, 1f);
 
             var hits = new Collider2D[9];
-            if (data.IsMultiTarget)
+            if (weaponData.IsMultiTarget)
             {
                 _ = Physics2D.OverlapBoxNonAlloc(point, attackBoxSize, default, hits, hitMask);
                 return hits.Select(hit => hit ? hit.GetComponent<Health>() : null);
@@ -63,7 +68,7 @@ namespace Game.Gameplay
 
             Vector2 position = transform.position;
 
-            var box = new Vector3(data.Range, 1f, 1f);
+            var box = new Vector3(weaponData.Range, 1f, 1f);
             var offset = new Vector3(box.x / 2f * aimDirectionSign, 1f);
 
             Gizmos.color = Color.red;

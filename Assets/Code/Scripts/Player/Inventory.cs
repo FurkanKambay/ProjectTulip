@@ -2,8 +2,6 @@ using System;
 using System.Linq;
 using Game.Data;
 using Game.Data.Interfaces;
-using Game.Data.Items;
-using Game.Gameplay;
 using Game.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -30,8 +28,6 @@ namespace Game.Player
         }
 
         [SerializeField] HotbarData hotbarData;
-
-        private WeaponWielder wielder;
 
         public override event Action<int> HotbarSelectionChanged;
         public override event Action HotbarModified;
@@ -163,29 +159,13 @@ namespace Game.Player
                 return;
 
             HotbarSelectedIndex = index;
-            PrepareSelectedItem();
             HotbarSelectionChanged?.Invoke(HotbarSelectedIndex);
-        }
-
-        private void PrepareSelectedItem()
-        {
-            if (HotbarSelected?.Item is not WeaponData weapon)
-            {
-                wielder.enabled = false;
-                return;
-            }
-
-            wielder.enabled = true;
-            wielder.data = weapon;
         }
 
         private void Awake()
         {
             Items = hotbarData.hotbar.Select(so => so ? new ItemStack(so) : null).ToArray();
             HotbarModified?.Invoke();
-
-            wielder = GetComponent<WeaponWielder>();
-            wielder.enabled = HotbarSelected?.Item is WeaponData;
         }
 
         private void OnScroll(InputAction.CallbackContext context)

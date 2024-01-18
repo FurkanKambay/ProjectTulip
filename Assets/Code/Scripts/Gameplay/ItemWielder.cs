@@ -34,9 +34,9 @@ namespace Game.Gameplay
         private Transform itemVisual;
         private SpriteRenderer itemRenderer;
 
-        public event Action OnCharge;
-        public event Action OnSwing;
-        public event Action OnReady;
+        public event Action<IUsable> OnCharge;
+        public event Action<IUsable> OnSwing;
+        public event Action<IUsable> OnReady;
 
         public void ChargeAndSwing()
         {
@@ -54,7 +54,7 @@ namespace Game.Gameplay
                 .OnComplete(() =>
                 {
                     state = ItemSwingState.Charged;
-                    OnCharge?.Invoke();
+                    OnCharge?.Invoke(Current);
                     onComplete?.Invoke();
                 });
         }
@@ -65,7 +65,7 @@ namespace Game.Gameplay
             itemVisual.DOLocalRotate(Vector3.forward * swingAngle, swingDuration)
                 .OnComplete(() =>
                 {
-                    OnSwing?.Invoke();
+                    OnSwing?.Invoke(Current);
                     onComplete?.Invoke();
                     ResetState();
                 });
@@ -80,7 +80,7 @@ namespace Game.Gameplay
                 .OnComplete(() =>
                 {
                     state = ItemSwingState.Ready;
-                    OnReady?.Invoke();
+                    OnReady?.Invoke(Current);
                 });
         }
 
