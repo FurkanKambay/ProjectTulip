@@ -1,5 +1,4 @@
-﻿using System;
-using Game.Data.Interfaces;
+﻿using Game.Data.Interfaces;
 using UnityEngine;
 
 namespace Game.Gameplay
@@ -8,8 +7,6 @@ namespace Game.Gameplay
     {
         [SerializeField] Health health;
         [SerializeField] Animator animator;
-        [SerializeField] AudioClip hurtSound;
-        [SerializeField] AudioClip dieSound;
 
         private IMovement movement;
 
@@ -19,15 +16,10 @@ namespace Game.Gameplay
 
         private void FixedUpdate() => animator.SetFloat(animSpeed, Mathf.Abs(movement.Velocity.x));
 
-        private void HandleHurt(DamageEventArgs damage)
-        {
-            if (hurtSound) AudioSource.PlayClipAtPoint(hurtSound, damage.Source.transform.position);
-            animator.SetTrigger(animHurt);
-        }
+        private void HandleHurt(DamageEventArgs damage) => animator.SetTrigger(animHurt);
 
         private void HandleDied(DamageEventArgs damage)
         {
-            if (dieSound) AudioSource.PlayClipAtPoint(dieSound, damage.Source.transform.position);
             animator.SetTrigger(animDie);
             DestroyAfterAnimation(.5f);
         }

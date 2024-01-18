@@ -30,7 +30,6 @@ namespace Game.Player
         public event Action<Vector3Int?> OnChangeCellFocus;
 
         private Inventory inventory;
-        private AudioSource audioSource;
         private BoxCollider2D playerCollider;
 
         private float timeSinceLastUse;
@@ -49,12 +48,7 @@ namespace Game.Player
             InputHelper.Actions.Player.ToggleSmartCursor.performed += _ => smartCursor = !smartCursor;
 
             inventory = GetComponent<Inventory>();
-            audioSource = GetComponent<AudioSource>();
             playerCollider = GetComponent<BoxCollider2D>();
-
-            world.OnPlaceBlock += PlayPlaceSound;
-            world.OnHitBlock += PlayHitSound;
-            world.OnDestroyBlock += PlayHitSound;
         }
 
         private void Update()
@@ -105,9 +99,6 @@ namespace Game.Player
             hitPoint = hit.point - (hit.normal * 0.1f);
             FocusedCell = hit.collider ? world.WorldToCell(hitPoint) : null;
         }
-
-        private void PlayPlaceSound(Vector3Int cell, BlockTile block) => audioSource.PlayOneShot(block.placeSound);
-        private void PlayHitSound(Vector3Int cell, BlockTile block) => audioSource.PlayOneShot(block.hitSound);
 
         private void OnDrawGizmosSelected()
         {

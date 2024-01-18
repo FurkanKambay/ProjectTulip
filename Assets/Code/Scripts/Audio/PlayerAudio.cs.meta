@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7510b374231144b5bc8a2f704017c6d3
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - hurtSound: {instanceID: 0}
+  - dieSound: {instanceID: 0}
+  - chargeSound: {instanceID: 0}
+  - swingSound: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
