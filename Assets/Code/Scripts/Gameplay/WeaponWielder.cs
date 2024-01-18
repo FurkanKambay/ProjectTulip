@@ -13,28 +13,19 @@ namespace Game.Gameplay
         public LayerMask hitMask;
 
         private Health playerHealth;
+        private ItemWielder itemWielder;
         private new SpriteRenderer renderer;
-        private float timeSinceLastUse;
         private int aimDirectionSign;
 
         private void Awake()
         {
             playerHealth = GetComponent<Health>();
+            itemWielder = GetComponent<ItemWielder>();
             renderer = GetComponentInChildren<SpriteRenderer>();
-        }
-
-        private void Update()
-        {
-            timeSinceLastUse += Time.deltaTime;
-            if (InputHelper.Actions.Player.Use.inProgress)
-                Attack();
         }
 
         private void Attack()
         {
-            if (timeSinceLastUse <= data.Cooldown) return;
-            timeSinceLastUse = 0f;
-
             IEnumerable<Health> targets = CheckAttackBox(InputHelper.Instance.MouseWorldPoint);
 
             foreach (Health target in targets)
@@ -78,5 +69,8 @@ namespace Game.Gameplay
             Gizmos.color = Color.red;
             Gizmos.DrawWireCube((Vector3)position + offset, box);
         }
+
+        private void OnEnable() => itemWielder.OnSwing += Attack;
+        private void OnDisable() => itemWielder.OnSwing -= Attack;
     }
 }

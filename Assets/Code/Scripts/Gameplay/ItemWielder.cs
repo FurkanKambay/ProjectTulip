@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using Game.Data.Interfaces;
 using Game.Data.Tiles;
@@ -33,36 +34,38 @@ namespace Game.Gameplay
         private Transform itemVisual;
         private SpriteRenderer itemRenderer;
 
-        public void ChargeAndSwing(TweenCallback onCharge = null, TweenCallback onSwing = null)
+        public event Action OnCharge;
+        public event Action OnSwing;
+        public event Action OnReady;
+
+        public void ChargeAndSwing()
         {
             if (timeSinceLastUse <= Current?.Cooldown) return;
             if (state != ItemSwingState.Ready) return;
             timeSinceLastUse = 0f;
 
-            DoCharge(() =>
-            {
-                onCharge?.Invoke();
-                DoSwing(onSwing);
-            });
+            DoCharge(() => DoSwing());
         }
 
-        private void DoCharge(TweenCallback onComplete)
+        private void DoCharge(Action onComplete = null)
         {
             state = ItemSwingState.Charging;
             itemVisual.DOLocalRotate(Vector3.forward * chargeAngle, chargeDuration)
                 .OnComplete(() =>
                 {
                     state = ItemSwingState.Charged;
+                    OnCharge?.Invoke();
                     onComplete?.Invoke();
                 });
         }
 
-        private void DoSwing(TweenCallback onComplete)
+        private void DoSwing(Action onComplete = null)
         {
             state = ItemSwingState.Swinging;
             itemVisual.DOLocalRotate(Vector3.forward * swingAngle, swingDuration)
                 .OnComplete(() =>
                 {
+                    OnSwing?.Invoke();
                     onComplete?.Invoke();
                     ResetState();
                 });
@@ -74,7 +77,11 @@ namespace Game.Gameplay
 
             state = ItemSwingState.Resetting;
             itemVisual.DOLocalRotate(Vector3.forward * readyAngle, swingDuration)
-                .OnComplete(() => state = ItemSwingState.Ready);
+                .OnComplete(() =>
+                {
+                    state = ItemSwingState.Ready;
+                    OnReady?.Invoke();
+                });
         }
 
         private void Update()
