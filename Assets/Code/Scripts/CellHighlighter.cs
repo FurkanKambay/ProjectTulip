@@ -1,5 +1,4 @@
-using Game.Data.Items;
-using Game.Data.Tiles;
+using Game.Data.Interfaces;
 using Game.Player;
 using UnityEngine;
 
@@ -19,8 +18,7 @@ namespace Game
 
         private World world;
 
-        private void HandleCellFocusChanged(Vector3Int? cell)
-            => highlightedCell = cell;
+        private void HandleCellFocusChanged(Vector3Int? cell) => highlightedCell = cell;
 
         private void Awake()
         {
@@ -36,10 +34,10 @@ namespace Game
             bool hasBlock = world.HasBlock(cell);
             bool notOccupied = !world.CellIntersects(cell, playerCollider.bounds);
 
-            renderer.enabled = highlightedCell.HasValue && inventory.HotbarSelected?.Item switch
+            renderer.enabled = highlightedCell.HasValue && inventory.HotbarSelected?.Item?.Type switch
             {
-                Pickaxe => hasBlock,
-                BlockTile => !hasBlock && notOccupied,
+                ItemType.Pickaxe => hasBlock,
+                ItemType.Block => !hasBlock && notOccupied,
                 _ => false
             };
 

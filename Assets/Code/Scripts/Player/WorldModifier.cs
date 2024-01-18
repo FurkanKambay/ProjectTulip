@@ -3,6 +3,7 @@ using Game.Data;
 using Game.Data.Interfaces;
 using Game.Data.Items;
 using Game.Data.Tiles;
+using Game.Gameplay;
 using Game.Input;
 using UnityEngine;
 
@@ -18,22 +19,22 @@ namespace Game.Player
 
         public Vector3Int? FocusedCell
         {
-            get => focusedCell;
+            get => highlightedCell;
             private set
             {
-                if (focusedCell == value) return;
-                focusedCell = value;
-                OnChangeCellFocus?.Invoke(focusedCell);
+                if (highlightedCell == value) return;
+                highlightedCell = value;
+                OnChangeCellFocus?.Invoke(highlightedCell);
             }
         }
 
         public event Action<Vector3Int?> OnChangeCellFocus;
 
         private Inventory inventory;
+        private ItemWielder itemWielder;
         private BoxCollider2D playerCollider;
 
-        private float timeSinceLastUse;
-        private Vector3Int? focusedCell;
+        private Vector3Int? highlightedCell;
         private Vector2 rangePath;
         private Vector3 hitPoint;
 
@@ -48,25 +49,25 @@ namespace Game.Player
             InputHelper.Actions.Player.ToggleSmartCursor.performed += _ => smartCursor = !smartCursor;
 
             inventory = GetComponent<Inventory>();
+            itemWielder = GetComponent<ItemWielder>();
             playerCollider = GetComponent<BoxCollider2D>();
         }
 
         private void Update()
         {
-            var item = inventory.HotbarSelected?.Item as ITool;
+            if (itemWielder.Current is not ITool) return;
             AssignCells();
+        }
 
-            timeSinceLastUse += Time.deltaTime;
-            if (item == null || timeSinceLastUse <= item.Cooldown) return;
+        private void HandleItemSwing(IUsable item)
+        {
+            if (item is not ITool tool) return;
 
             if (!FocusedCell.HasValue) return;
             if (world.CellIntersects(FocusedCell.Value, playerCollider.bounds)) return;
-            if (!InputHelper.Actions.Player.Use.IsPressed()) return;
-
-            timeSinceLastUse = 0;
 
             BlockTile blockTile = world.GetBlock(FocusedCell.Value);
-            if (!item.CanUseOnBlock(blockTile)) return;
+            if (!tool.CanUseOnBlock(blockTile)) return;
 
             inventory.ApplyModification(item.Type switch
             {
@@ -112,5 +113,8 @@ namespace Game.Player
             Gizmos.color = Color.green;
             Gizmos.DrawSphere(hitPoint, .1f);
         }
+
+        private void OnEnable() => itemWielder.OnSwing += HandleItemSwing;
+        private void OnDisable() => itemWielder.OnSwing -= HandleItemSwing;
     }
 }
