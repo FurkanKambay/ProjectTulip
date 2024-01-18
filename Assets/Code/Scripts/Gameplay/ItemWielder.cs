@@ -80,16 +80,6 @@ namespace Game.Gameplay
 
             itemRenderer.enabled = timeSinceLastUse < hideItemDelay;
 
-            if (UnityEngine.InputSystem.Keyboard.current.hKey.wasPressedThisFrame)
-            {
-                Time.timeScale -= .05f;
-            }
-
-            if (UnityEngine.InputSystem.Keyboard.current.jKey.wasPressedThisFrame)
-            {
-                Time.timeScale += .05f;
-            }
-
             if (state == ItemSwingState.Ready)
             {
                 Vector2 deltaToMouse = InputHelper.Instance.MouseWorldPoint - (Vector2)transform.position;
