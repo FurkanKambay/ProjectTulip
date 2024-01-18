@@ -1,5 +1,6 @@
 using DG.Tweening;
 using Game.Data.Interfaces;
+using Game.Data.Tiles;
 using Game.Input;
 using Game.Player;
 using UnityEngine;
@@ -83,6 +84,7 @@ namespace Game.Gameplay
             {
                 Time.timeScale -= .05f;
             }
+
             if (UnityEngine.InputSystem.Keyboard.current.jKey.wasPressedThisFrame)
             {
                 Time.timeScale += .05f;
@@ -99,7 +101,23 @@ namespace Game.Gameplay
                 ChargeAndSwing();
         }
 
-        private void UpdateItemSprite(int _) => itemRenderer.sprite = inventory.HotbarSelected?.Item?.Icon;
+        private void UpdateItemSprite(int _)
+        {
+            IItem item = inventory.HotbarSelected?.Item;
+
+            float scale = item?.IconScale ?? 1;
+            Color tint = Color.white;
+
+            if (item is { Type: ItemType.Block or ItemType.Wall })
+            {
+                scale = item.IconScale * 0.8f;
+                tint = ((BlockTile)item).color;
+            }
+
+            itemRenderer.sprite = item?.Icon;
+            itemRenderer.color = tint;
+            itemRenderer.transform.localScale = Vector2.one * scale;
+        }
 
         private void Awake()
         {
