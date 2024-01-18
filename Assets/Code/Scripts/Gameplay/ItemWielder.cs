@@ -24,6 +24,7 @@ namespace Game.Gameplay
 
         [SerializeField] private float chargeDuration = 0.2f;
         [SerializeField] private float swingDuration = 0.1f;
+        [SerializeField] private float itemShowHideDuration = 0.5f;
 
         private ItemSwingState state;
         private float timeSinceLastUse;
@@ -69,6 +70,8 @@ namespace Game.Gameplay
 
         private void ResetState()
         {
+            if (state == ItemSwingState.Ready) return;
+
             state = ItemSwingState.Resetting;
             itemVisual.DOLocalRotate(Vector3.forward * readyAngle, swingDuration)
                 .OnComplete(() => state = ItemSwingState.Ready);
@@ -78,14 +81,21 @@ namespace Game.Gameplay
         {
             timeSinceLastUse += Time.deltaTime;
 
-            itemRenderer.enabled = timeSinceLastUse < hideItemDelay;
+            bool shouldShowItem = timeSinceLastUse < hideItemDelay || InputHelper.Actions.Player.Use.inProgress;
+            Vector3 targetScale = itemPivot.localScale;
 
+            // Only flip around when not charging/swinging
             if (state == ItemSwingState.Ready)
             {
                 Vector2 deltaToMouse = InputHelper.Instance.MouseWorldPoint - (Vector2)transform.position;
-                float aimDirectionSign = Mathf.Sign(deltaToMouse.x);
-                itemPivot.localScale = new Vector3(aimDirectionSign < 0 ? -1 : 1, 1, 1);
+                int x = Mathf.Sign(deltaToMouse.x) < 0 ? -1 : 1;
+                targetScale = new Vector3(x, 1, 1);
             }
+
+            targetScale = shouldShowItem ? targetScale : Vector3.zero;
+
+            if (itemPivot.localScale != targetScale)
+                itemPivot.DOScale(targetScale, itemShowHideDuration);
 
             if (InputHelper.Actions.Player.Use.inProgress)
                 ChargeAndSwing();
