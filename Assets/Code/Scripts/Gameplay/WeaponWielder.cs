@@ -68,6 +68,7 @@ namespace Game.Gameplay
 
             Vector2 position = transform.position;
 
+            if (!weaponData) return;
             var box = new Vector3(weaponData.Range, 1f, 1f);
             var offset = new Vector3(box.x / 2f * aimDirectionSign, 1f);
 
