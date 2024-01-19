@@ -1,9 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Game.Data.Interfaces;
 using Game.Data.Items;
-using Game.Input;
+using Game.Gameplay.Extensions;
 using UnityEngine;
 
 namespace Game.Gameplay
@@ -15,9 +14,9 @@ namespace Game.Gameplay
         private Health playerHealth;
         private ItemWielder itemWielder;
         private new SpriteRenderer renderer;
-        private int aimDirectionSign;
 
         private WeaponData weaponData;
+        private ItemSwingDirection swingDirection;
 
         private void Awake()
         {
@@ -26,12 +25,13 @@ namespace Game.Gameplay
             renderer = GetComponentInChildren<SpriteRenderer>();
         }
 
-        private void Attack(IUsable usable)
+        private void Attack(IUsable usable, ItemSwingDirection direction)
         {
             if (usable is not WeaponData weapon) return;
             weaponData = weapon;
 
-            IEnumerable<Health> targets = CheckAttackBox(InputHelper.Instance.MouseWorldPoint);
+            swingDirection = direction;
+            IEnumerable<Health> targets = CheckAttackBox();
 
             foreach (Health target in targets)
             {
@@ -40,13 +40,14 @@ namespace Game.Gameplay
             }
         }
 
-        private IEnumerable<Health> CheckAttackBox(Vector2 mouseWorld)
+        private IEnumerable<Health> CheckAttackBox()
         {
             Vector2 position = transform.position;
-            aimDirectionSign = Math.Sign((mouseWorld - position).x);
-            renderer.flipX = aimDirectionSign < 0;
+            renderer.flipX = swingDirection == ItemSwingDirection.Left;
+            // renderer.flipY = swingDirection == ItemSwingDirection.Down;
 
-            Vector2 point = position + new Vector2(weaponData.Range / 2f * aimDirectionSign, 1f);
+            var direction = swingDirection.ToVector2();
+            Vector2 point = position + new Vector2(weaponData.Range / 2f * direction.x, 1f * direction.y);
             var attackBoxSize = new Vector2(weaponData.Range, 1f);
 
             var hits = new Collider2D[9];
@@ -70,7 +71,7 @@ namespace Game.Gameplay
 
             if (!weaponData) return;
             var box = new Vector3(weaponData.Range, 1f, 1f);
-            var offset = new Vector3(box.x / 2f * aimDirectionSign, 1f);
+            var offset = new Vector3(box.x / 2f * swingDirection.ToVector2().x, 1f);
 
             Gizmos.color = Color.red;
             Gizmos.DrawWireCube((Vector3)position + offset, box);

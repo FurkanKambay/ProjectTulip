@@ -59,7 +59,7 @@ namespace Game.Player
             AssignCells();
         }
 
-        private void HandleItemSwing(IUsable item)
+        private void HandleItemSwing(IUsable item, ItemSwingDirection _)
         {
             if (item is not ITool tool) return;
 

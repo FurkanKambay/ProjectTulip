@@ -28,7 +28,7 @@ namespace Game.Audio
         private void HandleHurt(DamageEventArgs damage) => audioSource.PlayOneShot(hurtSound);
         private void HandleDied(DamageEventArgs damage) => audioSource.PlayOneShot(dieSound);
         private void HandleItemCharge(IUsable item) => audioSource.PlayOneShot(chargeSound);
-        private void HandleItemSwing(IUsable item) => audioSource.PlayOneShot(swingSound);
+        private void HandleItemSwing(IUsable item, ItemSwingDirection _) => audioSource.PlayOneShot(swingSound);
 
         private void OnEnable()
         {

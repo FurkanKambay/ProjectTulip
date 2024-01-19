@@ -2,6 +2,7 @@ using System;
 using DG.Tweening;
 using Game.Data.Interfaces;
 using Game.Data.Tiles;
+using Game.Gameplay.Extensions;
 using Game.Input;
 using Game.Player;
 using UnityEngine;
@@ -35,16 +36,16 @@ namespace Game.Gameplay
         private SpriteRenderer itemRenderer;
 
         public event Action<IUsable> OnCharge;
-        public event Action<IUsable> OnSwing;
+        public event Action<IUsable, ItemSwingDirection> OnSwing;
         public event Action<IUsable> OnReady;
 
-        public void ChargeAndSwing()
+        public void ChargeAndSwing(ItemSwingDirection swingDirection)
         {
             if (timeSinceLastUse <= Current?.Cooldown) return;
             if (state != ItemSwingState.Ready) return;
             timeSinceLastUse = 0f;
 
-            DoCharge(() => DoSwing());
+            DoCharge(() => DoSwing(swingDirection));
         }
 
         private void DoCharge(Action onComplete = null)
@@ -59,13 +60,13 @@ namespace Game.Gameplay
                 });
         }
 
-        private void DoSwing(Action onComplete = null)
+        private void DoSwing(ItemSwingDirection swingDirection, Action onComplete = null)
         {
             state = ItemSwingState.Swinging;
             itemVisual.DOLocalRotate(Vector3.forward * swingAngle, swingDuration)
                 .OnComplete(() =>
                 {
-                    OnSwing?.Invoke(Current);
+                    OnSwing?.Invoke(Current, swingDirection);
                     onComplete?.Invoke();
                     ResetState();
                 });
@@ -91,13 +92,16 @@ namespace Game.Gameplay
             bool shouldShowItem = timeSinceLastUse < hideItemDelay || InputHelper.Actions.Player.Use.inProgress;
             Vector3 targetScale = itemPivot.localScale;
 
+            Vector2 deltaToMouse = InputHelper.Instance.MouseWorldPoint - (Vector2)transform.position;
+
+            // TODO: implement up/down swing
+            ItemSwingDirection swingDirection = deltaToMouse.x < 0
+                ? ItemSwingDirection.Left
+                : ItemSwingDirection.Right;
+
             // Only flip around when not charging/swinging
             if (state == ItemSwingState.Ready)
-            {
-                Vector2 deltaToMouse = InputHelper.Instance.MouseWorldPoint - (Vector2)transform.position;
-                int x = Mathf.Sign(deltaToMouse.x) < 0 ? -1 : 1;
-                targetScale = new Vector3(x, 1, 1);
-            }
+                targetScale = new Vector3(swingDirection.ToVector2().x, 1, 1);
 
             targetScale = shouldShowItem ? targetScale : Vector3.zero;
 
@@ -105,7 +109,7 @@ namespace Game.Gameplay
                 itemPivot.DOScale(targetScale, itemShowHideDuration);
 
             if (InputHelper.Actions.Player.Use.inProgress)
-                ChargeAndSwing();
+                ChargeAndSwing(swingDirection);
         }
 
         private void UpdateItemSprite(int _)
@@ -147,5 +151,13 @@ namespace Game.Gameplay
         Charged,
         Swinging,
         Resetting
+    }
+
+    public enum ItemSwingDirection
+    {
+        Left,
+        Right,
+        Down,
+        Up
     }
 }
