@@ -14,7 +14,7 @@ namespace Game.Gameplay
         public float CurrentHealth
         {
             get => currentHealth;
-            set => currentHealth = Mathf.Clamp(value, 0, MaxHealth);
+            private set => currentHealth = Mathf.Clamp(value, 0, MaxHealth);
         }
 
         public event Action<DamageEventArgs> OnHurt;
@@ -22,17 +22,20 @@ namespace Game.Gameplay
 
         public void TakeDamage(float damage, Health source)
         {
+            var self = (IHealth)this;
+            if (self.IsDead) return;
+
             CurrentHealth -= damage;
 
             var eventArgs = new DamageEventArgs(damage, source, this);
             OnHurt?.Invoke(eventArgs);
 
-            if (CurrentHealth > 0) return;
+            if (self.IsAlive) return;
             OnDie?.Invoke(eventArgs);
             enabled = false;
         }
 
-        [ContextMenu("Take Damage")]
+        [ContextMenu("Take 10 Damage")]
         public void TakeDamage() => TakeDamage(10f, this);
 
         private void OnValidate() => CurrentHealth = currentHealth;
