@@ -1,7 +1,5 @@
-# Terra
+# Project Terra
 
-An open-world platformer game that I try to develop in my free time. The name is Terra because it's inspired by 🌳 Terraria 🪓.
+_Project Terra_ is an open-world 2D platformer game that I'm developing in my free time. It's inspired by Terraria, which should explain the lazy naming.
 
-I have a tentative roadmap for it and it's still very early in development but I'm making it public for my portfolio. I took care to carefully architect the project by using assembly definitions, separate namespaces, and directory organization as well as by keeping the code semantically organized for scalability. At the time of writing, it's been stale for some time as I have no free time, but I hope to continue improving it.
-
-Aside from the regular C# game code, I am experimenting with compute shaders to speed up world generation, and in the future, fluid simulation.
+I have a lot of different ideas for the game design and mechanics that I hope I'll be able to implement. I'm also paying special attention to the code architecture to keep everything organized and easy to extend upon existing features.
