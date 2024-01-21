@@ -34,7 +34,7 @@ namespace Game.Debugging
             while (true)
             {
                 Vector2 randomPoint = (Vector2)player.position + (Random.insideUnitCircle * spawnRadius);
-                if (!world.HasBlock(world.WorldToCell(randomPoint)))
+                if (!world.HasTile(world.WorldToCell(randomPoint)))
                     return randomPoint;
             }
         }

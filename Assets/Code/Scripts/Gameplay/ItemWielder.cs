@@ -122,10 +122,10 @@ namespace Game.Gameplay
             float scale = item?.IconScale ?? 1;
             Color tint = Color.white;
 
-            if (item is { Type: ItemType.Block or ItemType.Wall })
+            if (item is WorldTile tile)
             {
                 scale = item.IconScale * 0.8f;
-                tint = ((BlockTile)item).color;
+                tint = tile.color;
             }
 
             itemRenderer.sprite = item?.Icon;

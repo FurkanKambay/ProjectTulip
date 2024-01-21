@@ -16,15 +16,15 @@ namespace Game.Data
         public AnimationCurve heightDensityCurve;
 
         [Header("Blocks")]
-        public BlockTile dirt;
-        public BlockTile stone;
-        public BlockTile deepstone;
-        public BlockTile jungle;
-        public BlockTile flesh;
-        public BlockTile aquatic;
+        public WorldTile dirt;
+        public WorldTile stone;
+        public WorldTile deepstone;
+        public WorldTile jungle;
+        public WorldTile flesh;
+        public WorldTile aquatic;
 
         [Header("Background Tiles")]
-        public BlockTile backgroundDirt;
+        public WorldTile backgroundDirt;
 
         [Header("Earth Layers")]
         public int dirtLayerHeight = 10;

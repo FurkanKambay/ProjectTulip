@@ -66,14 +66,14 @@ namespace Game.Player
             if (!FocusedCell.HasValue) return;
             if (world.CellIntersects(FocusedCell.Value, playerCollider.bounds)) return;
 
-            BlockTile blockTile = world.GetBlock(FocusedCell.Value);
-            if (!tool.CanUseOnBlock(blockTile)) return;
+            WorldTile tile = world.GetTile(FocusedCell.Value);
+            if (!tool.CanUseOnTile(tile)) return;
 
             inventory.ApplyModification(item.Type switch
             {
-                ItemType.Block => world.PlaceBlock(FocusedCell.Value, item as BlockTile),
+                ItemType.Block => world.PlaceTile(FocusedCell.Value, item as WorldTile),
                 ItemType.Wall => InventoryModification.Empty,
-                ItemType.Pickaxe => world.DamageBlock(FocusedCell.Value, ((Pickaxe)item).Power),
+                ItemType.Pickaxe => world.DamageTile(FocusedCell.Value, ((Pickaxe)item).Power),
                 _ => InventoryModification.Empty
             });
         }

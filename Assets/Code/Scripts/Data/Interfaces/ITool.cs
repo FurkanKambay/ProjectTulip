@@ -7,6 +7,6 @@ namespace Game.Data.Interfaces
     /// </summary>
     public interface ITool : IUsable
     {
-        bool CanUseOnBlock(BlockTile block);
+        bool CanUseOnTile(WorldTile tile);
     }
 }

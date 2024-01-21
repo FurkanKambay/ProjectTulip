@@ -32,7 +32,7 @@ namespace Game.UI
 
                 if (item == null) continue;
                 image.transform.scale = Vector3.one * item.IconScale;
-                image.tintColor = item is BlockTile block ? block.color : Color.white;
+                image.tintColor = item is WorldTile tile ? tile.color : Color.white;
             }
         }
 

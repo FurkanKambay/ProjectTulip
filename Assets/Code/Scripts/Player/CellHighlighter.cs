@@ -30,13 +30,13 @@ namespace Game.Player
         private void Update()
         {
             Vector3Int cell = highlightedCell.GetValueOrDefault();
-            bool hasBlock = world.HasBlock(cell);
+            bool hasTile = world.HasTile(cell);
             bool notOccupied = !world.CellIntersects(cell, playerCollider.bounds);
 
             renderer.enabled = highlightedCell.HasValue && inventory.HotbarSelected?.Item?.Type switch
             {
-                ItemType.Pickaxe => hasBlock,
-                ItemType.Block => !hasBlock && notOccupied,
+                ItemType.Pickaxe => hasTile,
+                ItemType.Block => !hasTile && notOccupied,
                 _ => false
             };
 

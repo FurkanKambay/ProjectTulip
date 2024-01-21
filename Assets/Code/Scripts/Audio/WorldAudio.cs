@@ -14,21 +14,21 @@ namespace Game.Audio
             world = World.Instance;
         }
 
-        private void HandleBlockPlaced(Vector3Int cell, BlockTile block) => audioSource.PlayOneShot(block.placeSound);
-        private void HandleBlockDestroyed(Vector3Int cell, BlockTile block) => audioSource.PlayOneShot(block.hitSound);
+        private void HandleTilePlaced(Vector3Int cell, WorldTile tile) => audioSource.PlayOneShot(tile.placeSound);
+        private void HandleTileDestroyed(Vector3Int cell, WorldTile tile) => audioSource.PlayOneShot(tile.hitSound);
 
         private void OnEnable()
         {
-            world.OnPlaceBlock += HandleBlockPlaced;
-            world.OnHitBlock += HandleBlockDestroyed;
-            world.OnDestroyBlock += HandleBlockDestroyed;
+            world.OnPlaceTile += HandleTilePlaced;
+            world.OnHitTile += HandleTileDestroyed;
+            world.OnDestroyTile += HandleTileDestroyed;
         }
 
         private void OnDisable()
         {
-            world.OnPlaceBlock -= HandleBlockPlaced;
-            world.OnHitBlock -= HandleBlockDestroyed;
-            world.OnDestroyBlock -= HandleBlockDestroyed;
+            world.OnPlaceTile -= HandleTilePlaced;
+            world.OnHitTile -= HandleTileDestroyed;
+            world.OnDestroyTile -= HandleTileDestroyed;
         }
     }
 }

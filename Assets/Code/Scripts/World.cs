@@ -13,52 +13,52 @@ namespace Game
         public Tilemap Tilemap => tilemap;
         [SerializeField] Tilemap tilemap;
 
-        public event Action<Vector3Int, BlockTile> OnPlaceBlock;
-        public event Action<Vector3Int, BlockTile> OnHitBlock;
-        public event Action<Vector3Int, BlockTile> OnDestroyBlock;
+        public event Action<Vector3Int, WorldTile> OnPlaceTile;
+        public event Action<Vector3Int, WorldTile> OnHitTile;
+        public event Action<Vector3Int, WorldTile> OnDestroyTile;
 
         private readonly Dictionary<Vector3Int, int> tileDamageMap = new();
 
         /// <summary>
-        /// Damages a block at the given cell coordinates.
+        /// Damages a tile at the given cell coordinates.
         /// </summary>
-        /// <returns>Whether the block was destroyed.</returns>
-        public InventoryModification DamageBlock(Vector3Int cell, int damage)
+        /// <returns>Whether the tile was destroyed.</returns>
+        public InventoryModification DamageTile(Vector3Int cell, int damage)
         {
             if (!Tilemap.HasTile(cell))
                 return InventoryModification.Empty;
 
             tileDamageMap.TryAdd(cell, 0);
 
-            BlockTile block = GetBlock(cell);
+            WorldTile tile = GetTile(cell);
             int damageTaken = tileDamageMap[cell] += damage;
-            int hardness = block.hardness;
+            int hardness = tile.hardness;
 
             if (damageTaken < hardness)
             {
-                OnHitBlock?.Invoke(cell, block);
+                OnHitTile?.Invoke(cell, tile);
                 return InventoryModification.Empty;
             }
 
             Tilemap.SetTile(cell, null);
             tileDamageMap.Remove(cell);
-            OnDestroyBlock?.Invoke(cell, block);
-            return new InventoryModification(toAdd: new ItemStack(item: block));
+            OnDestroyTile?.Invoke(cell, tile);
+            return new InventoryModification(toAdd: new ItemStack(item: tile));
         }
 
         /// <summary>
-        /// Tries to place a block at the given cell coordinates.
+        /// Tries to place a tile at the given cell coordinates.
         /// </summary>
-        /// <returns>Whether the block was placed successfully.</returns>
-        public InventoryModification PlaceBlock(Vector3Int cell, BlockTile newBlock)
+        /// <returns>Whether the tile was placed successfully.</returns>
+        public InventoryModification PlaceTile(Vector3Int cell, WorldTile tile)
         {
             if (Tilemap.HasTile(cell))
                 return InventoryModification.Empty;
 
-            Tilemap.SetTile(cell, newBlock);
+            Tilemap.SetTile(cell, tile);
             tileDamageMap.Remove(cell);
-            OnPlaceBlock?.Invoke(cell, newBlock);
-            return new InventoryModification(toRemove: new ItemStack(item: newBlock));
+            OnPlaceTile?.Invoke(cell, tile);
+            return new InventoryModification(toRemove: new ItemStack(item: tile));
         }
 
         public int GetTileDamage(Vector3Int cell)
@@ -71,8 +71,8 @@ namespace Game
         public Vector3 CellCenter(Vector3Int cell) => Tilemap.GetCellCenterWorld(cell);
         public Bounds CellBoundsWorld(Vector3Int cell) => new(CellCenter(cell), Tilemap.GetBoundsLocal(cell).size);
 
-        public bool HasBlock(Vector3Int cell) => Tilemap.HasTile(cell);
-        public BlockTile GetBlock(Vector3Int cell) => Tilemap.GetTile<BlockTile>(cell);
-        public BlockTile GetBlock(Vector3 worldPosition) => GetBlock(WorldToCell(worldPosition));
+        public bool HasTile(Vector3Int cell) => Tilemap.HasTile(cell);
+        public WorldTile GetTile(Vector3Int cell) => Tilemap.GetTile<WorldTile>(cell);
+        public WorldTile GetTile(Vector3 worldPosition) => GetTile(WorldToCell(worldPosition));
     }
 }

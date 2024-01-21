@@ -1213,7 +1213,7 @@ GameObject:
   - component: {fileID: 1572344359}
   - component: {fileID: 1572344360}
   m_Layer: 0
-  m_Name: 'Light: Blocks & Characters'
+  m_Name: 'Light: Tiles & Characters'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

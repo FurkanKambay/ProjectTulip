@@ -79,7 +79,7 @@ namespace Game.CharacterController
 
             if (!hit) return AutoStepDirection.None;
 
-            if (world.HasBlock(cell1) || world.HasBlock(cell2) || world.HasBlock(cell3))
+            if (world.HasTile(cell1) || world.HasTile(cell2) || world.HasTile(cell3))
                 return AutoStepDirection.None;
 
             return velocity > 0 ? AutoStepDirection.Right : AutoStepDirection.Left;

@@ -4,8 +4,8 @@ using UnityEngine.Tilemaps;
 
 namespace Game.Data.Tiles
 {
-    [CreateAssetMenu(fileName = "Block", menuName = "Items/Block")]
-    public class BlockTile : RuleTile<BlockTile.Neighbor>, ITool
+    [CreateAssetMenu(fileName = "Tile", menuName = "Items/Tile")]
+    public class WorldTile : RuleTile<WorldTile.Neighbor>, ITool
     {
         public float Cooldown => .25f;
 
@@ -24,14 +24,14 @@ namespace Game.Data.Tiles
         [SerializeField] float iconScale = 1f;
         [SerializeField, Min(1)] int maxAmount = 999;
 
-        [Header("Block Data")]
+        [Header("Tile Data")]
         public int hardness = 50;
 
         [Header("Sounds")]
         public AudioClip hitSound;
         public AudioClip placeSound;
 
-        public bool CanUseOnBlock(BlockTile block) => block != this;
+        public bool CanUseOnTile(WorldTile tile) => tile != this;
 
         public override bool RuleMatch(int neighbor, TileBase tile) => neighbor switch
         {

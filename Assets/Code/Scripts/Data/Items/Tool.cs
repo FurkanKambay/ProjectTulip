@@ -10,6 +10,6 @@ namespace Game.Data.Items
     [CreateAssetMenu(fileName = "Tool", menuName = "Items/Tool")]
     public class Tool : Usable, ITool
     {
-        public virtual bool CanUseOnBlock(BlockTile block) => false;
+        public virtual bool CanUseOnTile(WorldTile tile) => false;
     }
 }
