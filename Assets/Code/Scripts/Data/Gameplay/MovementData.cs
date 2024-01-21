@@ -6,7 +6,7 @@ namespace Game.Data.Gameplay
     public class MovementData : ScriptableObject
     {
         [Range(0f, 100f)] public float maxSpeed = 10f;
-        [SerializeField] public float friction;
+        public float friction;
 
         [Header("Acceleration")]
         public bool useAcceleration;

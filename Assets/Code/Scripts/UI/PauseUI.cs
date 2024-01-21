@@ -19,12 +19,12 @@ namespace Game.UI
             root = document.rootVisualElement.ElementAt(0);
             inputModule = GetComponentInParent<InputSystemUIInputModule>();
 
-            root.Q<Button>("ResumeButton").RegisterCallback<ClickEvent>(OnResumeClicked);
-            root.Q<Button>("SettingsButton").RegisterCallback<ClickEvent>(OnSettingsClicked);
-            root.Q<Button>("SaveButton").RegisterCallback<ClickEvent>(OnSaveClicked);
+            root.Q<Button>("ResumeButton").RegisterCallback<ClickEvent>(HandleResumeClicked);
+            root.Q<Button>("SettingsButton").RegisterCallback<ClickEvent>(HandleSettingsClicked);
+            root.Q<Button>("SaveButton").RegisterCallback<ClickEvent>(HandleSaveClicked);
 
-            InputHelper.Actions.Player.Menu.performed += OnPaused;
-            InputHelper.Actions.UI.Cancel.performed += OnResumed;
+            InputHelper.Actions.Player.Menu.performed += HandlePause;
+            InputHelper.Actions.UI.Cancel.performed += HandleResume;
         }
 
         private void Start() => SetState(false);
@@ -48,10 +48,10 @@ namespace Game.UI
             }
         }
 
-        private void OnResumeClicked(ClickEvent evt) => SetState(false);
-        private void OnSettingsClicked(ClickEvent evt) => Debug.Log("Settings clicked");
+        private void HandleResumeClicked(ClickEvent _) => SetState(false);
+        private void HandleSettingsClicked(ClickEvent _) => Debug.Log("Settings clicked");
 
-        private void OnSaveClicked(ClickEvent evt)
+        private static void HandleSaveClicked(ClickEvent _)
         {
 #if UNITY_EDITOR
             EditorApplication.isPlaying = false;
@@ -59,8 +59,8 @@ namespace Game.UI
             Application.Quit();
         }
 
-        private void OnPaused(InputAction.CallbackContext context) => SetState(true);
-        private void OnResumed(InputAction.CallbackContext context) => SetState(false);
+        private void HandlePause(InputAction.CallbackContext context) => SetState(true);
+        private void HandleResume(InputAction.CallbackContext context) => SetState(false);
 
         private void OnDisable() => SetState(false);
     }

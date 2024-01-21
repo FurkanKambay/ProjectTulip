@@ -24,6 +24,7 @@ namespace Game.CharacterController
 
             timeSinceLastDash = 0f;
             float direction = movement.ReadValue<float>();
+
             if (Mathf.Abs(direction) > 0.1f)
                 body.AddForce(Vector2.right * (direction * dashSpeed), forceMode);
         }

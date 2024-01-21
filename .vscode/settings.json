@@ -11,5 +11,16 @@
         "**/*.prefab": true,
         "**/*.unity": true,
         "Packages/packages-lock.json": true
-    }
+    },
+    "cSpell.words": [
+        "Behaviour",
+        "Cooldown",
+        "Gameplay",
+        "Hotbar",
+        "hotspot",
+        "Mathf",
+        "Raycast",
+        "Rigidbody",
+        "Scriptable"
+    ]
 }

@@ -9,7 +9,7 @@ namespace Game.CharacterController
     {
         public JumpData data;
 
-        public bool CurrentlyJumping => currentlyJumping;
+        public bool IsJumping { get; private set; }
 
         [Header("Components")]
         private Rigidbody2D body;
@@ -18,16 +18,16 @@ namespace Game.CharacterController
         [Header("Calculations")]
         private float jumpSpeed;
         private float defaultGravityScale;
-        private float gravMultiplier;
+        private float gravityMultiplier;
 
         [Header("Current State")]
         private Vector2 velocity;
+
         private float coyoteTimeCounter;
         private float jumpBufferCounter;
-        private bool desiredJump;
-        private bool pressingJump;
-        private bool onGround;
-        private bool currentlyJumping;
+        private bool isJumpDesired;
+        private bool isPressingJump;
+        private bool isGrounded;
 
         private void Awake()
         {
@@ -36,117 +36,122 @@ namespace Game.CharacterController
             defaultGravityScale = 1f;
         }
 
-        private void Start()
+        private void OnEnable()
         {
-            InputHelper.Actions.Player.Jump.started += OnJump;
-            InputHelper.Actions.Player.Jump.canceled += OnJump;
+            InputHelper.Actions.Player.Jump.started += HandleJump;
+            InputHelper.Actions.Player.Jump.canceled += HandleJump;
         }
 
-        public void OnJump(InputAction.CallbackContext context)
+        private void OnDisable()
         {
-            if (context.started)
-            {
-                desiredJump = true;
-                pressingJump = true;
-            }
-
-            if (context.canceled)
-                pressingJump = false;
+            InputHelper.Actions.Player.Jump.started -= HandleJump;
+            InputHelper.Actions.Player.Jump.canceled -= HandleJump;
         }
 
         private void Update()
         {
             SetGravity();
 
-            onGround = ground.IsGrounded;
+            isGrounded = ground.IsGrounded;
 
             if (data.jumpBuffer > 0)
             {
                 // Instead of immediately turning off "desireJump", start counting up...
                 // All the while, the DoAJump function will repeatedly be fired off
-                if (desiredJump)
+                if (isJumpDesired)
                 {
                     jumpBufferCounter += Time.deltaTime;
 
                     if (jumpBufferCounter > data.jumpBuffer)
                     {
                         // If time exceeds the jump buffer, turn off "desireJump"
-                        desiredJump = false;
+                        isJumpDesired = false;
                         jumpBufferCounter = 0;
                     }
                 }
             }
 
-            if (!currentlyJumping && !onGround)
+            if (!IsJumping && !isGrounded)
                 coyoteTimeCounter += Time.deltaTime;
             else
                 coyoteTimeCounter = 0;
-        }
-
-        private void SetGravity()
-        {
-            var newGravity = new Vector2(0, -2 * data.jumpHeight / (data.timeToJumpApex * data.timeToJumpApex));
-            body.gravityScale = newGravity.y / Physics2D.gravity.y * gravMultiplier;
         }
 
         private void FixedUpdate()
         {
             velocity = body.velocity;
 
-            if (desiredJump)
+            if (isJumpDesired)
             {
-                DoAJump();
+                Jump();
                 body.velocity = velocity;
                 // Skip gravity calculations this frame, so currentlyJumping doesn't turn off
                 // This makes sure you can't do the coyote time double jump bug
                 return;
             }
 
-            CalculateGravity();
+            SetVerticalVelocity();
         }
 
-        private void CalculateGravity()
+        public void HandleJump(InputAction.CallbackContext context)
         {
-            if (body.velocity.y > 0.01f)
+            if (context.started)
             {
-                if (onGround)
-                {
-                    gravMultiplier = defaultGravityScale;
-                }
-                else if (data.hasVariableJumpHeight)
-                {
-                    if (pressingJump && currentlyJumping)
-                        gravMultiplier = data.upwardGravityMultiplier;
-                    else
-                        gravMultiplier = data.jumpCutOff;
-                }
-                else
-                {
-                    gravMultiplier = data.upwardGravityMultiplier;
-                }
+                isJumpDesired = true;
+                isPressingJump = true;
             }
-            else if (body.velocity.y < -0.01f)
-            {
-                gravMultiplier = onGround
-                    ? defaultGravityScale
-                    : data.downwardGravityMultiplier;
-            }
-            else
-            {
-                if (onGround)
-                    currentlyJumping = false;
 
-                gravMultiplier = defaultGravityScale;
+            if (context.canceled)
+                isPressingJump = false;
+        }
+
+        private void SetGravity()
+        {
+            var newGravity = new Vector2(0, -2 * data.jumpHeight / (data.timeToJumpApex * data.timeToJumpApex));
+            body.gravityScale = newGravity.y / Physics2D.gravity.y * gravityMultiplier;
+        }
+
+        private void SetVerticalVelocity()
+        {
+            switch (body.velocity.y)
+            {
+                case > 0.01f when isGrounded:
+                    gravityMultiplier = defaultGravityScale;
+                    break;
+                case > 0.01f when data.hasVariableJumpHeight:
+                {
+                    if (isPressingJump && IsJumping)
+                        gravityMultiplier = data.upwardGravityMultiplier;
+                    else
+                        gravityMultiplier = data.jumpCutOff;
+                    break;
+                }
+                case > 0.01f:
+                    gravityMultiplier = data.upwardGravityMultiplier;
+                    break;
+                case < -0.01f:
+                    gravityMultiplier = isGrounded
+                        ? defaultGravityScale
+                        : data.downwardGravityMultiplier;
+                    break;
+                default:
+                {
+                    if (isGrounded)
+                        IsJumping = false;
+
+                    gravityMultiplier = defaultGravityScale;
+                    break;
+                }
             }
 
             body.velocity = new Vector2(velocity.x, Mathf.Clamp(velocity.y, -data.maxFallSpeed, 100));
         }
 
-        private void DoAJump()
+        private void Jump()
         {
-            if (onGround || (coyoteTimeCounter > 0.03f && coyoteTimeCounter < data.coyoteTime))
+            if (isGrounded || (coyoteTimeCounter > 0.03f && coyoteTimeCounter < data.coyoteTime))
             {
-                desiredJump = false;
+                isJumpDesired = false;
                 jumpBufferCounter = 0;
                 coyoteTimeCounter = 0;
 
@@ -158,11 +163,11 @@ namespace Game.CharacterController
                     jumpSpeed += Mathf.Abs(body.velocity.y);
 
                 velocity.y += jumpSpeed;
-                currentlyJumping = true;
+                IsJumping = true;
             }
 
             if (data.jumpBuffer == 0)
-                desiredJump = false;
+                isJumpDesired = false;
         }
     }
 }

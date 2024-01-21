@@ -7,9 +7,9 @@ namespace Game.Gameplay
 {
     public class PlayerInput : MonoBehaviour
     {
-        private Movement movement;
+        private CharacterMovement movement;
 
-        private void Awake() => movement = GetComponent<Movement>();
+        private void Awake() => movement = GetComponent<CharacterMovement>();
         private void Start() => InputHelper.Actions.Player.MoveX.performed += OnMoveX;
 
         private void OnMoveX(InputAction.CallbackContext context)

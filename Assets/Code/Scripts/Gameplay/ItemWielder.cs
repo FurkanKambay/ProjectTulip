@@ -15,18 +15,20 @@ namespace Game.Gameplay
     {
         public IUsable Current => inventory.HotbarSelected?.Item as IUsable;
 
-        [SerializeField] private Transform itemPivot;
+        [SerializeField] Transform itemPivot;
+        [SerializeField] float hideItemDelay = 2f;
 
-        [SerializeField] private float hideItemDelay = 2f;
+        [Header("Item Swing")]
+        [SerializeField] float readyAngle = -10;
 
-        [SerializeField] private float readyAngle = -10;
+        [SerializeField] float chargeAngle = 45f;
+        [SerializeField] float swingAngle = -90f;
 
-        [SerializeField] private float chargeAngle = 45f;
-        [SerializeField] private float swingAngle = -90f;
+        [Header("Item Animations")]
+        [SerializeField] float chargeDuration = 0.2f;
 
-        [SerializeField] private float chargeDuration = 0.2f;
-        [SerializeField] private float swingDuration = 0.1f;
-        [SerializeField] private float itemShowHideDuration = 0.5f;
+        [SerializeField] float swingDuration = 0.1f;
+        [SerializeField] float itemShowHideDuration = 0.5f;
 
         private ItemSwingState state;
         private float timeSinceLastUse;
@@ -132,25 +134,26 @@ namespace Game.Gameplay
 
         private void Awake()
         {
+            Assert.IsNotNull(itemPivot);
+
             inventory = GetComponent<Inventory>();
             itemRenderer = itemPivot.GetComponentInChildren<SpriteRenderer>();
             itemVisual = itemRenderer.transform;
-            Assert.IsNotNull(itemPivot);
 
             itemVisual.localEulerAngles = Vector3.forward * readyAngle;
         }
 
         private void OnEnable() => inventory.OnChangeHotbarSelection += UpdateItemSprite;
         private void OnDisable() => inventory.OnChangeHotbarSelection -= UpdateItemSprite;
-    }
 
-    internal enum ItemSwingState
-    {
-        Ready,
-        Charging,
-        Charged,
-        Swinging,
-        Resetting
+        private enum ItemSwingState
+        {
+            Ready,
+            Charging,
+            Charged,
+            Swinging,
+            Resetting
+        }
     }
 
     public enum ItemSwingDirection

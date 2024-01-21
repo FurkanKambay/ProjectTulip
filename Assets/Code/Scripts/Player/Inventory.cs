@@ -13,24 +13,23 @@ namespace Game.Player
         public override ItemStack[] Items { get; protected set; }
         public override ItemStack HotbarSelected => Items[HotbarSelectedIndex];
 
-        private int hotbarSelectedIndex;
-
         public override int HotbarSelectedIndex
         {
             get => hotbarSelectedIndex;
             protected set => hotbarSelectedIndex = Mathf.Clamp(value, 0, Items.Length - 1);
         }
 
+        [SerializeField] HotbarData hotbarData;
+        private int hotbarSelectedIndex;
+
+        public override event Action<int> OnChangeHotbarSelection;
+        public override event Action OnModifyHotbar;
+
         public override ItemStack this[int index]
         {
             get => Items[index];
             set => Items[index] = value;
         }
-
-        [SerializeField] HotbarData hotbarData;
-
-        public override event Action<int> OnChangeHotbarSelection;
-        public override event Action OnModifyHotbar;
 
         /// <summary>
         /// Applies the <see cref="InventoryModification"/> to the inventory by first removing the items in
@@ -51,13 +50,13 @@ namespace Game.Player
                 );
         }
 
-        internal int RemoveItem(ItemStack itemStack)
+        private int RemoveItem(ItemStack itemStack)
             => itemStack is { IsValid: true } ? RemoveItem(itemStack.Item, itemStack.Amount) : 0;
 
-        internal int AddItem(ItemStack itemStack)
+        private int AddItem(ItemStack itemStack)
             => itemStack is { IsValid: true } ? AddItem(itemStack.Item, itemStack.Amount) : 0;
 
-        internal int RemoveItem(IItem item, int amount)
+        private int RemoveItem(IItem item, int amount)
         {
             if (item == null || amount <= 0) return amount;
 
@@ -89,7 +88,7 @@ namespace Game.Player
             return remaining;
         }
 
-        internal int AddItem(IItem item, int amount)
+        private int AddItem(IItem item, int amount)
         {
             if (item == null || amount <= 0) return amount;
 

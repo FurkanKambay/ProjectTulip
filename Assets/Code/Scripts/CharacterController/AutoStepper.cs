@@ -8,14 +8,14 @@ namespace Game.CharacterController
     {
         [Header("Step")]
         [SerializeField] float stepHeight = 1f;
+
         [SerializeField] float stepWidth;
         [SerializeField] Vector2 stepSpeed = Vector2.one;
 
         [Header("Thresholds")]
         [SerializeField] float velocityThreshold = .1f;
         [SerializeField] float range = .5f;
-
-        [SerializeField] Vector3 offset = (Vector3.up * .5f);
+        [SerializeField] Vector3 offset = Vector3.up * .5f;
 
         private World world;
         private IMovement movement;
@@ -34,9 +34,9 @@ namespace Game.CharacterController
 
         private void Update()
         {
-            StepType step = CanStepUp();
+            AutoStepDirection stepDirection = CanStepUp();
 
-            if (step == StepType.None)
+            if (stepDirection == AutoStepDirection.None)
             {
                 targetPosition = null;
                 return;
@@ -45,24 +45,25 @@ namespace Game.CharacterController
             if (!ground.IsGrounded) return;
 
             Vector2 position = body.position;
-            float width = step == StepType.Left ? -stepWidth : stepWidth;
+            float width = stepDirection == AutoStepDirection.Left ? -stepWidth : stepWidth;
             targetPosition = new Vector2(position.x + width, position.y + stepHeight);
         }
 
         private void FixedUpdate()
         {
             if (!targetPosition.HasValue) return;
+
             Vector2 position = body.position;
             Vector2 moveDirection = (targetPosition.Value - position).normalized;
             Vector2 moveDelta = moveDirection * stepSpeed * Time.deltaTime;
             body.MovePosition(position + moveDelta);
         }
 
-        private StepType CanStepUp()
+        private AutoStepDirection CanStepUp()
         {
             float velocity = movement.DesiredVelocity.x;
             if (Mathf.Abs(velocity) < velocityThreshold)
-                return StepType.None;
+                return AutoStepDirection.None;
 
             Vector2 direction = Vector2.right * Math.Sign(velocity);
             Vector2 hotspot = transform.position + offset;
@@ -76,23 +77,24 @@ namespace Game.CharacterController
             Vector3Int cell2 = cell1 + Vector3Int.up;
             Vector3Int cell3 = cell2 + (velocity < 0 ? Vector3Int.right : Vector3Int.left);
 
-            if (!hit) return StepType.None;
+            if (!hit) return AutoStepDirection.None;
 
             if (world.HasBlock(cell1) || world.HasBlock(cell2) || world.HasBlock(cell3))
-                return StepType.None;
+                return AutoStepDirection.None;
 
-            return velocity > 0 ? StepType.Right : StepType.Left;
+            return velocity > 0 ? AutoStepDirection.Right : AutoStepDirection.Left;
         }
 
         private void OnDrawGizmosSelected()
         {
             if (!Application.isPlaying) return;
             if (!targetPosition.HasValue) return;
+
             Gizmos.color = Color.green;
             Gizmos.DrawSphere(targetPosition.Value, .3f);
         }
 
-        enum StepType
+        private enum AutoStepDirection
         {
             None,
             Left,

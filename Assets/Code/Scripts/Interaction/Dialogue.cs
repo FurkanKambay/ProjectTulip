@@ -9,7 +9,7 @@ namespace Game.Interaction
 
         private void Awake()
         {
-            interactable ??= GetComponent<Interactable>();
+            if (!interactable) interactable = GetComponent<Interactable>();
             interactable.OnInteract += HandleInteract;
         }
 

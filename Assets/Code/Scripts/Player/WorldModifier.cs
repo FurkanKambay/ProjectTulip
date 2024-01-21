@@ -19,12 +19,12 @@ namespace Game.Player
 
         public Vector3Int? FocusedCell
         {
-            get => highlightedCell;
+            get => focusedCell;
             private set
             {
-                if (highlightedCell == value) return;
-                highlightedCell = value;
-                OnChangeCellFocus?.Invoke(highlightedCell);
+                if (focusedCell == value) return;
+                focusedCell = value;
+                OnChangeCellFocus?.Invoke(focusedCell);
             }
         }
 
@@ -34,7 +34,7 @@ namespace Game.Player
         private ItemWielder itemWielder;
         private BoxCollider2D playerCollider;
 
-        private Vector3Int? highlightedCell;
+        private Vector3Int? focusedCell;
         private Vector2 rangePath;
         private Vector3 hitPoint;
 

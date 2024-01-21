@@ -7,7 +7,7 @@ namespace Game.CharacterController
 {
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(GroundChecker))]
-    public class Movement : MonoBehaviour, IMovement
+    public class CharacterMovement : MonoBehaviour, IMovement
     {
         public MovementData data;
 
@@ -25,8 +25,8 @@ namespace Game.CharacterController
         private float turnSpeed;
 
         [Header("Current State")]
-        private bool onGround;
-        private bool anyMovement;
+        private bool isGrounded;
+        private bool hasAnyMovement;
 
         private Rigidbody2D body;
         private SpriteRenderer spriteRenderer;
@@ -41,9 +41,9 @@ namespace Game.CharacterController
 
         private void Update()
         {
-            anyMovement = Input.x != 0;
+            hasAnyMovement = Input.x != 0;
 
-            if (anyMovement)
+            if (hasAnyMovement)
                 spriteRenderer.flipX = Input.x < 0;
 
             desiredVelocity = Input * Mathf.Max(data.maxSpeed - data.friction, 0f);
@@ -51,12 +51,12 @@ namespace Game.CharacterController
 
         private void FixedUpdate()
         {
-            onGround = ground.IsGrounded;
+            isGrounded = ground.IsGrounded;
             velocity = body.velocity;
 
             if (data.useAcceleration)
                 RunWithAcceleration();
-            else if (onGround)
+            else if (isGrounded)
                 RunWithoutAcceleration();
             else
                 RunWithAcceleration();
@@ -64,11 +64,11 @@ namespace Game.CharacterController
 
         private void RunWithAcceleration()
         {
-            acceleration = onGround ? data.maxAcceleration : data.maxAirAcceleration;
-            deceleration = onGround ? data.maxDeceleration : data.maxAirDeceleration;
-            turnSpeed = onGround ? data.maxTurnSpeed : data.maxAirTurnSpeed;
+            acceleration = isGrounded ? data.maxAcceleration : data.maxAirAcceleration;
+            deceleration = isGrounded ? data.maxDeceleration : data.maxAirDeceleration;
+            turnSpeed = isGrounded ? data.maxTurnSpeed : data.maxAirTurnSpeed;
 
-            maxSpeedChange = anyMovement switch
+            maxSpeedChange = hasAnyMovement switch
             {
                 // ReSharper disable once CompareOfFloatsByEqualityOperator
                 true when Mathf.Sign(Input.x) != Mathf.Sign(velocity.x) => turnSpeed * Time.deltaTime,

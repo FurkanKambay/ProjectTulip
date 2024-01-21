@@ -12,7 +12,6 @@ namespace Game.Debugging
         [SerializeField] GameObject[] enemies;
 
         private KeyControl keySpawnRandom;
-
         private World world;
 
         private void Awake()

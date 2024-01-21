@@ -11,7 +11,7 @@ namespace Game.Gameplay
     {
         public LayerMask hitMask;
 
-        private Health playerHealth;
+        private Health health;
         private ItemWielder itemWielder;
         private new SpriteRenderer renderer;
 
@@ -20,7 +20,7 @@ namespace Game.Gameplay
 
         private void Awake()
         {
-            playerHealth = GetComponent<Health>();
+            health = GetComponent<Health>();
             itemWielder = GetComponent<ItemWielder>();
             renderer = GetComponentInChildren<SpriteRenderer>();
         }
@@ -36,7 +36,7 @@ namespace Game.Gameplay
             foreach (Health target in targets)
             {
                 if (!target) continue;
-                target.TakeDamage(weaponData.Damage, playerHealth);
+                target.TakeDamage(weaponData.Damage, health);
             }
         }
 

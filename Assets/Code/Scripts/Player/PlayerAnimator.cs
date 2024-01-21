@@ -6,12 +6,12 @@ namespace Game.Player
 {
     public class PlayerAnimator : MonoBehaviour
     {
-        private static readonly int animSpeed = Animator.StringToHash("speed");
-        private static readonly int animJump = Animator.StringToHash("jump");
-
         private Animator animator;
         private IMovement movement;
         private PlayerJump playerJump;
+
+        private static readonly int animSpeed = Animator.StringToHash("speed");
+        private static readonly int animJump = Animator.StringToHash("jump");
 
         private void Awake()
         {
@@ -23,7 +23,7 @@ namespace Game.Player
         private void Update()
         {
             animator.SetFloat(animSpeed, Mathf.Abs(movement.Velocity.x));
-            animator.SetBool(animJump, playerJump.CurrentlyJumping);
+            animator.SetBool(animJump, playerJump.IsJumping);
         }
     }
 }

@@ -11,14 +11,13 @@ namespace Game
     public class World : Singleton<World>
     {
         public Tilemap Tilemap => tilemap;
-
         [SerializeField] Tilemap tilemap;
-
-        private Dictionary<Vector3Int, int> TileDamageMap { get; } = new();
 
         public event Action<Vector3Int, BlockTile> OnPlaceBlock;
         public event Action<Vector3Int, BlockTile> OnHitBlock;
         public event Action<Vector3Int, BlockTile> OnDestroyBlock;
+
+        private readonly Dictionary<Vector3Int, int> tileDamageMap = new();
 
         /// <summary>
         /// Damages a block at the given cell coordinates.
@@ -29,10 +28,10 @@ namespace Game
             if (!Tilemap.HasTile(cell))
                 return InventoryModification.Empty;
 
-            TileDamageMap.TryAdd(cell, 0);
+            tileDamageMap.TryAdd(cell, 0);
 
             BlockTile block = GetBlock(cell);
-            int damageTaken = TileDamageMap[cell] += damage;
+            int damageTaken = tileDamageMap[cell] += damage;
             int hardness = block.hardness;
 
             if (damageTaken < hardness)
@@ -42,7 +41,7 @@ namespace Game
             }
 
             Tilemap.SetTile(cell, null);
-            TileDamageMap.Remove(cell);
+            tileDamageMap.Remove(cell);
             OnDestroyBlock?.Invoke(cell, block);
             return new InventoryModification(toAdd: new ItemStack(item: block));
         }
@@ -57,13 +56,13 @@ namespace Game
                 return InventoryModification.Empty;
 
             Tilemap.SetTile(cell, newBlock);
-            TileDamageMap.Remove(cell);
+            tileDamageMap.Remove(cell);
             OnPlaceBlock?.Invoke(cell, newBlock);
             return new InventoryModification(toRemove: new ItemStack(item: newBlock));
         }
 
         public int GetTileDamage(Vector3Int cell)
-            => TileDamageMap.GetValueOrDefault(cell, 0);
+            => tileDamageMap.GetValueOrDefault(cell, 0);
 
         public bool CellIntersects(Vector3Int cell, Bounds other)
             => CellBoundsWorld(cell).Intersects(other);
