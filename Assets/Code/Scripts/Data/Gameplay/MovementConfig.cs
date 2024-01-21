@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Game.Data.Gameplay
 {
     [CreateAssetMenu(menuName = "Data/Movement")]
-    public class MovementData : ScriptableObject
+    public class MovementConfig : ScriptableObject
     {
         [Range(0f, 100f)] public float maxSpeed = 10f;
         public float friction;

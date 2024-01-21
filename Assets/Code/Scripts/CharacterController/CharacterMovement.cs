@@ -9,7 +9,7 @@ namespace Game.CharacterController
     [RequireComponent(typeof(GroundChecker))]
     public class CharacterMovement : MonoBehaviour, IMovement
     {
-        public MovementData data;
+        public MovementConfig config;
 
         public Vector2 Input { get; set; }
 
@@ -46,7 +46,7 @@ namespace Game.CharacterController
             if (hasAnyMovement)
                 spriteRenderer.flipX = Input.x < 0;
 
-            desiredVelocity = Input * Mathf.Max(data.maxSpeed - data.friction, 0f);
+            desiredVelocity = Input * Mathf.Max(config.maxSpeed - config.friction, 0f);
         }
 
         private void FixedUpdate()
@@ -54,7 +54,7 @@ namespace Game.CharacterController
             isGrounded = ground.IsGrounded;
             velocity = body.velocity;
 
-            if (data.useAcceleration)
+            if (config.useAcceleration)
                 RunWithAcceleration();
             else if (isGrounded)
                 RunWithoutAcceleration();
@@ -64,9 +64,9 @@ namespace Game.CharacterController
 
         private void RunWithAcceleration()
         {
-            acceleration = isGrounded ? data.maxAcceleration : data.maxAirAcceleration;
-            deceleration = isGrounded ? data.maxDeceleration : data.maxAirDeceleration;
-            turnSpeed = isGrounded ? data.maxTurnSpeed : data.maxAirTurnSpeed;
+            acceleration = isGrounded ? config.maxAcceleration : config.maxAirAcceleration;
+            deceleration = isGrounded ? config.maxDeceleration : config.maxAirDeceleration;
+            turnSpeed = isGrounded ? config.maxTurnSpeed : config.maxAirTurnSpeed;
 
             maxSpeedChange = hasAnyMovement switch
             {

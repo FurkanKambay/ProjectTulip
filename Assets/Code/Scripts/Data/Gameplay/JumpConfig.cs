@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Game.Data.Gameplay
 {
     [CreateAssetMenu(menuName = "Data/Jump")]
-    public class JumpData : ScriptableObject
+    public class JumpConfig : ScriptableObject
     {
         [Range(0, 10f)] public float jumpHeight = 5f;
         [Range(0, 3f)] public float timeToJumpApex = .5f;

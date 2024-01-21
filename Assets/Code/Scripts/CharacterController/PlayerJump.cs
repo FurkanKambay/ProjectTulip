@@ -7,7 +7,7 @@ namespace Game.CharacterController
 {
     public class PlayerJump : MonoBehaviour
     {
-        public JumpData data;
+        public JumpConfig config;
 
         public bool IsJumping { get; private set; }
 
@@ -54,7 +54,7 @@ namespace Game.CharacterController
 
             isGrounded = ground.IsGrounded;
 
-            if (data.jumpBuffer > 0)
+            if (config.jumpBuffer > 0)
             {
                 // Instead of immediately turning off "desireJump", start counting up...
                 // All the while, the DoAJump function will repeatedly be fired off
@@ -62,7 +62,7 @@ namespace Game.CharacterController
                 {
                     jumpBufferCounter += Time.deltaTime;
 
-                    if (jumpBufferCounter > data.jumpBuffer)
+                    if (jumpBufferCounter > config.jumpBuffer)
                     {
                         // If time exceeds the jump buffer, turn off "desireJump"
                         isJumpDesired = false;
@@ -93,7 +93,7 @@ namespace Game.CharacterController
             SetVerticalVelocity();
         }
 
-        public void HandleJump(InputAction.CallbackContext context)
+        private void HandleJump(InputAction.CallbackContext context)
         {
             if (context.started)
             {
@@ -107,7 +107,7 @@ namespace Game.CharacterController
 
         private void SetGravity()
         {
-            var newGravity = new Vector2(0, -2 * data.jumpHeight / (data.timeToJumpApex * data.timeToJumpApex));
+            var newGravity = new Vector2(0, -2f * config.jumpHeight / (config.timeToJumpApex * config.timeToJumpApex));
             body.gravityScale = newGravity.y / Physics2D.gravity.y * gravityMultiplier;
         }
 
@@ -118,21 +118,21 @@ namespace Game.CharacterController
                 case > 0.01f when isGrounded:
                     gravityMultiplier = defaultGravityScale;
                     break;
-                case > 0.01f when data.hasVariableJumpHeight:
+                case > 0.01f when config.hasVariableJumpHeight:
                 {
                     if (isPressingJump && IsJumping)
-                        gravityMultiplier = data.upwardGravityMultiplier;
+                        gravityMultiplier = config.upwardGravityMultiplier;
                     else
-                        gravityMultiplier = data.jumpCutOff;
+                        gravityMultiplier = config.jumpCutOff;
                     break;
                 }
                 case > 0.01f:
-                    gravityMultiplier = data.upwardGravityMultiplier;
+                    gravityMultiplier = config.upwardGravityMultiplier;
                     break;
                 case < -0.01f:
                     gravityMultiplier = isGrounded
                         ? defaultGravityScale
-                        : data.downwardGravityMultiplier;
+                        : config.downwardGravityMultiplier;
                     break;
                 default:
                 {
@@ -144,18 +144,18 @@ namespace Game.CharacterController
                 }
             }
 
-            body.velocity = new Vector2(velocity.x, Mathf.Clamp(velocity.y, -data.maxFallSpeed, 100));
+            body.velocity = new Vector2(velocity.x, Mathf.Clamp(velocity.y, -config.maxFallSpeed, 100));
         }
 
         private void Jump()
         {
-            if (isGrounded || (coyoteTimeCounter > 0.03f && coyoteTimeCounter < data.coyoteTime))
+            if (isGrounded || (coyoteTimeCounter > 0.03f && coyoteTimeCounter < config.coyoteTime))
             {
                 isJumpDesired = false;
                 jumpBufferCounter = 0;
                 coyoteTimeCounter = 0;
 
-                jumpSpeed = Mathf.Sqrt(-2f * Physics2D.gravity.y * body.gravityScale * data.jumpHeight);
+                jumpSpeed = Mathf.Sqrt(-2f * Physics2D.gravity.y * body.gravityScale * config.jumpHeight);
 
                 if (velocity.y > 0f)
                     jumpSpeed = Mathf.Max(jumpSpeed - velocity.y, 0f);
@@ -166,7 +166,7 @@ namespace Game.CharacterController
                 IsJumping = true;
             }
 
-            if (data.jumpBuffer == 0)
+            if (config.jumpBuffer == 0)
                 isJumpDesired = false;
         }
     }
