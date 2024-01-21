@@ -1,4 +1,4 @@
-﻿namespace Game.Gameplay
+namespace Game.Gameplay
 {
     public readonly struct DamageEventArgs
     {

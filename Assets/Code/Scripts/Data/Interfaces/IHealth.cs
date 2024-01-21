@@ -1,4 +1,4 @@
-﻿namespace Game.Data.Interfaces
+namespace Game.Data.Interfaces
 {
     public interface IHealth
     {

@@ -1,4 +1,4 @@
-﻿using Game.CharacterController;
+using Game.CharacterController;
 using Game.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;

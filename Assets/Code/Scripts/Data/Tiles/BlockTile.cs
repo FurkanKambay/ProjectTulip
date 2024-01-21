@@ -1,4 +1,4 @@
-﻿using Game.Data.Interfaces;
+using Game.Data.Interfaces;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 

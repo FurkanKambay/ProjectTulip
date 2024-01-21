@@ -1,4 +1,4 @@
-﻿using Game.Data.Tiles;
+using Game.Data.Tiles;
 
 namespace Game.Data.Interfaces
 {
