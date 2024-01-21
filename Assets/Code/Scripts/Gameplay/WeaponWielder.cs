@@ -15,7 +15,7 @@ namespace Game.Gameplay
         private ItemWielder itemWielder;
         private new SpriteRenderer renderer;
 
-        private WeaponData weaponData;
+        private Weapon weapon;
         private ItemSwingDirection swingDirection;
 
         private void Awake()
@@ -27,8 +27,8 @@ namespace Game.Gameplay
 
         private void Attack(IUsable usable, ItemSwingDirection direction)
         {
-            if (usable is not WeaponData weapon) return;
-            weaponData = weapon;
+            if (usable is not Weapon usedWeapon) return;
+            weapon = usedWeapon;
 
             swingDirection = direction;
             IEnumerable<Health> targets = CheckAttackBox();
@@ -36,7 +36,7 @@ namespace Game.Gameplay
             foreach (Health target in targets)
             {
                 if (!target) continue;
-                target.TakeDamage(weaponData.Damage, health);
+                target.TakeDamage(weapon.Damage, health);
             }
         }
 
@@ -47,11 +47,11 @@ namespace Game.Gameplay
             // renderer.flipY = swingDirection == ItemSwingDirection.Down;
 
             var direction = swingDirection.ToVector2();
-            Vector2 point = position + new Vector2(weaponData.Range / 2f * direction.x, 1f * direction.y);
-            var attackBoxSize = new Vector2(weaponData.Range, 1f);
+            Vector2 point = position + new Vector2(weapon.Range / 2f * direction.x, 1f * direction.y);
+            var attackBoxSize = new Vector2(weapon.Range, 1f);
 
             var hits = new Collider2D[9];
-            if (weaponData.IsMultiTarget)
+            if (weapon.IsMultiTarget)
             {
                 _ = Physics2D.OverlapBoxNonAlloc(point, attackBoxSize, default, hits, hitMask);
                 return hits.Select(hit => hit ? hit.GetComponent<Health>() : null);
@@ -69,8 +69,8 @@ namespace Game.Gameplay
 
             Vector2 position = transform.position;
 
-            if (!weaponData) return;
-            var box = new Vector3(weaponData.Range, 1f, 1f);
+            if (!weapon) return;
+            var box = new Vector3(weapon.Range, 1f, 1f);
             var offset = new Vector3(box.x / 2f * swingDirection.ToVector2().x, 1f);
 
             Gizmos.color = Color.red;

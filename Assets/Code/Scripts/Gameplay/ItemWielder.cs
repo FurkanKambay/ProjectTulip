@@ -1,5 +1,6 @@
 using System;
 using DG.Tweening;
+using Game.Data;
 using Game.Data.Interfaces;
 using Game.Data.Tiles;
 using Game.Gameplay.Extensions;

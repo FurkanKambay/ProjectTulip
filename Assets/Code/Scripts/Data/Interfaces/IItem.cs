@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace Game.Data.Interfaces
 {
+    /// <summary>
+    /// An interface describing a base item that can be stored in an inventory.
+    /// </summary>
     public interface IItem
     {
         string Name { get; }
@@ -10,14 +13,5 @@ namespace Game.Data.Interfaces
         Sprite Icon { get; }
         float IconScale { get; }
         int MaxAmount { get; }
-    }
-
-    public enum ItemType
-    {
-        Item,
-        Block,
-        Wall,
-        Pickaxe,
-        Weapon
     }
 }

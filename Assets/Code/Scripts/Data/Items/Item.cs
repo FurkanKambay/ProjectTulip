@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace Game.Data.Interfaces
 {
+    /// <summary>
+    /// A base item that can be stored in an inventory.
+    /// </summary>
     [CreateAssetMenu(fileName = "Item", menuName = "Items/Item")]
     public class Item : ScriptableObject, IItem
     {

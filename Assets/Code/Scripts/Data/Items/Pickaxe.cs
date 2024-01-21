@@ -1,17 +1,19 @@
-using Game.Data.Interfaces;
 using Game.Data.Tiles;
 using UnityEngine;
 
 namespace Game.Data.Items
 {
+    /// <summary>
+    /// A pickaxe.
+    /// </summary>
     [CreateAssetMenu(fileName = "Pickaxe", menuName = "Items/Pickaxe")]
-    public sealed class Pickaxe : Usable, ITool
+    public sealed class Pickaxe : Tool
     {
         public int Power => power;
 
         [Header("Pickaxe Data")]
         [SerializeField, Min(0)] int power = 50;
 
-        public bool CanUseOnBlock(BlockTile block) => block;
+        public override bool CanUseOnBlock(BlockTile block) => (bool)block;
     }
 }

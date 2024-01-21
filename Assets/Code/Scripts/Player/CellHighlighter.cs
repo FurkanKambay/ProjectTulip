@@ -1,8 +1,7 @@
-using Game.Data.Interfaces;
-using Game.Player;
+using Game.Data;
 using UnityEngine;
 
-namespace Game
+namespace Game.Player
 {
     public class CellHighlighter : MonoBehaviour
     {
