@@ -29,6 +29,7 @@ namespace Game.Data.Tiles
 
         [Header("Sounds")]
         public AudioClip hitSound;
+        public AudioClip destroySound;
         public AudioClip placeSound;
 
         public bool CanUseOnTile(WorldTile tile) => tile != this;
