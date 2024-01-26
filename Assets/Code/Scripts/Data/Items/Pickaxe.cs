@@ -14,6 +14,6 @@ namespace Game.Data.Items
         [Header("Pickaxe Data")]
         [SerializeField, Min(0)] int power = 50;
 
-        public override bool CanUseOnTile(WorldTile tile) => (bool)tile;
+        public override bool IsUsableOnTile(WorldTile tile) => (bool)tile;
     }
 }

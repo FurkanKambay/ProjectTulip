@@ -41,7 +41,7 @@ namespace Game.Player
             WorldTile worldTile = world.GetTile(focusedCell.Value);
             IItem item = inventory.HotbarSelected?.Item;
             bool notOccupiedByPlayer = !world.CellIntersects(focusedCell.Value, playerCollider.bounds);
-            bool toolIsUsable = (item as Tool)?.CanUseOnTile(worldTile) ?? false;
+            bool toolIsUsable = (item as Tool)?.IsUsableOnTile(worldTile) ?? false;
 
             renderer.enabled = item?.Type switch
             {
