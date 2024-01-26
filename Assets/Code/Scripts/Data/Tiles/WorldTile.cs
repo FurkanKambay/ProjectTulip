@@ -32,7 +32,7 @@ namespace Game.Data.Tiles
         public AudioClip destroySound;
         public AudioClip placeSound;
 
-        public bool CanUseOnTile(WorldTile tile) => tile != this;
+        public bool CanUseOnTile(WorldTile tile) => tile is null;
 
         public override bool RuleMatch(int neighbor, TileBase tile) => neighbor switch
         {

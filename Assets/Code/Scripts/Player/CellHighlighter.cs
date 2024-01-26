@@ -1,4 +1,7 @@
 using Game.Data;
+using Game.Data.Interfaces;
+using Game.Data.Items;
+using Game.Data.Tiles;
 using UnityEngine;
 
 namespace Game.Player
@@ -13,11 +16,11 @@ namespace Game.Player
         private BoxCollider2D playerCollider;
 
         private Vector3 targetPosition;
-        private Vector3Int? highlightedCell;
+        private Vector3Int? focusedCell;
 
         private World world;
 
-        private void HandleCellFocusChanged(Vector3Int? cell) => highlightedCell = cell;
+        private void HandleCellFocusChanged(Vector3Int? cell) => focusedCell = cell;
 
         private void Awake()
         {
@@ -29,19 +32,26 @@ namespace Game.Player
 
         private void Update()
         {
-            Vector3Int cell = highlightedCell.GetValueOrDefault();
-            bool hasTile = world.HasTile(cell);
-            bool notOccupied = !world.CellIntersects(cell, playerCollider.bounds);
-
-            renderer.enabled = highlightedCell.HasValue && inventory.HotbarSelected?.Item?.Type switch
+            if (!focusedCell.HasValue)
             {
-                ItemType.Pickaxe => hasTile,
-                ItemType.Block => !hasTile && notOccupied,
+                renderer.enabled = false;
+                return;
+            }
+
+            WorldTile worldTile = world.GetTile(focusedCell.Value);
+            IItem item = inventory.HotbarSelected?.Item;
+            bool notOccupiedByPlayer = !world.CellIntersects(focusedCell.Value, playerCollider.bounds);
+            bool toolIsUsable = (item as Tool)?.CanUseOnTile(worldTile) ?? false;
+
+            renderer.enabled = item?.Type switch
+            {
+                ItemType.Pickaxe => toolIsUsable,
+                ItemType.Block => toolIsUsable && notOccupiedByPlayer,
                 _ => false
             };
 
-            if (!renderer.enabled) return;
-            targetPosition = world.CellCenter(cell);
+            if (renderer.enabled)
+                targetPosition = world.CellCenter(focusedCell.Value);
         }
 
         private void LateUpdate()
