@@ -1,6 +1,5 @@
 using System;
 using DG.Tweening;
-using Game.Data;
 using Game.Data.Interfaces;
 using Game.Data.Tiles;
 using Game.Gameplay.Extensions;
@@ -14,35 +13,33 @@ namespace Game.Gameplay
     [RequireComponent(typeof(Inventory))]
     public class ItemWielder : MonoBehaviour
     {
+        public event Action<IUsable> OnCharge;
+        public event Action<IUsable, ItemSwingDirection> OnSwing;
+        public event Action<IUsable> OnReady;
+
         public IUsable Current => inventory.HotbarSelected?.Item as IUsable;
 
         [SerializeField] Transform itemPivot;
-        [SerializeField] float hideItemDelay = 2f;
+
+        [Header("Item Animations")]
+        [SerializeField] float itemStowDelay = 2f;
+        [SerializeField] float itemDrawStowDuration = 0.5f;
 
         [Header("Item Swing")]
         [SerializeField] float readyAngle = -10;
-
         [SerializeField] float chargeAngle = 45f;
         [SerializeField] float swingAngle = -90f;
-
-        [Header("Item Animations")]
         [SerializeField] float chargeDuration = 0.2f;
-
         [SerializeField] float swingDuration = 0.1f;
-        [SerializeField] float itemShowHideDuration = 0.5f;
-
-        private ItemSwingState state;
-        private float timeSinceLastUse;
 
         private Inventory inventory;
         private Transform itemVisual;
         private SpriteRenderer itemRenderer;
 
-        public event Action<IUsable> OnCharge;
-        public event Action<IUsable, ItemSwingDirection> OnSwing;
-        public event Action<IUsable> OnReady;
+        private ItemSwingState state;
+        private float timeSinceLastUse;
 
-        public void ChargeAndSwing(ItemSwingDirection swingDirection)
+        private void ChargeAndSwing(ItemSwingDirection swingDirection)
         {
             if (timeSinceLastUse <= Current?.Cooldown) return;
             if (state != ItemSwingState.Ready) return;
@@ -92,7 +89,7 @@ namespace Game.Gameplay
         {
             timeSinceLastUse += Time.deltaTime;
 
-            bool shouldShowItem = timeSinceLastUse < hideItemDelay || InputHelper.Actions.Player.Use.inProgress;
+            bool shouldShowItem = timeSinceLastUse < itemStowDelay || InputHelper.Actions.Player.Use.inProgress;
             Vector3 targetScale = itemPivot.localScale;
 
             Vector2 deltaToMouse = InputHelper.Instance.MouseWorldPoint - (Vector2)transform.position;
@@ -109,7 +106,7 @@ namespace Game.Gameplay
             targetScale = shouldShowItem ? targetScale : Vector3.zero;
 
             if (itemPivot.localScale != targetScale)
-                itemPivot.DOScale(targetScale, itemShowHideDuration);
+                itemPivot.DOScale(targetScale, itemDrawStowDuration);
 
             if (InputHelper.Actions.Player.Use.inProgress)
                 ChargeAndSwing(swingDirection);

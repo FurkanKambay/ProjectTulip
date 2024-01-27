@@ -279,13 +279,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemPivot: {fileID: 5170996385232603194}
-  hideItemDelay: 3
+  itemStowDelay: 3
+  itemDrawStowDuration: 0.15
   readyAngle: -10
   chargeAngle: 60
   swingAngle: -120
   chargeDuration: 0.2
   swingDuration: 0.1
-  itemShowHideDuration: 0.15
 --- !u!114 &6482861320932609866
 MonoBehaviour:
   m_ObjectHideFlags: 0
