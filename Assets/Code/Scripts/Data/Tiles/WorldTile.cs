@@ -9,23 +9,25 @@ namespace Game.Data.Tiles
     {
         public float Cooldown => .25f;
 
-        public string Name => name;
-        public string Description => description;
         public ItemType Type => type;
         public Sprite Icon => m_DefaultSprite;
         public float IconScale => iconScale;
+        public string Name => name;
+        public string Description => description;
         public int MaxAmount => maxAmount;
 
+        [Header("Tile Data")]
         public Color color = Color.white;
 
-        [SerializeField] new string name;
-        [SerializeField, Multiline] string description;
+        [Header("Item Data")]
         [SerializeField] ItemType type;
         [SerializeField] float iconScale = 1f;
+        [SerializeField] new string name;
+        [SerializeField, Multiline] string description;
         [SerializeField, Min(1)] int maxAmount = 999;
 
-        [Header("Tile Data")]
-        public int hardness = 50;
+        [Header("World Tile Data")]
+        [Min(1)] public int hardness = 50;
 
         [Header("Sounds")]
         public AudioClip hitSound;
