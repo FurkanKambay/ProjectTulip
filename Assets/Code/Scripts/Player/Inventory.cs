@@ -51,97 +51,98 @@ namespace Game.Player
         }
 
         private int RemoveItem(ItemStack itemStack)
-            => itemStack is { IsValid: true } ? RemoveItem(itemStack.Item, itemStack.Amount) : 0;
-
-        private int AddItem(ItemStack itemStack)
-            => itemStack is { IsValid: true } ? AddItem(itemStack.Item, itemStack.Amount) : 0;
-
-        private int RemoveItem(IItem item, int amount)
         {
-            if (item == null || amount <= 0) return amount;
+            if (itemStack is not { IsValid: true })
+                return 0;
 
-            int remaining = amount;
-            while (remaining > 0)
+            int remainingAmount = itemStack.Amount;
+            while (remainingAmount > 0)
             {
-                int index = HotbarSelected.Item == item
+                int foundIndex = HotbarSelected.Item == itemStack.Item
                     ? HotbarSelectedIndex
-                    : GetFirstItemIndex(item, allowAny: true);
+                    : FindFirstItemIndex(itemStack.Item, includeFullStacks: true);
 
-                if (index < 0)
-                {
-                    OnModifyHotbar?.Invoke();
+                if (foundIndex < 0)
                     break;
-                }
 
-                ItemStack stack = Items[index];
-                int oldAmount = stack.Amount;
-                stack.Amount -= remaining;
-                remaining -= oldAmount - stack.Amount;
+                ItemStack foundStack = Items[foundIndex];
+                int oldAmount = foundStack.Amount;
+                foundStack.Amount -= remainingAmount;
+                remainingAmount -= oldAmount - foundStack.Amount;
 
-                if (stack.Amount == 0)
-                    Items[index] = null;
+                if (foundStack.Amount == 0)
+                    Items[foundIndex] = null;
             }
 
-            if (remaining == 0)
-                OnModifyHotbar?.Invoke();
-
-            return remaining;
+            OnModifyHotbar?.Invoke();
+            return remainingAmount;
         }
 
-        private int AddItem(IItem item, int amount)
+        private int AddItem(ItemStack itemStack)
         {
-            if (item == null || amount <= 0) return amount;
+            if (itemStack is not { IsValid: true })
+                return 0;
 
-            int remaining = amount;
-            while (remaining > 0)
+            int remainingAmount = itemStack.Amount;
+            while (remainingAmount > 0)
             {
-                int index = GetFirstItemIndex(item, allowAny: false);
-                if (index < 0) index = CreateNewStack(item);
-                if (index < 0)
+                int foundIndex = FindFirstItemIndex(itemStack.Item, includeFullStacks: false);
+                if (foundIndex < 0)
                 {
-                    // Inventory full
-                    return amount;
+                    foundIndex = CreateNewStack(itemStack.Item);
+
+                    if (foundIndex < 0)
+                    {
+                        // Inventory is full
+                        return itemStack.Amount;
+                    }
                 }
 
-                remaining = AddToExistingStack(index, remaining);
+                remainingAmount = AddToExistingStack(foundIndex, remainingAmount);
             }
 
-            if (remaining == 0)
+            if (remainingAmount == 0)
                 OnModifyHotbar?.Invoke();
 
-            return remaining;
+            return remainingAmount;
         }
 
         private int AddToExistingStack(int stackIndex, int amount)
         {
-            ItemStack stack = Items[stackIndex];
-            int total = stack.Amount + amount;
-            stack.Amount += amount;
+            ItemStack existingStack = Items[stackIndex];
+            existingStack.Amount += amount;
 
-            return total > stack.Item.MaxAmount ? total - stack.Item.MaxAmount : 0;
+            int total = existingStack.Amount + amount;
+            bool hasOverflow = total > existingStack.Item.MaxAmount;
+            int remainingAmount = total - existingStack.Item.MaxAmount;
+
+            return hasOverflow ? remainingAmount : 0;
         }
 
         private int CreateNewStack(IItem item)
         {
-            int firstEmpty = GetFirstEmptyIndex();
-            if (firstEmpty < 0) return -1;
+            int firstEmptyIndex = FindFirstEmptyIndex();
+            if (firstEmptyIndex < 0) return -1;
 
-            Items[firstEmpty] = new ItemStack(item, 0);
-            return firstEmpty;
+            Items[firstEmptyIndex] = new ItemStack(item, 0);
+            return firstEmptyIndex;
         }
 
-        private int GetFirstItemIndex(IItem item, bool allowAny = false)
+        private int FindFirstItemIndex(IItem item, bool includeFullStacks = false)
         {
-            for (int i = 0; i < Items.Length; i++)
+            if (item == null) return -1;
+
+            for (int itemIndex = 0; itemIndex < Items.Length; itemIndex++)
             {
-                if (Items[i]?.Item == item && (allowAny || Items[i].Amount < item?.MaxAmount))
-                    return i;
+                ItemStack currentItem = Items[itemIndex];
+                if (currentItem?.Item == item && (includeFullStacks || currentItem.Amount < item.MaxAmount))
+                    return itemIndex;
             }
 
             return -1;
         }
 
-        private int GetFirstEmptyIndex()
+        private int FindFirstEmptyIndex()
         {
             for (int i = 0; i < Items.Length; i++)
             {
