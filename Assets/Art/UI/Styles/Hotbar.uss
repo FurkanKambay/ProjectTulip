@@ -5,7 +5,29 @@
 }
 
 .selected > Button {
-    background-color: #778899;
+    background-color: rgb(119, 136, 153);
     border-color: midnightblue;
     border-width: 2px;
+}
+
+.tooltip-container {
+    background-color: rgba(0, 108, 111, 0.51);
+    width: 200px;
+    align-self: center;
+    margin-top: 4px;
+}
+
+.tooltip-label-name {
+    margin: 0;
+    background-color: rgba(0, 0, 0, 0.13);
+    -unity-text-align: upper-center;
+}
+
+.tooltip-label-description {
+    font-size: 12px;
+    margin: 0;
+    padding-left: 4px;
+    padding-right: 4px;
+    width: 200px;
+    white-space: normal;
 }

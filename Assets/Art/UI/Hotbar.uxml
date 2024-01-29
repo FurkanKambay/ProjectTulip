@@ -12,4 +12,8 @@
         <ui:Instance template="HotbarSlot" name="slot-7" />
         <ui:Instance template="HotbarSlot" name="slot-8" />
     </ui:VisualElement>
+    <ui:VisualElement name="tooltip-container" class="tooltip-container">
+        <ui:Label name="tooltip-name" class="tooltip-label-name" enable-rich-text="false" text="Item name" />
+        <ui:Label name="tooltip-description" class="tooltip-label-description" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
+    </ui:VisualElement>
 </ui:UXML>
