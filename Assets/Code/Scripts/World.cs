@@ -1,4 +1,5 @@
 using System;
+using UnityEngine.Assertions;
 using System.Collections.Generic;
 using Game.Data;
 using Game.Data.Tiles;
@@ -58,6 +59,26 @@ namespace Game
             tileDamageMap.Remove(cell);
             OnPlaceTile?.Invoke(cell, tile);
             return new InventoryModification(toRemove: new ItemStack(item: tile));
+        }
+
+        public bool CanAccommodate(Vector3Int cell, Vector2Int entitySize)
+        {
+            Assert.IsTrue(entitySize.x > 0, "entitySize.x > 0");
+            Assert.IsTrue(entitySize.y > 0, "entitySize.y > 0");
+
+            // NOTE: temporary restriction
+            Assert.IsTrue(entitySize.x == 1, "entitySize.x == 1");
+
+            Vector3Int cellToCheck = cell;
+            for (int y = 0; y < entitySize.y; y++)
+            {
+                if (HasTile(cellToCheck))
+                    return false;
+
+                cellToCheck.y++;
+            }
+
+            return true;
         }
 
         public int GetTileDamage(Vector3Int cell)
