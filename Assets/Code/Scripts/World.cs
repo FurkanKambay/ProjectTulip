@@ -10,7 +10,6 @@ namespace Game
 {
     public class World : Singleton<World>
     {
-        public Tilemap Tilemap => tilemap;
         [SerializeField] Tilemap tilemap;
 
         public event Action<Vector3Int, WorldTile> OnPlaceTile;
@@ -25,7 +24,7 @@ namespace Game
         /// <returns>Whether the tile was destroyed.</returns>
         public InventoryModification DamageTile(Vector3Int cell, int damage)
         {
-            if (!Tilemap.HasTile(cell))
+            if (!tilemap.HasTile(cell))
                 return InventoryModification.Empty;
 
             tileDamageMap.TryAdd(cell, 0);
@@ -40,7 +39,7 @@ namespace Game
                 return InventoryModification.Empty;
             }
 
-            Tilemap.SetTile(cell, null);
+            tilemap.SetTile(cell, null);
             tileDamageMap.Remove(cell);
             OnDestroyTile?.Invoke(cell, tile);
             return new InventoryModification(toAdd: new ItemStack(item: tile));
@@ -52,10 +51,10 @@ namespace Game
         /// <returns>Whether the tile was placed successfully.</returns>
         public InventoryModification PlaceTile(Vector3Int cell, WorldTile tile)
         {
-            if (Tilemap.HasTile(cell))
+            if (tilemap.HasTile(cell))
                 return InventoryModification.Empty;
 
-            Tilemap.SetTile(cell, tile);
+            tilemap.SetTile(cell, tile);
             tileDamageMap.Remove(cell);
             OnPlaceTile?.Invoke(cell, tile);
             return new InventoryModification(toRemove: new ItemStack(item: tile));
@@ -67,12 +66,12 @@ namespace Game
         public bool CellIntersects(Vector3Int cell, Bounds other)
             => CellBoundsWorld(cell).Intersects(other);
 
-        public Vector3Int WorldToCell(Vector3 worldPosition) => Tilemap.WorldToCell(worldPosition);
-        public Vector3 CellCenter(Vector3Int cell) => Tilemap.GetCellCenterWorld(cell);
-        public Bounds CellBoundsWorld(Vector3Int cell) => new(CellCenter(cell), Tilemap.GetBoundsLocal(cell).size);
+        public Vector3Int WorldToCell(Vector3 worldPosition) => tilemap.WorldToCell(worldPosition);
+        public Vector3 CellCenter(Vector3Int cell) => tilemap.GetCellCenterWorld(cell);
+        public Bounds CellBoundsWorld(Vector3Int cell) => new(CellCenter(cell), tilemap.GetBoundsLocal(cell).size);
 
-        public bool HasTile(Vector3Int cell) => Tilemap.HasTile(cell);
-        public WorldTile GetTile(Vector3Int cell) => Tilemap.GetTile<WorldTile>(cell);
+        public bool HasTile(Vector3Int cell) => tilemap.HasTile(cell);
+        public WorldTile GetTile(Vector3Int cell) => tilemap.GetTile<WorldTile>(cell);
         public WorldTile GetTile(Vector3 worldPosition) => GetTile(WorldToCell(worldPosition));
     }
 }
