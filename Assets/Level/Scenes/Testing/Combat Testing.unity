@@ -653,7 +653,7 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4266250971387899883, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
-      propertyPath: hotbarData
+      propertyPath: inventoryData
       value: 
       objectReference: {fileID: 11400000, guid: d92bff51ac01705478bd12e9f7fb82e1, type: 2}
     - target: {fileID: 8291246366843984804, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}

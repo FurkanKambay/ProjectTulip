@@ -19,7 +19,7 @@ namespace Game.Player
             protected set => hotbarSelectedIndex = Mathf.Clamp(value, 0, Items.Length - 1);
         }
 
-        [SerializeField] HotbarData hotbarData;
+        [SerializeField] InventoryData inventoryData;
         private int hotbarSelectedIndex;
 
         public override event Action<int> OnChangeHotbarSelection;
@@ -164,7 +164,7 @@ namespace Game.Player
 
         private void Awake()
         {
-            Items = hotbarData.hotbar.Select(so => so ? new ItemStack(so) : null).ToArray();
+            Items = inventoryData.Inventory.Select(so => so ? new ItemStack(so) : null).ToArray();
             OnModifyHotbar?.Invoke();
         }
 
