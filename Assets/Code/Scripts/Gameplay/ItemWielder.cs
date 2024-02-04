@@ -38,10 +38,10 @@ namespace Game.Gameplay
 
         private void ChargeAndSwing(ItemSwingDirection swingDirection)
         {
-            itemToSwing ??= HotbarItem;
-
-            if (itemToSwing == null || timeSinceLastUse <= itemToSwing.Cooldown) return;
             if (state != ItemSwingState.Ready) return;
+
+            itemToSwing = HotbarItem;
+            if (itemToSwing == null || timeSinceLastUse <= itemToSwing.Cooldown) return;
 
             itemToSwing = HotbarItem;
             timeSinceLastUse = 0f;
