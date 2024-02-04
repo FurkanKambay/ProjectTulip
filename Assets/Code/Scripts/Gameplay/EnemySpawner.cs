@@ -3,10 +3,8 @@ using System.Linq;
 using Game.Input;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Controls;
 
-namespace Game.Debugging
+namespace Game.Gameplay
 {
     public class EnemySpawner : MonoBehaviour
     {
@@ -14,33 +12,13 @@ namespace Game.Debugging
 
         [SerializeField, Min(0)] int spawnRadius = 5;
         [SerializeField, Min(1)] int enemyHeight = 2;
-        [SerializeField, Min(0)] float spawnInterval;
+        [SerializeField, Min(0)] float spawnInterval = 10f;
         [SerializeField] GameObject[] enemies;
 
-        private KeyControl keySpawnRandom;
         private World world;
         private Camera mainCamera;
 
         private Vector3Int EnemySize => new(1, enemyHeight, 1);
-
-        private void Awake()
-        {
-            keySpawnRandom = Keyboard.current.rKey;
-            world = World.Instance;
-            mainCamera = Camera.main;
-        }
-
-        private void Start()
-        {
-            Assert.IsTrue(enemies?.Length > 0);
-            InvokeRepeating(nameof(SpawnRandomEnemy), 0, spawnInterval);
-        }
-
-        private void Update()
-        {
-            if (keySpawnRandom.wasPressedThisFrame)
-                SpawnRandomEnemy();
-        }
 
         private void SpawnRandomEnemy()
         {
@@ -83,6 +61,16 @@ namespace Game.Debugging
                 }
             }
         }
+
+        private void Awake()
+        {
+            Assert.IsTrue(enemies?.Length > 0);
+            world = World.Instance;
+            mainCamera = Camera.main;
+        }
+
+        private void OnEnable() => InvokeRepeating(nameof(SpawnRandomEnemy), 0, spawnInterval);
+        private void OnDisable() => CancelInvoke(nameof(SpawnRandomEnemy));
 
         private void OnDrawGizmosSelected()
         {
