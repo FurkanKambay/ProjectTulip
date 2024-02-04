@@ -8,6 +8,7 @@ namespace Game.Data.Tiles
     public class WorldTile : RuleTile<WorldTile.Neighbor>, ITool
     {
         public float Cooldown => .25f;
+        public bool IsSafe => true;
 
         public ItemType Type => type;
         public Sprite Icon => m_DefaultSprite;

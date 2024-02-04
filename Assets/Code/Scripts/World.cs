@@ -70,6 +70,11 @@ namespace Game
             Assert.IsTrue(entitySize.x == 1, "entitySize.x == 1");
 
             Vector3Int cellToCheck = cell;
+
+            var floor = new Vector3Int(cellToCheck.x, cellToCheck.y - 1);
+            if (!HasTile(floor) || !GetTile(floor).IsSafe)
+                return false;
+
             for (int y = 0; y < entitySize.y; y++)
             {
                 if (HasTile(cellToCheck))
