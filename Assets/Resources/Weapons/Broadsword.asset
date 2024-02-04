@@ -21,6 +21,6 @@ MonoBehaviour:
   cooldown: 0.5
   chargeTime: 0.1
   swingTime: 0.1
-  damage: 10
+  damage: 20
   range: 2
   isMultiTarget: 1
