@@ -1,43 +1,86 @@
+using System.Collections.Generic;
+using System.Linq;
 using Game.Input;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
-using Random = UnityEngine.Random;
 
 namespace Game.Debugging
 {
     public class EnemySpawner : MonoBehaviour
     {
-        [SerializeField] Transform player;
-        [SerializeField, Min(0)] float spawnRadius = 5f;
-        [SerializeField, Min(1)] int enemyHeight;
+        public Vector3Int[] SuitableSpawnCells { get; private set; }
+
+        [SerializeField, Min(0)] int spawnRadius = 5;
+        [SerializeField, Min(1)] int enemyHeight = 2;
+        [SerializeField, Min(0)] float spawnInterval;
         [SerializeField] GameObject[] enemies;
 
         private KeyControl keySpawnRandom;
         private World world;
+        private Camera mainCamera;
+
+        private Vector3Int EnemySize => new(1, enemyHeight, 1);
 
         private void Awake()
         {
-            world = World.Instance;
             keySpawnRandom = Keyboard.current.rKey;
+            world = World.Instance;
+            mainCamera = Camera.main;
+        }
+
+        private void Start()
+        {
+            Assert.IsTrue(enemies?.Length > 0);
+            InvokeRepeating(nameof(SpawnRandomEnemy), 0, spawnInterval);
         }
 
         private void Update()
         {
-            if (!keySpawnRandom.wasPressedThisFrame) return;
-            if (!(enemies?.Length > 0)) return;
-
-            GameObject enemy = Instantiate(enemies[Random.Range(0, enemies.Length)]);
-            enemy.transform.position = GetRandomPosition();
+            if (keySpawnRandom.wasPressedThisFrame)
+                SpawnRandomEnemy();
         }
 
-        private Vector3 GetRandomPosition()
+        private void SpawnRandomEnemy()
         {
-            while (true)
+            UpdateSuitableCoordinates();
+            if (SuitableSpawnCells.Length == 0) return;
+
+            GameObject randomEnemy = Instantiate(GetRandomEnemy());
+            randomEnemy.transform.position = world.CellCenter(GetRandomSpawnCell());
+        }
+
+        private void UpdateSuitableCoordinates() => SuitableSpawnCells = FindSuitableCells().ToArray();
+
+        private GameObject GetRandomEnemy() => enemies[Random.Range(0, enemies.Length)];
+        private Vector3Int GetRandomSpawnCell() => SuitableSpawnCells[Random.Range(0, SuitableSpawnCells.Length)];
+
+        private IEnumerable<Vector3Int> FindSuitableCells()
+        {
+            float camExtentY = mainCamera.orthographicSize;
+            float camExtentX = camExtentY * mainCamera.aspect;
+            float spawnExtentY = camExtentY + spawnRadius;
+            float spawnExtentX = camExtentX + spawnRadius;
+
+            Vector3 cameraCenter = mainCamera.transform.position;
+
+            Vector3Int camTopRight = (cameraCenter + new Vector3(camExtentX, camExtentY)).ToCell();
+            Vector3Int camBottomLeft = (cameraCenter - new Vector3(camExtentX, camExtentY)).ToCell();
+            Vector3Int spawnTopRight = (cameraCenter + new Vector3(spawnExtentX, spawnExtentY)).ToCell();
+            Vector3Int spawnBottomLeft = (cameraCenter - new Vector3(spawnExtentX, spawnExtentY)).ToCell();
+
+            for (int y = spawnBottomLeft.y; y <= spawnTopRight.y; y++)
             {
-                Vector2 randomPoint = (Vector2)player.position + (Random.insideUnitCircle * spawnRadius);
-                if (!world.HasTile(world.WorldToCell(randomPoint)))
-                    return randomPoint;
+                for (int x = spawnBottomLeft.x; x <= spawnTopRight.x; x++)
+                {
+                    if (y <= camTopRight.y && y >= camBottomLeft.y &&
+                        x <= camTopRight.x && x >= camBottomLeft.x) continue;
+
+                    var cell = new Vector3Int(x, y);
+                    if (world.CanAccommodate(cell, (Vector2Int)EnemySize))
+                        yield return cell;
+                }
             }
         }
 
@@ -45,16 +88,28 @@ namespace Game.Debugging
         {
             if (!Application.isPlaying) return;
 
+            DrawGizmosForSpawnCells();
+            DrawGizmoForCellUnderMouse();
+        }
+
+        private void DrawGizmosForSpawnCells()
+        {
+            Gizmos.color = Color.yellow;
+
+            foreach (Vector3Int cell in SuitableSpawnCells)
+                Gizmos.DrawSphere(world.CellCenter(cell), 0.4f);
+        }
+
+        private void DrawGizmoForCellUnderMouse()
+        {
             Vector2 mouseWorld = InputHelper.Instance.MouseWorldPoint;
             Vector3Int mouseCell = world.WorldToCell(mouseWorld);
-            var enemySize = new Vector2Int(1, enemyHeight);
 
             Vector3 cellWorld = world.CellCenter(mouseCell);
-            var gizmoSize = new Vector3(enemySize.x, enemySize.y, 1);
-            var gizmoCenter = new Vector3(cellWorld.x, cellWorld.y + (gizmoSize.y / 2f) - 0.5f, 0);
+            var gizmoCenter = new Vector3(cellWorld.x, cellWorld.y + (EnemySize.y / 2f) - 0.5f, 0);
 
-            Gizmos.color = world.CanAccommodate(mouseCell, enemySize) ? Color.green : Color.red;
-            Gizmos.DrawWireCube(gizmoCenter, gizmoSize);
+            Gizmos.color = world.CanAccommodate(mouseCell, (Vector2Int)EnemySize) ? Color.green : Color.red;
+            Gizmos.DrawWireCube(gizmoCenter, EnemySize);
         }
     }
 }
