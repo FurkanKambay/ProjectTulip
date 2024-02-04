@@ -17,11 +17,12 @@ MonoBehaviour:
   m_DefaultColliderType: 0
   m_TilingRules: []
   color: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 1}
-  name: Dirt Wall
-  description: A patch of dirt wall.
   type: 2
   iconScale: 1.2
+  name: Dirt Wall
+  description: A patch of dirt wall.
   maxAmount: 99
   hardness: 20
   hitSound: {fileID: 8300000, guid: 1c58ef9024d97c946911c88ce0b23e68, type: 3}
+  destroySound: {fileID: 0}
   placeSound: {fileID: 8300000, guid: 06a72ce793aec6e47acd9cd16493da2c, type: 3}

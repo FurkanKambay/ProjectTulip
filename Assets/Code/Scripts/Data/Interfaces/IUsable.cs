@@ -6,5 +6,7 @@ namespace Game.Data.Interfaces
     public interface IUsable : IItem
     {
         float Cooldown { get; }
+        float ChargeTime { get; }
+        float SwingTime { get; }
     }
 }

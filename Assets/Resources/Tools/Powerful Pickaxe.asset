@@ -19,4 +19,6 @@ MonoBehaviour:
   iconScale: 1.5
   maxAmount: 1
   cooldown: 0.3
+  chargeTime: 0.2
+  swingTime: 0.1
   power: 50

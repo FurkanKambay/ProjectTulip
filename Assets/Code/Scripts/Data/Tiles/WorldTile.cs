@@ -7,7 +7,9 @@ namespace Game.Data.Tiles
     [CreateAssetMenu(fileName = "Tile", menuName = "Items/Tile")]
     public class WorldTile : RuleTile<WorldTile.Neighbor>, ITool
     {
-        public float Cooldown => .25f;
+        public float Cooldown => 0.25f;
+        public float ChargeTime => 0f;
+        public float SwingTime => 0f;
         public bool IsSafe => true;
 
         public ItemType Type => type;

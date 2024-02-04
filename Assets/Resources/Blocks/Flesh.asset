@@ -114,10 +114,10 @@ MonoBehaviour:
     - {x: 0, y: -1, z: 0}
     m_RuleTransform: 0
   color: {r: 0.8113208, g: 0, b: 0, a: 1}
-  name: Flesh
-  description: Don't ask.
   type: 1
   iconScale: 1
+  name: Flesh
+  description: Don't ask.
   maxAmount: 99
   hardness: 200
   hitSound: {fileID: 8300000, guid: b65b9caeebb3648408ca1136889f421d, type: 3}

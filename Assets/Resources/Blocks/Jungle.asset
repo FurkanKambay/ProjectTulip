@@ -114,10 +114,10 @@ MonoBehaviour:
     - {x: 0, y: -1, z: 0}
     m_RuleTransform: 0
   color: {r: 0.0141509175, g: 1, b: 0.39136198, a: 1}
-  name: Jungle Dirt
-  description: A patch of dirt from the jungle.
   type: 1
   iconScale: 1
+  name: Jungle Dirt
+  description: A patch of dirt from the jungle.
   maxAmount: 99
   hardness: 50
   hitSound: {fileID: 8300000, guid: b65b9caeebb3648408ca1136889f421d, type: 3}

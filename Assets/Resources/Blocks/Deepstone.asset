@@ -114,10 +114,10 @@ MonoBehaviour:
     - {x: 0, y: -1, z: 0}
     m_RuleTransform: 0
   color: {r: 0.46226418, g: 0.46226418, b: 0.46226418, a: 1}
-  name: Deepstone
-  description: Stone that is deep.
   type: 1
   iconScale: 1
+  name: Deepstone
+  description: Stone that is deep.
   maxAmount: 99
   hardness: 150
   hitSound: {fileID: 8300000, guid: b65b9caeebb3648408ca1136889f421d, type: 3}

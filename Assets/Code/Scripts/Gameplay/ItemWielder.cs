@@ -17,45 +17,45 @@ namespace Game.Gameplay
         public event Action<IUsable, ItemSwingDirection> OnSwing;
         public event Action<IUsable> OnReady;
 
-        public IUsable Current => inventory.HotbarSelected?.Item as IUsable;
+        public IUsable HotbarItem => inventory.HotbarSelected?.Item as IUsable;
 
         [SerializeField] Transform itemPivot;
 
-        [Header("Item Animations")]
+        [Header("Item Visuals")]
         [SerializeField] float itemStowDelay = 2f;
         [SerializeField] float itemDrawStowDuration = 0.5f;
-
-        [Header("Item Swing")]
         [SerializeField] float readyAngle = -10;
         [SerializeField] float chargeAngle = 45f;
         [SerializeField] float swingAngle = -90f;
-        [SerializeField] float chargeDuration = 0.2f;
-        [SerializeField] float swingDuration = 0.1f;
 
         private Inventory inventory;
         private Transform itemVisual;
         private SpriteRenderer itemRenderer;
 
+        private IUsable itemToSwing;
         private ItemSwingState state;
         private float timeSinceLastUse;
 
         private void ChargeAndSwing(ItemSwingDirection swingDirection)
         {
-            if (timeSinceLastUse <= Current?.Cooldown) return;
-            if (state != ItemSwingState.Ready) return;
-            timeSinceLastUse = 0f;
+            itemToSwing ??= HotbarItem;
 
-            DoCharge(() => DoSwing(swingDirection));
+            if (itemToSwing == null || timeSinceLastUse <= itemToSwing.Cooldown) return;
+            if (state != ItemSwingState.Ready) return;
+
+            itemToSwing = HotbarItem;
+            timeSinceLastUse = 0f;
+            DoCharge(onComplete: () => DoSwing(swingDirection));
         }
 
         private void DoCharge(Action onComplete = null)
         {
             state = ItemSwingState.Charging;
-            itemVisual.DOLocalRotate(Vector3.forward * chargeAngle, chargeDuration)
+            itemVisual.DOLocalRotate(Vector3.forward * chargeAngle, itemToSwing.ChargeTime)
                 .OnComplete(() =>
                 {
                     state = ItemSwingState.Charged;
-                    OnCharge?.Invoke(Current);
+                    OnCharge?.Invoke(itemToSwing);
                     onComplete?.Invoke();
                 });
         }
@@ -63,10 +63,10 @@ namespace Game.Gameplay
         private void DoSwing(ItemSwingDirection swingDirection, Action onComplete = null)
         {
             state = ItemSwingState.Swinging;
-            itemVisual.DOLocalRotate(Vector3.forward * swingAngle, swingDuration)
+            itemVisual.DOLocalRotate(Vector3.forward * swingAngle, itemToSwing.SwingTime)
                 .OnComplete(() =>
                 {
-                    OnSwing?.Invoke(Current, swingDirection);
+                    OnSwing?.Invoke(itemToSwing, swingDirection);
                     onComplete?.Invoke();
                     ResetState();
                 });
@@ -77,11 +77,14 @@ namespace Game.Gameplay
             if (state == ItemSwingState.Ready) return;
 
             state = ItemSwingState.Resetting;
-            itemVisual.DOLocalRotate(Vector3.forward * readyAngle, swingDuration)
+            itemVisual.DOLocalRotate(Vector3.forward * readyAngle, itemToSwing.SwingTime)
                 .OnComplete(() =>
                 {
                     state = ItemSwingState.Ready;
-                    OnReady?.Invoke(Current);
+                    itemToSwing = HotbarItem;
+
+                    if (itemToSwing != null)
+                        OnReady?.Invoke(itemToSwing);
                 });
         }
 

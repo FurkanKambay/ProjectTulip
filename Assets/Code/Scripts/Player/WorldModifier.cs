@@ -55,7 +55,7 @@ namespace Game.Player
 
         private void Update()
         {
-            if (itemWielder.Current is not ITool) return;
+            if (itemWielder.HotbarItem is not ITool) return;
             AssignCells();
         }
 
