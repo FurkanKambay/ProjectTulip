@@ -14,8 +14,8 @@ namespace Game.Data.Items
         public virtual float SwingTime => swingTime;
 
         [Header("Usable Data")]
-        [SerializeField, Min(0)] float cooldown = 0.5f;
-        [SerializeField, Min(0)] float chargeTime = 0.1f;
-        [SerializeField, Min(0)] float swingTime = 0.1f;
+        [SerializeField, Min(0)] protected float cooldown = 0.5f;
+        [SerializeField, Min(0)] protected float chargeTime = 0.1f;
+        [SerializeField, Min(0)] protected float swingTime = 0.1f;
     }
 }

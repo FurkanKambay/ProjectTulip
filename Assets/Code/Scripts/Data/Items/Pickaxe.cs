@@ -12,7 +12,7 @@ namespace Game.Data.Items
         public virtual int Power => power;
 
         [Header("Pickaxe Data")]
-        [SerializeField, Min(0)] int power = 50;
+        [SerializeField, Min(0)] protected int power = 50;
 
         public override bool IsUsableOnTile(WorldTile tile) => (bool)tile;
     }

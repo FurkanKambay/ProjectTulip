@@ -16,11 +16,11 @@ namespace Game.Data.Interfaces
         public virtual int MaxAmount => maxAmount;
 
         [Header("Item Data")]
-        [SerializeField] ItemType type;
-        [SerializeField] Sprite icon;
-        [SerializeField] float iconScale = 1f;
-        [SerializeField] new string name;
-        [SerializeField, Multiline] string description;
-        [SerializeField, Min(1)] int maxAmount = 1;
+        [SerializeField] protected ItemType type;
+        [SerializeField] protected Sprite icon;
+        [SerializeField] protected float iconScale = 1f;
+        [SerializeField] protected new string name;
+        [SerializeField, Multiline] protected string description;
+        [SerializeField, Min(1)] protected int maxAmount = 1;
     }
 }
