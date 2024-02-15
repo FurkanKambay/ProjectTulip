@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Game.Data;
 using Game.Data.Items;
@@ -11,8 +12,9 @@ namespace Game.Player
     public sealed class Inventory : InventoryBase
     {
         public override ItemStack[] Items { get; protected set; }
-        public override ItemStack HotbarSelected => Items[HotbarSelectedIndex];
+        public override int Capacity => capacity;
 
+        public override ItemStack HotbarSelected => Items[HotbarSelectedIndex];
         public override int HotbarSelectedIndex
         {
             get => hotbarSelectedIndex;
@@ -20,6 +22,8 @@ namespace Game.Player
         }
 
         [SerializeField] InventoryData inventoryData;
+        [SerializeField, Min(0)] int capacity = 9;
+
         private int hotbarSelectedIndex;
 
         public override event Action<int> OnChangeHotbarSelection;
@@ -166,7 +170,11 @@ namespace Game.Player
 
         private void Awake()
         {
-            Items = inventoryData.Inventory.Select(so => so ? new ItemStack(so) : null).ToArray();
+            ItemStack[] startingInventory = inventoryData.Inventory.Select(stack => new ItemStack(stack)).ToArray();
+            Array.Resize(ref startingInventory, capacity);
+
+            Items = startingInventory;
+
             OnModifyHotbar?.Invoke();
         }
 

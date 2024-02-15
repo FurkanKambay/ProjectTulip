@@ -266,6 +266,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryData: {fileID: 11400000, guid: 1265edbba7f76c84ba1e9ba37adf7f80, type: 2}
+  capacity: 9
 --- !u!114 &3140798728654723148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,8 +285,6 @@ MonoBehaviour:
   readyAngle: -10
   chargeAngle: 60
   swingAngle: -120
-  chargeDuration: 0.2
-  swingDuration: 0.1
 --- !u!114 &6482861320932609866
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,15 +7,14 @@ namespace Game.Data
     public class InventoryData : ScriptableObject, IValidate
     {
         public int Capacity => capacity;
-        public ScriptableObject[] Inventory => inventory;
+        public ItemStack[] Inventory => inventory;
 
-        [SerializeField] private int capacity = 9;
-        [SerializeField] private ScriptableObject[] inventory;
+        [SerializeField] int capacity = 9;
+        [SerializeField] ItemStack[] inventory;
 
         public void OnValidate()
         {
-            inventory ??= new ScriptableObject[capacity];
-            if (inventory.Length != capacity)
+            if (inventory.Length > capacity)
                 Array.Resize(ref inventory, capacity);
         }
     }

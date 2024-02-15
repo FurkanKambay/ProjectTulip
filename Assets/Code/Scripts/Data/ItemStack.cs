@@ -4,13 +4,14 @@ using UnityEngine;
 
 namespace Game.Data
 {
-    public class ItemStack
+    [Serializable]
+    public class ItemStack : IValidate
     {
-        public bool IsValid => Item != null && Amount > 0;
+        public bool IsValid => Item != null && amount > 0;
 
-        public Item Item { get; }
+        [field: SerializeField] public Item Item { get; private set; }
 
-        private int amount;
+        [SerializeField, Min(0)] int amount;
         public int Amount
         {
             get => amount;
@@ -23,15 +24,12 @@ namespace Game.Data
             Amount = amount;
         }
 
-        public ItemStack(ScriptableObject so, int amount = 1)
+        public ItemStack(ItemStack other)
         {
-            if (so is null)
-                throw new ArgumentNullException(nameof(so));
-            if (so is not Item item)
-                throw new ArgumentException($"ScriptableObject {so.name} is not an IItem", nameof(so));
-
-            Item = item;
-            Amount = amount;
+            Item = other.Item;
+            Amount = other.Amount;
         }
+
+        public void OnValidate() => Amount = amount;
     }
 }
