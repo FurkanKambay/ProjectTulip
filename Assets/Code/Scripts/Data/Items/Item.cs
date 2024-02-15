@@ -8,12 +8,12 @@ namespace Game.Data.Interfaces
     [CreateAssetMenu(fileName = "Item", menuName = "Items/Item")]
     public class Item : ScriptableObject, IItem
     {
-        public ItemType Type => type;
-        public Sprite Icon => icon;
-        public float IconScale => iconScale;
-        public string Name => name;
-        public string Description => description;
-        public int MaxAmount => maxAmount;
+        public virtual ItemType Type => type;
+        public virtual Sprite Icon => icon;
+        public virtual float IconScale => iconScale;
+        public virtual string Name => name;
+        public virtual string Description => description;
+        public virtual int MaxAmount => maxAmount;
 
         [Header("Item Data")]
         [SerializeField] ItemType type;

@@ -7,9 +7,9 @@ namespace Game.Data.Items
     /// A pickaxe.
     /// </summary>
     [CreateAssetMenu(fileName = "Pickaxe", menuName = "Items/Pickaxe")]
-    public sealed class Pickaxe : Tool
+    public class Pickaxe : Tool
     {
-        public int Power => power;
+        public virtual int Power => power;
 
         [Header("Pickaxe Data")]
         [SerializeField, Min(0)] int power = 50;

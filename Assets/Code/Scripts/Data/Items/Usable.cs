@@ -9,9 +9,9 @@ namespace Game.Data.Items
     [CreateAssetMenu(fileName = "Usable Item", menuName = "Items/Usable Item")]
     public class Usable : Item, IUsable
     {
-        public float Cooldown => cooldown;
-        public float ChargeTime => chargeTime;
-        public float SwingTime => swingTime;
+        public virtual float Cooldown => cooldown;
+        public virtual float ChargeTime => chargeTime;
+        public virtual float SwingTime => swingTime;
 
         [Header("Usable Data")]
         [SerializeField, Min(0)] float cooldown = 0.5f;
