@@ -12,16 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec2778eec103403f8cae777705b279c9, type: 3}
   m_Name: Dirt Wall
   m_EditorClassIdentifier: 
-  m_DefaultSprite: {fileID: -502003605, guid: ef7b919bed58fcc42a5a05ba9e91e9d2, type: 3}
-  m_DefaultGameObject: {fileID: 0}
-  m_DefaultColliderType: 0
-  m_TilingRules: []
-  color: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 1}
   type: 2
+  icon: {fileID: 0}
   iconScale: 1.2
   name: Dirt Wall
   description: A patch of dirt wall.
-  maxAmount: 99
+  maxAmount: 999
+  cooldown: 0.5
+  chargeTime: 0
+  swingTime: 0
+  ruleTile: {fileID: 11400000, guid: 2fb86c8156c8f9f4d806fdbeb58c8578, type: 2}
+  color: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 1}
   hardness: 20
   hitSound: {fileID: 8300000, guid: 1c58ef9024d97c946911c88ce0b23e68, type: 3}
   destroySound: {fileID: 0}

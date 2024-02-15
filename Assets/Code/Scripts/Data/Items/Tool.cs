@@ -1,5 +1,4 @@
 using Game.Data.Interfaces;
-using Game.Data.Tiles;
 using UnityEngine;
 
 namespace Game.Data.Items

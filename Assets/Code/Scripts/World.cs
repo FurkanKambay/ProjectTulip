@@ -2,6 +2,7 @@ using System;
 using UnityEngine.Assertions;
 using System.Collections.Generic;
 using Game.Data;
+using Game.Data.Items;
 using Game.Data.Tiles;
 using Game.Helpers;
 using UnityEngine;
@@ -30,35 +31,40 @@ namespace Game
 
             tileDamageMap.TryAdd(cell, 0);
 
-            WorldTile tile = GetTile(cell);
+            WorldTile worldTile = GetTile(cell)?.WorldTile;
             int damageTaken = tileDamageMap[cell] += damage;
-            int hardness = tile.hardness;
+            int hardness = worldTile.hardness;
 
             if (damageTaken < hardness)
             {
-                OnHitTile?.Invoke(cell, tile);
+                OnHitTile?.Invoke(cell, worldTile);
                 return InventoryModification.Empty;
             }
 
             tilemap.SetTile(cell, null);
             tileDamageMap.Remove(cell);
-            OnDestroyTile?.Invoke(cell, tile);
-            return new InventoryModification(toAdd: new ItemStack(item: tile));
+            OnDestroyTile?.Invoke(cell, worldTile);
+            return new InventoryModification(toAdd: new ItemStack(item: worldTile));
         }
 
         /// <summary>
         /// Tries to place a tile at the given cell coordinates.
         /// </summary>
         /// <returns>Whether the tile was placed successfully.</returns>
-        public InventoryModification PlaceTile(Vector3Int cell, WorldTile tile)
+        public InventoryModification PlaceTile(Vector3Int cell, WorldTile worldTile)
         {
             if (tilemap.HasTile(cell))
                 return InventoryModification.Empty;
 
-            tilemap.SetTile(cell, tile);
+            // var tileChangeData = new TileChangeData(cell, worldTile.Tile, worldTile.Color, Matrix4x4.zero);
+            // tilemap.SetTile(tileChangeData, ignoreLockFlags: false);
+            tilemap.SetTile(cell, worldTile.RuleTile);
+            tilemap.SetColor(cell, worldTile.color);
+            // BUG: color doesn't work
+
             tileDamageMap.Remove(cell);
-            OnPlaceTile?.Invoke(cell, tile);
-            return new InventoryModification(toRemove: new ItemStack(item: tile));
+            OnPlaceTile?.Invoke(cell, worldTile);
+            return new InventoryModification(toRemove: new ItemStack(item: worldTile));
         }
 
         public bool CanAccommodate(Vector3Int cell, Vector2Int entitySize)
@@ -72,7 +78,7 @@ namespace Game
             Vector3Int cellToCheck = cell;
 
             var floor = new Vector3Int(cellToCheck.x, cellToCheck.y - 1);
-            if (!HasTile(floor) || !GetTile(floor).IsSafe)
+            if (!HasTile(floor) || !GetTile(floor).WorldTile.IsSafe)
                 return false;
 
             for (int y = 0; y < entitySize.y; y++)
@@ -97,7 +103,7 @@ namespace Game
         public Bounds CellBoundsWorld(Vector3Int cell) => new(CellCenter(cell), tilemap.GetBoundsLocal(cell).size);
 
         public bool HasTile(Vector3Int cell) => tilemap.HasTile(cell);
-        public WorldTile GetTile(Vector3Int cell) => tilemap.GetTile<WorldTile>(cell);
-        public WorldTile GetTile(Vector3 worldPosition) => GetTile(WorldToCell(worldPosition));
+        public CustomRuleTile GetTile(Vector3Int cell) => tilemap.GetTile<CustomRuleTile>(cell);
+        public CustomRuleTile GetTile(Vector3 worldPosition) => GetTile(WorldToCell(worldPosition));
     }
 }

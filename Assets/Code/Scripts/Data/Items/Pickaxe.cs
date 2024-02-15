@@ -1,4 +1,3 @@
-using Game.Data.Tiles;
 using UnityEngine;
 
 namespace Game.Data.Items

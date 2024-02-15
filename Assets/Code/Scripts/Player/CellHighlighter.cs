@@ -1,7 +1,6 @@
 using Game.Data;
 using Game.Data.Interfaces;
 using Game.Data.Items;
-using Game.Data.Tiles;
 using UnityEngine;
 
 namespace Game.Player
@@ -38,7 +37,7 @@ namespace Game.Player
                 return;
             }
 
-            WorldTile worldTile = world.GetTile(focusedCell.Value);
+            WorldTile worldTile = world.GetTile(focusedCell.Value)?.WorldTile;
             IItem item = inventory.HotbarSelected?.Item;
             bool notOccupiedByPlayer = !world.CellIntersects(focusedCell.Value, playerCollider.bounds);
             bool toolIsUsable = (item as Tool)?.IsUsableOnTile(worldTile) ?? false;

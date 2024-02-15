@@ -1,4 +1,5 @@
 using Game.Data;
+using Game.Data.Items;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -21,19 +22,19 @@ namespace Game.WorldGen
 
                 for (int x = 0; x < data.width; x++)
                 {
-                    TileBase biomeSoil = x < data.aquaticBiomeWidth ? data.aquatic
+                    WorldTile biomeSoil = x < data.aquaticBiomeWidth ? data.aquatic
                         : x < data.aquaticBiomeWidth + data.starterBiomeWidth ? data.dirt
                         : x < data.aquaticBiomeWidth + data.starterBiomeWidth + data.jungleBiomeWidth ? data.jungle
                         : x < data.aquaticBiomeWidth + data.starterBiomeWidth + data.jungleBiomeWidth + data.fleshBiomeWidth ? data.flesh
                         : data.dirt;
 
-                    TileBase tile = PerlinNoise[x, y] > densityCutoff ? null
+                    WorldTile tile = PerlinNoise[x, y] > densityCutoff ? null
                         : data.height - y < data.dirtLayerHeight ? biomeSoil
                         : data.height - y < data.stoneLayerHeight ? data.stone
                         : data.deepstone;
 
-                    tilemap.SetTile(new Vector3Int(x, y, 0), tile);
-                    backgroundTilemap.SetTile(new Vector3Int(x, y, 0), data.backgroundDirt);
+                    tilemap.SetTile(new Vector3Int(x, y, 0), tile ? tile.RuleTile : null);
+                    backgroundTilemap.SetTile(new Vector3Int(x, y, 0), data.backgroundDirt.RuleTile);
                 }
             }
         }

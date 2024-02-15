@@ -2,7 +2,6 @@ using System;
 using Game.Data;
 using Game.Data.Interfaces;
 using Game.Data.Items;
-using Game.Data.Tiles;
 using Game.Gameplay;
 using Game.Input;
 using UnityEngine;
@@ -66,7 +65,7 @@ namespace Game.Player
             if (!FocusedCell.HasValue) return;
             if (world.CellIntersects(FocusedCell.Value, playerCollider.bounds)) return;
 
-            WorldTile tile = world.GetTile(FocusedCell.Value);
+            WorldTile tile = world.GetTile(FocusedCell.Value)?.WorldTile;
             if (!tool.IsUsableOnTile(tile)) return;
 
             inventory.ApplyModification(item.Type switch
