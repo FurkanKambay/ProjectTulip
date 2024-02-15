@@ -1,6 +1,5 @@
 using System;
 using DG.Tweening;
-using Game.Data.Interfaces;
 using Game.Data.Items;
 using Game.Gameplay.Extensions;
 using Game.Input;
@@ -13,11 +12,11 @@ namespace Game.Gameplay
     [RequireComponent(typeof(Inventory))]
     public class ItemWielder : MonoBehaviour
     {
-        public event Action<IUsable> OnCharge;
-        public event Action<IUsable, ItemSwingDirection> OnSwing;
-        public event Action<IUsable> OnReady;
+        public event Action<Usable> OnCharge;
+        public event Action<Usable, ItemSwingDirection> OnSwing;
+        public event Action<Usable> OnReady;
 
-        public IUsable HotbarItem => inventory.HotbarSelected?.Item as IUsable;
+        public Usable HotbarItem => inventory.HotbarSelected?.Item as Usable;
 
         [SerializeField] Transform itemPivot;
 
@@ -32,7 +31,7 @@ namespace Game.Gameplay
         private Transform itemVisual;
         private SpriteRenderer itemRenderer;
 
-        private IUsable itemToSwing;
+        private Usable itemToSwing;
         private ItemSwingState state;
         private float timeSinceLastUse;
 
@@ -117,9 +116,9 @@ namespace Game.Gameplay
 
         private void UpdateItemSprite(int _)
         {
-            IItem item = inventory.HotbarSelected?.Item;
+            Item item = inventory.HotbarSelected?.Item;
 
-            float scale = item?.IconScale ?? 1;
+            float scale = item ? item.IconScale : 1;
             Color tint = Color.white;
 
             if (item is WorldTile tile)
@@ -128,7 +127,7 @@ namespace Game.Gameplay
                 tint = tile.color;
             }
 
-            itemRenderer.sprite = item?.Icon;
+            itemRenderer.sprite = item ? item.Icon : null;
             itemRenderer.color = tint;
             itemRenderer.transform.localScale = Vector2.one * scale;
         }

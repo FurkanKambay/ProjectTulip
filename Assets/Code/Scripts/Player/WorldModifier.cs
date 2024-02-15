@@ -1,6 +1,5 @@
 using System;
 using Game.Data;
-using Game.Data.Interfaces;
 using Game.Data.Items;
 using Game.Gameplay;
 using Game.Input;
@@ -54,13 +53,13 @@ namespace Game.Player
 
         private void Update()
         {
-            if (itemWielder.HotbarItem is not ITool) return;
+            if (itemWielder.HotbarItem is not Tool) return;
             AssignCells();
         }
 
-        private void HandleItemSwing(IUsable item, ItemSwingDirection _)
+        private void HandleItemSwing(Usable item, ItemSwingDirection _)
         {
-            if (item is not ITool tool) return;
+            if (item is not Tool tool) return;
 
             if (!FocusedCell.HasValue) return;
             if (world.CellIntersects(FocusedCell.Value, playerCollider.bounds)) return;

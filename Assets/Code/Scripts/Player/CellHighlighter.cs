@@ -1,5 +1,4 @@
 using Game.Data;
-using Game.Data.Interfaces;
 using Game.Data.Items;
 using UnityEngine;
 
@@ -38,11 +37,11 @@ namespace Game.Player
             }
 
             WorldTile worldTile = world.GetTile(focusedCell.Value)?.WorldTile;
-            IItem item = inventory.HotbarSelected?.Item;
+            Item item = inventory.HotbarSelected?.Item;
             bool notOccupiedByPlayer = !world.CellIntersects(focusedCell.Value, playerCollider.bounds);
             bool toolIsUsable = (item as Tool)?.IsUsableOnTile(worldTile) ?? false;
 
-            renderer.enabled = item?.Type switch
+            renderer.enabled = !item ? false : item.Type switch
             {
                 ItemType.Pickaxe => toolIsUsable,
                 ItemType.Block => toolIsUsable && notOccupiedByPlayer,

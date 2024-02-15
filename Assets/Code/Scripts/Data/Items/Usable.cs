@@ -1,4 +1,3 @@
-using Game.Data.Interfaces;
 using UnityEngine;
 
 namespace Game.Data.Items
@@ -7,7 +6,7 @@ namespace Game.Data.Items
     /// A basic item that can be used.
     /// </summary>
     [CreateAssetMenu(fileName = "Usable Item", menuName = "Items/Usable Item")]
-    public class Usable : Item, IUsable
+    public class Usable : Item
     {
         public virtual float Cooldown => cooldown;
         public virtual float ChargeTime => chargeTime;

@@ -1,4 +1,3 @@
-using Game.Data.Interfaces;
 using UnityEngine;
 
 namespace Game.Data.Items
@@ -7,7 +6,7 @@ namespace Game.Data.Items
     /// An item that can be used on a tile.
     /// </summary>
     [CreateAssetMenu(fileName = "Tool", menuName = "Items/Tool")]
-    public class Tool : Usable, ITool
+    public class Tool : Usable
     {
         public virtual bool IsUsableOnTile(WorldTile tile) => false;
     }

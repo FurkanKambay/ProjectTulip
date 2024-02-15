@@ -1,5 +1,5 @@
 using System;
-using Game.Data.Interfaces;
+using Game.Data.Items;
 using UnityEngine;
 
 namespace Game.Data
@@ -8,16 +8,16 @@ namespace Game.Data
     {
         public bool IsValid => Item != null && Amount > 0;
 
-        public IItem Item { get; }
+        public Item Item { get; }
 
         private int amount;
         public int Amount
         {
             get => amount;
-            set => amount = Mathf.Clamp(value, 0, Item?.MaxAmount ?? 0);
+            set => amount = Mathf.Clamp(value, 0, Item ? Item.MaxAmount : 0);
         }
 
-        public ItemStack(IItem item, int amount = 1)
+        public ItemStack(Item item, int amount = 1)
         {
             Item = item;
             Amount = amount;
@@ -27,7 +27,7 @@ namespace Game.Data
         {
             if (so is null)
                 throw new ArgumentNullException(nameof(so));
-            if (so is not IItem item)
+            if (so is not Item item)
                 throw new ArgumentException($"ScriptableObject {so.name} is not an IItem", nameof(so));
 
             Item = item;

@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using Game.Data;
-using Game.Data.Interfaces;
 using Game.Data.Items;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -32,7 +31,7 @@ namespace Game.UI
             for (int i = 0; i < items.Length; i++)
             {
                 ItemStack slot = items[i];
-                IItem item = slot?.Item;
+                Item item = slot?.Item;
 
                 VisualElement button = hotbarRoot[i];
                 Label slotLabel = button.Q<Label>();
@@ -40,7 +39,7 @@ namespace Game.UI
 
                 slotLabel.visible = item is { MaxAmount: > 1 };
                 slotLabel.text = slot?.Amount.ToString();
-                slotImage.sprite = item?.Icon;
+                slotImage.sprite = item ? item.Icon : null;
 
                 if (item == null) continue;
                 slotImage.transform.scale = Vector3.one * item.IconScale;
@@ -61,13 +60,13 @@ namespace Game.UI
 
         private void UpdateTooltip()
         {
-            IItem selectedItem = inventory.HotbarSelected?.Item;
+            Item selectedItem = inventory.HotbarSelected?.Item;
             tooltipRoot.visible = selectedItem != null;
 
             Label nameLabel = tooltipRoot.Q<Label>("tooltip-name");
             Label descriptionLabel = tooltipRoot.Q<Label>("tooltip-description");
-            nameLabel.text = selectedItem?.Name;
-            descriptionLabel.text = selectedItem?.Description;
+            nameLabel.text = selectedItem ? selectedItem.Name : null;
+            descriptionLabel.text = selectedItem ? selectedItem.Description : null;
 
             int slotIndex = inventory.HotbarSelectedIndex;
             Vector3 slotPosition = hotbarRoot[slotIndex].layout.position;

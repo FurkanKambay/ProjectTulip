@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using Game.Data;
-using Game.Data.Interfaces;
+using Game.Data.Items;
 using Game.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -119,7 +119,7 @@ namespace Game.Player
             return hasOverflow ? remainingAmount : 0;
         }
 
-        private int CreateNewStack(IItem item)
+        private int CreateNewStack(Item item)
         {
             int firstEmptyIndex = FindFirstEmptyIndex();
             if (firstEmptyIndex < 0) return -1;
@@ -128,14 +128,16 @@ namespace Game.Player
             return firstEmptyIndex;
         }
 
-        private int FindFirstItemIndex(IItem item, bool includeFullStacks = false)
+        private int FindFirstItemIndex(Item item, bool includeFullStacks = false)
         {
             if (item == null) return -1;
 
             for (int itemIndex = 0; itemIndex < Items.Length; itemIndex++)
             {
                 ItemStack currentItem = Items[itemIndex];
-                if (currentItem?.Item == item && (includeFullStacks || currentItem.Amount < item.MaxAmount))
+                if (currentItem == null) continue;
+
+                if (currentItem.Item == item && (includeFullStacks || currentItem.Amount < item.MaxAmount))
                     return itemIndex;
             }
 

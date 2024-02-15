@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Game.Data.Interfaces;
 using Game.Data.Items;
 using Game.Gameplay.Extensions;
 using UnityEngine;
@@ -25,7 +24,7 @@ namespace Game.Gameplay
             renderer = GetComponentInChildren<SpriteRenderer>();
         }
 
-        private void Attack(IUsable usable, ItemSwingDirection direction)
+        private void Attack(Usable usable, ItemSwingDirection direction)
         {
             if (usable is not Weapon usedWeapon) return;
             weapon = usedWeapon;

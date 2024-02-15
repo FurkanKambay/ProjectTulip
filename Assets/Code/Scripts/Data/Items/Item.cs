@@ -1,12 +1,12 @@
 using UnityEngine;
 
-namespace Game.Data.Interfaces
+namespace Game.Data.Items
 {
     /// <summary>
     /// A base item that can be stored in an inventory.
     /// </summary>
     [CreateAssetMenu(fileName = "Item", menuName = "Items/Item")]
-    public class Item : ScriptableObject, IItem
+    public class Item : ScriptableObject
     {
         public virtual ItemType Type => type;
         public virtual Sprite Icon => icon;
