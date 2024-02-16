@@ -1,0 +1,51 @@
+.menu-panel {
+    background-color: rgba(0, 0, 0, 0.6);
+    padding-right: 64px;
+    padding-left: 64px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    align-self: center;
+    flex-grow: 1;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.menu-button:hover {
+    border-left-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+    scale: 1.15 1.15;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-top-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    font-size: 18px;
+}
+
+.menu-button {
+    font-size: 18px;
+    width: 200px;
+    background-color: rgb(34, 38, 42);
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    color: rgb(245, 245, 245);
+    padding-top: 16px;
+    padding-right: 16px;
+    padding-bottom: 16px;
+    padding-left: 16px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
