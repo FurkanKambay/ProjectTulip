@@ -1,5 +1,7 @@
 fileFormatVersion: 2
 guid: c5d893c5f1c159e47a38522e8a17ccd4
+labels:
+- CustomTile
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 11400000
