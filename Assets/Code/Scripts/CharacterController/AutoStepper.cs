@@ -17,7 +17,6 @@ namespace Game.CharacterController
         [SerializeField] float range = .5f;
         [SerializeField] Vector3 offset = Vector3.up * .5f;
 
-        private World world;
         private IMovement movement;
         private GroundChecker ground;
         private Rigidbody2D body;
@@ -26,7 +25,6 @@ namespace Game.CharacterController
 
         private void Awake()
         {
-            world = World.Instance;
             movement = GetComponent<IMovement>();
             ground = GetComponent<GroundChecker>();
             body = GetComponent<Rigidbody2D>();
@@ -73,13 +71,13 @@ namespace Game.CharacterController
                 LayerMask.GetMask("World"));
 
             Vector2 hitPoint = hit.point - (hit.normal * 0.1f);
-            Vector3Int cell1 = world.WorldToCell(hitPoint) + Vector3Int.up;
+            Vector3Int cell1 = World.Instance.WorldToCell(hitPoint) + Vector3Int.up;
             Vector3Int cell2 = cell1 + Vector3Int.up;
             Vector3Int cell3 = cell2 + (velocity < 0 ? Vector3Int.right : Vector3Int.left);
 
             if (!hit) return AutoStepDirection.None;
 
-            if (world.HasTile(cell1) || world.HasTile(cell2) || world.HasTile(cell3))
+            if (World.Instance.HasTile(cell1) || World.Instance.HasTile(cell2) || World.Instance.HasTile(cell3))
                 return AutoStepDirection.None;
 
             return velocity > 0 ? AutoStepDirection.Right : AutoStepDirection.Left;

@@ -15,7 +15,6 @@ namespace Game.Gameplay
         [SerializeField, Min(0)] float spawnInterval = 10f;
         [SerializeField] GameObject[] enemies;
 
-        private World world;
         private Camera mainCamera;
 
         private Vector3Int EnemySize => new(1, enemyHeight, 1);
@@ -26,7 +25,7 @@ namespace Game.Gameplay
             if (SuitableSpawnCells.Length == 0) return;
 
             GameObject randomEnemy = Instantiate(GetRandomEnemy());
-            randomEnemy.transform.position = world.CellCenter(GetRandomSpawnCell());
+            randomEnemy.transform.position = World.Instance.CellCenter(GetRandomSpawnCell());
         }
 
         private void UpdateSuitableCoordinates() => SuitableSpawnCells = FindSuitableCells().ToArray();
@@ -56,7 +55,7 @@ namespace Game.Gameplay
                         x <= camTopRight.x && x >= camBottomLeft.x) continue;
 
                     var cell = new Vector3Int(x, y);
-                    if (world.CanAccommodate(cell, (Vector2Int)EnemySize))
+                    if (World.Instance.CanAccommodate(cell, (Vector2Int)EnemySize))
                         yield return cell;
                 }
             }
@@ -65,7 +64,6 @@ namespace Game.Gameplay
         private void Awake()
         {
             Assert.IsTrue(enemies?.Length > 0);
-            world = World.Instance;
             mainCamera = Camera.main;
         }
 
@@ -85,18 +83,18 @@ namespace Game.Gameplay
             Gizmos.color = Color.yellow;
 
             foreach (Vector3Int cell in SuitableSpawnCells)
-                Gizmos.DrawSphere(world.CellCenter(cell), 0.4f);
+                Gizmos.DrawSphere(World.Instance.CellCenter(cell), 0.4f);
         }
 
         private void DrawGizmoForCellUnderMouse()
         {
             Vector2 mouseWorld = InputHelper.Instance.MouseWorldPoint;
-            Vector3Int mouseCell = world.WorldToCell(mouseWorld);
+            Vector3Int mouseCell = World.Instance.WorldToCell(mouseWorld);
 
-            Vector3 cellWorld = world.CellCenter(mouseCell);
+            Vector3 cellWorld = World.Instance.CellCenter(mouseCell);
             var gizmoCenter = new Vector3(cellWorld.x, cellWorld.y + (EnemySize.y / 2f) - 0.5f, 0);
 
-            Gizmos.color = world.CanAccommodate(mouseCell, (Vector2Int)EnemySize) ? Color.green : Color.red;
+            Gizmos.color = World.Instance.CanAccommodate(mouseCell, (Vector2Int)EnemySize) ? Color.green : Color.red;
             Gizmos.DrawWireCube(gizmoCenter, EnemySize);
         }
     }

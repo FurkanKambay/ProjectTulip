@@ -16,13 +16,10 @@ namespace Game.Player
         private Vector3 targetPosition;
         private Vector3Int? focusedCell;
 
-        private World world;
-
         private void HandleCellFocusChanged(Vector3Int? cell) => focusedCell = cell;
 
         private void Awake()
         {
-            world = World.Instance;
             renderer = GetComponent<SpriteRenderer>();
             inventory = worldModifier.GetComponent<Inventory>();
             playerCollider = worldModifier.GetComponent<BoxCollider2D>();
@@ -36,9 +33,9 @@ namespace Game.Player
                 return;
             }
 
-            WorldTile worldTile = world.GetTile(focusedCell.Value)?.WorldTile;
+            WorldTile worldTile = World.Instance.GetTile(focusedCell.Value)?.WorldTile;
             Item item = inventory.HotbarSelected?.Item;
-            bool notOccupiedByPlayer = !world.CellIntersects(focusedCell.Value, playerCollider.bounds);
+            bool notOccupiedByPlayer = !World.Instance.CellIntersects(focusedCell.Value, playerCollider.bounds);
             bool toolIsUsable = (item as Tool)?.IsUsableOnTile(worldTile) ?? false;
 
             renderer.enabled = !item ? false : item.Type switch
@@ -49,7 +46,7 @@ namespace Game.Player
             };
 
             if (renderer.enabled)
-                targetPosition = world.CellCenter(focusedCell.Value);
+                targetPosition = World.Instance.CellCenter(focusedCell.Value);
         }
 
         private void LateUpdate()

@@ -36,14 +36,8 @@ namespace Game.Player
         private Vector2 rangePath;
         private Vector3 hitPoint;
 
-        private InputHelper input;
-        private World world;
-
         private void Awake()
         {
-            input = InputHelper.Instance;
-            world = World.Instance;
-
             InputHelper.Actions.Player.ToggleSmartCursor.performed += _ => smartCursor = !smartCursor;
 
             inventory = GetComponent<Inventory>();
@@ -62,24 +56,24 @@ namespace Game.Player
             if (item is not Tool tool) return;
 
             if (!FocusedCell.HasValue) return;
-            if (world.CellIntersects(FocusedCell.Value, playerCollider.bounds)) return;
+            if (World.Instance.CellIntersects(FocusedCell.Value, playerCollider.bounds)) return;
 
-            WorldTile tile = world.GetTile(FocusedCell.Value)?.WorldTile;
+            WorldTile tile = World.Instance.GetTile(FocusedCell.Value)?.WorldTile;
             if (!tool.IsUsableOnTile(tile)) return;
 
             inventory.ApplyModification(item.Type switch
             {
-                ItemType.Block => world.PlaceTile(FocusedCell.Value, item as WorldTile),
+                ItemType.Block => World.Instance.PlaceTile(FocusedCell.Value, item as WorldTile),
                 ItemType.Wall => InventoryModification.Empty,
-                ItemType.Pickaxe => world.DamageTile(FocusedCell.Value, ((Pickaxe)item).Power),
+                ItemType.Pickaxe => World.Instance.DamageTile(FocusedCell.Value, ((Pickaxe)item).Power),
                 _ => InventoryModification.Empty
             });
         }
 
         private void AssignCells()
         {
-            Vector3 mouseWorld = input.MouseWorldPoint;
-            MouseCell = world.WorldToCell(mouseWorld);
+            Vector3 mouseWorld = InputHelper.Instance.MouseWorldPoint;
+            MouseCell = World.Instance.WorldToCell(mouseWorld);
 
             Vector2 hotspot = (Vector2)transform.position + hotspotOffset;
             rangePath = Vector2.ClampMagnitude((Vector2)mouseWorld - hotspot, range);
@@ -96,7 +90,7 @@ namespace Game.Player
                 LayerMask.GetMask("World"));
 
             hitPoint = hit.point - (hit.normal * 0.1f);
-            FocusedCell = hit.collider ? world.WorldToCell(hitPoint) : null;
+            FocusedCell = hit.collider ? World.Instance.WorldToCell(hitPoint) : null;
         }
 
         private void OnDrawGizmosSelected()

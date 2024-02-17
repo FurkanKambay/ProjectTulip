@@ -31,7 +31,7 @@ namespace Game
 
             tileDamageMap.TryAdd(cell, 0);
 
-            WorldTile worldTile = GetTile(cell)?.WorldTile;
+            WorldTile worldTile = GetTile(cell).WorldTile;
             int damageTaken = tileDamageMap[cell] += damage;
             int hardness = worldTile.hardness;
 
