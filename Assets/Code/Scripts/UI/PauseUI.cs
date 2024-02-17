@@ -22,9 +22,6 @@ namespace Game.UI
             root.Q<Button>("ResumeButton").RegisterCallback<ClickEvent>(HandleResumeClicked);
             root.Q<Button>("SettingsButton").RegisterCallback<ClickEvent>(HandleSettingsClicked);
             root.Q<Button>("SaveButton").RegisterCallback<ClickEvent>(HandleSaveClicked);
-
-            InputHelper.Actions.Player.Menu.performed += HandlePause;
-            InputHelper.Actions.UI.Cancel.performed += HandleResume;
         }
 
         private void Start() => SetState(false);
@@ -62,6 +59,18 @@ namespace Game.UI
         private void HandlePause(InputAction.CallbackContext context) => SetState(true);
         private void HandleResume(InputAction.CallbackContext context) => SetState(false);
 
-        private void OnDisable() => SetState(false);
+        private void OnEnable()
+        {
+            InputHelper.Actions.Player.Menu.performed += HandlePause;
+            InputHelper.Actions.UI.Cancel.performed += HandleResume;
+        }
+
+        private void OnDisable()
+        {
+            InputHelper.Actions.Player.Menu.performed -= HandlePause;
+            InputHelper.Actions.UI.Cancel.performed -= HandleResume;
+
+            SetState(false);
+        }
     }
 }

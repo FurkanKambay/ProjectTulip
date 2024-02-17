@@ -20,15 +20,18 @@ namespace Game.Input
         private void HandleInputPoint(InputAction.CallbackContext context)
             => MouseScreenPoint = context.ReadValue<Vector2>();
 
-        protected override void Awake()
+        private void OnEnable()
         {
-            base.Awake();
-
+            Actions.Enable();
             Actions.Player.Hotbar.performed += HandleInputHotbar;
             Actions.Player.Point.performed += HandleInputPoint;
         }
 
-        private void OnEnable() => Actions.Enable();
-        private void OnDisable() => Actions.Disable();
+        private void OnDisable()
+        {
+            Actions.Player.Hotbar.performed -= HandleInputHotbar;
+            Actions.Player.Point.performed -= HandleInputPoint;
+            Actions.Disable();
+        }
     }
 }

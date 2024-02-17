@@ -4,6 +4,7 @@ using Game.Data.Items;
 using Game.Gameplay;
 using Game.Input;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Game.Player
 {
@@ -39,8 +40,6 @@ namespace Game.Player
 
         private void Awake()
         {
-            InputHelper.Actions.Player.ToggleSmartCursor.performed += _ => smartCursor = !smartCursor;
-
             inventory = GetComponent<Inventory>();
             itemWielder = GetComponent<ItemWielder>();
             playerCollider = GetComponent<BoxCollider2D>();
@@ -108,7 +107,19 @@ namespace Game.Player
             Gizmos.DrawSphere(hitPoint, .1f);
         }
 
-        private void OnEnable() => itemWielder.OnSwing += HandleItemSwing;
-        private void OnDisable() => itemWielder.OnSwing -= HandleItemSwing;
+        private void HandleToggleSmartCursor(InputAction.CallbackContext _)
+            => smartCursor = !smartCursor;
+
+        private void OnEnable()
+        {
+            InputHelper.Actions.Player.ToggleSmartCursor.performed += HandleToggleSmartCursor;
+            itemWielder.OnSwing += HandleItemSwing;
+        }
+
+        private void OnDisable()
+        {
+            InputHelper.Actions.Player.ToggleSmartCursor.performed -= HandleToggleSmartCursor;
+            itemWielder.OnSwing -= HandleItemSwing;
+        }
     }
 }

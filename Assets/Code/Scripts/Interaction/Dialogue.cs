@@ -10,8 +10,10 @@ namespace Game.Interaction
         private void Awake()
         {
             if (!interactable) interactable = GetComponent<Interactable>();
-            interactable.OnInteract += HandleInteract;
         }
+
+        private void OnEnable() => interactable.OnInteract += HandleInteract;
+        private void OnDisable() => interactable.OnInteract -= HandleInteract;
 
         private void HandleInteract() => Debug.Log(greetingText);
     }
