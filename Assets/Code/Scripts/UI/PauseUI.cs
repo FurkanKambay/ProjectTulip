@@ -14,16 +14,21 @@ namespace Game.UI
         private VisualElement root;
         private InputSystemUIInputModule inputModule;
 
+        private Button resumeButton;
+        private Button settingsButton;
+        private Button saveButton;
+        private Button superquitButton;
+
         private void Awake()
         {
             document = GetComponent<UIDocument>();
             root = document.rootVisualElement.ElementAt(0);
             inputModule = GetComponentInParent<InputSystemUIInputModule>();
 
-            root.Q<Button>("ResumeButton").RegisterCallback<ClickEvent>(HandleResumeClicked);
-            root.Q<Button>("SettingsButton").RegisterCallback<ClickEvent>(HandleSettingsClicked);
-            root.Q<Button>("SaveButton").RegisterCallback<ClickEvent>(HandleSaveClicked);
-            root.Q<Button>("SuperquitButton").RegisterCallback<ClickEvent>(HandleSuperquitClicked);
+            resumeButton = root.Q<Button>("ResumeButton");
+            settingsButton = root.Q<Button>("SettingsButton");
+            saveButton = root.Q<Button>("SaveButton");
+            superquitButton = root.Q<Button>("SuperquitButton");
         }
 
         private void Start() => SetState(false);
@@ -77,12 +82,22 @@ namespace Game.UI
         {
             InputHelper.Actions.Player.Menu.performed += HandlePause;
             InputHelper.Actions.UI.Cancel.performed += HandleResume;
+
+            resumeButton.RegisterCallback<ClickEvent>(HandleResumeClicked);
+            settingsButton.RegisterCallback<ClickEvent>(HandleSettingsClicked);
+            saveButton.RegisterCallback<ClickEvent>(HandleSaveClicked);
+            superquitButton.RegisterCallback<ClickEvent>(HandleSuperquitClicked);
         }
 
         private void OnDisable()
         {
             InputHelper.Actions.Player.Menu.performed -= HandlePause;
             InputHelper.Actions.UI.Cancel.performed -= HandleResume;
+
+            resumeButton.UnregisterCallback<ClickEvent>(HandleResumeClicked);
+            settingsButton.UnregisterCallback<ClickEvent>(HandleSettingsClicked);
+            saveButton.UnregisterCallback<ClickEvent>(HandleSaveClicked);
+            superquitButton.UnregisterCallback<ClickEvent>(HandleSuperquitClicked);
 
             SetState(false);
         }
