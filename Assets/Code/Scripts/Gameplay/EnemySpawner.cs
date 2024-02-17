@@ -13,6 +13,8 @@ namespace Tulip.Gameplay
         [SerializeField, Min(0)] int spawnRadius = 5;
         [SerializeField, Min(1)] int enemyHeight = 2;
         [SerializeField, Min(0)] float spawnInterval = 10f;
+
+        [SerializeField] Transform spawnParent;
         [SerializeField] GameObject[] enemies;
 
         private Camera mainCamera;
@@ -24,7 +26,7 @@ namespace Tulip.Gameplay
             UpdateSuitableCoordinates();
             if (SuitableSpawnCells.Length == 0) return;
 
-            GameObject randomEnemy = Instantiate(GetRandomEnemy());
+            GameObject randomEnemy = Instantiate(GetRandomEnemy(), spawnParent);
             randomEnemy.transform.position = World.Instance.CellCenter(GetRandomSpawnCell());
         }
 

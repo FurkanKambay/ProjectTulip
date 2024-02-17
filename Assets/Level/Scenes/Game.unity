@@ -1194,8 +1194,40 @@ MonoBehaviour:
   spawnRadius: 10
   enemyHeight: 2
   spawnInterval: 5
+  spawnParent: {fileID: 1793959016}
   enemies:
   - {fileID: 2859632988072890709, guid: e80f529ddf142384a9f35b19b774a636, type: 3}
+--- !u!1 &1793959015
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1793959016}
+  m_Layer: 0
+  m_Name: Enemies
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1793959016
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1793959015}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2100611435
 GameObject:
   m_ObjectHideFlags: 0
@@ -1280,6 +1312,7 @@ SceneRoots:
   - {fileID: 316423897}
   - {fileID: 1105140267}
   - {fileID: 2001973681169395107}
+  - {fileID: 1793959016}
   - {fileID: 661774618}
   - {fileID: 122205217}
   - {fileID: 908108056}
