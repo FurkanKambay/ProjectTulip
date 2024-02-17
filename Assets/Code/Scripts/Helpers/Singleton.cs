@@ -7,7 +7,7 @@ namespace Game.Helpers
         protected static T instance;
 
         public static T Instance =>
-            instance ??= FindObjectOfType<T>() ?? new GameObject
+            instance = instance ? instance : FindObjectOfType<T>() ?? new GameObject
             {
                 name = typeof(T).Name,
                 hideFlags = HideFlags.NotEditable
