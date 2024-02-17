@@ -38,7 +38,11 @@ namespace Tulip
             quitButton.UnregisterCallback<ClickEvent>(HandleQuitClicked);
         }
 
-        private void HandlePlayClicked(ClickEvent _) => SceneManager.LoadSceneAsync("Game");
+        private void HandlePlayClicked(ClickEvent _)
+        {
+            SceneManager.LoadSceneAsync("Game", LoadSceneMode.Additive);
+            SceneManager.UnloadSceneAsync("Main Menu");
+        }
 
         private void HandleSettingsClicked(ClickEvent _) => Debug.Log("Settings clicked");
 

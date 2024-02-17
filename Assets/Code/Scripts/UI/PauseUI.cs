@@ -23,7 +23,7 @@ namespace Tulip.UI
         {
             document = GetComponent<UIDocument>();
             root = document.rootVisualElement.ElementAt(0);
-            inputModule = GetComponentInParent<InputSystemUIInputModule>();
+            inputModule = FindObjectOfType<InputSystemUIInputModule>();
 
             resumeButton = root.Q<Button>("ResumeButton");
             settingsButton = root.Q<Button>("SettingsButton");
@@ -73,7 +73,11 @@ namespace Tulip.UI
 
         // TODO: save game
         private void SaveGame() => Debug.Log("Saving...");
-        private void ReturnToMainMenu() => SceneManager.LoadScene("Main Menu");
+        private void ReturnToMainMenu()
+        {
+            SceneManager.UnloadSceneAsync("Game");
+            SceneManager.LoadSceneAsync("Main Menu", LoadSceneMode.Additive);
+        }
 
         private void HandlePause(InputAction.CallbackContext context) => SetState(true);
         private void HandleResume(InputAction.CallbackContext context) => SetState(false);
@@ -98,8 +102,6 @@ namespace Tulip.UI
             settingsButton.UnregisterCallback<ClickEvent>(HandleSettingsClicked);
             saveButton.UnregisterCallback<ClickEvent>(HandleSaveClicked);
             superquitButton.UnregisterCallback<ClickEvent>(HandleSuperquitClicked);
-
-            SetState(false);
         }
     }
 }
