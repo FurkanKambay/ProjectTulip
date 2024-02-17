@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.Gameplay.Extensions
+namespace Tulip.Gameplay.Extensions
 {
     public static class EnumExtensions
     {

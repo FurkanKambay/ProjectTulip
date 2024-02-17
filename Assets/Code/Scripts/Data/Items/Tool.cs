@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.Data.Items
+namespace Tulip.Data.Items
 {
     /// <summary>
     /// An item that can be used on a tile.

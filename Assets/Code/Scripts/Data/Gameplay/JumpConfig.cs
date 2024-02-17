@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.Data.Gameplay
+namespace Tulip.Data.Gameplay
 {
     [CreateAssetMenu(menuName = "Data/Jump")]
     public class JumpConfig : ScriptableObject

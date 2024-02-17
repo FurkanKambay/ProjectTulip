@@ -1,7 +1,7 @@
-using Game.Data.Items;
+using Tulip.Data.Items;
 using UnityEngine;
 
-namespace Game.Audio
+namespace Tulip.Audio
 {
     public class WorldAudio : MonoBehaviour
     {

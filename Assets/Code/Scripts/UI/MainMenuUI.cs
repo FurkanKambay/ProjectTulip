@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-namespace Game
+namespace Tulip
 {
     public class MainMenuUI : MonoBehaviour
     {

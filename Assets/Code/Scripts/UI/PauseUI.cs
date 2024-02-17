@@ -1,4 +1,4 @@
-using Game.Input;
+using Tulip.Input;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -6,7 +6,7 @@ using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-namespace Game.UI
+namespace Tulip.UI
 {
     public class PauseUI : MonoBehaviour
     {

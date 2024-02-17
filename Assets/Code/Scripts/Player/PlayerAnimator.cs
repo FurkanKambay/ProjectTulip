@@ -1,8 +1,8 @@
-using Game.CharacterController;
-using Game.Data.Interfaces;
+using Tulip.CharacterController;
+using Tulip.Data.Interfaces;
 using UnityEngine;
 
-namespace Game.Player
+namespace Tulip.Player
 {
     public class PlayerAnimator : MonoBehaviour
     {

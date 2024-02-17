@@ -1,7 +1,7 @@
-using Game.Gameplay;
+using Tulip.Gameplay;
 using UnityEngine;
 
-namespace Game.Audio
+namespace Tulip.Audio
 {
     public class EnemyAudio : MonoBehaviour
     {

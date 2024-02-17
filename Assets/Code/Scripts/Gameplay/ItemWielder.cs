@@ -1,13 +1,13 @@
 using System;
 using DG.Tweening;
-using Game.Data.Items;
-using Game.Gameplay.Extensions;
-using Game.Input;
-using Game.Player;
+using Tulip.Data.Items;
+using Tulip.Gameplay.Extensions;
+using Tulip.Input;
+using Tulip.Player;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace Game.Gameplay
+namespace Tulip.Gameplay
 {
     [RequireComponent(typeof(Inventory))]
     public class ItemWielder : MonoBehaviour

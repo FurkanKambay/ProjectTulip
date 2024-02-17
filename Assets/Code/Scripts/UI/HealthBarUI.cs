@@ -1,7 +1,7 @@
-using Game.Data.Interfaces;
+using Tulip.Data.Interfaces;
 using UnityEngine;
 
-namespace Game.UI
+namespace Tulip.UI
 {
     public class HealthBarUI : MonoBehaviour
     {

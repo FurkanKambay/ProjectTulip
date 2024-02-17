@@ -1,8 +1,8 @@
 using System;
-using Game.Data.Interfaces;
+using Tulip.Data.Interfaces;
 using UnityEngine;
 
-namespace Game.Data
+namespace Tulip.Data
 {
     public abstract class InventoryBase : MonoBehaviour, IInventory
     {

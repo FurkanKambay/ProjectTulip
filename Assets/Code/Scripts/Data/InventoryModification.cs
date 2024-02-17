@@ -1,4 +1,4 @@
-namespace Game.Data
+namespace Tulip.Data
 {
     public readonly struct InventoryModification
     {

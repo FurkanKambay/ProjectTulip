@@ -1,7 +1,7 @@
-using Game.Data.Items;
+using Tulip.Data.Items;
 using UnityEngine;
 
-namespace Game.Data
+namespace Tulip.Data
 {
     [CreateAssetMenu(fileName = "WorldData", menuName = "Data/World", order = 0)]
     public class WorldData : ScriptableObject

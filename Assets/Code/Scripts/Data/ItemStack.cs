@@ -1,8 +1,8 @@
 using System;
-using Game.Data.Items;
+using Tulip.Data.Items;
 using UnityEngine;
 
-namespace Game.Data
+namespace Tulip.Data
 {
     [Serializable]
     public class ItemStack : IValidate

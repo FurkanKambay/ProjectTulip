@@ -1,7 +1,8 @@
 {
-    "name": "Game.AI",
-    "rootNamespace": "Game",
+    "name": "Tulip.WorldGen",
+    "rootNamespace": "Tulip",
     "references": [
+        "GUID:613783dc1674e844b87788ea74ede0f6",
         "GUID:4cb23d4305e903d4cbe6b4d464c9f42d"
     ],
     "includePlatforms": [],

@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: Furkan Kambay
-  productName: Project Terra
+  productName: Project Tulip
   defaultCursor: {fileID: 2800000, guid: a19eac1ab359ad342b193d47ba3c0476, type: 3}
   cursorHotspot: {x: 5, y: 1}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -137,6 +137,8 @@ PlayerSettings:
   vulkanEnableLateAcquireNextImage: 0
   vulkanEnableCommandBufferRecycling: 1
   loadStoreDebugModeEnabled: 0
+  visionOSBundleVersion: 1.0
+  tvOSBundleVersion: 1.0
   bundleVersion: 0.1
   preloadedAssets: []
   metroInputSource: 0
@@ -159,7 +161,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Standalone: com.Furkan-Kambay.Terra
+    Standalone: com.Furkan-Kambay.Tulip
   buildNumber:
     Standalone: 0
     VisionOS: 0

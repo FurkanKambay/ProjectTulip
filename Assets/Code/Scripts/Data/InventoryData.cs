@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Game.Data
+namespace Tulip.Data
 {
     [CreateAssetMenu(fileName = "Inventory Data", menuName = "Data/Starting Inventory")]
     public class InventoryData : ScriptableObject, IValidate

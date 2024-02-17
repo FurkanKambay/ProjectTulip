@@ -1,11 +1,11 @@
 using System;
 using System.Collections;
-using Game.Data;
-using Game.Data.Items;
+using Tulip.Data;
+using Tulip.Data.Items;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Game.UI
+namespace Tulip.UI
 {
     public class HotbarUI : MonoBehaviour
     {

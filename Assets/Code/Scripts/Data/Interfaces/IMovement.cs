@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.Data.Interfaces
+namespace Tulip.Data.Interfaces
 {
     public interface IMovement
     {

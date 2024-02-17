@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.CharacterController
+namespace Tulip.CharacterController
 {
     public class GroundChecker : MonoBehaviour
     {

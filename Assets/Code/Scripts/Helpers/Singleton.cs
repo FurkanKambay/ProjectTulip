@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.Helpers
+namespace Tulip.Helpers
 {
     public abstract class Singleton<T> : MonoBehaviour where T : Component
     {

@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Game.Data;
-using Game.Data.Items;
-using Game.Input;
+using Tulip.Data;
+using Tulip.Data.Items;
+using Tulip.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Game.Player
+namespace Tulip.Player
 {
     public sealed class Inventory : InventoryBase
     {

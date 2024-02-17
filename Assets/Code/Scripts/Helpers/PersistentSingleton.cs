@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.Helpers
+namespace Tulip.Helpers
 {
     public abstract class PersistentSingleton<T> : Singleton<T> where T : Component
     {

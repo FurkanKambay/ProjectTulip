@@ -1,9 +1,9 @@
-using Game.Data.Gameplay;
-using Game.Input;
+using Tulip.Data.Gameplay;
+using Tulip.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Game.CharacterController
+namespace Tulip.CharacterController
 {
     public class PlayerJump : MonoBehaviour
     {

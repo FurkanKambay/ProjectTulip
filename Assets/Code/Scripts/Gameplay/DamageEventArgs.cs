@@ -1,4 +1,4 @@
-namespace Game.Gameplay
+namespace Tulip.Gameplay
 {
     public readonly struct DamageEventArgs
     {

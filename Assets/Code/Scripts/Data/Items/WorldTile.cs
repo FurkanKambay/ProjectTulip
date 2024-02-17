@@ -1,7 +1,7 @@
-using Game.Data.Tiles;
+using Tulip.Data.Tiles;
 using UnityEngine;
 
-namespace Game.Data.Items
+namespace Tulip.Data.Items
 {
     [CreateAssetMenu(fileName = "World Tile", menuName = "Items/World Tile")]
     public class WorldTile : Tool

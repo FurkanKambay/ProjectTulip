@@ -1,9 +1,9 @@
-using Game.CharacterController;
-using Game.Input;
+using Tulip.CharacterController;
+using Tulip.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Game.Gameplay
+namespace Tulip.Gameplay
 {
     public class PlayerInput : MonoBehaviour
     {

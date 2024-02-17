@@ -1,8 +1,8 @@
-using Game.Data.Items;
+using Tulip.Data.Items;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace Game.Data.Tiles
+namespace Tulip.Data.Tiles
 {
     [CreateAssetMenu(fileName = "Custom Rule Tile", menuName = "Custom Rule Tile")]
     public sealed class CustomRuleTile : RuleTile<CustomRuleTile.Neighbor>

@@ -1,9 +1,9 @@
 using System;
-using Game.Data.Gameplay;
-using Game.Data.Interfaces;
+using Tulip.Data.Gameplay;
+using Tulip.Data.Interfaces;
 using UnityEngine;
 
-namespace Game.CharacterController
+namespace Tulip.CharacterController
 {
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(GroundChecker))]

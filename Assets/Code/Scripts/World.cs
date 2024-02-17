@@ -1,14 +1,14 @@
 using System;
 using UnityEngine.Assertions;
 using System.Collections.Generic;
-using Game.Data;
-using Game.Data.Items;
-using Game.Data.Tiles;
-using Game.Helpers;
+using Tulip.Data;
+using Tulip.Data.Items;
+using Tulip.Data.Tiles;
+using Tulip.Helpers;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace Game
+namespace Tulip
 {
     public class World : Singleton<World>
     {

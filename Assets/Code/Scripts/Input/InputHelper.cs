@@ -1,9 +1,9 @@
 using System;
-using Game.Helpers;
+using Tulip.Helpers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Game.Input
+namespace Tulip.Input
 {
     public class InputHelper : PersistentSingleton<InputHelper>
     {

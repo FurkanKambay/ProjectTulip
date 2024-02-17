@@ -1,9 +1,9 @@
 using System;
-using Game.Input;
+using Tulip.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Game.Interaction
+namespace Tulip.Interaction
 {
     [RequireComponent(typeof(BoxCollider2D))]
     public class Interactable : MonoBehaviour

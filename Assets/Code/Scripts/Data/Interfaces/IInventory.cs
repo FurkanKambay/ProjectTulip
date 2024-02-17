@@ -1,6 +1,6 @@
 using System;
 
-namespace Game.Data.Interfaces
+namespace Tulip.Data.Interfaces
 {
     public interface IInventory
     {

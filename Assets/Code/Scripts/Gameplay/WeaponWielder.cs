@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using Game.Data.Items;
-using Game.Gameplay.Extensions;
+using Tulip.Data.Items;
+using Tulip.Gameplay.Extensions;
 using UnityEngine;
 
-namespace Game.Gameplay
+namespace Tulip.Gameplay
 {
     public class WeaponWielder : MonoBehaviour
     {

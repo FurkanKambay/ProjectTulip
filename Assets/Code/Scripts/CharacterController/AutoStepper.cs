@@ -1,8 +1,8 @@
 using System;
-using Game.Data.Interfaces;
+using Tulip.Data.Interfaces;
 using UnityEngine;
 
-namespace Game.CharacterController
+namespace Tulip.CharacterController
 {
     public class AutoStepper : MonoBehaviour
     {

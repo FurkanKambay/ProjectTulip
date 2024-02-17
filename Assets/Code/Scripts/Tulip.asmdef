@@ -1,6 +1,6 @@
 {
-    "name": "Game",
-    "rootNamespace": "Game",
+    "name": "Tulip",
+    "rootNamespace": "Tulip",
     "references": [
         "GUID:75469ad4d38634e559750d17036d5f7c",
         "GUID:613783dc1674e844b87788ea74ede0f6",

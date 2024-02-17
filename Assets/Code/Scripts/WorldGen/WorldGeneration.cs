@@ -1,9 +1,9 @@
-using Game.Data;
-using Game.Data.Items;
+using Tulip.Data;
+using Tulip.Data.Items;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace Game.WorldGen
+namespace Tulip.WorldGen
 {
     public class WorldGeneration : MonoBehaviour
     {

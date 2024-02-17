@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.Data.Items
+namespace Tulip.Data.Items
 {
     /// <summary>
     /// A base item that can be stored in an inventory.

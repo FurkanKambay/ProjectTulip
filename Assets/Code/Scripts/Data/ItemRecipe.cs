@@ -1,7 +1,7 @@
-using Game.Data.Items;
+using Tulip.Data.Items;
 using UnityEngine;
 
-namespace Game.Data
+namespace Tulip.Data
 {
     [CreateAssetMenu(fileName = "Item Recipe", menuName = "Data/Item Recipe")]
     public class ItemRecipe : ScriptableObject

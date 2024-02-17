@@ -1,12 +1,12 @@
 using System;
-using Game.Data;
-using Game.Data.Items;
-using Game.Gameplay;
-using Game.Input;
+using Tulip.Data;
+using Tulip.Data.Items;
+using Tulip.Gameplay;
+using Tulip.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Game.Player
+namespace Tulip.Player
 {
     public class WorldModifier : MonoBehaviour
     {

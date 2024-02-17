@@ -1,8 +1,8 @@
-using Game.Data.Items;
-using Game.Gameplay;
+using Tulip.Data.Items;
+using Tulip.Gameplay;
 using UnityEngine;
 
-namespace Game.Audio
+namespace Tulip.Audio
 {
     public class PlayerAudio : MonoBehaviour
     {

@@ -1,9 +1,9 @@
 using System;
-using Game.Data;
-using Game.Input;
+using Tulip.Data;
+using Tulip.Input;
 using UnityEngine;
 
-namespace Game.Player
+namespace Tulip.Player
 {
     public class CameraFollow : MonoBehaviour
     {

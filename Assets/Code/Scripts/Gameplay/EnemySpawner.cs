@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using Game.Input;
+using Tulip.Input;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace Game.Gameplay
+namespace Tulip.Gameplay
 {
     public class EnemySpawner : MonoBehaviour
     {

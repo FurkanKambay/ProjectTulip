@@ -1,8 +1,8 @@
-using Game.Data;
-using Game.Data.Items;
+using Tulip.Data;
+using Tulip.Data.Items;
 using UnityEngine;
 
-namespace Game.Player
+namespace Tulip.Player
 {
     public class CellHighlighter : MonoBehaviour
     {

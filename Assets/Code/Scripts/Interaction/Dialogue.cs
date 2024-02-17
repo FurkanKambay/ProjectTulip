@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.Interaction
+namespace Tulip.Interaction
 {
     public class Dialogue : MonoBehaviour
     {

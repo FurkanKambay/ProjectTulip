@@ -1,7 +1,7 @@
-using Game.Data.Interfaces;
+using Tulip.Data.Interfaces;
 using UnityEngine;
 
-namespace Game.AI
+namespace Tulip.AI
 {
     [RequireComponent(typeof(IMovement))]
     public class SimpleFollowerAI : MonoBehaviour
