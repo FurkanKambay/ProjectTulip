@@ -31,6 +31,7 @@ namespace Game.Player
         private Inventory inventory;
         private ItemWielder itemWielder;
         private BoxCollider2D playerCollider;
+        private Camera mainCamera;
 
         private Vector3Int? focusedCell;
         private Vector2 rangePath;
@@ -43,6 +44,7 @@ namespace Game.Player
             inventory = GetComponent<Inventory>();
             itemWielder = GetComponent<ItemWielder>();
             playerCollider = GetComponent<BoxCollider2D>();
+            mainCamera = Camera.main;
         }
 
         private void Update()
@@ -72,11 +74,11 @@ namespace Game.Player
 
         private void AssignCells()
         {
-            Vector3 mouseWorld = InputHelper.Instance.MouseWorldPoint;
+            Vector2 mouseWorld = mainCamera.ScreenToWorldPoint(InputHelper.Instance.MouseScreenPoint);
             MouseCell = World.Instance.WorldToCell(mouseWorld);
 
             Vector2 hotspot = (Vector2)transform.position + hotspotOffset;
-            rangePath = Vector2.ClampMagnitude((Vector2)mouseWorld - hotspot, range);
+            rangePath = Vector2.ClampMagnitude(mouseWorld - hotspot, range);
 
             if (!smartCursor || inventory.HotbarSelected?.Item is not Pickaxe)
             {

@@ -12,6 +12,8 @@ namespace Game.Interaction
 
         public event Action OnInteract;
 
+        private Camera mainCamera;
+
         private bool isHovering;
 
         private void HandleInteract(InputAction.CallbackContext context)
@@ -20,8 +22,14 @@ namespace Game.Interaction
             OnInteract?.Invoke();
         }
 
+        private void Awake() => mainCamera = Camera.main;
+
         // TODO: highlight sprite outline
-        private void Update() => isHovering = trigger.OverlapPoint(InputHelper.Instance.MouseWorldPoint);
+        private void Update()
+        {
+            Vector3 mouseWorld = mainCamera.ScreenToWorldPoint(InputHelper.Instance.MouseScreenPoint);
+            isHovering = trigger.OverlapPoint(mouseWorld);
+        }
 
         private void OnEnable() => InputHelper.Actions.Player.Interact.performed += HandleInteract;
         private void OnDisable() => InputHelper.Actions.Player.Interact.performed -= HandleInteract;

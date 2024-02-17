@@ -30,6 +30,7 @@ namespace Game.Gameplay
         private Inventory inventory;
         private Transform itemVisual;
         private SpriteRenderer itemRenderer;
+        private Camera mainCamera;
 
         private Usable itemToSwing;
         private ItemSwingState state;
@@ -94,7 +95,8 @@ namespace Game.Gameplay
             bool shouldShowItem = timeSinceLastUse < itemStowDelay || InputHelper.Actions.Player.Use.inProgress;
             Vector3 targetScale = itemPivot.localScale;
 
-            Vector2 deltaToMouse = InputHelper.Instance.MouseWorldPoint - (Vector2)transform.position;
+            Vector3 mouseWorld = mainCamera.ScreenToWorldPoint(InputHelper.Instance.MouseScreenPoint);
+            Vector2 deltaToMouse = mouseWorld - transform.position;
 
             // TODO: implement up/down swing
             ItemSwingDirection swingDirection = deltaToMouse.x < 0
@@ -139,6 +141,7 @@ namespace Game.Gameplay
             inventory = GetComponent<Inventory>();
             itemRenderer = itemPivot.GetComponentInChildren<SpriteRenderer>();
             itemVisual = itemRenderer.transform;
+            mainCamera = Camera.main;
 
             itemVisual.localEulerAngles = Vector3.forward * readyAngle;
         }

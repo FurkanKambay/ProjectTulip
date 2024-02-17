@@ -88,7 +88,7 @@ namespace Game.Gameplay
 
         private void DrawGizmoForCellUnderMouse()
         {
-            Vector2 mouseWorld = InputHelper.Instance.MouseWorldPoint;
+            Vector3 mouseWorld = mainCamera.ScreenToWorldPoint(InputHelper.Instance.MouseScreenPoint);
             Vector3Int mouseCell = World.Instance.WorldToCell(mouseWorld);
 
             Vector3 cellWorld = World.Instance.CellCenter(mouseCell);
