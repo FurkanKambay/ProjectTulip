@@ -3,6 +3,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 namespace Game.UI
@@ -22,6 +23,7 @@ namespace Game.UI
             root.Q<Button>("ResumeButton").RegisterCallback<ClickEvent>(HandleResumeClicked);
             root.Q<Button>("SettingsButton").RegisterCallback<ClickEvent>(HandleSettingsClicked);
             root.Q<Button>("SaveButton").RegisterCallback<ClickEvent>(HandleSaveClicked);
+            root.Q<Button>("SuperquitButton").RegisterCallback<ClickEvent>(HandleSuperquitClicked);
         }
 
         private void Start() => SetState(false);
@@ -48,13 +50,25 @@ namespace Game.UI
         private void HandleResumeClicked(ClickEvent _) => SetState(false);
         private void HandleSettingsClicked(ClickEvent _) => Debug.Log("Settings clicked");
 
-        private static void HandleSaveClicked(ClickEvent _)
+        private void HandleSaveClicked(ClickEvent _)
         {
+            SaveGame();
+            ReturnToMainMenu();
+        }
+
+        private void HandleSuperquitClicked(ClickEvent _)
+        {
+            SaveGame();
+
 #if UNITY_EDITOR
             EditorApplication.isPlaying = false;
 #endif
             Application.Quit();
         }
+
+        // TODO: save game
+        private void SaveGame() => Debug.Log("Saving...");
+        private void ReturnToMainMenu() => SceneManager.LoadScene("Main Menu");
 
         private void HandlePause(InputAction.CallbackContext context) => SetState(true);
         private void HandleResume(InputAction.CallbackContext context) => SetState(false);

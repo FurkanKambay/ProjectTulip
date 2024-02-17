@@ -4,5 +4,6 @@
         <ui:Button text="Resume" enable-rich-text="false" name="ResumeButton" class="menu-button" />
         <ui:Button text="Settings" enable-rich-text="false" name="SettingsButton" class="menu-button" />
         <ui:Button text="Save &amp; Exit" enable-rich-text="false" name="SaveButton" class="menu-button" />
+        <ui:Button text="Superquit" enable-rich-text="false" name="SuperquitButton" class="menu-button" />
     </ui:VisualElement>
 </ui:UXML>
