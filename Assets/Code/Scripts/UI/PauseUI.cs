@@ -2,7 +2,6 @@ using Tulip.Input;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
@@ -12,7 +11,8 @@ namespace Tulip.UI
     {
         private UIDocument document;
         private VisualElement root;
-        private InputSystemUIInputModule inputModule;
+
+        private SettingsUI settingsUI;
 
         private Button resumeButton;
         private Button settingsButton;
@@ -23,7 +23,8 @@ namespace Tulip.UI
         {
             document = GetComponent<UIDocument>();
             root = document.rootVisualElement.ElementAt(0);
-            inputModule = FindObjectOfType<InputSystemUIInputModule>();
+
+            settingsUI = FindObjectOfType<SettingsUI>();
 
             resumeButton = root.Q<Button>("ResumeButton");
             settingsButton = root.Q<Button>("SettingsButton");
@@ -36,7 +37,6 @@ namespace Tulip.UI
         private void SetState(bool value)
         {
             root.visible = value;
-            inputModule.enabled = value;
 
             if (value)
             {
@@ -53,7 +53,19 @@ namespace Tulip.UI
         }
 
         private void HandleResumeClicked(ClickEvent _) => SetState(false);
-        private void HandleSettingsClicked(ClickEvent _) => Debug.Log("Settings clicked");
+
+        private void HandleSettingsClicked(ClickEvent _)
+        {
+            root.visible = false;
+            InputHelper.Actions.UI.Cancel.performed -= HandleResume;
+            settingsUI.enabled = true;
+        }
+
+        private void HandleSettingsHide()
+        {
+            SetState(true);
+            InputHelper.Actions.UI.Cancel.performed += HandleResume;
+        }
 
         private void HandleSaveClicked(ClickEvent _)
         {
@@ -84,6 +96,7 @@ namespace Tulip.UI
 
         private void OnEnable()
         {
+            settingsUI.OnHide += HandleSettingsHide;
             InputHelper.Actions.Player.Menu.performed += HandlePause;
             InputHelper.Actions.UI.Cancel.performed += HandleResume;
 
@@ -95,6 +108,7 @@ namespace Tulip.UI
 
         private void OnDisable()
         {
+            settingsUI.OnHide -= HandleSettingsHide;
             InputHelper.Actions.Player.Menu.performed -= HandlePause;
             InputHelper.Actions.UI.Cancel.performed -= HandleResume;
 

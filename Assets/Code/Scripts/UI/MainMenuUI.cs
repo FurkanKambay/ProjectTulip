@@ -1,14 +1,17 @@
+using Tulip.Input;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-namespace Tulip
+namespace Tulip.UI
 {
     public class MainMenuUI : MonoBehaviour
     {
         private UIDocument document;
         private VisualElement root;
+
+        private SettingsUI settingsUI;
 
         private Button playButton;
         private Button settingsButton;
@@ -19,9 +22,13 @@ namespace Tulip
             document = GetComponent<UIDocument>();
             root = document.rootVisualElement.ElementAt(0);
 
+            settingsUI = FindObjectOfType<SettingsUI>();
+
             playButton = root.Q<Button>("PlayButton");
             settingsButton = root.Q<Button>("SettingsButton");
             quitButton = root.Q<Button>("QuitButton");
+
+            InputHelper.Actions.Player.Disable();
         }
 
         private void OnEnable()
@@ -44,7 +51,7 @@ namespace Tulip
             SceneManager.UnloadSceneAsync("Main Menu");
         }
 
-        private void HandleSettingsClicked(ClickEvent _) => Debug.Log("Settings clicked");
+        private void HandleSettingsClicked(ClickEvent _) => settingsUI.enabled = true;
 
         private static void HandleQuitClicked(ClickEvent _)
         {
