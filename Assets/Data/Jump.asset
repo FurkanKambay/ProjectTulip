@@ -18,6 +18,6 @@ MonoBehaviour:
   hasVariableJumpHeight: 1
   jumpCutOff: 3
   coyoteTime: 0.15
-  jumpBuffer: 0.05
+  jumpBuffer: 0.1
   upwardGravityMultiplier: 1.5
   downwardGravityMultiplier: 1.5
