@@ -1,8 +1,8 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/Art/UI/Styles/MainMenu.uss?fileID=7433441132597879392&amp;guid=5f24e2399b8035745a7f7fe2e37082b7&amp;type=3#MainMenu" />
-    <ui:VisualElement name="SettingsMenuContainer" class="menu-panel" style="flex-direction: row; align-items: flex-start; align-self: auto; justify-content: flex-start; padding-top: 16px; padding-right: 16px; padding-bottom: 16px; padding-left: 16px;">
-        <ui:Button text="✖" enable-rich-text="false" name="BackButton" class="menu-button" style="width: 64px; height: 64px; margin-top: 8px; margin-right: 8px; margin-bottom: 8px; margin-left: 8px;" />
-        <ui:Button text="Gameplay" enable-rich-text="false" name="GameplayButton" class="menu-button" style="background-color: rgb(0, 88, 176); height: 64px; margin-top: 8px; margin-right: 8px; margin-bottom: 8px; margin-left: 8px;" />
-        <ui:Button text="Audio" enable-rich-text="false" name="AudioButton" class="menu-button" style="background-color: rgb(0, 88, 176); height: 64px; margin-top: 8px; margin-right: 8px; margin-bottom: 8px; margin-left: 8px;" />
-    </ui:VisualElement>
+    <Style src="project://database/Assets/Art/UI/Styles/SettingsMenu.uss?fileID=7433441132597879392&amp;guid=6fb4624177c61bf46812563d65e71cde&amp;type=3#SettingsMenu" />
+    <ui:TabView class="tab-view">
+        <ui:Tab label="Gameplay" name="TabGameplay" />
+        <ui:Tab label="Audio" name="TabAudio" />
+    </ui:TabView>
+    <ui:Toggle name="ToggleButton" enable-rich-text="false" emoji-fallback-support="false" class="unity-tab__header" />
 </ui:UXML>

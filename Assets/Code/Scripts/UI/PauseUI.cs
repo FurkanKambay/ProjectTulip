@@ -15,7 +15,6 @@ namespace Tulip.UI
         private SettingsUI settingsUI;
 
         private Button resumeButton;
-        private Button settingsButton;
         private Button saveButton;
         private Button superquitButton;
 
@@ -24,10 +23,10 @@ namespace Tulip.UI
             document = GetComponent<UIDocument>();
             root = document.rootVisualElement.ElementAt(0);
 
-            settingsUI = FindObjectOfType<SettingsUI>();
+            settingsUI = FindFirstObjectByType<SettingsUI>();
+            settingsUI.enabled = false;
 
             resumeButton = root.Q<Button>("ResumeButton");
-            settingsButton = root.Q<Button>("SettingsButton");
             saveButton = root.Q<Button>("SaveButton");
             superquitButton = root.Q<Button>("SuperquitButton");
         }
@@ -37,6 +36,7 @@ namespace Tulip.UI
         private void SetState(bool value)
         {
             root.visible = value;
+            settingsUI.enabled = value;
 
             if (value)
             {
@@ -54,11 +54,10 @@ namespace Tulip.UI
 
         private void HandleResumeClicked(ClickEvent _) => SetState(false);
 
-        private void HandleSettingsClicked(ClickEvent _)
+        private void HandleSettingsShow()
         {
             root.visible = false;
             InputHelper.Actions.UI.Cancel.performed -= HandleResume;
-            settingsUI.enabled = true;
         }
 
         private void HandleSettingsHide()
@@ -85,6 +84,7 @@ namespace Tulip.UI
 
         // TODO: save game
         private void SaveGame() => Debug.Log("Saving...");
+
         private void ReturnToMainMenu()
         {
             SceneManager.UnloadSceneAsync("Game");
@@ -96,24 +96,24 @@ namespace Tulip.UI
 
         private void OnEnable()
         {
+            settingsUI.OnShow += HandleSettingsShow;
             settingsUI.OnHide += HandleSettingsHide;
             InputHelper.Actions.Player.Menu.performed += HandlePause;
             InputHelper.Actions.UI.Cancel.performed += HandleResume;
 
             resumeButton.RegisterCallback<ClickEvent>(HandleResumeClicked);
-            settingsButton.RegisterCallback<ClickEvent>(HandleSettingsClicked);
             saveButton.RegisterCallback<ClickEvent>(HandleSaveClicked);
             superquitButton.RegisterCallback<ClickEvent>(HandleSuperquitClicked);
         }
 
         private void OnDisable()
         {
+            settingsUI.OnShow -= HandleSettingsShow;
             settingsUI.OnHide -= HandleSettingsHide;
             InputHelper.Actions.Player.Menu.performed -= HandlePause;
             InputHelper.Actions.UI.Cancel.performed -= HandleResume;
 
             resumeButton.UnregisterCallback<ClickEvent>(HandleResumeClicked);
-            settingsButton.UnregisterCallback<ClickEvent>(HandleSettingsClicked);
             saveButton.UnregisterCallback<ClickEvent>(HandleSaveClicked);
             superquitButton.UnregisterCallback<ClickEvent>(HandleSuperquitClicked);
         }

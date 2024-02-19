@@ -2,7 +2,6 @@
     <Style src="project://database/Assets/Art/UI/Styles/PauseMenu.uss?fileID=7433441132597879392&amp;guid=92941d0999339e44aaac77f8d18a3955&amp;type=3#PauseMenu" />
     <ui:VisualElement name="PauseMenuContainer" class="menu-panel">
         <ui:Button text="Resume" enable-rich-text="false" name="ResumeButton" class="menu-button" />
-        <ui:Button text="Settings" enable-rich-text="false" name="SettingsButton" class="menu-button" />
         <ui:Button text="Save &amp; Exit" enable-rich-text="false" name="SaveButton" class="menu-button" />
         <ui:Button text="Superquit" enable-rich-text="false" name="SuperquitButton" class="menu-button" />
     </ui:VisualElement>

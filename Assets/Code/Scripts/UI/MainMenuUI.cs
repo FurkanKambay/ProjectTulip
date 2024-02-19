@@ -14,7 +14,6 @@ namespace Tulip.UI
         private SettingsUI settingsUI;
 
         private Button playButton;
-        private Button settingsButton;
         private Button quitButton;
 
         private void Awake()
@@ -22,10 +21,9 @@ namespace Tulip.UI
             document = GetComponent<UIDocument>();
             root = document.rootVisualElement.ElementAt(0);
 
-            settingsUI = FindObjectOfType<SettingsUI>();
+            settingsUI = FindFirstObjectByType<SettingsUI>();
 
             playButton = root.Q<Button>("PlayButton");
-            settingsButton = root.Q<Button>("SettingsButton");
             quitButton = root.Q<Button>("QuitButton");
 
             InputHelper.Actions.Player.Disable();
@@ -34,14 +32,12 @@ namespace Tulip.UI
         private void OnEnable()
         {
             playButton.RegisterCallback<ClickEvent>(HandlePlayClicked);
-            settingsButton.RegisterCallback<ClickEvent>(HandleSettingsClicked);
             quitButton.RegisterCallback<ClickEvent>(HandleQuitClicked);
         }
 
         private void OnDisable()
         {
             playButton.UnregisterCallback<ClickEvent>(HandlePlayClicked);
-            settingsButton.UnregisterCallback<ClickEvent>(HandleSettingsClicked);
             quitButton.UnregisterCallback<ClickEvent>(HandleQuitClicked);
         }
 
@@ -50,8 +46,6 @@ namespace Tulip.UI
             SceneManager.LoadSceneAsync("Game", LoadSceneMode.Additive);
             SceneManager.UnloadSceneAsync("Main Menu");
         }
-
-        private void HandleSettingsClicked(ClickEvent _) => settingsUI.enabled = true;
 
         private static void HandleQuitClicked(ClickEvent _)
         {

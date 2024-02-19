@@ -11,42 +11,41 @@ namespace Tulip.UI
         public event Action OnShow;
         public event Action OnHide;
 
-        private UIDocument document;
         private VisualElement root;
-        private Button backButton;
+        private Toggle toggleButton;
+        private TabView tabView;
 
         private void Awake()
         {
             DontDestroyOnLoad(gameObject);
 
-            document = GetComponent<UIDocument>();
-            root = document.rootVisualElement.ElementAt(0);
-            backButton = root.Q<Button>("BackButton");
+            root = GetComponent<UIDocument>().rootVisualElement;
+            toggleButton = root.Q<Toggle>("ToggleButton");
+            tabView = root.Q<TabView>();
+            tabView.visible = false;
 
-            enabled = false;
+            toggleButton.RegisterCallback<ChangeEvent<bool>>(HandleToggle);
         }
 
-        private void HandleBackClicked(ClickEvent _) => enabled = false;
-        private void HandleEscape(InputAction.CallbackContext context) => enabled = false;
-
-        private void OnEnable()
+        private void HandleToggle(ChangeEvent<bool> change)
         {
-            root.visible = true;
+            tabView.visible = change.newValue;
 
-            InputHelper.Actions.UI.Cancel.performed += HandleEscape;
-            backButton.RegisterCallback<ClickEvent>(HandleBackClicked);
-
-            OnShow?.Invoke();
+            if (change.newValue)
+            {
+                OnShow?.Invoke();
+                InputHelper.Actions.UI.Cancel.performed += HandleEscape;
+            }
+            else
+            {
+                OnHide?.Invoke();
+                InputHelper.Actions.UI.Cancel.performed -= HandleEscape;
+            }
         }
 
-        private void OnDisable()
-        {
-            root.visible = false;
+        private void HandleEscape(InputAction.CallbackContext context) => toggleButton.value = false;
 
-            InputHelper.Actions.UI.Cancel.performed -= HandleEscape;
-            backButton.UnregisterCallback<ClickEvent>(HandleBackClicked);
-
-            OnHide?.Invoke();
-        }
+        private void OnEnable() => root.visible = true;
+        private void OnDisable() => root.visible = false;
     }
 }
