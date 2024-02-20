@@ -31,15 +31,24 @@ namespace Tulip.UI
 
         private void OnEnable()
         {
+            settingsUI.OnShow += HandleSettingsShow;
+            settingsUI.OnHide += HandleSettingsHide;
+
             playButton.RegisterCallback<ClickEvent>(HandlePlayClicked);
             quitButton.RegisterCallback<ClickEvent>(HandleQuitClicked);
         }
 
         private void OnDisable()
         {
+            settingsUI.OnShow -= HandleSettingsShow;
+            settingsUI.OnHide -= HandleSettingsHide;
+
             playButton.UnregisterCallback<ClickEvent>(HandlePlayClicked);
             quitButton.UnregisterCallback<ClickEvent>(HandleQuitClicked);
         }
+
+        private void HandleSettingsShow() => root.visible = false;
+        private void HandleSettingsHide() => root.visible = true;
 
         private void HandlePlayClicked(ClickEvent _)
         {
