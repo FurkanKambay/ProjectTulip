@@ -1,39 +1,35 @@
-.menu-panel {
+#Container {
     background-color: rgba(0, 0, 0, 0.6);
-    padding-right: 64px;
-    padding-left: 64px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
+    font-size: 20px;
+    flex-grow: 1;
+    width: 33%;
     align-self: center;
+    align-items: stretch;
+    color: rgb(250, 250, 250);
+}
+
+#Header {
+    width: 100%;
+    background-color: rgba(0, 165, 255, 0.53);
+    height: 20%;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    -unity-font-style: bold;
+}
+
+#Body {
     flex-grow: 1;
     justify-content: center;
-    font-size: 18px;
+    align-self: center;
 }
 
-.menu-button:hover {
-    border-left-color: rgb(255, 255, 255);
-    border-bottom-color: rgb(255, 255, 255);
-    scale: 1.15 1.15;
-    border-top-width: 1px;
-    border-right-width: 1px;
-    border-bottom-width: 1px;
-    border-left-width: 1px;
-    border-top-color: rgb(255, 255, 255);
-    border-right-color: rgb(255, 255, 255);
-    font-size: 18px;
-}
-
-.menu-button {
-    font-size: 18px;
-    width: 200px;
+Button {
     background-color: rgb(34, 38, 42);
-    border-left-width: 1px;
-    border-right-width: 1px;
-    border-top-width: 1px;
-    border-bottom-width: 1px;
-    color: rgb(245, 245, 245);
+    border-left-width: 4px;
+    border-right-width: 4px;
+    border-top-width: 4px;
+    border-bottom-width: 4px;
     padding-top: 16px;
     padding-right: 16px;
     padding-bottom: 16px;
@@ -48,4 +44,43 @@
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
     border-bottom-left-radius: 8px;
+    width: 240px;
+}
+
+#PlayButton {
+    border-left-color: rgb(94, 125, 79);
+    border-right-color: rgb(94, 125, 79);
+    border-top-color: rgb(94, 125, 79);
+    border-bottom-color: rgb(94, 125, 79);
+}
+
+#PlayButton:hover {
+    background-color: rgb(94, 125, 79);
+}
+
+#PlayButton:active {
+    background-color: rgb(75, 99, 63);
+    border-left-color: rgb(75, 99, 63);
+    border-right-color: rgb(75, 99, 63);
+    border-top-color: rgb(75, 99, 63);
+    border-bottom-color: rgb(75, 99, 63);
+}
+
+#QuitButton {
+    border-left-color: rgb(155, 56, 59);
+    border-right-color: rgb(155, 56, 59);
+    border-top-color: rgb(155, 56, 59);
+    border-bottom-color: rgb(155, 56, 59);
+}
+
+#QuitButton:hover {
+    background-color: rgb(155, 56, 59);
+}
+
+#QuitButton:active {
+    background-color: rgb(130, 47, 50);
+    border-left-color: rgb(130, 47, 50);
+    border-right-color: rgb(130, 47, 50);
+    border-top-color: rgb(130, 47, 50);
+    border-bottom-color: rgb(130, 47, 50);
 }

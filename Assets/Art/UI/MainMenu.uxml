@@ -1,7 +1,12 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Art/UI/Styles/MainMenu.uss?fileID=7433441132597879392&amp;guid=5f24e2399b8035745a7f7fe2e37082b7&amp;type=3#MainMenu" />
-    <ui:VisualElement name="MainMenuContainer" class="menu-panel">
-        <ui:Button text="Play" enable-rich-text="false" name="PlayButton" class="menu-button" style="background-color: rgb(94, 125, 79);" />
-        <ui:Button text="Quit" enable-rich-text="false" name="QuitButton" class="menu-button" style="background-color: rgb(155, 56, 59);" />
+    <ui:VisualElement name="Container" class="container">
+        <ui:VisualElement name="Header">
+            <ui:Label text="Project Tulip" name="Title" enable-rich-text="false" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Body">
+            <ui:Button text="Play" enable-rich-text="false" name="PlayButton" class="menu-button" />
+            <ui:Button text="Quit" enable-rich-text="false" name="QuitButton" class="menu-button" />
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
