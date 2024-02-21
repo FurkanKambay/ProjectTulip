@@ -1,4 +1,5 @@
 using System;
+using Tulip.Helpers;
 using Tulip.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -23,6 +24,9 @@ namespace Tulip.UI
             toggleButton = root.Q<Toggle>("ToggleButton");
             container = root.Q<VisualElement>("MainContainer");
             container.visible = false;
+
+            root.Q<Tab>("TabGame").dataSource = Options.Game;
+            root.Q<Tab>("TabSound").dataSource = Options.Sound;
 
             toggleButton.RegisterCallback<ChangeEvent<bool>>(HandleToggle);
         }

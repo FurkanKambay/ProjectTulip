@@ -5,13 +5,34 @@
             <ui:Label text="Options" name="HeaderTitle" enable-rich-text="false" class="header-title" />
         </ui:VisualElement>
         <ui:TabView name="SettingsPage" class="tab-view" style="position: absolute;">
-            <ui:Tab label="Game" name="TabGame" class="tab">
-                <ui:Toggle label="Smart Cursor" focusable="false" />
+            <ui:Tab label="Game" name="TabGame" data-source-type="Tulip.Helpers.Options+GameOptions, Tulip.Helpers" class="tab">
+                <ui:Toggle label="Smart Cursor" focusable="false">
+                    <Bindings>
+                        <ui:DataBinding property="value" binding-mode="TwoWay" data-source-path="UseSmartCursor" />
+                    </Bindings>
+                </ui:Toggle>
             </ui:Tab>
-            <ui:Tab label="Audio" name="TabAudio" class="tab">
-                <ui:SliderInt label="Master" value="100" high-value="100" focusable="false" show-input-field="true" name="AudioMaster" class="slider-audio" />
-                <ui:SliderInt label="Music" value="100" high-value="100" focusable="false" show-input-field="true" name="AudioMusic" class="slider-audio" />
-                <ui:SliderInt label="Effects" value="100" high-value="100" focusable="false" show-input-field="true" name="AudioEffects" class="slider-audio" />
+            <ui:Tab label="Sound" name="TabSound" data-source-type="Tulip.Helpers.Options+SoundOptions, Tulip.Helpers" class="tab">
+                <ui:SliderInt label="Master" value="100" high-value="100" focusable="false" show-input-field="true" name="SoundMaster" class="slider-audio">
+                    <Bindings>
+                        <ui:DataBinding property="value" binding-mode="TwoWay" data-source-path="MasterVolume" />
+                    </Bindings>
+                </ui:SliderInt>
+                <ui:SliderInt label="Music" value="100" high-value="100" focusable="false" show-input-field="true" name="SoundMusic" class="slider-audio">
+                    <Bindings>
+                        <ui:DataBinding property="value" binding-mode="TwoWay" data-source-path="MusicVolume" />
+                    </Bindings>
+                </ui:SliderInt>
+                <ui:SliderInt label="Effects" value="100" high-value="100" focusable="false" show-input-field="true" name="SoundEffects" class="slider-audio">
+                    <Bindings>
+                        <ui:DataBinding property="value" binding-mode="TwoWay" data-source-path="EffectsVolume" />
+                    </Bindings>
+                </ui:SliderInt>
+                <ui:SliderInt label="UI" value="100" high-value="100" focusable="false" show-input-field="true" name="SoundUI" class="slider-audio">
+                    <Bindings>
+                        <ui:DataBinding property="value" binding-mode="TwoWay" data-source-path="UIVolume" />
+                    </Bindings>
+                </ui:SliderInt>
             </ui:Tab>
         </ui:TabView>
     </ui:VisualElement>

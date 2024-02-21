@@ -2,6 +2,7 @@ using System;
 using Tulip.Data;
 using Tulip.Data.Items;
 using Tulip.Gameplay;
+using Tulip.Helpers;
 using Tulip.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -12,7 +13,6 @@ namespace Tulip.Player
     {
         [SerializeField] Vector2 hotspotOffset;
         public float range = 5f;
-        public bool smartCursor;
 
         public Vector3Int MouseCell { get; private set; }
 
@@ -79,7 +79,7 @@ namespace Tulip.Player
             Vector2 hotspot = (Vector2)transform.position + hotspotOffset;
             rangePath = Vector2.ClampMagnitude(mouseWorld - hotspot, range);
 
-            if (!smartCursor || inventory.HotbarSelected?.Item is not Pickaxe)
+            if (!Options.Game.UseSmartCursor || inventory.HotbarSelected?.Item is not Pickaxe)
             {
                 float distance = Vector3.Distance(hotspot, mouseWorld);
                 FocusedCell = distance <= range ? MouseCell : null;
@@ -96,7 +96,7 @@ namespace Tulip.Player
 
         private void OnDrawGizmosSelected()
         {
-            if (!smartCursor) return;
+            if (!Options.Game.UseSmartCursor) return;
 
             Vector2 hotspot = (Vector2)transform.position + hotspotOffset;
 
@@ -108,7 +108,7 @@ namespace Tulip.Player
         }
 
         private void HandleToggleSmartCursor(InputAction.CallbackContext _)
-            => smartCursor = !smartCursor;
+            => Options.Game.UseSmartCursor = !Options.Game.UseSmartCursor;
 
         private void OnEnable()
         {

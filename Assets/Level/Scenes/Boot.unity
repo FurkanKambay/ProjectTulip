@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 9
+  serializedVersion: 10
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -44,7 +44,6 @@ RenderSettings:
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 12
-  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -67,9 +66,6 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
-    m_FinalGather: 0
-    m_FinalGatherFiltering: 1
-    m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
     m_BakeBackend: 1
@@ -254,6 +250,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1760523199}
+  - component: {fileID: 1760523203}
   - component: {fileID: 1760523200}
   - component: {fileID: 1760523202}
   - component: {fileID: 1760523201}
@@ -303,6 +300,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -6291760135436389978, guid: 0aaef0ddb808246458705689e1cb9780, type: 2}
   m_audioClip: {fileID: 8300000, guid: 02dd0fc2c09d7294f8b37caf8c0980d7, type: 3}
+  m_Resource: {fileID: 8300000, guid: 02dd0fc2c09d7294f8b37caf8c0980d7, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.2
   m_Pitch: 1
@@ -396,6 +394,20 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1760523198}
   m_Enabled: 1
+--- !u!114 &1760523203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1760523198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d6d1e2a56c648e48c7e5ba48c5941a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mixer: {fileID: 24100000, guid: 0aaef0ddb808246458705689e1cb9780, type: 2}
+  music: 1
 --- !u!1 &1795025818
 GameObject:
   m_ObjectHideFlags: 0
@@ -457,6 +469,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b14510e3ad34628b0f264c3030b5103, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useSmartCursor: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
