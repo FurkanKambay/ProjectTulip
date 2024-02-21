@@ -12,8 +12,8 @@ namespace Tulip.UI
         public event Action OnHide;
 
         private VisualElement root;
+        private VisualElement container;
         private Toggle toggleButton;
-        private TabView tabView;
 
         private void Awake()
         {
@@ -21,15 +21,15 @@ namespace Tulip.UI
 
             root = GetComponent<UIDocument>().rootVisualElement;
             toggleButton = root.Q<Toggle>("ToggleButton");
-            tabView = root.Q<TabView>();
-            tabView.visible = false;
+            container = root.Q<VisualElement>("MainContainer");
+            container.visible = false;
 
             toggleButton.RegisterCallback<ChangeEvent<bool>>(HandleToggle);
         }
 
         private void HandleToggle(ChangeEvent<bool> change)
         {
-            tabView.visible = change.newValue;
+            container.visible = change.newValue;
 
             if (change.newValue)
             {

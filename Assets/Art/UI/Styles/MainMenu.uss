@@ -10,7 +10,7 @@
 
 #Header {
     width: 100%;
-    background-color: rgba(0, 165, 255, 0.53);
+    background-color: rgb(44, 132, 181);
     height: 20%;
     justify-content: center;
     align-items: center;

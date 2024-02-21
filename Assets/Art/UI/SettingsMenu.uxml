@@ -1,8 +1,19 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Art/UI/Styles/SettingsMenu.uss?fileID=7433441132597879392&amp;guid=6fb4624177c61bf46812563d65e71cde&amp;type=3#SettingsMenu" />
-    <ui:TabView class="tab-view">
-        <ui:Tab label="Gameplay" name="TabGameplay" />
-        <ui:Tab label="Audio" name="TabAudio" />
-    </ui:TabView>
+    <ui:VisualElement name="MainContainer" class="MainContainer">
+        <ui:VisualElement name="Header" class="header">
+            <ui:Label text="Options" name="HeaderTitle" enable-rich-text="false" class="header-title" />
+        </ui:VisualElement>
+        <ui:TabView name="SettingsPage" class="tab-view" style="position: absolute;">
+            <ui:Tab label="Game" name="TabGame" class="tab">
+                <ui:Toggle label="Smart Cursor" focusable="false" />
+            </ui:Tab>
+            <ui:Tab label="Audio" name="TabAudio" class="tab">
+                <ui:SliderInt label="Master" value="100" high-value="100" focusable="false" show-input-field="true" name="AudioMaster" class="slider-audio" />
+                <ui:SliderInt label="Music" value="100" high-value="100" focusable="false" show-input-field="true" name="AudioMusic" class="slider-audio" />
+                <ui:SliderInt label="Effects" value="100" high-value="100" focusable="false" show-input-field="true" name="AudioEffects" class="slider-audio" />
+            </ui:Tab>
+        </ui:TabView>
+    </ui:VisualElement>
     <ui:Toggle name="ToggleButton" enable-rich-text="false" emoji-fallback-support="false" class="unity-tab__header" />
 </ui:UXML>
