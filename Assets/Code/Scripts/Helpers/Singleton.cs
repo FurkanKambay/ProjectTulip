@@ -7,7 +7,7 @@ namespace Tulip.Helpers
         protected static T instance;
 
         public static T Instance =>
-            instance = instance ? instance : FindObjectOfType<T>() ?? new GameObject
+            instance = instance ? instance : FindAnyObjectByType<T>() ?? new GameObject
             {
                 name = typeof(T).Name,
                 hideFlags = HideFlags.NotEditable

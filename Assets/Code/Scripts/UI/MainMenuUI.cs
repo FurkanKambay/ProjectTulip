@@ -21,7 +21,7 @@ namespace Tulip.UI
             document = GetComponent<UIDocument>();
             root = document.rootVisualElement.ElementAt(0);
 
-            settingsUI = FindFirstObjectByType<SettingsUI>();
+            settingsUI = FindAnyObjectByType<SettingsUI>();
 
             playButton = root.Q<Button>("PlayButton");
             quitButton = root.Q<Button>("QuitButton");

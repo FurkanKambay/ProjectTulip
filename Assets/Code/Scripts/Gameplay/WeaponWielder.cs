@@ -8,7 +8,8 @@ namespace Tulip.Gameplay
 {
     public class WeaponWielder : MonoBehaviour
     {
-        public LayerMask hitMask;
+        [SerializeField] ContactFilter2D hitContactFilter;
+        [SerializeField] int maxMultiTargetAmount = 9;
 
         private Health health;
         private ItemWielder itemWielder;
@@ -49,15 +50,15 @@ namespace Tulip.Gameplay
             Vector2 point = position + new Vector2(weapon.Range / 2f * direction.x, 1f * direction.y);
             var attackBoxSize = new Vector2(weapon.Range, 1f);
 
-            var hits = new Collider2D[9];
+            var hits = new Collider2D[maxMultiTargetAmount];
             if (weapon.IsMultiTarget)
             {
-                _ = Physics2D.OverlapBoxNonAlloc(point, attackBoxSize, default, hits, hitMask);
-                return hits.Select(hit => hit ? hit.GetComponent<Health>() : null);
+                Physics2D.OverlapBox(point, attackBoxSize, default, hitContactFilter, hits);
+                return hits.Select(hit => hit.GetComponent<Health>());
             }
 
             // TODO: find the closest hit instead?
-            _ = Physics2D.OverlapBoxNonAlloc(point, attackBoxSize, default, hits, hitMask);
+            Physics2D.OverlapBox(point, attackBoxSize, default, hitContactFilter, hits);
             Collider2D singleHit = hits[0];
             return new[] { singleHit ? singleHit.GetComponent<Health>() : null };
         }
