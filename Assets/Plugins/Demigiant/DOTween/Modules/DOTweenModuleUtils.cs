@@ -87,7 +87,7 @@ namespace DG.Tweening
             // Called via DOTweenExternalCommand callback
             public static void SetOrientationOnPath(PathOptions options, Tween t, Quaternion newRot, Transform trans)
             {
-#if true // PHYSICS_MARKER
+#if false // PHYSICS_MARKER
                 if (options.isRigidbody) ((Rigidbody)t.target).rotation = newRot;
                 else trans.rotation = newRot;
 #else
@@ -115,7 +115,7 @@ namespace DG.Tweening
 #endif
             public static bool HasRigidbody(Component target)
             {
-#if true // PHYSICS_MARKER
+#if false // PHYSICS_MARKER
                 return target.GetComponent<Rigidbody>() != null;
 #else
                 return false;
@@ -131,7 +131,7 @@ namespace DG.Tweening
             ){
                 TweenerCore<Vector3, Path, PathOptions> t = null;
                 bool rBodyFoundAndTweened = false;
-#if true // PHYSICS_MARKER
+#if false // PHYSICS_MARKER
                 if (tweenRigidbody) {
                     Rigidbody rBody = target.GetComponent<Rigidbody>();
                     if (rBody != null) {
