@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tulip.Data.Items;
@@ -17,6 +18,7 @@ namespace Tulip.Gameplay
 
         private Weapon weapon;
         private ItemSwingDirection swingDirection;
+        private Collider2D[] hits = Array.Empty<Collider2D>();
 
         private void Awake()
         {
@@ -29,18 +31,18 @@ namespace Tulip.Gameplay
         {
             if (usable is not Weapon usedWeapon) return;
             weapon = usedWeapon;
-
             swingDirection = direction;
-            IEnumerable<Health> targets = CheckAttackBox();
 
-            foreach (Health target in targets)
+            Array.Resize(ref hits, weapon.IsMultiTarget ? maxMultiTargetAmount : 1);
+
+            foreach (Health target in GetTargets())
             {
-                if (!target) continue;
+                if (!target.enabled) continue;
                 target.TakeDamage(weapon.Damage, health);
             }
         }
 
-        private IEnumerable<Health> CheckAttackBox()
+        private IEnumerable<Health> GetTargets()
         {
             Vector2 position = transform.position;
             renderer.flipX = swingDirection == ItemSwingDirection.Left;
@@ -50,17 +52,13 @@ namespace Tulip.Gameplay
             Vector2 point = position + new Vector2(weapon.Range / 2f * direction.x, 1f * direction.y);
             var attackBoxSize = new Vector2(weapon.Range, 1f);
 
-            var hits = new Collider2D[maxMultiTargetAmount];
-            if (weapon.IsMultiTarget)
-            {
-                Physics2D.OverlapBox(point, attackBoxSize, default, hitContactFilter, hits);
-                return hits.Select(hit => hit.GetComponent<Health>());
-            }
-
-            // TODO: find the closest hit instead?
-            Physics2D.OverlapBox(point, attackBoxSize, default, hitContactFilter, hits);
-            Collider2D singleHit = hits[0];
-            return new[] { singleHit ? singleHit.GetComponent<Health>() : null };
+            // TODO: find the closest hit instead for single hit?
+            // BUG: attacks shouldn't go through walls
+            int hitCount = Physics2D.OverlapBox(point, attackBoxSize, default, hitContactFilter, hits);
+            return hits.Take(hitCount)
+                .TakeWhile(hit => (bool)hit)
+                .Select(hit => hit.GetComponent<Health>())
+                .Where(hitHealth => (bool)hitHealth);
         }
 
         private void OnDrawGizmosSelected()
