@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Tulip.Gameplay
 {
+    [SelectionBase]
     public class Health : MonoBehaviour, IHealth
     {
         [SerializeField, Min(0)] float maxHealth = 100f;
