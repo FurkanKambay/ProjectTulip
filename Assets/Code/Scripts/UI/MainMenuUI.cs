@@ -50,18 +50,7 @@ namespace Tulip.UI
         private void HandleSettingsShow() => root.visible = false;
         private void HandleSettingsHide() => root.visible = true;
 
-        private void HandlePlayClicked(ClickEvent _)
-        {
-            SceneManager.LoadSceneAsync("Game", LoadSceneMode.Additive);
-            SceneManager.UnloadSceneAsync("Main Menu");
-        }
-
-        private static void HandleQuitClicked(ClickEvent _)
-        {
-#if UNITY_EDITOR
-            EditorApplication.isPlaying = false;
-#endif
-            Application.Quit();
-        }
+        private void HandlePlayClicked(ClickEvent _) => Bootstrapper.LoadGameScene();
+        private static void HandleQuitClicked(ClickEvent _) => Bootstrapper.QuitGame();
     }
 }

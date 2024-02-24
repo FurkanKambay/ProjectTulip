@@ -69,27 +69,17 @@ namespace Tulip.UI
         private void HandleSaveClicked(ClickEvent _)
         {
             SaveGame();
-            ReturnToMainMenu();
+            Bootstrapper.ReturnToMainMenu();
         }
 
         private void HandleSuperquitClicked(ClickEvent _)
         {
             SaveGame();
-
-#if UNITY_EDITOR
-            EditorApplication.isPlaying = false;
-#endif
-            Application.Quit();
+            Bootstrapper.QuitGame();
         }
 
         // TODO: save game
         private void SaveGame() => Debug.Log("Saving...");
-
-        private void ReturnToMainMenu()
-        {
-            SceneManager.UnloadSceneAsync("Game");
-            SceneManager.LoadSceneAsync("Main Menu", LoadSceneMode.Additive);
-        }
 
         private void HandlePause(InputAction.CallbackContext context) => SetState(true);
         private void HandleResume(InputAction.CallbackContext context) => SetState(false);
