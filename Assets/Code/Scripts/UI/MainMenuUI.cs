@@ -1,7 +1,6 @@
+using Tulip.Core;
 using Tulip.Input;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 namespace Tulip.UI

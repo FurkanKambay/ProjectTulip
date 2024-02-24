@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Tulip
+namespace Tulip.Core
 {
     public class Bootstrapper : MonoBehaviour
     {

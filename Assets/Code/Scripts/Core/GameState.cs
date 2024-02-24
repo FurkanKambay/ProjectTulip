@@ -1,4 +1,4 @@
-namespace Tulip
+namespace Tulip.Core
 {
     public enum GameState
     {
