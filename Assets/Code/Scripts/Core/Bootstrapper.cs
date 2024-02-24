@@ -13,7 +13,11 @@ namespace Tulip.Core
         private void Awake() => Application.wantsToQuit += HandleQuitRequested;
 #endif
 
-        private void Start() => SceneManager.LoadSceneAsync("Main Menu", LoadSceneMode.Additive);
+        private void Start()
+        {
+            GameState = GameState.InMainMenu;
+            SceneManager.LoadSceneAsync("Main Menu", LoadSceneMode.Additive);
+        }
 
         public static void LoadGameScene()
         {
