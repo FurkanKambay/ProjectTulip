@@ -13,9 +13,7 @@ namespace Tulip.Gameplay
         [SerializeField, Min(0)] int spawnRadius = 5;
         [SerializeField, Min(1)] int enemyHeight = 2;
         [SerializeField, Min(0)] float spawnInterval = 10f;
-
-        [SerializeField] Transform spawnParent;
-        [SerializeField] GameObject[] enemies;
+        [SerializeField] GameObject[] enemyOptions;
 
         private Camera mainCamera;
 
@@ -26,13 +24,13 @@ namespace Tulip.Gameplay
             UpdateSuitableCoordinates();
             if (SuitableSpawnCells.Length == 0) return;
 
-            GameObject randomEnemy = Instantiate(GetRandomEnemy(), spawnParent);
+            GameObject randomEnemy = Instantiate(GetRandomEnemy(), transform);
             randomEnemy.transform.position = World.Instance.CellCenter(GetRandomSpawnCell());
         }
 
         private void UpdateSuitableCoordinates() => SuitableSpawnCells = FindSuitableCells().ToArray();
 
-        private GameObject GetRandomEnemy() => enemies[Random.Range(0, enemies.Length)];
+        private GameObject GetRandomEnemy() => enemyOptions[Random.Range(0, enemyOptions.Length)];
         private Vector3Int GetRandomSpawnCell() => SuitableSpawnCells[Random.Range(0, SuitableSpawnCells.Length)];
 
         private IEnumerable<Vector3Int> FindSuitableCells()
@@ -65,7 +63,7 @@ namespace Tulip.Gameplay
 
         private void Awake()
         {
-            Assert.IsTrue(enemies?.Length > 0);
+            Assert.IsTrue(enemyOptions?.Length > 0);
             mainCamera = Camera.main;
         }
 
