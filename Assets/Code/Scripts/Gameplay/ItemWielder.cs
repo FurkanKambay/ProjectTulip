@@ -109,7 +109,8 @@ namespace Tulip.Gameplay
 
             targetScale = shouldShowItem ? targetScale : Vector3.zero;
 
-            if (itemPivot.localScale != targetScale)
+            // TODO: don't do this in Update()
+            if ((itemPivot.localScale - targetScale).sqrMagnitude > 0.01f)
                 itemPivot.DOScale(targetScale, itemDrawStowDuration);
 
             if (InputHelper.Actions.Player.Use.inProgress)
