@@ -14,13 +14,16 @@
     },
     "cSpell.words": [
         "Behaviour",
+        "Bootstrapper",
         "Cooldown",
+        "Dont",
         "Gameplay",
         "Hotbar",
         "hotspot",
         "Mathf",
         "Raycast",
         "Rigidbody",
-        "Scriptable"
+        "Scriptable",
+        "superquit"
     ]
 }
