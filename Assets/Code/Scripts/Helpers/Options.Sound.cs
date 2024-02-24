@@ -6,7 +6,7 @@ namespace Tulip.Helpers
     {
         public sealed class SoundOptions
         {
-            private int masterVolume;
+            private int masterVolume = 100;
 
             [CreateProperty]
             public int MasterVolume
@@ -15,7 +15,7 @@ namespace Tulip.Helpers
                 set => SetOption(Keys.VolumeMaster, ref masterVolume, value);
             }
 
-            private int musicVolume;
+            private int musicVolume = 50;
 
             [CreateProperty]
             public int MusicVolume
@@ -24,7 +24,7 @@ namespace Tulip.Helpers
                 set => SetOption(Keys.VolumeMusic, ref musicVolume, value);
             }
 
-            private int effectsVolume;
+            private int effectsVolume = 100;
 
             [CreateProperty]
             public int EffectsVolume
@@ -33,7 +33,7 @@ namespace Tulip.Helpers
                 set => SetOption(Keys.VolumeEffects, ref effectsVolume, value);
             }
 
-            private int uiVolume;
+            private int uiVolume = 100;
 
             [CreateProperty]
             public int UIVolume
