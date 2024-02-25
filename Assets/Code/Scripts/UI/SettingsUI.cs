@@ -12,6 +12,8 @@ namespace Tulip.UI
         public event Action OnShow;
         public event Action OnHide;
 
+        [SerializeField] AudioSource audioSource;
+
         private VisualElement root;
         private VisualElement container;
         private Toggle toggleButton;
@@ -34,6 +36,7 @@ namespace Tulip.UI
         private void HandleToggle(ChangeEvent<bool> change)
         {
             container.visible = change.newValue;
+            audioSource.Play();
 
             if (change.newValue)
             {
