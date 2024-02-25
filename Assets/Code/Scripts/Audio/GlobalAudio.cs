@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game
+namespace Tulip.Audio
 {
     public class GlobalAudio : MonoBehaviour
     {
