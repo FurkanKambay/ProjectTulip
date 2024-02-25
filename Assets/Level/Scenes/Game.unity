@@ -832,6 +832,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72704d37797ebee40afab671ba602024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: {fileID: 708079357}
   inventory: {fileID: 1105140268}
   tooltipShowDuration: 2
 --- !u!82 &708079357

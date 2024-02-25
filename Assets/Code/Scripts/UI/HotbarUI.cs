@@ -8,18 +8,16 @@ namespace Tulip.UI
 {
     public class HotbarUI : MonoBehaviour
     {
+        [SerializeField] AudioSource audioSource;
         [SerializeField] InventoryBase inventory;
         [SerializeField] float tooltipShowDuration;
 
-        private AudioSource audioSource;
-        private UIDocument document;
         private VisualElement hotbarRoot;
         private VisualElement tooltipRoot;
 
         private void Awake()
         {
-            audioSource = GetComponent<AudioSource>();
-            document = GetComponent<UIDocument>();
+            UIDocument document = GetComponent<UIDocument>();
             hotbarRoot = document.rootVisualElement[0];
             tooltipRoot = document.rootVisualElement[1];
         }
