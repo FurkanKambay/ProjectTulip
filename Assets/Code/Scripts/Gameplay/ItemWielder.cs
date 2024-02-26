@@ -33,12 +33,44 @@ namespace Tulip.Gameplay
         private Camera mainCamera;
 
         private Usable itemToSwing;
-        private ItemSwingState state;
+        private ItemSwingState itemState;
+        private ItemSwingDirection itemVisualState;
         private float timeSinceLastUse;
+
+        private void Awake()
+        {
+            Assert.IsNotNull(itemPivot);
+
+            inventory = GetComponent<Inventory>();
+            itemRenderer = itemPivot.GetComponentInChildren<SpriteRenderer>();
+            itemVisual = itemRenderer.transform;
+            mainCamera = Camera.main;
+
+            itemVisual.localEulerAngles = Vector3.forward * readyAngle;
+        }
+
+        private void Update()
+        {
+            timeSinceLastUse += Time.deltaTime;
+
+            Vector3 mouseWorld = mainCamera.ScreenToWorldPoint(InputHelper.Instance.MouseScreenPoint);
+            float deltaToMouse = mouseWorld.x - transform.position.x;
+
+            // TODO: implement up/down swing
+            ItemSwingDirection intendedSwingDirection = deltaToMouse < 0
+                ? ItemSwingDirection.Left
+                : ItemSwingDirection.Right;
+
+            bool shouldShowItem = timeSinceLastUse < itemStowDelay || InputHelper.Actions.Player.Use.inProgress;
+            UpdateItemVisual(shouldShowItem ? intendedSwingDirection : ItemSwingDirection.None);
+
+            if (InputHelper.Actions.Player.Use.inProgress)
+                ChargeAndSwing(intendedSwingDirection);
+        }
 
         private void ChargeAndSwing(ItemSwingDirection swingDirection)
         {
-            if (state != ItemSwingState.Ready) return;
+            if (itemState != ItemSwingState.Ready) return;
 
             itemToSwing = HotbarItem;
             if (itemToSwing == null || timeSinceLastUse <= itemToSwing.Cooldown) return;
@@ -50,11 +82,11 @@ namespace Tulip.Gameplay
 
         private void DoCharge(Action onComplete = null)
         {
-            state = ItemSwingState.Charging;
+            itemState = ItemSwingState.Charging;
             itemVisual.DOLocalRotate(Vector3.forward * chargeAngle, itemToSwing.ChargeTime)
                 .OnComplete(() =>
                 {
-                    state = ItemSwingState.Charged;
+                    itemState = ItemSwingState.Charged;
                     OnCharge?.Invoke(itemToSwing);
                     onComplete?.Invoke();
                 });
@@ -62,7 +94,7 @@ namespace Tulip.Gameplay
 
         private void DoSwing(ItemSwingDirection swingDirection, Action onComplete = null)
         {
-            state = ItemSwingState.Swinging;
+            itemState = ItemSwingState.Swinging;
             itemVisual.DOLocalRotate(Vector3.forward * swingAngle, itemToSwing.SwingTime)
                 .OnComplete(() =>
                 {
@@ -74,13 +106,13 @@ namespace Tulip.Gameplay
 
         private void ResetState()
         {
-            if (state == ItemSwingState.Ready) return;
+            if (itemState == ItemSwingState.Ready) return;
 
-            state = ItemSwingState.Resetting;
+            itemState = ItemSwingState.Resetting;
             itemVisual.DOLocalRotate(Vector3.forward * readyAngle, itemToSwing.SwingTime)
                 .OnComplete(() =>
                 {
-                    state = ItemSwingState.Ready;
+                    itemState = ItemSwingState.Ready;
                     itemToSwing = HotbarItem;
 
                     if (itemToSwing != null)
@@ -88,33 +120,17 @@ namespace Tulip.Gameplay
                 });
         }
 
-        private void Update()
+        private void UpdateItemVisual(ItemSwingDirection swingDirection)
         {
-            timeSinceLastUse += Time.deltaTime;
+            if (itemVisualState == swingDirection) return;
 
-            bool shouldShowItem = timeSinceLastUse < itemStowDelay || InputHelper.Actions.Player.Use.inProgress;
-            Vector3 targetScale = itemPivot.localScale;
+            // Don't update item visuals in the middle of swinging
+            if (itemState != ItemSwingState.Ready) return;
 
-            Vector3 mouseWorld = mainCamera.ScreenToWorldPoint(InputHelper.Instance.MouseScreenPoint);
-            Vector2 deltaToMouse = mouseWorld - transform.position;
+            var endValue = new Vector3(swingDirection.ToVector2().x, 1, 1);
+            itemPivot.DOScale(endValue, itemDrawStowDuration);
 
-            // TODO: implement up/down swing
-            ItemSwingDirection swingDirection = deltaToMouse.x < 0
-                ? ItemSwingDirection.Left
-                : ItemSwingDirection.Right;
-
-            // Only flip around when not charging/swinging
-            if (state == ItemSwingState.Ready)
-                targetScale = new Vector3(swingDirection.ToVector2().x, 1, 1);
-
-            targetScale = shouldShowItem ? targetScale : Vector3.zero;
-
-            // TODO: don't do this in Update()
-            if ((itemPivot.localScale - targetScale).sqrMagnitude > 0.01f)
-                itemPivot.DOScale(targetScale, itemDrawStowDuration);
-
-            if (InputHelper.Actions.Player.Use.inProgress)
-                ChargeAndSwing(swingDirection);
+            itemVisualState = swingDirection;
         }
 
         private void UpdateItemSprite(int _)
@@ -135,18 +151,6 @@ namespace Tulip.Gameplay
             itemRenderer.transform.localScale = Vector2.one * scale;
         }
 
-        private void Awake()
-        {
-            Assert.IsNotNull(itemPivot);
-
-            inventory = GetComponent<Inventory>();
-            itemRenderer = itemPivot.GetComponentInChildren<SpriteRenderer>();
-            itemVisual = itemRenderer.transform;
-            mainCamera = Camera.main;
-
-            itemVisual.localEulerAngles = Vector3.forward * readyAngle;
-        }
-
         private void OnEnable() => inventory.OnChangeHotbarSelection += UpdateItemSprite;
         private void OnDisable() => inventory.OnChangeHotbarSelection -= UpdateItemSprite;
 
@@ -162,6 +166,7 @@ namespace Tulip.Gameplay
 
     public enum ItemSwingDirection
     {
+        None,
         Left,
         Right,
         Down,

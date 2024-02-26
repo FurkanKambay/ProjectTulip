@@ -10,7 +10,7 @@ namespace Tulip.Gameplay.Extensions
             ItemSwingDirection.Right => Vector2.right,
             ItemSwingDirection.Down => Vector2.down,
             ItemSwingDirection.Up => Vector2.up,
-            _ => Vector2.up
+            _ => Vector2.zero
         };
     }
 }
