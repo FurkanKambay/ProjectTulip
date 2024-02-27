@@ -1,7 +1,7 @@
 using Tulip.Data.Items;
 using UnityEngine;
 
-namespace Tulip
+namespace Tulip.GameWorld
 {
     public static class WorldExtensions
     {

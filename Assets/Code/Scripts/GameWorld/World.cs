@@ -8,7 +8,7 @@ using Tulip.Helpers;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace Tulip
+namespace Tulip.GameWorld
 {
     public class World : Singleton<World>
     {

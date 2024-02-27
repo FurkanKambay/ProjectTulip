@@ -1,5 +1,6 @@
 using Tulip.Data;
 using Tulip.Data.Items;
+using Tulip.GameWorld;
 using UnityEngine;
 
 namespace Tulip.Player

@@ -1,5 +1,6 @@
 using System;
 using Tulip.Data.Interfaces;
+using Tulip.GameWorld;
 using UnityEngine;
 
 namespace Tulip.CharacterController
