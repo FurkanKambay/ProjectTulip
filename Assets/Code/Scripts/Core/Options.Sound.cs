@@ -1,6 +1,6 @@
 ﻿using Unity.Properties;
 
-namespace Tulip.Helpers
+namespace Tulip.Core
 {
     public static partial class Options
     {

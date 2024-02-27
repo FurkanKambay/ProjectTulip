@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Tulip.Helpers
+namespace Tulip.Core
 {
     public static partial class Options
     {

@@ -5,14 +5,14 @@
             <ui:Label text="Options" name="HeaderTitle" enable-rich-text="false" class="header-title" />
         </ui:VisualElement>
         <ui:TabView name="SettingsPage" class="tab-view" style="position: absolute;">
-            <ui:Tab label="Game" name="TabGame" data-source-type="Tulip.Helpers.Options+GameOptions, Tulip.Helpers" class="tab">
+            <ui:Tab label="Game" name="TabGame" data-source-type="Tulip.Core.Options+GameOptions, Tulip.Core" class="tab">
                 <ui:Toggle label="Smart Cursor" focusable="false">
                     <Bindings>
                         <ui:DataBinding property="value" binding-mode="TwoWay" data-source-path="UseSmartCursor" />
                     </Bindings>
                 </ui:Toggle>
             </ui:Tab>
-            <ui:Tab label="Sound" name="TabSound" data-source-type="Tulip.Helpers.Options+SoundOptions, Tulip.Helpers" class="tab">
+            <ui:Tab label="Sound" name="TabSound" data-source-type="Tulip.Core.Options+SoundOptions, Tulip.Core" class="tab">
                 <ui:SliderInt label="Master" value="100" high-value="100" focusable="false" show-input-field="true" name="SoundMaster" class="slider-audio">
                     <Bindings>
                         <ui:DataBinding property="value" binding-mode="TwoWay" data-source-path="MasterVolume" />
