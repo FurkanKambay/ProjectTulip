@@ -73,6 +73,8 @@ namespace Tulip.Gameplay
         private void OnDrawGizmosSelected()
         {
             if (!Application.isPlaying) return;
+
+            UpdateSuitableCoordinates();
             DrawGizmosForSpawnCells();
         }
 
