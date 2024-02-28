@@ -6,7 +6,6 @@
         </ui:VisualElement>
         <ui:VisualElement name="Body">
             <ui:Button text="Play" enable-rich-text="false" name="PlayButton" class="menu-button" />
-            <ui:Button text="Quit" enable-rich-text="false" name="QuitButton" class="menu-button" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

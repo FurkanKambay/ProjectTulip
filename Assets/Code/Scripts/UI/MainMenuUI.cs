@@ -7,24 +7,17 @@ namespace Tulip.UI
 {
     public class MainMenuUI : MonoBehaviour
     {
-        private UIDocument document;
         private VisualElement root;
+        private Button playButton;
 
         private SettingsUI settingsUI;
 
-        private Button playButton;
-        private Button quitButton;
-
         private void Awake()
         {
-            document = GetComponent<UIDocument>();
-            root = document.rootVisualElement.ElementAt(0);
+            root =  GetComponent<UIDocument>().rootVisualElement.ElementAt(0);
+            playButton = root.Q<Button>("PlayButton");
 
             settingsUI = FindAnyObjectByType<SettingsUI>();
-
-            playButton = root.Q<Button>("PlayButton");
-            quitButton = root.Q<Button>("QuitButton");
-
             InputHelper.Actions.Player.Disable();
         }
 
@@ -34,7 +27,6 @@ namespace Tulip.UI
             settingsUI.OnHide += HandleSettingsHide;
 
             playButton.RegisterCallback<ClickEvent>(HandlePlayClicked);
-            quitButton.RegisterCallback<ClickEvent>(HandleQuitClicked);
         }
 
         private void OnDisable()
@@ -43,13 +35,11 @@ namespace Tulip.UI
             settingsUI.OnHide -= HandleSettingsHide;
 
             playButton.UnregisterCallback<ClickEvent>(HandlePlayClicked);
-            quitButton.UnregisterCallback<ClickEvent>(HandleQuitClicked);
         }
 
         private void HandleSettingsShow() => root.visible = false;
         private void HandleSettingsHide() => root.visible = true;
 
         private void HandlePlayClicked(ClickEvent _) => Bootstrapper.LoadGameScene();
-        private static void HandleQuitClicked(ClickEvent _) => Bootstrapper.QuitGame();
     }
 }
