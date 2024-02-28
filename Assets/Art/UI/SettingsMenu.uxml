@@ -11,6 +11,11 @@
                         <ui:DataBinding property="value" binding-mode="TwoWay" data-source-path="UseSmartCursor" />
                     </Bindings>
                 </ui:Toggle>
+                <ui:Toggle label="Allow Pause" focusable="false">
+                    <Bindings>
+                        <ui:DataBinding property="value" binding-mode="TwoWay" data-source-path="AllowPause" />
+                    </Bindings>
+                </ui:Toggle>
             </ui:Tab>
             <ui:Tab label="Sound" name="TabSound" data-source-type="Tulip.Core.Options+SoundOptions, Tulip.Core" class="tab">
                 <ui:SliderInt label="Master" value="100" high-value="100" focusable="false" show-input-field="true" name="SoundMaster" class="slider-audio">
