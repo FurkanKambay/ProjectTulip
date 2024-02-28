@@ -1,4 +1,4 @@
-using Unity.Properties;
+using System;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -7,7 +7,20 @@ namespace Tulip.Core
 {
     public class Bootstrapper : MonoBehaviour
     {
-        [CreateProperty] public static GameState GameState { get; private set; }
+        public static event Action OnGameStateChange;
+
+        public static GameState GameState
+        {
+            get => gameState;
+            private set
+            {
+                if (gameState == value) return;
+                gameState = value;
+                OnGameStateChange?.Invoke();
+            }
+        }
+
+        private static GameState gameState;
 
 #if !UNITY_EDITOR
         private void Awake() => Application.wantsToQuit += HandleQuitRequested;

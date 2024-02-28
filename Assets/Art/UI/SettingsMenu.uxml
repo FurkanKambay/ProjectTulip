@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Art/UI/Styles/SettingsMenu.uss?fileID=7433441132597879392&amp;guid=6fb4624177c61bf46812563d65e71cde&amp;type=3#SettingsMenu" />
-    <ui:VisualElement name="MainContainer" class="MainContainer">
+    <ui:VisualElement name="MainContainer" data-source-type="Tulip.UI.SettingsUI, Tulip.UI" class="MainContainer">
         <ui:VisualElement name="Header" class="header">
             <ui:Label text="Options" name="HeaderTitle" enable-rich-text="false" class="header-title" />
         </ui:VisualElement>
@@ -35,6 +35,17 @@
                 </ui:SliderInt>
             </ui:Tab>
         </ui:TabView>
+        <ui:Button text="Quit to desktop" name="QuitConfirmButton" focusable="false" class="header-button quit-button">
+            <Bindings>
+                <ui:DataBinding property="style.visibility" binding-mode="ToTarget" data-source-path="QuitConfirmButtonVisibility" />
+            </Bindings>
+        </ui:Button>
+        <ui:Button text="Save &amp; Quit" name="SaveExitButton" focusable="false" class="header-button quit-button" style="visibility: hidden;">
+            <Bindings>
+                <ui:DataBinding property="style.visibility" binding-mode="ToTarget" data-source-path="SaveExitButtonVisibility" />
+            </Bindings>
+        </ui:Button>
+        <ui:Toggle name="QuitFlyoutButton" enable-rich-text="false" emoji-fallback-support="false" class="header-button" />
     </ui:VisualElement>
-    <ui:Toggle name="ToggleButton" enable-rich-text="false" emoji-fallback-support="false" class="unity-tab__header" />
+    <ui:Toggle name="OptionsButton" enable-rich-text="false" emoji-fallback-support="false" class="header-button" />
 </ui:UXML>
