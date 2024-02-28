@@ -32,7 +32,6 @@ namespace Tulip.Player
 
         private Inventory inventory;
         private IItemWielder itemWielder;
-        private BoxCollider2D playerCollider;
         private Camera mainCamera;
 
         private Vector3Int? focusedCell;
@@ -43,7 +42,6 @@ namespace Tulip.Player
         {
             inventory = GetComponent<Inventory>();
             itemWielder = GetComponent<IItemWielder>();
-            playerCollider = GetComponent<BoxCollider2D>();
             mainCamera = Camera.main;
         }
 
@@ -58,7 +56,14 @@ namespace Tulip.Player
             if (item is not Tool tool) return;
 
             if (!FocusedCell.HasValue) return;
-            if (World.Instance.CellIntersects(FocusedCell.Value, playerCollider.bounds)) return;
+
+            Bounds bounds = World.Instance.CellBoundsWorld(FocusedCell.Value);
+            Vector2 topLeft = bounds.center - bounds.extents + (Vector3.one * 0.02f);
+            Vector2 bottomRight = bounds.center + bounds.extents - (Vector3.one * 0.02f);
+
+            int layerMask = LayerMask.GetMask("Enemy", "Player", "NPC");
+            if (Physics2D.OverlapArea(topLeft, bottomRight, layerMask))
+                return;
 
             WorldTile tile = World.Instance.GetTile(FocusedCell.Value)?.WorldTile;
             if (!tool.IsUsableOnTile(tile)) return;
