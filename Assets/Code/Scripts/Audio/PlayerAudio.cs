@@ -1,5 +1,6 @@
+using Tulip.Data;
+using Tulip.Data.Gameplay;
 using Tulip.Data.Items;
-using Tulip.Gameplay;
 using UnityEngine;
 
 namespace Tulip.Audio
@@ -15,14 +16,14 @@ namespace Tulip.Audio
         [SerializeField] AudioClip swingSound;
 
         private AudioSource audioSource;
-        private Health health;
-        private ItemWielder itemWielder;
+        private IHealth health;
+        private IItemWielder itemWielder;
 
         private void Awake()
         {
             audioSource = GetComponent<AudioSource>();
-            itemWielder = GetComponentInParent<ItemWielder>();
-            health = GetComponentInParent<Health>();
+            itemWielder = GetComponentInParent<IItemWielder>();
+            health = GetComponentInParent<IHealth>();
         }
 
         private void HandleHurt(DamageEventArgs damage) => audioSource.PlayOneShot(hurtSound);

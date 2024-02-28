@@ -1,6 +1,6 @@
 using System;
 
-namespace Tulip.Data.Interfaces
+namespace Tulip.Data
 {
     public interface IInventory
     {

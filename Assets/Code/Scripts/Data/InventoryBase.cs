@@ -1,5 +1,4 @@
 using System;
-using Tulip.Data.Interfaces;
 using UnityEngine;
 
 namespace Tulip.Data

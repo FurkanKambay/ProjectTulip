@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Tulip.GameWorld;
-using Tulip.Input;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -74,9 +73,7 @@ namespace Tulip.Gameplay
         private void OnDrawGizmosSelected()
         {
             if (!Application.isPlaying) return;
-
             DrawGizmosForSpawnCells();
-            DrawGizmoForCellUnderMouse();
         }
 
         private void DrawGizmosForSpawnCells()
@@ -85,18 +82,6 @@ namespace Tulip.Gameplay
 
             foreach (Vector3Int cell in SuitableSpawnCells)
                 Gizmos.DrawSphere(World.Instance.CellCenter(cell), 0.4f);
-        }
-
-        private void DrawGizmoForCellUnderMouse()
-        {
-            Vector3 mouseWorld = mainCamera.ScreenToWorldPoint(InputHelper.Instance.MouseScreenPoint);
-            Vector3Int mouseCell = World.Instance.WorldToCell(mouseWorld);
-
-            Vector3 cellWorld = World.Instance.CellCenter(mouseCell);
-            var gizmoCenter = new Vector3(cellWorld.x, cellWorld.y + (EnemySize.y / 2f) - 0.5f, 0);
-
-            Gizmos.color = World.Instance.CanAccommodate(mouseCell, (Vector2Int)EnemySize) ? Color.green : Color.red;
-            Gizmos.DrawWireCube(gizmoCenter, EnemySize);
         }
     }
 }

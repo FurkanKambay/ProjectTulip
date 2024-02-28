@@ -1,5 +1,4 @@
-using Tulip.CharacterController;
-using Tulip.Data.Interfaces;
+using Tulip.Data;
 using UnityEngine;
 
 namespace Tulip.Player
@@ -7,8 +6,8 @@ namespace Tulip.Player
     public class PlayerAnimator : MonoBehaviour
     {
         private Animator animator;
-        private IMovement movement;
-        private PlayerJump playerJump;
+        private ICharacterMovement movement;
+        private ICharacterJump playerJump;
 
         private static readonly int animSpeed = Animator.StringToHash("speed");
         private static readonly int animJump = Animator.StringToHash("jump");
@@ -16,8 +15,8 @@ namespace Tulip.Player
         private void Awake()
         {
             animator = GetComponent<Animator>();
-            movement = GetComponentInParent<IMovement>();
-            playerJump = GetComponentInParent<PlayerJump>();
+            movement = GetComponentInParent<ICharacterMovement>();
+            playerJump = GetComponentInParent<ICharacterJump>();
         }
 
         private void Update()

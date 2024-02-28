@@ -3,7 +3,7 @@ using Tulip.Data.Items;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace Tulip.WorldGen
+namespace Tulip.GameWorld.Generation
 {
     public class WorldGeneration : MonoBehaviour
     {

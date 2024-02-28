@@ -1,13 +1,13 @@
 using System;
 using Tulip.Data.Gameplay;
-using Tulip.Data.Interfaces;
+using Tulip.Data;
 using UnityEngine;
 
-namespace Tulip.CharacterController
+namespace Tulip.Character
 {
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(GroundChecker))]
-    public class CharacterMovement : MonoBehaviour, IMovement
+    public class CharacterMovement : MonoBehaviour, ICharacterMovement
     {
         public MovementConfig config;
 

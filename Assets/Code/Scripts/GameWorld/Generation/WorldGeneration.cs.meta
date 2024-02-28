@@ -4,8 +4,9 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - tilemap: {fileID: 5093018205530781823, guid: c0ac8f8831286d34aa5fffb209dfaccf, type: 3}
-  - data: {fileID: 11400000, guid: 30e1e234c9d6a5f4a8fef293ef378762, type: 2}
+  - data: {instanceID: 0}
+  - tilemap: {instanceID: 0}
+  - backgroundTilemap: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Tulip.WorldGen
+namespace Tulip.GameWorld.Generation
 {
     public class ProcGen : MonoBehaviour
     {

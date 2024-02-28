@@ -1,8 +1,8 @@
 using System;
 using Tulip.Core;
 using Tulip.Data;
+using Tulip.Data.Gameplay;
 using Tulip.Data.Items;
-using Tulip.Gameplay;
 using Tulip.GameWorld;
 using Tulip.Input;
 using UnityEngine;
@@ -31,7 +31,7 @@ namespace Tulip.Player
         public event Action<Vector3Int?> OnChangeCellFocus;
 
         private Inventory inventory;
-        private ItemWielder itemWielder;
+        private IItemWielder itemWielder;
         private BoxCollider2D playerCollider;
         private Camera mainCamera;
 
@@ -42,14 +42,14 @@ namespace Tulip.Player
         private void Awake()
         {
             inventory = GetComponent<Inventory>();
-            itemWielder = GetComponent<ItemWielder>();
+            itemWielder = GetComponent<IItemWielder>();
             playerCollider = GetComponent<BoxCollider2D>();
             mainCamera = Camera.main;
         }
 
         private void Update()
         {
-            if (itemWielder.HotbarItem is not Tool) return;
+            if (itemWielder.CurrentItem is not Tool) return;
             AssignCells();
         }
 

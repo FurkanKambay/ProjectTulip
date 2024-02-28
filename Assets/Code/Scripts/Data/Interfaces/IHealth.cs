@@ -1,7 +1,13 @@
-namespace Tulip.Data.Interfaces
+using System;
+using Tulip.Data.Gameplay;
+
+namespace Tulip.Data
 {
     public interface IHealth
     {
+        event Action<DamageEventArgs> OnHurt;
+        event Action<DamageEventArgs> OnDie;
+
         float CurrentHealth { get; }
         float MaxHealth { get; }
         float Ratio => CurrentHealth / MaxHealth;

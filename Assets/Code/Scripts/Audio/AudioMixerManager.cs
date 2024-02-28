@@ -12,17 +12,17 @@ namespace Tulip.Audio
 
         private void HandleOptionsUpdated()
         {
-            Set("Master", Convert(Options.Sound.MasterVolume));
-            Set("Music", Convert(Options.Sound.MusicVolume));
-            Set("Effects", Convert(Options.Sound.EffectsVolume));
-            Set("UI", Convert(Options.Sound.UIVolume));
+            SetMixerValue("Master", Options.Sound.MasterVolume);
+            SetMixerValue("Music", Options.Sound.MusicVolume);
+            SetMixerValue("Effects", Options.Sound.EffectsVolume);
+            SetMixerValue("UI", Options.Sound.UIVolume);
         }
 
-        private static float Convert(int value)
-            => Mathf.Max(0.0001f, Mathf.InverseLerp(0f, 100f, value));
-
-        private void Set(string channel, float value)
-            => mixer.SetFloat(channel, Mathf.Log10(value) * 20f);
+        private void SetMixerValue(string channel, float value)
+        {
+            float mixerValue = Mathf.Max(0.0001f, Mathf.InverseLerp(0f, 100f, value));
+            mixer.SetFloat(channel, Mathf.Log10(mixerValue) * 20f);
+        }
 
         private void OnEnable() => Options.OnUpdate += HandleOptionsUpdated;
         private void OnDisable() => Options.OnUpdate -= HandleOptionsUpdated;

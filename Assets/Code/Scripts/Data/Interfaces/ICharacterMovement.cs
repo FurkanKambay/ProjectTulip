@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace Tulip.Data.Interfaces
+namespace Tulip.Data
 {
-    public interface IMovement
+    public interface ICharacterMovement
     {
         Vector2 Input { get; set; }
         Vector2 DesiredVelocity { get; }

@@ -1,16 +1,16 @@
 using System;
 using UnityEngine.Assertions;
 using System.Collections.Generic;
+using Tulip.Core;
 using Tulip.Data;
 using Tulip.Data.Items;
 using Tulip.Data.Tiles;
-using Tulip.Helpers;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 namespace Tulip.GameWorld
 {
-    public class World : Singleton<World>
+    public class World : Singleton<World>, IWorld
     {
         [SerializeField] Tilemap tilemap;
 

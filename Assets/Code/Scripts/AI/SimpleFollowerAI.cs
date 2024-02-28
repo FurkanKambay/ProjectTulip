@@ -1,18 +1,18 @@
-using Tulip.Data.Interfaces;
+using Tulip.Data;
 using UnityEngine;
 
 namespace Tulip.AI
 {
-    [RequireComponent(typeof(IMovement))]
+    [RequireComponent(typeof(ICharacterMovement))]
     public class SimpleFollowerAI : MonoBehaviour
     {
-        private IMovement movement;
+        private ICharacterMovement movement;
         private IHealth health;
         private Transform target;
 
         private void Awake()
         {
-            movement = GetComponent<IMovement>();
+            movement = GetComponent<ICharacterMovement>();
             health = GetComponent<IHealth>();
             if (!target) target = GameObject.FindGameObjectWithTag("Player").transform;
         }

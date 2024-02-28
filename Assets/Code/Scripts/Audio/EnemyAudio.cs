@@ -1,4 +1,5 @@
-using Tulip.Gameplay;
+using Tulip.Data;
+using Tulip.Data.Gameplay;
 using UnityEngine;
 
 namespace Tulip.Audio
@@ -10,12 +11,12 @@ namespace Tulip.Audio
         [SerializeField] AudioClip dieSound;
 
         private AudioSource audioSource;
-        private Health health;
+        private IHealth health;
 
         private void Awake()
         {
             audioSource = GetComponent<AudioSource>();
-            health = GetComponentInParent<Health>();
+            health = GetComponentInParent<IHealth>();
         }
 
         private void HandleHurt(DamageEventArgs damage) => audioSource.PlayOneShot(hurtSound);

@@ -3,14 +3,14 @@
     "rootNamespace": "Tulip",
     "references": [
         "GUID:75469ad4d38634e559750d17036d5f7c",
-        "GUID:8dbdb26a47fee8c489e2525f17a335b2"
+        "GUID:250902a33e0b95c4a8530088293e7fea"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
-    "autoReferenced": true,
+    "autoReferenced": false,
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false

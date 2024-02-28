@@ -2,7 +2,7 @@ using Tulip.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Tulip.CharacterController
+namespace Tulip.Character
 {
     public class Dasher : MonoBehaviour
     {

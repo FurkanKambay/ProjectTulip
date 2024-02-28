@@ -1,4 +1,5 @@
-using Tulip.Data.Interfaces;
+using Tulip.Data;
+using Tulip.Data.Gameplay;
 using UnityEngine;
 
 namespace Tulip.Gameplay
@@ -8,7 +9,7 @@ namespace Tulip.Gameplay
         [SerializeField] Health health;
         [SerializeField] Animator animator;
 
-        private IMovement movement;
+        private ICharacterMovement movement;
 
         private static readonly int animSpeed = Animator.StringToHash("speed");
         private static readonly int animHurt = Animator.StringToHash("hurt");
@@ -34,7 +35,7 @@ namespace Tulip.Gameplay
         {
             health ??= GetComponent<Health>();
             animator ??= GetComponent<Animator>();
-            movement ??= GetComponent<IMovement>();
+            movement ??= GetComponent<ICharacterMovement>();
         }
 
         private void OnEnable()

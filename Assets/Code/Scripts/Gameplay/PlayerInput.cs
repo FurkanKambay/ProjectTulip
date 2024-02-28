@@ -1,4 +1,4 @@
-using Tulip.CharacterController;
+using Tulip.Data;
 using Tulip.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,9 +7,9 @@ namespace Tulip.Gameplay
 {
     public class PlayerInput : MonoBehaviour
     {
-        private CharacterMovement movement;
+        private ICharacterMovement movement;
 
-        private void Awake() => movement = GetComponent<CharacterMovement>();
+        private void Awake() => movement = GetComponent<ICharacterMovement>();
 
         private void OnMoveX(InputAction.CallbackContext context)
             => movement.Input = new Vector2(context.ReadValue<float>(), 0f);

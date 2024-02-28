@@ -1,13 +1,17 @@
 {
-    "name": "Tulip.Helpers",
+    "name": "Tulip.GameWorld",
     "rootNamespace": "Tulip",
-    "references": [],
+    "references": [
+        "GUID:613783dc1674e844b87788ea74ede0f6",
+        "GUID:250902a33e0b95c4a8530088293e7fea",
+        "GUID:4cb23d4305e903d4cbe6b4d464c9f42d"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
-    "autoReferenced": true,
+    "autoReferenced": false,
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false

@@ -1,15 +1,14 @@
 using System;
-using Tulip.Data.Interfaces;
+using Tulip.Data;
 using Tulip.GameWorld;
 using UnityEngine;
 
-namespace Tulip.CharacterController
+namespace Tulip.Character
 {
     public class AutoStepper : MonoBehaviour
     {
         [Header("Step")]
         [SerializeField] float stepHeight = 1f;
-
         [SerializeField] float stepWidth;
         [SerializeField] Vector2 stepSpeed = Vector2.one;
 
@@ -18,7 +17,7 @@ namespace Tulip.CharacterController
         [SerializeField] float range = .5f;
         [SerializeField] Vector3 offset = Vector3.up * .5f;
 
-        private IMovement movement;
+        private ICharacterMovement movement;
         private GroundChecker ground;
         private Rigidbody2D body;
 
@@ -26,7 +25,7 @@ namespace Tulip.CharacterController
 
         private void Awake()
         {
-            movement = GetComponent<IMovement>();
+            movement = GetComponent<ICharacterMovement>();
             ground = GetComponent<GroundChecker>();
             body = GetComponent<Rigidbody2D>();
         }

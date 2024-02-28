@@ -1,5 +1,6 @@
 using System;
-using Tulip.Data.Interfaces;
+using Tulip.Data;
+using Tulip.Data.Gameplay;
 using UnityEngine;
 
 namespace Tulip.Gameplay

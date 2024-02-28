@@ -1,12 +1,12 @@
-namespace Tulip.Gameplay
+namespace Tulip.Data.Gameplay
 {
     public readonly struct DamageEventArgs
     {
         public readonly float Amount;
-        public readonly Health Source;
-        public readonly Health Target;
+        public readonly IHealth Source;
+        public readonly IHealth Target;
 
-        public DamageEventArgs(float amount, Health source, Health target)
+        public DamageEventArgs(float amount, IHealth source, IHealth target)
         {
             Amount = amount;
             Source = source;

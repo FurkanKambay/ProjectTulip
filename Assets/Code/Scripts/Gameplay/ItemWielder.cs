@@ -1,22 +1,23 @@
 using System;
 using DG.Tweening;
+using Tulip.Data;
+using Tulip.Data.Gameplay;
 using Tulip.Data.Items;
 using Tulip.Gameplay.Extensions;
 using Tulip.Input;
-using Tulip.Player;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace Tulip.Gameplay
 {
-    [RequireComponent(typeof(Inventory))]
-    public class ItemWielder : MonoBehaviour
+    [RequireComponent(typeof(IInventory))]
+    public class ItemWielder : MonoBehaviour, IItemWielder
     {
         public event Action<Usable> OnCharge;
         public event Action<Usable, ItemSwingDirection> OnSwing;
         public event Action<Usable> OnReady;
 
-        public Usable HotbarItem => inventory.HotbarSelected?.Item as Usable;
+        public Item CurrentItem => inventory.HotbarSelected?.Item;
 
         [SerializeField] Transform itemPivot;
 
@@ -27,7 +28,7 @@ namespace Tulip.Gameplay
         [SerializeField] float chargeAngle = 45f;
         [SerializeField] float swingAngle = -90f;
 
-        private Inventory inventory;
+        private IInventory inventory;
         private Transform itemVisual;
         private SpriteRenderer itemRenderer;
         private Camera mainCamera;
@@ -41,7 +42,7 @@ namespace Tulip.Gameplay
         {
             Assert.IsNotNull(itemPivot);
 
-            inventory = GetComponent<Inventory>();
+            inventory = GetComponent<IInventory>();
             itemRenderer = itemPivot.GetComponentInChildren<SpriteRenderer>();
             itemVisual = itemRenderer.transform;
             mainCamera = Camera.main;
@@ -72,10 +73,10 @@ namespace Tulip.Gameplay
         {
             if (itemState != ItemSwingState.Ready) return;
 
-            itemToSwing = HotbarItem;
+            itemToSwing = CurrentItem as Usable;
             if (itemToSwing == null || timeSinceLastUse <= itemToSwing.Cooldown) return;
 
-            itemToSwing = HotbarItem;
+            itemToSwing = CurrentItem as Usable;
             timeSinceLastUse = 0f;
             DoCharge(onComplete: () => DoSwing(swingDirection));
         }
@@ -113,7 +114,7 @@ namespace Tulip.Gameplay
                 .OnComplete(() =>
                 {
                     itemState = ItemSwingState.Ready;
-                    itemToSwing = HotbarItem;
+                    itemToSwing = CurrentItem as Usable;
 
                     if (itemToSwing != null)
                         OnReady?.Invoke(itemToSwing);
@@ -162,14 +163,5 @@ namespace Tulip.Gameplay
             Swinging,
             Resetting
         }
-    }
-
-    public enum ItemSwingDirection
-    {
-        None,
-        Left,
-        Right,
-        Down,
-        Up
     }
 }

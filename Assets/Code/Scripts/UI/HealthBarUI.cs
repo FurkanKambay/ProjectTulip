@@ -1,4 +1,4 @@
-using Tulip.Data.Interfaces;
+using Tulip.Data;
 using UnityEngine;
 
 namespace Tulip.UI
