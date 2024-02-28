@@ -37,17 +37,16 @@ namespace Tulip.UI
             root.visible = value;
             settingsUI.enabled = value;
 
+            Bootstrapper.TrySetGamePaused(value);
             if (value)
             {
                 InputHelper.Actions.Player.Disable();
                 InputHelper.Actions.UI.Enable();
-                Time.timeScale = 0;
             }
             else
             {
                 InputHelper.Actions.Player.Enable();
                 InputHelper.Actions.UI.Disable();
-                Time.timeScale = 1;
             }
         }
 

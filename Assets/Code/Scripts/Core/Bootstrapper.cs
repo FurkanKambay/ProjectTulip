@@ -37,6 +37,18 @@ namespace Tulip.Core
             GameState = GameState.InMainMenu;
         }
 
+        public static void TrySetGamePaused(bool paused)
+        {
+            if (gameState == GameState.InMainMenu || !Options.Game.AllowPause)
+            {
+                Time.timeScale = 1;
+                return;
+            }
+
+            GameState = paused ? GameState.Paused : GameState.InGame;
+            Time.timeScale = paused ? 0 : 1;
+        }
+
         // ReSharper disable once UnusedMember.Local
         private static bool HandleQuitRequested()
         {
