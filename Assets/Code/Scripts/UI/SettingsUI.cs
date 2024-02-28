@@ -48,9 +48,6 @@ namespace Tulip.UI
             gameExitButton = root.Q<Button>("SaveExitButton");
             menuQuitButton = root.Q<Button>("QuitConfirmButton");
 
-            InputHelper.Actions.Player.Disable();
-            // InputHelper.Actions.UI.Enable();
-
             optionsButton.RegisterCallback<ChangeEvent<bool>>(HandleOptionsToggle);
             gameExitButton.RegisterCallback<ClickEvent>(HandleSaveExitClicked);
             menuQuitButton.RegisterCallback<ClickEvent>(HandleQuitClicked);
@@ -62,7 +59,10 @@ namespace Tulip.UI
         private void HandleOptionsToggle(ChangeEvent<bool> change)
         {
             container.visible = change.newValue;
+            quitFlyoutButton.value = false;
+
             audioSource.Play();
+            Bootstrapper.TrySetGamePaused(change.newValue);
 
             if (change.newValue)
                 OnShow?.Invoke();
@@ -71,18 +71,31 @@ namespace Tulip.UI
         }
 
         private void HandleEscape(InputAction.CallbackContext context) => optionsButton.value = !optionsButton.value;
-        private void HandleResume(InputAction.CallbackContext context) => optionsButton.value = false;
-        private void HandlePause(InputAction.CallbackContext context) => optionsButton.value = true;
 
         private void HandleGameStateChange()
         {
             root.visible = Bootstrapper.GameState != GameState.InGame;
+
+            // TODO: Subscribe to Bootstrapper.OnGameStateChange in InputHelper to enable Player input
+            switch (Bootstrapper.GameState)
+            {
+                case GameState.InGame:
+                    InputHelper.Actions.Player.Enable();
+                    break;
+                case GameState.InMainMenu:
+                case GameState.Paused:
+                default:
+                    InputHelper.Actions.Player.Disable();
+                    break;
+            }
         }
 
         private void HandleSaveExitClicked(ClickEvent _)
         {
             SaveGame();
+            quitFlyoutButton.value = false;
             Bootstrapper.ReturnToMainMenu();
+            optionsButton.value = false;
         }
 
         private void HandleQuitClicked(ClickEvent _) => Bootstrapper.QuitGame();
