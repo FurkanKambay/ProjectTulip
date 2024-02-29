@@ -1,4 +1,4 @@
-using Tulip.Data.Items;
+using Tulip.Data;
 using Tulip.GameWorld;
 using UnityEngine;
 
@@ -8,14 +8,16 @@ namespace Tulip.Audio
     {
         private AudioSource audioSource;
 
-        private void Awake()
-        {
-            audioSource = GetComponent<AudioSource>();
-        }
+        private void Awake() => audioSource = GetComponent<AudioSource>();
 
-        private void HandleTilePlaced(Vector3Int cell, WorldTile tile) => audioSource.PlayOneShot(tile.placeSound);
-        private void HandleTileHit(Vector3Int cell, WorldTile tile) => audioSource.PlayOneShot(tile.hitSound);
-        private void HandleTileDestroyed(Vector3Int cell, WorldTile tile) => audioSource.PlayOneShot(tile.destroySound);
+        private void HandleTilePlaced(TileModification modification)
+            => audioSource.PlayOneShot(modification.WorldTile.placeSound);
+
+        private void HandleTileHit(TileModification modification)
+            => audioSource.PlayOneShot(modification.WorldTile.hitSound);
+
+        private void HandleTileDestroyed(TileModification modification)
+            => audioSource.PlayOneShot(modification.WorldTile.destroySound);
 
         private void OnEnable()
         {

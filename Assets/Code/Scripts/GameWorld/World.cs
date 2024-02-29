@@ -14,9 +14,9 @@ namespace Tulip.GameWorld
     {
         [SerializeField] Tilemap tilemap;
 
-        public event Action<Vector3Int, WorldTile> OnPlaceTile;
-        public event Action<Vector3Int, WorldTile> OnHitTile;
-        public event Action<Vector3Int, WorldTile> OnDestroyTile;
+        public event Action<TileModification> OnPlaceTile;
+        public event Action<TileModification> OnHitTile;
+        public event Action<TileModification> OnDestroyTile;
 
         private readonly Dictionary<Vector3Int, int> tileDamageMap = new();
 
@@ -37,13 +37,13 @@ namespace Tulip.GameWorld
 
             if (damageTaken < hardness)
             {
-                OnHitTile?.Invoke(cell, worldTile);
+                OnHitTile?.Invoke(TileModification.FromDamaged(cell, worldTile));
                 return InventoryModification.Empty;
             }
 
             tilemap.SetTile(cell, null);
             tileDamageMap.Remove(cell);
-            OnDestroyTile?.Invoke(cell, worldTile);
+            OnDestroyTile?.Invoke(TileModification.FromDestroyed(cell, worldTile));
             return new InventoryModification(toAdd: new ItemStack(item: worldTile));
         }
 
@@ -63,7 +63,7 @@ namespace Tulip.GameWorld
             // BUG: color doesn't work
 
             tileDamageMap.Remove(cell);
-            OnPlaceTile?.Invoke(cell, worldTile);
+            OnPlaceTile?.Invoke(TileModification.FromPlaced(cell, worldTile));
             return new InventoryModification(toRemove: new ItemStack(item: worldTile));
         }
 

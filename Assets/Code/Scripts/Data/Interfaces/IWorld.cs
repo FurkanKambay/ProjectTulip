@@ -6,8 +6,8 @@ namespace Tulip.Data
 {
     public interface IWorld
     {
-        event Action<Vector3Int, WorldTile> OnPlaceTile;
-        event Action<Vector3Int, WorldTile> OnHitTile;
-        event Action<Vector3Int, WorldTile> OnDestroyTile;
+        event Action<TileModification> OnPlaceTile;
+        event Action<TileModification> OnHitTile;
+        event Action<TileModification> OnDestroyTile;
     }
 }
