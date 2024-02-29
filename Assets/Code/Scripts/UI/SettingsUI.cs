@@ -65,30 +65,20 @@ namespace Tulip.UI
             Bootstrapper.TrySetGamePaused(change.newValue);
 
             if (change.newValue)
+            {
                 OnShow?.Invoke();
+                InputHelper.Actions.Player.Disable();
+            }
             else
+            {
                 OnHide?.Invoke();
+                InputHelper.Actions.Player.Enable();
+            }
         }
 
         private void HandleEscape(InputAction.CallbackContext context) => optionsButton.value = !optionsButton.value;
 
-        private void HandleGameStateChange()
-        {
-            root.visible = Bootstrapper.GameState != GameState.InGame;
-
-            // TODO: Subscribe to Bootstrapper.OnGameStateChange in InputHelper to enable Player input
-            switch (Bootstrapper.GameState)
-            {
-                case GameState.InGame:
-                    InputHelper.Actions.Player.Enable();
-                    break;
-                case GameState.InMainMenu:
-                case GameState.Paused:
-                default:
-                    InputHelper.Actions.Player.Disable();
-                    break;
-            }
-        }
+        private void HandleGameStateChange() => root.visible = Bootstrapper.GameState != GameState.InGame;
 
         private void HandleSaveExitClicked(ClickEvent _)
         {
