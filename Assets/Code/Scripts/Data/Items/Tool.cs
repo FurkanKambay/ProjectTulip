@@ -8,6 +8,7 @@ namespace Tulip.Data.Items
     [CreateAssetMenu(fileName = "Tool", menuName = "Items/Tool")]
     public class Tool : Usable
     {
-        public virtual bool IsUsableOnTile(WorldTile tile) => false;
+        public virtual bool IsUsableOn(IWorld world, Vector3Int cell) => false;
+        public virtual InventoryModification UseOn(IWorld world, Vector3Int cell) => InventoryModification.Empty;
     }
 }
