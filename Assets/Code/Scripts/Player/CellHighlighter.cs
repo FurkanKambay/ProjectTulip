@@ -34,15 +34,15 @@ namespace Tulip.Player
                 return;
             }
 
-            WorldTile worldTile = World.Instance.GetTile(focusedCell.Value)?.WorldTile;
+            WorldTile worldTile = World.Instance.GetTile(focusedCell.Value);
             Item item = inventory.HotbarSelected?.Item;
             bool notOccupiedByPlayer = !World.Instance.CellIntersects(focusedCell.Value, playerCollider.bounds);
             bool toolIsUsable = (item as Tool)?.IsUsableOnTile(worldTile) ?? false;
 
-            renderer.enabled = !item ? false : item.Type switch
+            renderer.enabled = item && item.Type switch
             {
                 ItemType.Pickaxe => toolIsUsable,
-                ItemType.Block => toolIsUsable && notOccupiedByPlayer,
+                _ when item is WorldTile { TileType: TileType.Block } => toolIsUsable && notOccupiedByPlayer,
                 _ => false
             };
 

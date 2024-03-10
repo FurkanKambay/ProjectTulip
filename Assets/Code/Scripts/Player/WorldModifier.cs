@@ -65,7 +65,7 @@ namespace Tulip.Player
             if (Physics2D.OverlapArea(topLeft, bottomRight, layerMask))
                 return;
 
-            WorldTile tile = World.Instance.GetTile(FocusedCell.Value)?.WorldTile;
+            WorldTile tile = World.Instance.GetTile(FocusedCell.Value);
             if (!tool.IsUsableOnTile(tile)) return;
 
             inventory.ApplyModification(item.Type switch

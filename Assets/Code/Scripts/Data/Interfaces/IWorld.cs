@@ -25,7 +25,7 @@ namespace Tulip.Data
 
         bool CellIntersects(Vector3Int cell, Bounds other);
         bool HasTile(Vector3Int cell);
-        CustomRuleTile GetTile(Vector3Int cell);
-        CustomRuleTile GetTile(Vector3 worldPosition);
+        WorldTile GetTile(Vector3Int cell);
+        WorldTile GetTile(Vector3 worldPosition);
     }
 }

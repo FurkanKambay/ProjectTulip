@@ -27,7 +27,7 @@ namespace Tulip.GameWorld
 
             tileDamageMap.TryAdd(cell, 0);
 
-            WorldTile worldTile = GetTile(cell).WorldTile;
+            WorldTile worldTile = GetTile(cell);
             int damageTaken = tileDamageMap[cell] += damage;
             int hardness = worldTile.hardness;
 
@@ -70,7 +70,7 @@ namespace Tulip.GameWorld
             Vector3Int cellToCheck = cell;
 
             var floor = new Vector3Int(cellToCheck.x, cellToCheck.y - 1);
-            if (!HasTile(floor) || !GetTile(floor).WorldTile.IsSafe)
+            if (!HasTile(floor) || !GetTile(floor).IsSafe)
                 return false;
 
             for (int y = 0; y < entitySize.y; y++)
@@ -95,7 +95,7 @@ namespace Tulip.GameWorld
         public Bounds CellBoundsWorld(Vector3Int cell) => new(CellCenter(cell), tilemap.GetBoundsLocal(cell).size);
 
         public bool HasTile(Vector3Int cell) => tilemap.HasTile(cell);
-        public CustomRuleTile GetTile(Vector3Int cell) => tilemap.GetTile<CustomRuleTile>(cell);
-        public CustomRuleTile GetTile(Vector3 worldPosition) => GetTile(WorldToCell(worldPosition));
+        public WorldTile GetTile(Vector3Int cell) => tilemap.GetTile<CustomRuleTile>(cell)?.WorldTile;
+        public WorldTile GetTile(Vector3 worldPosition) => GetTile(WorldToCell(worldPosition));
     }
 }
