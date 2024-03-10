@@ -8,6 +8,7 @@ namespace Tulip.Core
         {
             if (instance != null && instance != this)
             {
+                Debug.LogWarning($"{typeof(T).Name} instance already exists. Destroying self.");
                 Destroy(gameObject);
                 return;
             }
@@ -15,6 +16,8 @@ namespace Tulip.Core
             instance = this as T;
             DontDestroyOnLoad(gameObject);
             gameObject.hideFlags = HideFlags.NotEditable;
+
+            Debug.Log($"{typeof(T).Name} instance is ready.");
         }
     }
 }
