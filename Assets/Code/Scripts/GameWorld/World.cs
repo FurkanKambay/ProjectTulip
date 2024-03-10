@@ -20,10 +20,6 @@ namespace Tulip.GameWorld
 
         private readonly Dictionary<Vector3Int, int> tileDamageMap = new();
 
-        /// <summary>
-        /// Damages a tile at the given cell coordinates.
-        /// </summary>
-        /// <returns>Whether the tile was destroyed.</returns>
         public InventoryModification DamageTile(Vector3Int cell, int damage)
         {
             if (!tilemap.HasTile(cell))
@@ -47,10 +43,6 @@ namespace Tulip.GameWorld
             return new InventoryModification(toAdd: new ItemStack(item: worldTile));
         }
 
-        /// <summary>
-        /// Tries to place a tile at the given cell coordinates.
-        /// </summary>
-        /// <returns>Whether the tile was placed successfully.</returns>
         public InventoryModification PlaceTile(Vector3Int cell, WorldTile worldTile)
         {
             if (tilemap.HasTile(cell))
