@@ -7,6 +7,7 @@ namespace Tulip.Data.Items
     public class WorldTile : Tool
     {
         public bool IsSafe => true;
+        public virtual TileType TileType => tileType;
         public CustomRuleTile RuleTile => ruleTile;
 
         public override Sprite Icon => ruleTile.m_DefaultSprite;
@@ -15,6 +16,7 @@ namespace Tulip.Data.Items
         public override float SwingTime => 0f;
 
         [Header("Tile Data")]
+        [SerializeField] TileType tileType;
         [SerializeField] CustomRuleTile ruleTile;
         public Color color = Color.white;
 
@@ -26,7 +28,19 @@ namespace Tulip.Data.Items
         public AudioClip destroySound;
         public AudioClip placeSound;
 
-        public override bool IsUsableOnTile(WorldTile worldTile) => worldTile is null;
+        public override InventoryModification UseOn(IWorld world, Vector3Int cell) => tileType switch
+        {
+            TileType.Block when IsUsableOn(world, cell) => world.PlaceTile(cell, this),
+            _ => InventoryModification.Empty
+        };
+
+        public override bool IsUsableOn(IWorld world, Vector3Int cell) => tileType switch
+        {
+            // TODO: maybe bring back this constraint (originally for cell highlighting)
+            // bool notOccupiedByPlayer = !world.CellIntersects(cell, playerCollider.bounds);
+            TileType.Block => world.GetTile(cell) is null,
+            _ => false
+        };
 
         private void OnValidate() => RuleTile.WorldTile = this;
 

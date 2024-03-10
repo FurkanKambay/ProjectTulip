@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ea4930fe2524a86902cded11caf5a4a, type: 3}
   m_Name: Pickaxe
   m_EditorClassIdentifier: 
-  type: 3
+  type: 2
   icon: {fileID: -1312279058, guid: c8834629caf834b43a4462ab2b3b36f7, type: 3}
   iconScale: 1.5
   name: Weak Pickaxe

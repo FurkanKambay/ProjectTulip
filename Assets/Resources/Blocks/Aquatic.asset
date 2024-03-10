@@ -21,6 +21,7 @@ MonoBehaviour:
   cooldown: 0.5
   chargeTime: 0
   swingTime: 0
+  tileType: 1
   ruleTile: {fileID: 11400000, guid: c5d893c5f1c159e47a38522e8a17ccd4, type: 2}
   color: {r: 0, g: 0.7582536, b: 1, a: 1}
   hardness: 120

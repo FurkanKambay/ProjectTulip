@@ -1,4 +1,3 @@
-using Tulip.Data;
 using Tulip.Data.Items;
 using Tulip.GameWorld;
 using UnityEngine;
@@ -12,7 +11,6 @@ namespace Tulip.Player
 
         private new SpriteRenderer renderer;
         private Inventory inventory;
-        private BoxCollider2D playerCollider;
 
         private Vector3 targetPosition;
         private Vector3Int? focusedCell;
@@ -23,7 +21,6 @@ namespace Tulip.Player
         {
             renderer = GetComponent<SpriteRenderer>();
             inventory = worldModifier.GetComponent<Inventory>();
-            playerCollider = worldModifier.GetComponent<BoxCollider2D>();
         }
 
         private void Update()
@@ -34,17 +31,9 @@ namespace Tulip.Player
                 return;
             }
 
-            WorldTile worldTile = World.Instance.GetTile(focusedCell.Value)?.WorldTile;
             Item item = inventory.HotbarSelected?.Item;
-            bool notOccupiedByPlayer = !World.Instance.CellIntersects(focusedCell.Value, playerCollider.bounds);
-            bool toolIsUsable = (item as Tool)?.IsUsableOnTile(worldTile) ?? false;
-
-            renderer.enabled = !item ? false : item.Type switch
-            {
-                ItemType.Pickaxe => toolIsUsable,
-                ItemType.Block => toolIsUsable && notOccupiedByPlayer,
-                _ => false
-            };
+            renderer.enabled = item is Tool tool
+                               && tool.IsUsableOn(World.Instance, focusedCell.Value);
 
             if (renderer.enabled)
                 targetPosition = World.Instance.CellCenter(focusedCell.Value);

@@ -65,16 +65,10 @@ namespace Tulip.Player
             if (Physics2D.OverlapArea(topLeft, bottomRight, layerMask))
                 return;
 
-            WorldTile tile = World.Instance.GetTile(FocusedCell.Value)?.WorldTile;
-            if (!tool.IsUsableOnTile(tile)) return;
+            if (!tool.IsUsableOn(World.Instance, FocusedCell.Value)) return;
 
-            inventory.ApplyModification(item.Type switch
-            {
-                ItemType.Block => World.Instance.PlaceTile(FocusedCell.Value, item as WorldTile),
-                ItemType.Wall => InventoryModification.Empty,
-                ItemType.Pickaxe => World.Instance.DamageTile(FocusedCell.Value, ((Pickaxe)item).Power),
-                _ => InventoryModification.Empty
-            });
+            InventoryModification modification = tool.UseOn(World.Instance, FocusedCell.Value);
+            inventory.ApplyModification(modification);
         }
 
         private void AssignCells()
