@@ -1,5 +1,4 @@
 using Tulip.Core;
-using Tulip.Input;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -18,7 +17,6 @@ namespace Tulip.UI
             playButton = root.Q<Button>("PlayButton");
 
             settingsUI = FindAnyObjectByType<SettingsUI>();
-            InputHelper.Actions.Player.Disable();
         }
 
         private void OnEnable()

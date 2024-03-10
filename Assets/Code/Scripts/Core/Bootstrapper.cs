@@ -28,7 +28,8 @@ namespace Tulip.Core
 
         private void Start()
         {
-            GameState = GameState.InMainMenu;
+            gameState = GameState.InMainMenu;
+            OnGameStateChange?.Invoke();
             SceneManager.LoadSceneAsync("Main Menu", LoadSceneMode.Additive);
         }
 

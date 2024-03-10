@@ -65,18 +65,18 @@ namespace Tulip.UI
             Bootstrapper.TrySetGamePaused(change.newValue);
 
             if (change.newValue)
-            {
                 OnShow?.Invoke();
-                InputHelper.Actions.Player.Disable();
-            }
             else
-            {
                 OnHide?.Invoke();
-                InputHelper.Actions.Player.Enable();
-            }
         }
 
-        private void HandleEscape(InputAction.CallbackContext context) => optionsButton.value = !optionsButton.value;
+        private void HandlePause(InputAction.CallbackContext context) => optionsButton.value = true;
+        private void HandleResume(InputAction.CallbackContext context) => optionsButton.value =
+            Bootstrapper.GameState switch
+            {
+                GameState.InMainMenu => !optionsButton.value,
+                _ => false
+            };
 
         private void HandleGameStateChange() => root.visible = Bootstrapper.GameState != GameState.InGame;
 
@@ -99,7 +99,8 @@ namespace Tulip.UI
             container.visible = false;
 
             Bootstrapper.OnGameStateChange += HandleGameStateChange;
-            InputHelper.Actions.UI.Cancel.performed += HandleEscape;
+            InputHelper.Actions.Player.Menu.performed += HandlePause;
+            InputHelper.Actions.UI.Cancel.performed += HandleResume;
         }
 
         private void OnDisable()
@@ -108,7 +109,6 @@ namespace Tulip.UI
             container.visible = false;
 
             Bootstrapper.OnGameStateChange -= HandleGameStateChange;
-            InputHelper.Actions.UI.Cancel.performed -= HandleEscape;
         }
     }
 }

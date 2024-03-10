@@ -20,18 +20,27 @@ namespace Tulip.Input
         private void HandleInputPoint(InputAction.CallbackContext context)
             => MouseScreenPoint = context.ReadValue<Vector2>();
 
-        private void OnEnable()
+        private void HandleGameStateChanged()
         {
-            Actions.Enable();
-            Actions.Player.Hotbar.performed += HandleInputHotbar;
-            Actions.Player.Point.performed += HandleInputPoint;
+            switch (Bootstrapper.GameState)
+            {
+                case GameState.InGame:
+                    Actions.Player.Hotbar.performed += HandleInputHotbar;
+                    Actions.Player.Point.performed += HandleInputPoint;
+                    Actions.Player.Enable();
+                    Actions.UI.Disable();
+                    break;
+                case GameState.InMainMenu:
+                case GameState.Paused:
+                default:
+                    Actions.Player.Disable();
+                    Actions.UI.Enable();
+                    break;
+            }
         }
 
-        private void OnDisable()
-        {
-            Actions.Player.Hotbar.performed -= HandleInputHotbar;
-            Actions.Player.Point.performed -= HandleInputPoint;
-            Actions.Disable();
-        }
+        private void OnEnable() => Bootstrapper.OnGameStateChange += HandleGameStateChanged;
+        private void OnDisable() => Bootstrapper.OnGameStateChange -= HandleGameStateChanged;
+        private void OnApplicationQuit() => Bootstrapper.OnGameStateChange -= HandleGameStateChanged;
     }
 }
