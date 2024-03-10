@@ -7,6 +7,7 @@ namespace Tulip.Data.Items
     public class WorldTile : Tool
     {
         public bool IsSafe => true;
+        public virtual TileType TileType => tileType;
         public CustomRuleTile RuleTile => ruleTile;
 
         public override Sprite Icon => ruleTile.m_DefaultSprite;
@@ -15,6 +16,7 @@ namespace Tulip.Data.Items
         public override float SwingTime => 0f;
 
         [Header("Tile Data")]
+        [SerializeField] TileType tileType;
         [SerializeField] CustomRuleTile ruleTile;
         public Color color = Color.white;
 

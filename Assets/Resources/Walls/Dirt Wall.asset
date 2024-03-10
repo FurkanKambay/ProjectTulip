@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec2778eec103403f8cae777705b279c9, type: 3}
   m_Name: Dirt Wall
   m_EditorClassIdentifier: 
-  type: 2
+  type: 1
   icon: {fileID: 0}
   iconScale: 1.2
   name: Dirt Wall
@@ -21,6 +21,7 @@ MonoBehaviour:
   cooldown: 0.5
   chargeTime: 0
   swingTime: 0
+  tileType: 0
   ruleTile: {fileID: 11400000, guid: 2fb86c8156c8f9f4d806fdbeb58c8578, type: 2}
   color: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 1}
   hardness: 20
