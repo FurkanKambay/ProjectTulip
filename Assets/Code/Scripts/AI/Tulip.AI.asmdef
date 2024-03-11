@@ -2,7 +2,8 @@
     "name": "Tulip.AI",
     "rootNamespace": "Tulip",
     "references": [
-        "GUID:4cb23d4305e903d4cbe6b4d464c9f42d"
+        "GUID:4cb23d4305e903d4cbe6b4d464c9f42d",
+        "GUID:fad44b819ceb4ff8a8af4a5fbab8835c"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

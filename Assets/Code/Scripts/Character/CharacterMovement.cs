@@ -11,42 +11,47 @@ namespace Tulip.Character
     {
         public MovementConfig config;
 
-        public Vector2 Input { get; set; }
-
+        public Vector2 DesiredVelocity { get; private set; }
         public Vector2 Velocity => velocity;
-        public Vector2 DesiredVelocity => desiredVelocity;
 
-        [Header("Calculations")]
-        private Vector2 desiredVelocity;
+        // Calculations
+        private float inputX;
         private Vector2 velocity;
         private float maxSpeedChange;
         private float acceleration;
         private float deceleration;
         private float turnSpeed;
 
-        [Header("Current State")]
+        // Current State
         private bool isGrounded;
         private bool hasAnyMovement;
 
+        private ICharacterBrain brain;
         private Rigidbody2D body;
         private SpriteRenderer spriteRenderer;
         private GroundChecker ground;
 
         private void Awake()
         {
+            brain = GetComponent<ICharacterBrain>();
             body = GetComponent<Rigidbody2D>();
             ground = GetComponent<GroundChecker>();
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         }
 
+        private void OnEnable() => brain.OnMoveLateral += HandleMoveLateral;
+        private void OnDisable() => brain.OnMoveLateral -= HandleMoveLateral;
+
+        private void HandleMoveLateral(float value) => inputX = value;
+
         private void Update()
         {
-            hasAnyMovement = Input.x != 0;
+            hasAnyMovement = inputX != 0;
 
             if (hasAnyMovement)
-                spriteRenderer.flipX = Input.x < 0;
+                spriteRenderer.flipX = inputX < 0;
 
-            desiredVelocity = Input * Mathf.Max(config.maxSpeed - config.friction, 0f);
+            DesiredVelocity = new Vector2(inputX, default) * Mathf.Max(config.maxSpeed - config.friction, 0f);
         }
 
         private void FixedUpdate()
@@ -71,18 +76,18 @@ namespace Tulip.Character
             maxSpeedChange = hasAnyMovement switch
             {
                 // ReSharper disable once CompareOfFloatsByEqualityOperator
-                true when Mathf.Sign(Input.x) != Mathf.Sign(velocity.x) => turnSpeed * Time.deltaTime,
+                true when Mathf.Sign(inputX) != Mathf.Sign(Velocity.x) => turnSpeed * Time.deltaTime,
                 true => acceleration * Time.deltaTime,
                 _ => deceleration * Time.deltaTime
             };
 
-            velocity.x = Mathf.MoveTowards(velocity.x, desiredVelocity.x, maxSpeedChange);
-            body.velocity = velocity;
+            velocity.x = Mathf.MoveTowards(Velocity.x, DesiredVelocity.x, maxSpeedChange);
+            body.velocity = Velocity;
         }
 
         private void RunWithoutAcceleration()
         {
-            velocity.x = desiredVelocity.x;
+            velocity.x = DesiredVelocity.x;
             body.velocity = velocity;
         }
 

@@ -1,20 +1,17 @@
 using Tulip.Data;
 using Tulip.Data.Gameplay;
-using Tulip.Input;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Tulip.Character
 {
-    public class PlayerJump : MonoBehaviour, ICharacterJump
+    public class CharacterJump : MonoBehaviour, ICharacterJump
     {
-        [SerializeField] private InputHelper inputHelper;
-
         public JumpConfig config;
 
         public bool IsJumping { get; private set; }
 
         [Header("Components")]
+        private ICharacterBrain brain;
         private Rigidbody2D body;
         private GroundChecker ground;
 
@@ -25,7 +22,6 @@ namespace Tulip.Character
 
         [Header("Current State")]
         private Vector2 velocity;
-
         private float coyoteTimeCounter;
         private float jumpBufferCounter;
         private bool isJumpDesired;
@@ -34,6 +30,7 @@ namespace Tulip.Character
 
         private void Awake()
         {
+            brain = GetComponent<ICharacterBrain>();
             body = GetComponent<Rigidbody2D>();
             ground = GetComponent<GroundChecker>();
             defaultGravityScale = 1f;
@@ -41,14 +38,14 @@ namespace Tulip.Character
 
         private void OnEnable()
         {
-            inputHelper.Actions.Player.Jump.started += HandleJump;
-            inputHelper.Actions.Player.Jump.canceled += HandleJump;
+            brain.OnJump += HandleJump;
+            brain.OnJumpReleased += HandleJumpReleased;
         }
 
         private void OnDisable()
         {
-            inputHelper.Actions.Player.Jump.started -= HandleJump;
-            inputHelper.Actions.Player.Jump.canceled -= HandleJump;
+            brain.OnJump -= HandleJump;
+            brain.OnJumpReleased -= HandleJumpReleased;
         }
 
         private void Update()
@@ -96,17 +93,13 @@ namespace Tulip.Character
             SetVerticalVelocity();
         }
 
-        private void HandleJump(InputAction.CallbackContext context)
+        private void HandleJump()
         {
-            if (context.started)
-            {
-                isJumpDesired = true;
-                isPressingJump = true;
-            }
-
-            if (context.canceled)
-                isPressingJump = false;
+            isJumpDesired = true;
+            isPressingJump = true;
         }
+
+        private void HandleJumpReleased() => isPressingJump = false;
 
         private void SetGravity()
         {
