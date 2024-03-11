@@ -9,6 +9,7 @@ namespace Tulip.Player
         [SerializeField] float speed = 100;
         [SerializeField] WorldModifier worldModifier;
 
+        private World world;
         private new SpriteRenderer renderer;
         private Inventory inventory;
 
@@ -19,6 +20,7 @@ namespace Tulip.Player
 
         private void Awake()
         {
+            world = FindAnyObjectByType<World>();
             renderer = GetComponent<SpriteRenderer>();
             inventory = worldModifier.GetComponent<Inventory>();
         }
@@ -33,10 +35,10 @@ namespace Tulip.Player
 
             Item item = inventory.HotbarSelected?.Item;
             renderer.enabled = item is Tool tool
-                               && tool.IsUsableOn(World.Instance, focusedCell.Value);
+                               && tool.IsUsableOn(world, focusedCell.Value);
 
             if (renderer.enabled)
-                targetPosition = World.Instance.CellCenter(focusedCell.Value);
+                targetPosition = world.CellCenter(focusedCell.Value);
         }
 
         private void LateUpdate()

@@ -6,9 +6,14 @@ namespace Tulip.Audio
 {
     public class WorldAudio : MonoBehaviour
     {
+        private World world;
         private AudioSource audioSource;
 
-        private void Awake() => audioSource = GetComponent<AudioSource>();
+        private void Awake()
+        {
+            world = FindAnyObjectByType<World>();
+            audioSource = GetComponent<AudioSource>();
+        }
 
         private void HandleTilePlaced(TileModification modification)
             => audioSource.PlayOneShot(modification.WorldTile.placeSound);
@@ -21,16 +26,16 @@ namespace Tulip.Audio
 
         private void OnEnable()
         {
-            World.Instance.OnPlaceTile += HandleTilePlaced;
-            World.Instance.OnHitTile += HandleTileHit;
-            World.Instance.OnDestroyTile += HandleTileDestroyed;
+            world.OnPlaceTile += HandleTilePlaced;
+            world.OnHitTile += HandleTileHit;
+            world.OnDestroyTile += HandleTileDestroyed;
         }
 
         private void OnDisable()
         {
-            World.Instance.OnPlaceTile -= HandleTilePlaced;
-            World.Instance.OnHitTile -= HandleTileHit;
-            World.Instance.OnDestroyTile -= HandleTileDestroyed;
+            world.OnPlaceTile -= HandleTilePlaced;
+            world.OnHitTile -= HandleTileHit;
+            world.OnDestroyTile -= HandleTileDestroyed;
         }
     }
 }

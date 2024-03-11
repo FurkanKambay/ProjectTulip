@@ -1,7 +1,6 @@
 using System;
 using UnityEngine.Assertions;
 using System.Collections.Generic;
-using Tulip.Core;
 using Tulip.Data;
 using Tulip.Data.Items;
 using Tulip.Data.Tiles;
@@ -10,7 +9,7 @@ using UnityEngine.Tilemaps;
 
 namespace Tulip.GameWorld
 {
-    public class World : Singleton<World>, IWorld
+    public class World : MonoBehaviour, IWorld
     {
         [SerializeField] Tilemap tilemap;
 

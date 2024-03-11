@@ -15,6 +15,7 @@ namespace Tulip.Gameplay
         [SerializeField, Min(0)] float spawnInterval = 10f;
         [SerializeField] GameObject[] enemyOptions;
 
+        private World world;
         private Camera mainCamera;
 
         private Vector3Int EnemySize => new(1, enemyHeight, 1);
@@ -25,7 +26,7 @@ namespace Tulip.Gameplay
             if (SuitableSpawnCells.Length == 0) return;
 
             GameObject randomEnemy = Instantiate(GetRandomEnemy(), transform);
-            randomEnemy.transform.position = World.Instance.CellCenter(GetRandomSpawnCell());
+            randomEnemy.transform.position = world.CellCenter(GetRandomSpawnCell());
         }
 
         private void UpdateSuitableCoordinates() => SuitableSpawnCells = FindSuitableCells().ToArray();
@@ -42,10 +43,10 @@ namespace Tulip.Gameplay
 
             Vector3 cameraCenter = mainCamera.transform.position;
 
-            Vector3Int camTopRight = (cameraCenter + new Vector3(camExtentX, camExtentY)).ToCell();
-            Vector3Int camBottomLeft = (cameraCenter - new Vector3(camExtentX, camExtentY)).ToCell();
-            Vector3Int spawnTopRight = (cameraCenter + new Vector3(spawnExtentX, spawnExtentY)).ToCell();
-            Vector3Int spawnBottomLeft = (cameraCenter - new Vector3(spawnExtentX, spawnExtentY)).ToCell();
+            Vector3Int camTopRight = world.WorldToCell(cameraCenter + new Vector3(camExtentX, camExtentY));
+            Vector3Int camBottomLeft = world.WorldToCell(cameraCenter - new Vector3(camExtentX, camExtentY));
+            Vector3Int spawnTopRight = world.WorldToCell(cameraCenter + new Vector3(spawnExtentX, spawnExtentY));
+            Vector3Int spawnBottomLeft = world.WorldToCell(cameraCenter - new Vector3(spawnExtentX, spawnExtentY));
 
             for (int y = spawnBottomLeft.y; y <= spawnTopRight.y; y++)
             {
@@ -55,7 +56,7 @@ namespace Tulip.Gameplay
                         x <= camTopRight.x && x >= camBottomLeft.x) continue;
 
                     var cell = new Vector3Int(x, y);
-                    if (World.Instance.CanAccommodate(cell, (Vector2Int)EnemySize))
+                    if (world.CanAccommodate(cell, (Vector2Int)EnemySize))
                         yield return cell;
                 }
             }
@@ -64,6 +65,7 @@ namespace Tulip.Gameplay
         private void Awake()
         {
             Assert.IsTrue(enemyOptions?.Length > 0);
+            world = FindAnyObjectByType<World>();
             mainCamera = Camera.main;
         }
 
@@ -83,7 +85,7 @@ namespace Tulip.Gameplay
             Gizmos.color = Color.yellow;
 
             foreach (Vector3Int cell in SuitableSpawnCells)
-                Gizmos.DrawSphere(World.Instance.CellCenter(cell), 0.4f);
+                Gizmos.DrawSphere(world.CellCenter(cell), 0.4f);
         }
     }
 }

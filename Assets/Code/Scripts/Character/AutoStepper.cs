@@ -17,6 +17,7 @@ namespace Tulip.Character
         [SerializeField] float range = .5f;
         [SerializeField] Vector3 offset = Vector3.up * .5f;
 
+        private World world;
         private ICharacterMovement movement;
         private GroundChecker ground;
         private Rigidbody2D body;
@@ -25,6 +26,7 @@ namespace Tulip.Character
 
         private void Awake()
         {
+            world = FindAnyObjectByType<World>();
             movement = GetComponent<ICharacterMovement>();
             ground = GetComponent<GroundChecker>();
             body = GetComponent<Rigidbody2D>();
@@ -71,13 +73,13 @@ namespace Tulip.Character
                 LayerMask.GetMask("World"));
 
             Vector2 hitPoint = hit.point - (hit.normal * 0.1f);
-            Vector3Int cell1 = World.Instance.WorldToCell(hitPoint) + Vector3Int.up;
+            Vector3Int cell1 = world.WorldToCell(hitPoint) + Vector3Int.up;
             Vector3Int cell2 = cell1 + Vector3Int.up;
             Vector3Int cell3 = cell2 + (velocity < 0 ? Vector3Int.right : Vector3Int.left);
 
             if (!hit) return AutoStepDirection.None;
 
-            if (World.Instance.HasTile(cell1) || World.Instance.HasTile(cell2) || World.Instance.HasTile(cell3))
+            if (world.HasTile(cell1) || world.HasTile(cell2) || world.HasTile(cell3))
                 return AutoStepDirection.None;
 
             return velocity > 0 ? AutoStepDirection.Right : AutoStepDirection.Left;

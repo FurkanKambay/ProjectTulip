@@ -30,6 +30,7 @@ namespace Tulip.Player
 
         public event Action<Vector3Int?> OnChangeCellFocus;
 
+        private World world;
         private Inventory inventory;
         private IItemWielder itemWielder;
         private Camera mainCamera;
@@ -40,6 +41,7 @@ namespace Tulip.Player
 
         private void Awake()
         {
+            world = FindAnyObjectByType<World>();
             inventory = GetComponent<Inventory>();
             itemWielder = GetComponent<IItemWielder>();
             mainCamera = Camera.main;
@@ -57,7 +59,7 @@ namespace Tulip.Player
 
             if (!FocusedCell.HasValue) return;
 
-            Bounds bounds = World.Instance.CellBoundsWorld(FocusedCell.Value);
+            Bounds bounds = world.CellBoundsWorld(FocusedCell.Value);
             Vector2 topLeft = bounds.center - bounds.extents + (Vector3.one * 0.02f);
             Vector2 bottomRight = bounds.center + bounds.extents - (Vector3.one * 0.02f);
 
@@ -65,16 +67,16 @@ namespace Tulip.Player
             if (Physics2D.OverlapArea(topLeft, bottomRight, layerMask))
                 return;
 
-            if (!tool.IsUsableOn(World.Instance, FocusedCell.Value)) return;
+            if (!tool.IsUsableOn(world, FocusedCell.Value)) return;
 
-            InventoryModification modification = tool.UseOn(World.Instance, FocusedCell.Value);
+            InventoryModification modification = tool.UseOn(world, FocusedCell.Value);
             inventory.ApplyModification(modification);
         }
 
         private void AssignCells()
         {
             Vector2 mouseWorld = mainCamera.ScreenToWorldPoint(InputHelper.Instance.MouseScreenPoint);
-            MouseCell = World.Instance.WorldToCell(mouseWorld);
+            MouseCell = world.WorldToCell(mouseWorld);
 
             Vector2 hotspot = (Vector2)transform.position + hotspotOffset;
             rangePath = Vector2.ClampMagnitude(mouseWorld - hotspot, range);
@@ -91,7 +93,7 @@ namespace Tulip.Player
                 LayerMask.GetMask("World"));
 
             hitPoint = hit.point - (hit.normal * 0.1f);
-            FocusedCell = hit.collider ? World.Instance.WorldToCell(hitPoint) : null;
+            FocusedCell = hit.collider ? world.WorldToCell(hitPoint) : null;
         }
 
         private void OnDrawGizmosSelected()
