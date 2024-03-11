@@ -13,6 +13,8 @@ namespace Tulip.Gameplay
     [RequireComponent(typeof(IInventory))]
     public class ItemWielder : MonoBehaviour, IItemWielder
     {
+        [SerializeField] private InputHelper inputHelper;
+
         public event Action<Usable> OnCharge;
         public event Action<Usable, ItemSwingDirection> OnSwing;
         public event Action<Usable> OnReady;
@@ -54,7 +56,7 @@ namespace Tulip.Gameplay
         {
             timeSinceLastUse += Time.deltaTime;
 
-            Vector3 mouseWorld = mainCamera.ScreenToWorldPoint(InputHelper.Instance.MouseScreenPoint);
+            Vector3 mouseWorld = mainCamera.ScreenToWorldPoint(inputHelper.MouseScreenPoint);
             float deltaToMouse = mouseWorld.x - transform.position.x;
 
             // TODO: implement up/down swing
@@ -62,10 +64,10 @@ namespace Tulip.Gameplay
                 ? ItemSwingDirection.Left
                 : ItemSwingDirection.Right;
 
-            bool shouldShowItem = timeSinceLastUse < itemStowDelay || InputHelper.Actions.Player.Use.inProgress;
+            bool shouldShowItem = timeSinceLastUse < itemStowDelay || inputHelper.Actions.Player.Use.inProgress;
             UpdateItemVisual(shouldShowItem ? intendedSwingDirection : ItemSwingDirection.None);
 
-            if (InputHelper.Actions.Player.Use.inProgress)
+            if (inputHelper.Actions.Player.Use.inProgress)
                 ChargeAndSwing(intendedSwingDirection);
         }
 

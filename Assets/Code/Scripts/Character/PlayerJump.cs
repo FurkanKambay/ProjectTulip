@@ -8,6 +8,8 @@ namespace Tulip.Character
 {
     public class PlayerJump : MonoBehaviour, ICharacterJump
     {
+        [SerializeField] private InputHelper inputHelper;
+
         public JumpConfig config;
 
         public bool IsJumping { get; private set; }
@@ -39,14 +41,14 @@ namespace Tulip.Character
 
         private void OnEnable()
         {
-            InputHelper.Actions.Player.Jump.started += HandleJump;
-            InputHelper.Actions.Player.Jump.canceled += HandleJump;
+            inputHelper.Actions.Player.Jump.started += HandleJump;
+            inputHelper.Actions.Player.Jump.canceled += HandleJump;
         }
 
         private void OnDisable()
         {
-            InputHelper.Actions.Player.Jump.started -= HandleJump;
-            InputHelper.Actions.Player.Jump.canceled -= HandleJump;
+            inputHelper.Actions.Player.Jump.started -= HandleJump;
+            inputHelper.Actions.Player.Jump.canceled -= HandleJump;
         }
 
         private void Update()

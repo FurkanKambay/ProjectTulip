@@ -269,6 +269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dbac43252630dd499875c6a60daacdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputHelper: {fileID: 11400000, guid: 9eefb6c1263df9741ac87a6316633a0c, type: 2}
   inventoryData: {fileID: 11400000, guid: 1265edbba7f76c84ba1e9ba37adf7f80, type: 2}
   capacity: 9
 --- !u!114 &3140798728654723148
@@ -283,6 +284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 221a2bf0379152f4b81a63414840b5da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputHelper: {fileID: 11400000, guid: 9eefb6c1263df9741ac87a6316633a0c, type: 2}
   itemPivot: {fileID: 5170996385232603194}
   itemStowDelay: 3
   itemDrawStowDuration: 0.15
@@ -328,6 +330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3e487889f14636458692cc46f41321d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputHelper: {fileID: 11400000, guid: 9eefb6c1263df9741ac87a6316633a0c, type: 2}
   hotspotOffset: {x: 0, y: 1}
   range: 5
 --- !u!114 &868025074711396792
@@ -372,6 +375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c841a85edce250b4ab7200bbc1d11405, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputHelper: {fileID: 11400000, guid: 9eefb6c1263df9741ac87a6316633a0c, type: 2}
   config: {fileID: 11400000, guid: f39354fa9ff53cf40af11ca8a3802dee, type: 2}
 --- !u!114 &2110289315241148991
 MonoBehaviour:
@@ -403,6 +407,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 785fc94a52e464e498ccf96036b19f0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputHelper: {fileID: 11400000, guid: 9eefb6c1263df9741ac87a6316633a0c, type: 2}
   dashSpeed: 15
   dashCooldown: 1.5
   forceMode: 1
@@ -418,6 +423,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34fe02ae195a4934ab403049c6892884, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputHelper: {fileID: 11400000, guid: 9eefb6c1263df9741ac87a6316633a0c, type: 2}
 --- !u!1 &3988847855271664023
 GameObject:
   m_ObjectHideFlags: 0

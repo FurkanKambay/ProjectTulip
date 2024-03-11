@@ -5,14 +5,15 @@ using UnityEngine.InputSystem;
 
 namespace Tulip.Input
 {
-    public class InputHelper : PersistentSingleton<InputHelper>
+    [CreateAssetMenu(fileName = "Input Helper", menuName = "Systems/Input")]
+    public class InputHelper : ScriptableObject
     {
-        public static InputActions Actions => Instance.actions ??= new InputActions();
-
         public event Action<int> OnSelectHotbar;
-        public Vector2 MouseScreenPoint { get; private set; }
 
+        public InputActions Actions => actions ??= new InputActions();
         private InputActions actions;
+
+        public Vector2 MouseScreenPoint { get; private set; }
 
         private void HandleInputHotbar(InputAction.CallbackContext context)
             => OnSelectHotbar?.Invoke(Convert.ToInt32(context.control.name) - 1);

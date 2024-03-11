@@ -8,6 +8,8 @@ namespace Tulip.Interaction
     [RequireComponent(typeof(BoxCollider2D))]
     public class Interactable : MonoBehaviour
     {
+        [SerializeField] private InputHelper inputHelper;
+
         [SerializeField] BoxCollider2D trigger;
 
         public event Action OnInteract;
@@ -27,12 +29,12 @@ namespace Tulip.Interaction
         // TODO: highlight sprite outline
         private void Update()
         {
-            Vector3 mouseWorld = mainCamera.ScreenToWorldPoint(InputHelper.Instance.MouseScreenPoint);
+            Vector3 mouseWorld = mainCamera.ScreenToWorldPoint(inputHelper.MouseScreenPoint);
             isHovering = trigger.OverlapPoint(mouseWorld);
         }
 
-        private void OnEnable() => InputHelper.Actions.Player.Interact.performed += HandleInteract;
-        private void OnDisable() => InputHelper.Actions.Player.Interact.performed -= HandleInteract;
+        private void OnEnable() => inputHelper.Actions.Player.Interact.performed += HandleInteract;
+        private void OnDisable() => inputHelper.Actions.Player.Interact.performed -= HandleInteract;
 
         private void OnValidate()
         {

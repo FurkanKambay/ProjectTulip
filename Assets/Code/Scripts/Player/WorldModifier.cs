@@ -12,6 +12,8 @@ namespace Tulip.Player
 {
     public class WorldModifier : MonoBehaviour
     {
+        [SerializeField] private InputHelper inputHelper;
+
         [SerializeField] Vector2 hotspotOffset;
         public float range = 5f;
 
@@ -75,7 +77,7 @@ namespace Tulip.Player
 
         private void AssignCells()
         {
-            Vector2 mouseWorld = mainCamera.ScreenToWorldPoint(InputHelper.Instance.MouseScreenPoint);
+            Vector2 mouseWorld = mainCamera.ScreenToWorldPoint(inputHelper.MouseScreenPoint);
             MouseCell = world.WorldToCell(mouseWorld);
 
             Vector2 hotspot = (Vector2)transform.position + hotspotOffset;
@@ -114,13 +116,13 @@ namespace Tulip.Player
 
         private void OnEnable()
         {
-            InputHelper.Actions.Player.ToggleSmartCursor.performed += HandleToggleSmartCursor;
+            inputHelper.Actions.Player.ToggleSmartCursor.performed += HandleToggleSmartCursor;
             itemWielder.OnSwing += HandleItemSwing;
         }
 
         private void OnDisable()
         {
-            InputHelper.Actions.Player.ToggleSmartCursor.performed -= HandleToggleSmartCursor;
+            inputHelper.Actions.Player.ToggleSmartCursor.performed -= HandleToggleSmartCursor;
             itemWielder.OnSwing -= HandleItemSwing;
         }
     }
