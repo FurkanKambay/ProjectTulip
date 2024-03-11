@@ -3,12 +3,20 @@ using UnityEngine;
 
 namespace Tulip.Core
 {
-    public static partial class Options
+    [CreateAssetMenu(fileName = "Game Options", menuName = "Data/Game Options")]
+    public partial class Options : ScriptableObject
     {
-        public static readonly GameOptions Game = new();
-        public static readonly SoundOptions Sound = new();
+        public static Options Instance { get; private set; }
 
         public static event Action OnUpdate;
+
+        public GameOptions Gameplay => gameplay;
+        public SoundOptions Sound => sound;
+
+        [SerializeField] private GameOptions gameplay;
+        [SerializeField] private SoundOptions sound;
+
+        private void OnEnable() => Instance = Resources.Load<Options>("Game Options");
 
         private static void SetOption<T>(string key, ref T field, T newValue)
         {

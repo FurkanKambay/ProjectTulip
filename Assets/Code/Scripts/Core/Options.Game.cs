@@ -1,13 +1,18 @@
-﻿using Unity.Properties;
+﻿using System;
+using Unity.Properties;
+using UnityEngine;
 
 namespace Tulip.Core
 {
-    public static partial class Options
+    public partial class Options
     {
-        public sealed class GameOptions
+        [Serializable]
+        public sealed record GameOptions
         {
-            private bool useSmartCursor = true;
-            private bool allowPause = true;
+            [SerializeField] bool useSmartCursor = true;
+            [SerializeField] bool allowPause = true;
+
+            private GameOptions() { }
 
             [CreateProperty]
             public bool UseSmartCursor
@@ -21,10 +26,6 @@ namespace Tulip.Core
             {
                 get => allowPause;
                 set => SetOption(Keys.AllowPause, ref allowPause, value);
-            }
-
-            internal GameOptions()
-            {
             }
 
             private static class Keys

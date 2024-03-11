@@ -53,9 +53,6 @@ namespace Tulip.UI
             optionsButton.RegisterCallback<ChangeEvent<bool>>(HandleOptionsToggle);
             gameExitButton.RegisterCallback<ClickEvent>(HandleSaveExitClicked);
             menuQuitButton.RegisterCallback<ClickEvent>(HandleQuitClicked);
-
-            root.Q<Tab>("TabGame").dataSource = Options.Game;
-            root.Q<Tab>("TabSound").dataSource = Options.Sound;
         }
 
         private void HandleOptionsToggle(ChangeEvent<bool> change)

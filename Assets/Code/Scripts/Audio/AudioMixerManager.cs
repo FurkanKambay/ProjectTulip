@@ -12,10 +12,10 @@ namespace Tulip.Audio
 
         private void HandleOptionsUpdated()
         {
-            SetMixerValue("Master", Options.Sound.MasterVolume);
-            SetMixerValue("Music", Options.Sound.MusicVolume);
-            SetMixerValue("Effects", Options.Sound.EffectsVolume);
-            SetMixerValue("UI", Options.Sound.UIVolume);
+            SetMixerValue("Master", Options.Instance.Sound.MasterVolume);
+            SetMixerValue("Music", Options.Instance.Sound.MusicVolume);
+            SetMixerValue("Effects", Options.Instance.Sound.EffectsVolume);
+            SetMixerValue("UI", Options.Instance.Sound.UIVolume);
         }
 
         private void SetMixerValue(string channel, float value)

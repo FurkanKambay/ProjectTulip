@@ -83,7 +83,7 @@ namespace Tulip.Player
             Vector2 hotspot = (Vector2)transform.position + hotspotOffset;
             rangePath = Vector2.ClampMagnitude(mouseWorld - hotspot, range);
 
-            if (!Options.Game.UseSmartCursor || inventory.HotbarSelected?.Item is not Pickaxe)
+            if (!Options.Instance.Gameplay.UseSmartCursor || inventory.HotbarSelected?.Item is not Pickaxe)
             {
                 float distance = Vector3.Distance(hotspot, mouseWorld);
                 FocusedCell = distance <= range ? MouseCell : null;
@@ -100,7 +100,7 @@ namespace Tulip.Player
 
         private void OnDrawGizmosSelected()
         {
-            if (!Options.Game.UseSmartCursor) return;
+            if (!Options.Instance.Gameplay.UseSmartCursor) return;
 
             Vector2 hotspot = (Vector2)transform.position + hotspotOffset;
 
@@ -112,7 +112,7 @@ namespace Tulip.Player
         }
 
         private void HandleToggleSmartCursor(InputAction.CallbackContext _)
-            => Options.Game.UseSmartCursor = !Options.Game.UseSmartCursor;
+            => Options.Instance.Gameplay.UseSmartCursor = !Options.Instance.Gameplay.UseSmartCursor;
 
         private void OnEnable()
         {

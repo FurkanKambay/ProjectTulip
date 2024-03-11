@@ -53,7 +53,7 @@ namespace Tulip.Core
 
         public static void TrySetGamePaused(bool paused)
         {
-            if (gameState == GameState.InMainMenu || !Options.Game.AllowPause)
+            if (gameState == GameState.InMainMenu || !Options.Instance.Gameplay.AllowPause)
             {
                 Time.timeScale = 1;
                 return;

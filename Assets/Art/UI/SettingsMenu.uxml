@@ -4,8 +4,8 @@
         <ui:VisualElement name="Header" class="header">
             <ui:Label text="Options" name="HeaderTitle" enable-rich-text="false" class="header-title" />
         </ui:VisualElement>
-        <ui:TabView name="SettingsPage" class="tab-view" style="position: absolute;">
-            <ui:Tab label="Game" name="TabGame" data-source-type="Tulip.Core.Options+GameOptions, Tulip.Core" class="tab">
+        <ui:TabView name="SettingsPage" class="tab-view" style="position: absolute;" data-source="project://database/Assets/Resources/Game%20Options.asset?fileID=11400000&amp;guid=41d61be9e30e9344a8e17121111b86b0&amp;type=2#Game Options">
+            <ui:Tab label="Game" name="TabGame" data-source-path="gameplay" class="tab">
                 <ui:Toggle label="Smart Cursor" focusable="false">
                     <Bindings>
                         <ui:DataBinding property="value" binding-mode="TwoWay" data-source-path="UseSmartCursor" />
@@ -17,7 +17,7 @@
                     </Bindings>
                 </ui:Toggle>
             </ui:Tab>
-            <ui:Tab label="Sound" name="TabSound" data-source-type="Tulip.Core.Options+SoundOptions, Tulip.Core" class="tab">
+            <ui:Tab label="Sound" name="TabSound" data-source-path="sound" class="tab">
                 <ui:SliderInt label="Master" value="100" high-value="100" focusable="false" show-input-field="true" name="SoundMaster" class="slider-audio">
                     <Bindings>
                         <ui:DataBinding property="value" binding-mode="TwoWay" data-source-path="MasterVolume" />

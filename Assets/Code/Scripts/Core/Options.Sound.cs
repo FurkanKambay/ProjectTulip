@@ -1,12 +1,20 @@
-﻿using Unity.Properties;
+﻿using System;
+using Unity.Properties;
+using UnityEngine;
 
 namespace Tulip.Core
 {
-    public static partial class Options
+    public partial class Options
     {
-        public sealed class SoundOptions
+        [Serializable]
+        public sealed record SoundOptions
         {
-            private int masterVolume = 100;
+            [SerializeField] int masterVolume = 100;
+            [SerializeField] int musicVolume = 50;
+            [SerializeField] int effectsVolume = 100;
+            [SerializeField] int uiVolume = 100;
+
+            private SoundOptions() { }
 
             [CreateProperty]
             public int MasterVolume
@@ -15,16 +23,12 @@ namespace Tulip.Core
                 set => SetOption(Keys.VolumeMaster, ref masterVolume, value);
             }
 
-            private int musicVolume = 50;
-
             [CreateProperty]
             public int MusicVolume
             {
                 get => musicVolume;
                 set => SetOption(Keys.VolumeMusic, ref musicVolume, value);
             }
-
-            private int effectsVolume = 100;
 
             [CreateProperty]
             public int EffectsVolume
@@ -33,17 +37,11 @@ namespace Tulip.Core
                 set => SetOption(Keys.VolumeEffects, ref effectsVolume, value);
             }
 
-            private int uiVolume = 100;
-
             [CreateProperty]
             public int UIVolume
             {
                 get => uiVolume;
                 set => SetOption(Keys.VolumeUI, ref uiVolume, value);
-            }
-
-            internal SoundOptions()
-            {
             }
 
             private static class Keys
