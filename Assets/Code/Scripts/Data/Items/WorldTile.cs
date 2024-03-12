@@ -42,6 +42,7 @@ namespace Tulip.Data.Items
             _ => false
         };
 
+        private void OnEnable() => RuleTile.WorldTile = this;
         private void OnValidate() => RuleTile.WorldTile = this;
 
         private void Reset() => maxAmount = 999;
