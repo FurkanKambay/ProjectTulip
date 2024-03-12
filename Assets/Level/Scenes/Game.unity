@@ -462,9 +462,9 @@ MonoBehaviour:
     <SnapValue>k__BackingField: 0.01
   zoom:
     target: 12
-    <Min>k__BackingField: 5
-    <Max>k__BackingField: 40
-    <Sensitivity>k__BackingField: 0.01
+    <Min>k__BackingField: 2
+    <Max>k__BackingField: 20
+    <Sensitivity>k__BackingField: 6
     <Speed>k__BackingField: 10
 --- !u!1 &619394800
 GameObject:

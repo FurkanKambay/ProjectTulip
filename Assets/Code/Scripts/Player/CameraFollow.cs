@@ -23,7 +23,7 @@ namespace Tulip.Player
             tracking.Target = player.position + (Vector3)tracking.Offset;
 
             float zoomDelta = inputHelper.Actions.Player.Zoom.ReadValue<float>();
-            zoom.Target -= zoomDelta * zoom.Sensitivity;
+            zoom.Target -= zoomDelta * zoom.Sensitivity * Time.deltaTime;
         }
 
         private void LateUpdate()
