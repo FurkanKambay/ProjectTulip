@@ -9,12 +9,20 @@ namespace Tulip.Core
         [Serializable]
         public sealed record SoundOptions
         {
-            [SerializeField] int masterVolume = 100;
-            [SerializeField] int musicVolume = 50;
-            [SerializeField] int effectsVolume = 100;
-            [SerializeField] int uiVolume = 100;
+            [SerializeField, Range(0, 100)] int masterVolume;
+            [SerializeField, Range(0, 100)] int musicVolume;
+            [SerializeField, Range(0, 100)] int effectsVolume;
+            [SerializeField, Range(0, 100)] int uiVolume;
 
             private SoundOptions() { }
+
+            internal void LoadValues()
+            {
+                MasterVolume = LoadOption(Keys.VolumeMaster, 100);
+                MusicVolume = LoadOption(Keys.VolumeMusic, 80);
+                EffectsVolume = LoadOption(Keys.VolumeEffects, 100);
+                UIVolume = LoadOption(Keys.VolumeUI, 100);
+            }
 
             [CreateProperty]
             public int MasterVolume
@@ -44,7 +52,7 @@ namespace Tulip.Core
                 set => SetOption(Keys.VolumeUI, ref uiVolume, value);
             }
 
-            private static class Keys
+            internal static class Keys
             {
                 public const string VolumeMaster = "sound/master";
                 public const string VolumeMusic = "sound/music";

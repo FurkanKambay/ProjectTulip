@@ -9,10 +9,16 @@ namespace Tulip.Core
         [Serializable]
         public sealed record GameOptions
         {
-            [SerializeField] bool useSmartCursor = true;
-            [SerializeField] bool allowPause = true;
+            [SerializeField] bool useSmartCursor;
+            [SerializeField] bool allowPause;
 
             private GameOptions() { }
+
+            internal void LoadValues()
+            {
+                UseSmartCursor = LoadOption(Keys.SmartCursor, false);
+                AllowPause = LoadOption(Keys.SmartCursor, false);
+            }
 
             [CreateProperty]
             public bool UseSmartCursor
@@ -28,7 +34,7 @@ namespace Tulip.Core
                 set => SetOption(Keys.AllowPause, ref allowPause, value);
             }
 
-            private static class Keys
+            internal static class Keys
             {
                 public const string SmartCursor = "game/smart-cursor";
                 public const string AllowPause = "game/allow-pause";

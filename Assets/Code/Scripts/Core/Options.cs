@@ -16,7 +16,17 @@ namespace Tulip.Core
         [SerializeField] private GameOptions gameplay;
         [SerializeField] private SoundOptions sound;
 
-        private void OnEnable() => Instance = Resources.Load<Options>("Game Options");
+        private void OnEnable()
+        {
+            Instance = this;
+            gameplay.LoadValues();
+            sound.LoadValues();
+        }
+
+        private static bool LoadOption(string key, bool defaultValue) => PlayerPrefs.GetInt(key, defaultValue ? 1 : 0) == 1;
+        private static int LoadOption(string key, int defaultValue) => PlayerPrefs.GetInt(key, defaultValue);
+        private static float LoadOption(string key, float defaultValue) => PlayerPrefs.GetFloat(key, defaultValue);
+        private static string LoadOption(string key, string defaultValue) => PlayerPrefs.GetString(key, defaultValue);
 
         private static void SetOption<T>(string key, ref T field, T newValue)
         {
