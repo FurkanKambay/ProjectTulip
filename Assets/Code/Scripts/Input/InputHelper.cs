@@ -31,6 +31,7 @@ namespace Tulip.Input
                     Actions.Player.Enable();
                     Actions.UI.Disable();
                     break;
+                case GameState.Loading:
                 case GameState.InMainMenu:
                 case GameState.Paused:
                 default:

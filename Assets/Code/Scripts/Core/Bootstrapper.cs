@@ -28,24 +28,28 @@ namespace Tulip.Core
 
         private void Start()
         {
-            gameState = GameState.InMainMenu;
+            gameState = GameState.Loading;
             OnGameStateChange?.Invoke();
-            SceneManager.LoadSceneAsync("Main Menu", LoadSceneMode.Additive);
+
+            SceneManager.LoadScene("Main Menu", LoadSceneMode.Additive);
+            GameState = GameState.InMainMenu;
         }
 
         public static void LoadGameScene()
         {
             if (GameState != GameState.InMainMenu) return;
 
+            GameState = GameState.Loading;
             SceneManager.UnloadSceneAsync("Main Menu");
-            SceneManager.LoadSceneAsync("Game", LoadSceneMode.Additive).completed +=
-                _ => GameState = GameState.InGame;
+            SceneManager.LoadScene("Game", LoadSceneMode.Additive);
+            GameState = GameState.InGame;
         }
 
         public static void ReturnToMainMenu()
         {
             if (GameState == GameState.InMainMenu) return;
 
+            GameState = GameState.Loading;
             SceneManager.UnloadSceneAsync("Game");
             SceneManager.LoadScene("Main Menu", LoadSceneMode.Additive);
             GameState = GameState.InMainMenu;
@@ -68,13 +72,16 @@ namespace Tulip.Core
         {
             switch (GameState)
             {
+                case GameState.Loading:
+                    return false;
                 case GameState.InMainMenu:
                 default:
                     return true;
                 case GameState.InGame:
                 case GameState.Paused:
-                    ReturnToMainMenu();
-                    return false;
+                    // TODO: save game, then quit
+                    Debug.LogWarning("Force quit requested. Should save game first.");
+                    return true;
             }
         }
 
