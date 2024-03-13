@@ -1,23 +1,25 @@
 .hotbar-slot {
     justify-content: center;
     align-items: center;
+    flex-direction: row;
     margin: 4px 4px 0;
     padding: 0;
-    width: 32px;
-    height: 32px;
+    width: 64px;
+    height: 64px;
 }
 
 .hotbar-slot-icon {
-    width: 14px;
-    height: 14px;
+    width: 24px;
+    height: 24px;
     position: absolute;
 }
 
 .label-amount {
-    font-size: 7px;
+    align-self: flex-end;
+    font-size: 16px;
     padding: 0;
-    width: 32px;
-    margin: 0 4px 4px;
-    position: absolute;
-    top: 20px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
 }
