@@ -1,0 +1,27 @@
+.unity-base-dropdown__container-inner {
+    background-color: rgba(39, 87, 110, 0.95);
+    color: white;
+}
+
+.unity-base-dropdown__container-outer {
+    border-top-width: 0px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+    border-left-width: 0px;
+}
+
+.unity-base-dropdown__item:checked {
+    background-color: rgba(0, 0, 0, 0.15);
+    -unity-background-image-tint-color: rgb(0, 160, 255);
+}
+
+.unity-base-dropdown__item:checked  .unity-base-dropdown__checkmark {
+    -unity-background-image-tint-color: rgb(0, 160, 255);
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.unity-base-dropdown__item  .unity-base-dropdown__checkmark {
+    margin-left: 2px;
+    margin-right: 2px;
+}

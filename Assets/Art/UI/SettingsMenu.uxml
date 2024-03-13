@@ -1,43 +1,56 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/Art/UI/Styles/SettingsMenu.uss?fileID=7433441132597879392&amp;guid=6fb4624177c61bf46812563d65e71cde&amp;type=3#SettingsMenu" />
+    <Style src="project://database/Assets/Art/UI/Styles/OptionsMenu.Header.uss?fileID=7433441132597879392&amp;guid=b0e91bc71732c494da0fd6a8ba10292c&amp;type=3#OptionsMenu.Header" />
+    <Style src="project://database/Assets/Art/UI/Styles/OptionsMenu.Body.uss?fileID=7433441132597879392&amp;guid=6fb4624177c61bf46812563d65e71cde&amp;type=3#OptionsMenu.Body" />
     <ui:VisualElement name="MainContainer" data-source-type="Tulip.UI.SettingsUI, Tulip.UI" class="MainContainer">
         <ui:VisualElement name="Header" class="header">
             <ui:Label text="Options" name="HeaderTitle" enable-rich-text="false" class="header-title" />
         </ui:VisualElement>
-        <ui:TabView name="SettingsPage" class="tab-view" style="position: absolute;" data-source="project://database/Assets/Resources/Game%20Options.asset?fileID=11400000&amp;guid=41d61be9e30e9344a8e17121111b86b0&amp;type=2#Game Options">
+        <ui:TabView name="SettingsPage" data-source="project://database/Assets/Resources/Game%20Options.asset?fileID=11400000&amp;guid=41d61be9e30e9344a8e17121111b86b0&amp;type=2#Game Options">
             <ui:Tab label="Game" name="TabGame" data-source-path="gameplay" class="tab">
-                <ui:Toggle label="Smart Cursor" focusable="false">
+                <ui:Toggle label="Smart Cursor" focusable="false" name="GameSmartCursor" class="option">
                     <Bindings>
                         <ui:DataBinding property="value" binding-mode="TwoWay" data-source-path="UseSmartCursor" />
                     </Bindings>
                 </ui:Toggle>
-                <ui:Toggle label="Allow Pause" focusable="false">
+                <ui:Toggle label="Allow Pause" focusable="false" name="GameAllowPause" class="option">
                     <Bindings>
                         <ui:DataBinding property="value" binding-mode="TwoWay" data-source-path="AllowPause" />
                     </Bindings>
                 </ui:Toggle>
             </ui:Tab>
             <ui:Tab label="Sound" name="TabSound" data-source-path="sound" class="tab">
-                <ui:SliderInt label="Master" value="100" high-value="100" focusable="false" show-input-field="true" name="SoundMaster" class="slider-audio">
+                <ui:SliderInt label="Master" value="100" high-value="100" focusable="false" show-input-field="true" name="SoundMaster" class="slider-audio option">
                     <Bindings>
                         <ui:DataBinding property="value" binding-mode="TwoWay" data-source-path="MasterVolume" />
                     </Bindings>
                 </ui:SliderInt>
-                <ui:SliderInt label="Music" value="100" high-value="100" focusable="false" show-input-field="true" name="SoundMusic" class="slider-audio">
+                <ui:SliderInt label="Music" value="100" high-value="100" focusable="false" show-input-field="true" name="SoundMusic" class="slider-audio option">
                     <Bindings>
                         <ui:DataBinding property="value" binding-mode="TwoWay" data-source-path="MusicVolume" />
                     </Bindings>
                 </ui:SliderInt>
-                <ui:SliderInt label="Effects" value="100" high-value="100" focusable="false" show-input-field="true" name="SoundEffects" class="slider-audio">
+                <ui:SliderInt label="Effects" value="100" high-value="100" focusable="false" show-input-field="true" name="SoundEffects" class="slider-audio option">
                     <Bindings>
                         <ui:DataBinding property="value" binding-mode="TwoWay" data-source-path="EffectsVolume" />
                     </Bindings>
                 </ui:SliderInt>
-                <ui:SliderInt label="UI" value="100" high-value="100" focusable="false" show-input-field="true" name="SoundUI" class="slider-audio">
+                <ui:SliderInt label="UI" value="100" high-value="100" focusable="false" show-input-field="true" name="SoundUI" class="slider-audio option">
                     <Bindings>
                         <ui:DataBinding property="value" binding-mode="TwoWay" data-source-path="UIVolume" />
                     </Bindings>
                 </ui:SliderInt>
+            </ui:Tab>
+            <ui:Tab label="Video" name="TabVideo" data-source-path="video" class="tab">
+                <ui:EnumField label="Window Mode" focusable="false" type="UnityEngine.FullScreenMode, UnityEngine.CoreModule" name="VideoWindowMode" class="dropdown option">
+                    <Bindings>
+                        <ui:DataBinding property="value" binding-mode="TwoWay" data-source-path="FullScreenMode" />
+                    </Bindings>
+                </ui:EnumField>
+                <ui:DropdownField label="Resolution" focusable="false" choices="1920x1080,1280x720" index="0" name="VideoResolution" class="dropdown option">
+                    <Bindings>
+                        <ui:DataBinding property="value" binding-mode="TwoWay" data-source-path="Resolution" />
+                    </Bindings>
+                </ui:DropdownField>
             </ui:Tab>
         </ui:TabView>
         <ui:Button text="Quit to desktop" name="QuitConfirmButton" focusable="false" class="header-button quit-button">

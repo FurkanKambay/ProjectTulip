@@ -35,6 +35,17 @@ namespace Tulip.Core
             GameState = GameState.InMainMenu;
         }
 
+        private void OnEnable() => Options.OnUpdate += HandleOptionsUpdated;
+        private void OnDisable() => Options.OnUpdate -= HandleOptionsUpdated;
+
+        private void HandleOptionsUpdated()
+        {
+            string[] resolutionParts = Options.Instance.Video.Resolution.Split('\u00d7', 2);
+            int width = int.Parse(resolutionParts[0]);
+            int height = int.Parse(resolutionParts[1]);
+            Screen.SetResolution(width, height, Options.Instance.Video.FullScreenMode);
+        }
+
         public static void LoadGameScene()
         {
             if (GameState != GameState.InMainMenu) return;

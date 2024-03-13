@@ -1,0 +1,126 @@
+#MainContainer {
+    font-size: 22px;
+    flex-grow: 1;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+TabView {
+    height: 100%;
+    padding-top: 16px;
+    padding-right: 16px;
+    padding-bottom: 16px;
+    padding-left: 16px;
+    color: rgb(240, 240, 240);
+    align-items: center;
+    align-self: center;
+    width: 100%;
+    justify-content: flex-start;
+}
+
+TabView > .unity-tab-view__content-container {
+    align-self: stretch;
+    top: 96px;
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
+    position: absolute;
+}
+
+Tab {
+    background-color: rgba(0, 0, 0, 0.6);
+    padding-top: 32px;
+    padding-right: 16px;
+    padding-left: 16px;
+    align-self: center;
+    height: 100%;
+    width: 40%;
+    align-items: center;
+    min-width: 440px;
+}
+
+Tab > .unity-tab__content-container {
+    flex-grow: 1;
+    align-self: center;
+    align-items: center;
+}
+
+.option {
+    height: 48px;
+    margin-top: 4px;
+    margin-right: 4px;
+    margin-bottom: 4px;
+    margin-left: 4px;
+    align-self: flex-end;
+}
+
+.option .unity-base-field__label {
+    align-self: center;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    margin-right: 2px;
+    margin-left: 2px;
+    padding-top: 0;
+    padding-right: 16px;
+    padding-bottom: 0;
+    padding-left: 0;
+    -unity-text-align: middle-right;
+}
+
+.slider-audio > Label {
+    align-items: flex-end;
+    justify-content: flex-end;
+    align-self: flex-end;
+    min-width: auto;
+    -unity-text-align: upper-right;
+}
+
+.slider-audio > VisualElement {
+    width: 240px;
+}
+
+.slider-audio .unity-text-field__input {
+    background-color: rgba(0, 0, 0, 0);
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    padding-bottom: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-left: 0;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+}
+
+.slider-audio #unity-text-field {
+    background-color: rgba(0, 0, 0, 0);
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-right: 0;
+    margin-left: 8px;
+    width: 38px;
+}
+
+.dropdown > .unity-base-field__input {
+    background-color: rgba(22, 22, 22, 0.8);
+    width: 240px;
+    border-width: 0;
+}
+
+.dropdown > .unity-base-field__input > TextElement {
+    margin-right: 8px;
+}
+
+.dropdown .unity-enum-field__arrow {
+    -unity-background-image-tint-color: white;
+}
+
+.dropdown .unity-base-popup-field__arrow {
+    -unity-background-image-tint-color: white;
+}
