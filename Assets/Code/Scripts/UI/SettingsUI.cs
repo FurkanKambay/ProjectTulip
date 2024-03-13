@@ -34,6 +34,7 @@ namespace Tulip.UI
         private Toggle quitFlyoutButton;
         private Button menuQuitButton;
         private Button gameExitButton;
+        private DropdownField resolutionDropdown;
 
         private void Awake()
         {
@@ -49,10 +50,14 @@ namespace Tulip.UI
             quitFlyoutButton = root.Q<Toggle>("QuitFlyoutButton");
             gameExitButton = root.Q<Button>("SaveExitButton");
             menuQuitButton = root.Q<Button>("QuitConfirmButton");
+            resolutionDropdown = root.Q<DropdownField>("VideoResolution");
 
             optionsButton.RegisterCallback<ChangeEvent<bool>>(HandleOptionsToggle);
             gameExitButton.RegisterCallback<ClickEvent>(HandleSaveExitClicked);
             menuQuitButton.RegisterCallback<ClickEvent>(HandleQuitClicked);
+
+            // UXML binding does not work
+            resolutionDropdown.choices = Options.Instance.Video.SupportedResolutions;
         }
 
         private void HandleOptionsToggle(ChangeEvent<bool> change)

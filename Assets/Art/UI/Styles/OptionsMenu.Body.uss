@@ -35,6 +35,7 @@ Tab {
     height: 100%;
     width: 40%;
     align-items: center;
+    min-width: 440px;
 }
 
 Tab > .unity-tab__content-container {
@@ -104,4 +105,22 @@ Tab > .unity-tab__content-container {
     margin-right: 0;
     margin-left: 8px;
     width: 38px;
+}
+
+.dropdown > .unity-base-field__input {
+    background-color: rgba(22, 22, 22, 0.8);
+    width: 240px;
+    border-width: 0;
+}
+
+.dropdown > .unity-base-field__input > TextElement {
+    margin-right: 8px;
+}
+
+.dropdown .unity-enum-field__arrow {
+    -unity-background-image-tint-color: white;
+}
+
+.dropdown .unity-base-popup-field__arrow {
+    -unity-background-image-tint-color: white;
 }
