@@ -486,6 +486,15 @@ namespace Tulip.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Switch Tab"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""72c8f006-fb8c-433d-9faf-94cf0b59e638"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -796,6 +805,39 @@ namespace Tulip.Input
                     ""action"": ""RightClick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""QE"",
+                    ""id"": ""e1241895-78ca-4d3f-b5ba-283d7c8ab541"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Switch Tab"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""e7a812b2-ef76-4480-9353-d5599ad9bf91"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Switch Tab"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""75caff33-0360-4a2a-a853-2e408f1db96b"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Switch Tab"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -862,6 +904,7 @@ namespace Tulip.Input
             m_UI_Point = m_UI.FindAction("Point", throwIfNotFound: true);
             m_UI_Click = m_UI.FindAction("Click", throwIfNotFound: true);
             m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
+            m_UI_SwitchTab = m_UI.FindAction("Switch Tab", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -1055,6 +1098,7 @@ namespace Tulip.Input
         private readonly InputAction m_UI_Point;
         private readonly InputAction m_UI_Click;
         private readonly InputAction m_UI_RightClick;
+        private readonly InputAction m_UI_SwitchTab;
         public struct UIActions
         {
             private @InputActions m_Wrapper;
@@ -1065,6 +1109,7 @@ namespace Tulip.Input
             public InputAction @Point => m_Wrapper.m_UI_Point;
             public InputAction @Click => m_Wrapper.m_UI_Click;
             public InputAction @RightClick => m_Wrapper.m_UI_RightClick;
+            public InputAction @SwitchTab => m_Wrapper.m_UI_SwitchTab;
             public InputActionMap Get() { return m_Wrapper.m_UI; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1092,6 +1137,9 @@ namespace Tulip.Input
                 @RightClick.started += instance.OnRightClick;
                 @RightClick.performed += instance.OnRightClick;
                 @RightClick.canceled += instance.OnRightClick;
+                @SwitchTab.started += instance.OnSwitchTab;
+                @SwitchTab.performed += instance.OnSwitchTab;
+                @SwitchTab.canceled += instance.OnSwitchTab;
             }
 
             private void UnregisterCallbacks(IUIActions instance)
@@ -1114,6 +1162,9 @@ namespace Tulip.Input
                 @RightClick.started -= instance.OnRightClick;
                 @RightClick.performed -= instance.OnRightClick;
                 @RightClick.canceled -= instance.OnRightClick;
+                @SwitchTab.started -= instance.OnSwitchTab;
+                @SwitchTab.performed -= instance.OnSwitchTab;
+                @SwitchTab.canceled -= instance.OnSwitchTab;
             }
 
             public void RemoveCallbacks(IUIActions instance)
@@ -1180,6 +1231,7 @@ namespace Tulip.Input
             void OnPoint(InputAction.CallbackContext context);
             void OnClick(InputAction.CallbackContext context);
             void OnRightClick(InputAction.CallbackContext context);
+            void OnSwitchTab(InputAction.CallbackContext context);
         }
     }
 }

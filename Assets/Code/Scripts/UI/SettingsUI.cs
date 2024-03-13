@@ -30,6 +30,8 @@ namespace Tulip.UI
 
         private VisualElement root;
         private VisualElement container;
+        private TabView tabView;
+
         private Toggle optionsButton;
         private Toggle quitFlyoutButton;
         private Button menuQuitButton;
@@ -46,6 +48,7 @@ namespace Tulip.UI
             container.visible = false;
             container.dataSource = this;
 
+            tabView = root.Q<TabView>();
             optionsButton = root.Q<Toggle>("OptionsButton");
             quitFlyoutButton = root.Q<Toggle>("QuitFlyoutButton");
             gameExitButton = root.Q<Button>("SaveExitButton");
@@ -59,6 +62,9 @@ namespace Tulip.UI
             // UXML binding does not work
             resolutionDropdown.choices = Options.Instance.Video.SupportedResolutions;
         }
+
+        private void HandleTabSwitch(InputAction.CallbackContext context)
+            => tabView.selectedTabIndex += (int)context.ReadValue<float>();
 
         private void HandleOptionsToggle(ChangeEvent<bool> change)
         {
@@ -105,6 +111,7 @@ namespace Tulip.UI
             Bootstrapper.OnGameStateChange += HandleGameStateChange;
             inputHelper.Actions.Player.Menu.performed += HandlePause;
             inputHelper.Actions.UI.Cancel.performed += HandleResume;
+            inputHelper.Actions.UI.SwitchTab.performed += HandleTabSwitch;
         }
 
         private void OnDisable()

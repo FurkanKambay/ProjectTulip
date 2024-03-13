@@ -4,6 +4,10 @@
     <ui:VisualElement name="MainContainer" data-source-type="Tulip.UI.SettingsUI, Tulip.UI" class="MainContainer">
         <ui:VisualElement name="Header" class="header">
             <ui:Label text="Options" name="HeaderTitle" enable-rich-text="false" class="header-title" />
+            <ui:VisualElement name="KeyPrompts" style="width: 720px; position: absolute; flex-direction: row; justify-content: space-between; align-self: center; height: 96px;">
+                <ui:VisualElement class="key-prompt" style="background-image: url(&quot;project://database/Assets/Art/Sprites/UI/Xelu%20Prompts/Keyboard%20Dark/KeyDark_Q.png?fileID=2800000&amp;guid=ac9d4abc8b456c449a2546bd00d966a3&amp;type=3#KeyDark_Q&quot;);" />
+                <ui:VisualElement class="key-prompt" style="background-image: url(&quot;project://database/Assets/Art/Sprites/UI/Xelu%20Prompts/Keyboard%20Dark/KeyDark_E.png?fileID=2800000&amp;guid=f37f09061207edd4f9657c203a0a13bd&amp;type=3#KeyDark_E&quot;);" />
+            </ui:VisualElement>
         </ui:VisualElement>
         <ui:TabView name="SettingsPage" data-source="project://database/Assets/Resources/Game%20Options.asset?fileID=11400000&amp;guid=41d61be9e30e9344a8e17121111b86b0&amp;type=2#Game Options">
             <ui:Tab label="Game" name="TabGame" data-source-path="gameplay" class="tab">
