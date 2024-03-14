@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 
 namespace Tulip.Input
 {
-    [CreateAssetMenu(fileName = "Input Helper", menuName = "Systems/Input")]
     public class InputHelper : ScriptableObject
     {
         public event Action<int> OnSelectHotbar;
