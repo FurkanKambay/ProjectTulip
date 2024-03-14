@@ -23,21 +23,17 @@ namespace Tulip.Input
 
         private void HandleGameStateChanged()
         {
-            switch (Bootstrapper.GameState)
+            if (Bootstrapper.GameState == GameState.Playing)
             {
-                case GameState.InGame:
-                    Actions.Player.Hotbar.performed += HandleInputHotbar;
-                    Actions.Player.Point.performed += HandleInputPoint;
-                    Actions.Player.Enable();
-                    Actions.UI.Disable();
-                    break;
-                case GameState.Loading:
-                case GameState.InMainMenu:
-                case GameState.Paused:
-                default:
-                    Actions.Player.Disable();
-                    Actions.UI.Enable();
-                    break;
+                Actions.Player.Hotbar.performed += HandleInputHotbar;
+                Actions.Player.Point.performed += HandleInputPoint;
+                Actions.Player.Enable();
+                Actions.UI.Disable();
+            }
+            else
+            {
+                Actions.Player.Disable();
+                Actions.UI.Enable();
             }
         }
 

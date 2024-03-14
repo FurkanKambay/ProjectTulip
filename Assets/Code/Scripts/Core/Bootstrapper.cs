@@ -22,23 +22,20 @@ namespace Tulip.Core
 
         private static GameState gameState;
 
-#if !UNITY_EDITOR
-        private void Awake() => Application.wantsToQuit += HandleQuitRequested;
-#endif
-
-        private void Start()
+        private void Awake()
         {
-            gameState = GameState.Loading;
-            OnGameStateChange?.Invoke();
+            gameState = GameState.Loading.With(GameState.Empty, GameState.MainMenu);
 
             SceneManager.LoadScene("Main Menu", LoadSceneMode.Additive);
-            GameState = GameState.InMainMenu;
+            GameState = GameState.MainMenu;
+
+            Application.wantsToQuit += () => GameState.RequestApplicationQuit();
         }
 
         private void OnEnable() => Options.OnUpdate += HandleOptionsUpdated;
         private void OnDisable() => Options.OnUpdate -= HandleOptionsUpdated;
 
-        private void HandleOptionsUpdated()
+        private static void HandleOptionsUpdated()
         {
             string[] resolutionParts = Options.Instance.Video.Resolution.Split('\u00d7', 2);
             int width = int.Parse(resolutionParts[0]);
@@ -48,52 +45,40 @@ namespace Tulip.Core
 
         public static void LoadGameScene()
         {
-            if (GameState != GameState.InMainMenu) return;
+            if (GameState != GameState.MainMenu) return;
 
-            GameState = GameState.Loading;
+            GameState = GameState.Loading.With(gameState, GameState.Playing);
             SceneManager.UnloadSceneAsync("Main Menu");
-            SceneManager.LoadScene("Game", LoadSceneMode.Additive);
-            GameState = GameState.InGame;
+
+            SceneManager.LoadSceneAsync("Game", LoadSceneMode.Additive)
+                .completed += _ =>
+            {
+                // TODO: set the World and Player here if possible
+                GameState = GameState.Playing;
+            };
         }
 
         public static void ReturnToMainMenu()
         {
-            if (GameState == GameState.InMainMenu) return;
+            if (GameState == GameState.MainMenu) return;
 
-            GameState = GameState.Loading;
+            GameState = GameState.Loading.With(gameState, GameState.MainMenu);
             SceneManager.UnloadSceneAsync("Game");
-            SceneManager.LoadScene("Main Menu", LoadSceneMode.Additive);
-            GameState = GameState.InMainMenu;
+
+            SceneManager.LoadSceneAsync("Main Menu", LoadSceneMode.Additive)
+                .completed += _ => GameState = GameState.MainMenu;
         }
 
         public static void TrySetGamePaused(bool paused)
         {
-            if (gameState == GameState.InMainMenu || !Options.Instance.Gameplay.AllowPause)
+            if (gameState == GameState.MainMenu || !Options.Instance.Gameplay.AllowPause)
             {
                 Time.timeScale = 1;
                 return;
             }
 
-            GameState = paused ? GameState.Paused : GameState.InGame;
+            GameState = paused ? GameState.Paused : GameState.Playing;
             Time.timeScale = paused ? 0 : 1;
-        }
-
-        // ReSharper disable once UnusedMember.Local
-        private static bool HandleQuitRequested()
-        {
-            switch (GameState)
-            {
-                case GameState.Loading:
-                    return false;
-                case GameState.InMainMenu:
-                default:
-                    return true;
-                case GameState.InGame:
-                case GameState.Paused:
-                    // TODO: save game, then quit
-                    Debug.LogWarning("Force quit requested. Should save game first.");
-                    return true;
-            }
         }
 
         public static void QuitGame()

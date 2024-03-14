@@ -25,7 +25,7 @@ namespace Tulip.UI
         public Visibility SaveExitButtonVisibility
             => !IsInMainMenu && ShouldShowQuitButton ? Visibility.Visible : Visibility.Hidden;
 
-        private static bool IsInMainMenu => Bootstrapper.GameState == GameState.InMainMenu;
+        private static bool IsInMainMenu => Bootstrapper.GameState == GameState.MainMenu;
         private bool ShouldShowQuitButton => container.visible && quitFlyoutButton.value;
 
         private VisualElement root;
@@ -80,15 +80,14 @@ namespace Tulip.UI
                 OnHide?.Invoke();
         }
 
-        private void HandlePause(InputAction.CallbackContext context) => optionsButton.value = true;
-        private void HandleResume(InputAction.CallbackContext context) => optionsButton.value =
-            Bootstrapper.GameState switch
-            {
-                GameState.InMainMenu => !optionsButton.value,
-                _ => false
-            };
+        private void HandlePause(InputAction.CallbackContext context)
+            => optionsButton.value = true;
 
-        private void HandleGameStateChange() => root.visible = Bootstrapper.GameState != GameState.InGame;
+        private void HandleResume(InputAction.CallbackContext context)
+            => optionsButton.value = Bootstrapper.GameState == GameState.MainMenu && !optionsButton.value;
+
+        private void HandleGameStateChange()
+            => root.visible = Bootstrapper.GameState != GameState.Playing;
 
         private void HandleSaveExitClicked(ClickEvent _)
         {
