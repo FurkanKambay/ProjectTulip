@@ -5,6 +5,8 @@ namespace Tulip.Core
 {
     public class PlayingGameState : GameState
     {
+        public override bool IsPlayerInputEnabled => true;
+
         protected override Awaitable Activate()
         {
             Time.timeScale = 1;

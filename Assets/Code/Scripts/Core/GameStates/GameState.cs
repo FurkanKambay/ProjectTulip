@@ -41,6 +41,8 @@ namespace Tulip.Core
             return Current;
         }
 
+        public virtual bool IsPlayerInputEnabled => false;
+
         protected virtual Awaitable Activate() => Awaitable.EndOfFrameAsync();
         protected virtual Awaitable Deactivate() => Awaitable.EndOfFrameAsync();
         protected virtual void TrySetPaused(bool paused) { }
