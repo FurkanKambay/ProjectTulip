@@ -161,7 +161,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.8, y: 1.8, z: 1.8}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 782185684793632868}
@@ -214,7 +214,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.9, y: 1.6}
+  m_Size: {x: 0.5, y: 1.6}
   m_EdgeRadius: 0
 --- !u!50 &7560684870690709998
 Rigidbody2D:
@@ -345,8 +345,8 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  checkHeight: 0.2
-  offset: 0.375
+  checkHeight: 0.5
+  offset: 0.45
 --- !u!114 &6853449593728978369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -385,11 +385,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7afe272b9283491fbd9e998a37c1bf5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stepHeight: 1.2
-  stepWidth: 0.2
-  stepSpeed: {x: 20, y: 20}
+  stepHeight: 2
+  stepWidth: 0.6
+  stepSpeed: {x: 30, y: 30}
   velocityThreshold: 1
-  range: 0.5
+  range: 0.7
   offset: {x: 0, y: 0.2, z: 0}
 --- !u!114 &1603745574418207456
 MonoBehaviour:
