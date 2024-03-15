@@ -14,13 +14,23 @@ namespace Tulip.Core
             [SerializeField] FullScreenMode fullScreenMode;
             [SerializeField] string resolution;
 
-            public List<string> SupportedResolutions { get; private set; }
+            private List<string> supportedResolutions;
+            public List<string> SupportedResolutions
+            {
+                get
+                {
+                    if (supportedResolutions == null || !supportedResolutions.Any())
+                        supportedResolutions = Screen.resolutions.Select(r => $"{r.width}\u00d7{r.height}").Reverse().ToList();
+
+                    return supportedResolutions;
+                }
+                private set => supportedResolutions = value;
+            }
 
             private VideoOptions() { }
 
             internal void LoadValues()
             {
-                SupportedResolutions = Screen.resolutions.Select(r => $"{r.width}\u00d7{r.height}").Reverse().ToList();
                 resolution = LoadOption(Keys.Resolution, SupportedResolutions[0]);
                 FullScreenMode = LoadOption(Keys.FullScreenMode, FullScreenMode.FullScreenWindow);
             }
