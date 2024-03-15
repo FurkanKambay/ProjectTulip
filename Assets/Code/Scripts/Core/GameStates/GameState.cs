@@ -1,6 +1,7 @@
 using System;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Tulip.Core
 {
@@ -13,8 +14,11 @@ namespace Tulip.Core
         public static MainMenuGameState MainMenu { get; protected set; }
         public static PlayingGameState Playing { get; protected set; }
         public static PausedGameState Paused { get; protected set; }
+        public static TestingGameState Testing { get; protected set; }
 
+        private static bool isTransitioning;
         private static GameState currentState;
+
         public static GameState Current
         {
             get => (bool)currentState ? currentState : Empty;
@@ -26,10 +30,31 @@ namespace Tulip.Core
             }
         }
 
-        public static async Awaitable<GameState> SwitchTo(GameState newState)
+        public static async Awaitable SwitchTo(GameState newState)
         {
-            if (newState == Current) return Current;
-            Debug.Log($"[Game State] Switching from {Current} to {newState}.");
+            Assert.IsNotNull(newState);
+            if (newState == Current) return;
+
+            bool hasWarned = false;
+            int frameWaitCount = 0;
+
+            while (isTransitioning)
+            {
+                if (!hasWarned)
+                {
+                    Debug.LogWarning($"[Game State] Can't switch from {Current} to {newState} now. Waiting.");
+                    hasWarned = true;
+                }
+
+                await Awaitable.NextFrameAsync();
+                frameWaitCount++;
+            }
+
+            isTransitioning = true;
+
+            string extraMessage = !hasWarned ? "." : $" after waiting for {frameWaitCount} frame(s).";
+            string logMessage = $"[Game State] Switching from {Current} to {newState}";
+            Debug.Log(logMessage + extraMessage);
 
             GameState oldState = Current;
             Current = Loading.With(oldState, newState);
@@ -38,7 +63,7 @@ namespace Tulip.Core
             await newState.Activate();
 
             Current = newState;
-            return Current;
+            isTransitioning = false;
         }
 
         public virtual bool IsPlayerInputEnabled => false;
