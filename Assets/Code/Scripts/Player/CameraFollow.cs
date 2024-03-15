@@ -7,8 +7,6 @@ namespace Tulip.Player
 {
     public class CameraFollow : MonoBehaviour
     {
-        [SerializeField] private InputHelper inputHelper;
-
         [SerializeField] Transform player;
 
         public TrackingOptions tracking;
@@ -22,7 +20,7 @@ namespace Tulip.Player
         {
             tracking.Target = player.position + (Vector3)tracking.Offset;
 
-            float zoomDelta = inputHelper.Actions.Player.Zoom.ReadValue<float>();
+            float zoomDelta = InputHelper.Instance.Actions.Player.Zoom.ReadValue<float>();
             zoom.Target -= zoomDelta * zoom.Sensitivity * Time.deltaTime;
         }
 

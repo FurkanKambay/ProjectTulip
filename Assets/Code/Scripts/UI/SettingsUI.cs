@@ -10,8 +10,6 @@ namespace Tulip.UI
 {
     public class SettingsUI : MonoBehaviour
     {
-        [SerializeField] private InputHelper inputHelper;
-
         public event Action OnShow;
         public event Action OnHide;
 
@@ -108,9 +106,9 @@ namespace Tulip.UI
             container.visible = false;
 
             GameState.OnGameStateChange += HandleGameStateChange;
-            inputHelper.Actions.Player.Menu.performed += HandlePause;
-            inputHelper.Actions.UI.Cancel.performed += HandleResume;
-            inputHelper.Actions.UI.SwitchTab.performed += HandleTabSwitch;
+            InputHelper.Instance.Actions.Player.Menu.performed += HandlePause;
+            InputHelper.Instance.Actions.UI.Cancel.performed += HandleResume;
+            InputHelper.Instance.Actions.UI.SwitchTab.performed += HandleTabSwitch;
         }
 
         private void OnDisable()

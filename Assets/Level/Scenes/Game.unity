@@ -454,7 +454,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fdfdff2c1ac25943b5f45bf68fb38e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputHelper: {fileID: 11400000, guid: 9eefb6c1263df9741ac87a6316633a0c, type: 2}
   player: {fileID: 1105140274}
   tracking:
     <Offset>k__BackingField: {x: 0, y: 1.45}

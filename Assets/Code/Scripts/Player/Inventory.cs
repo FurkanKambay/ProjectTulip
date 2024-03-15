@@ -10,8 +10,6 @@ namespace Tulip.Player
 {
     public sealed class Inventory : InventoryBase
     {
-        [SerializeField] private InputHelper inputHelper;
-
         public override ItemStack[] Items { get; protected set; }
         public override int Capacity => capacity;
 
@@ -189,15 +187,15 @@ namespace Tulip.Player
 
         private void OnEnable()
         {
-            inputHelper.Actions.Player.Scroll.performed += OnScroll;
-            inputHelper.OnSelectHotbar += HandleHotbarSelected;
+            InputHelper.Instance.Actions.Player.Scroll.performed += OnScroll;
+            InputHelper.Instance.OnSelectHotbar += HandleHotbarSelected;
             OnChangeHotbarSelection?.Invoke(HotbarSelectedIndex);
         }
 
         private void OnDisable()
         {
-            inputHelper.Actions.Player.Scroll.performed -= OnScroll;
-            inputHelper.OnSelectHotbar -= HandleHotbarSelected;
+            InputHelper.Instance.Actions.Player.Scroll.performed -= OnScroll;
+            InputHelper.Instance.OnSelectHotbar -= HandleHotbarSelected;
         }
     }
 }

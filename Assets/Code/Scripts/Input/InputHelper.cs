@@ -7,7 +7,7 @@ namespace Tulip.Input
 {
     public class InputHelper : ScriptableObject
     {
-        private static InputHelper instance;
+        public static InputHelper Instance { get; private set; }
 
         public event Action<int> OnSelectHotbar;
 
@@ -26,21 +26,21 @@ namespace Tulip.Input
         {
             if (GameState.Current == GameState.Playing)
             {
-                instance.Actions.Player.Hotbar.performed += instance.HandleInputHotbar;
-                instance.Actions.Player.Point.performed += instance.HandleInputPoint;
-                instance.Actions.Player.Enable();
-                instance.Actions.UI.Disable();
+                Instance.Actions.Player.Hotbar.performed += Instance.HandleInputHotbar;
+                Instance.Actions.Player.Point.performed += Instance.HandleInputPoint;
+                Instance.Actions.Player.Enable();
+                Instance.Actions.UI.Disable();
             }
             else
             {
-                instance.Actions.Player.Disable();
-                instance.Actions.UI.Enable();
+                Instance.Actions.Player.Disable();
+                Instance.Actions.UI.Enable();
             }
         }
 
         private void OnEnable()
         {
-            instance = this;
+            Instance = this;
             GameState.OnGameStateChange += HandleGameStateChanged;
             Debug.Log("Enabled input helper.");
         }

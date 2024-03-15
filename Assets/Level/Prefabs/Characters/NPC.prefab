@@ -277,7 +277,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faa247c75add54a428feb9cb3aabf26e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputHelper: {fileID: 11400000, guid: 9eefb6c1263df9741ac87a6316633a0c, type: 2}
   trigger: {fileID: 7554820057982354231}
 --- !u!114 &7554820057982354225
 MonoBehaviour:

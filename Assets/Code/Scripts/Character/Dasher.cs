@@ -6,8 +6,6 @@ namespace Tulip.Character
 {
     public class Dasher : MonoBehaviour
     {
-        [SerializeField] private InputHelper inputHelper;
-
         public float dashSpeed = 10f;
         public float dashCooldown = 0.5f;
 
@@ -21,7 +19,7 @@ namespace Tulip.Character
         private void Update()
         {
             timeSinceLastDash += Time.deltaTime;
-            bool dashing = inputHelper.Actions.Player.Dash.IsInProgress();
+            bool dashing = InputHelper.Instance.Actions.Player.Dash.IsInProgress();
             if (!dashing || timeSinceLastDash < dashCooldown) return;
 
             timeSinceLastDash = 0f;
@@ -33,7 +31,7 @@ namespace Tulip.Character
 
         private void Awake()
         {
-            movement = inputHelper.Actions.Player.MoveX;
+            movement = InputHelper.Instance.Actions.Player.MoveX;
             body = GetComponent<Rigidbody2D>();
         }
     }

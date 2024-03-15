@@ -6,8 +6,6 @@ namespace Tulip.Character
 {
     public class PlayerBrain : CharacterBrain
     {
-        [SerializeField] private InputHelper inputHelper;
-
         private void RaisePlayerMoveLateral(InputAction.CallbackContext context) =>
             RaiseOnMoveLateral(context.ReadValue<float>());
 
@@ -16,16 +14,16 @@ namespace Tulip.Character
 
         private void OnEnable()
         {
-            inputHelper.Actions.Player.MoveX.performed += RaisePlayerMoveLateral;
-            inputHelper.Actions.Player.Jump.performed += RaisePlayerJump;
-            inputHelper.Actions.Player.Jump.canceled += RaisePlayerJumpReleased;
+            InputHelper.Instance.Actions.Player.MoveX.performed += RaisePlayerMoveLateral;
+            InputHelper.Instance.Actions.Player.Jump.performed += RaisePlayerJump;
+            InputHelper.Instance.Actions.Player.Jump.canceled += RaisePlayerJumpReleased;
         }
 
         private void OnDisable()
         {
-            inputHelper.Actions.Player.MoveX.performed -= RaisePlayerMoveLateral;
-            inputHelper.Actions.Player.Jump.performed -= RaisePlayerJump;
-            inputHelper.Actions.Player.Jump.canceled -= RaisePlayerJumpReleased;
+            InputHelper.Instance.Actions.Player.MoveX.performed -= RaisePlayerMoveLateral;
+            InputHelper.Instance.Actions.Player.Jump.performed -= RaisePlayerJump;
+            InputHelper.Instance.Actions.Player.Jump.canceled -= RaisePlayerJumpReleased;
         }
     }
 }
