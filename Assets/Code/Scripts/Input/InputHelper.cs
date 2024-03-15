@@ -7,6 +7,8 @@ namespace Tulip.Input
 {
     public class InputHelper : ScriptableObject
     {
+        private static InputHelper instance;
+
         public event Action<int> OnSelectHotbar;
 
         public InputActions Actions => actions ??= new InputActions();
@@ -20,24 +22,27 @@ namespace Tulip.Input
         private void HandleInputPoint(InputAction.CallbackContext context)
             => MouseScreenPoint = context.ReadValue<Vector2>();
 
-        private void HandleGameStateChanged()
+        private static void HandleGameStateChanged()
         {
-            if (Bootstrapper.GameState == GameState.Playing)
+            if (GameState.Current == GameState.Playing)
             {
-                Actions.Player.Hotbar.performed += HandleInputHotbar;
-                Actions.Player.Point.performed += HandleInputPoint;
-                Actions.Player.Enable();
-                Actions.UI.Disable();
+                instance.Actions.Player.Hotbar.performed += instance.HandleInputHotbar;
+                instance.Actions.Player.Point.performed += instance.HandleInputPoint;
+                instance.Actions.Player.Enable();
+                instance.Actions.UI.Disable();
             }
             else
             {
-                Actions.Player.Disable();
-                Actions.UI.Enable();
+                instance.Actions.Player.Disable();
+                instance.Actions.UI.Enable();
             }
         }
 
-        private void OnEnable() => Bootstrapper.OnGameStateChange += HandleGameStateChanged;
-        private void OnDisable() => Bootstrapper.OnGameStateChange -= HandleGameStateChanged;
-        private void OnApplicationQuit() => Bootstrapper.OnGameStateChange -= HandleGameStateChanged;
+        private void OnEnable()
+        {
+            instance = this;
+            GameState.OnGameStateChange += HandleGameStateChanged;
+            Debug.Log("Enabled input helper.");
+        }
     }
 }

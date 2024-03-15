@@ -2,8 +2,8 @@ namespace Tulip.Core
 {
     public class LoadingGameState : GameState
     {
-        public GameState From { get; private set; }
-        public GameState To { get; private set; }
+        public GameState From { get; set; }
+        public GameState To { get; set; }
 
         public LoadingGameState With(GameState from, GameState to)
         {
@@ -12,8 +12,7 @@ namespace Tulip.Core
             return this;
         }
 
-        public override bool RequestApplicationQuit() => false;
-
-        protected override void OnEnable() => Loading = this;
+        protected override bool CanQuitGame() => false;
+        private void OnEnable() => Loading = this;
     }
 }

@@ -38,6 +38,6 @@ namespace Tulip.UI
         private void HandleSettingsShow() => root.visible = false;
         private void HandleSettingsHide() => root.visible = true;
 
-        private void HandlePlayClicked(ClickEvent _) => Bootstrapper.LoadGameScene();
+        private void HandlePlayClicked(ClickEvent _) => GameState.SwitchTo(GameState.Playing);
     }
 }

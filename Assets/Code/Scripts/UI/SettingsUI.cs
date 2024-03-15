@@ -25,7 +25,7 @@ namespace Tulip.UI
         public Visibility SaveExitButtonVisibility
             => !IsInMainMenu && ShouldShowQuitButton ? Visibility.Visible : Visibility.Hidden;
 
-        private static bool IsInMainMenu => Bootstrapper.GameState == GameState.MainMenu;
+        private static bool IsInMainMenu => GameState.Current == GameState.MainMenu;
         private bool ShouldShowQuitButton => container.visible && quitFlyoutButton.value;
 
         private VisualElement root;
@@ -72,7 +72,7 @@ namespace Tulip.UI
             quitFlyoutButton.value = false;
 
             audioSource.Play();
-            Bootstrapper.TrySetGamePaused(change.newValue);
+            GameState.SetPaused(change.newValue);
 
             if (change.newValue)
                 OnShow?.Invoke();
@@ -84,20 +84,20 @@ namespace Tulip.UI
             => optionsButton.value = true;
 
         private void HandleResume(InputAction.CallbackContext context)
-            => optionsButton.value = Bootstrapper.GameState == GameState.MainMenu && !optionsButton.value;
+            => optionsButton.value = GameState.Current == GameState.MainMenu && !optionsButton.value;
 
         private void HandleGameStateChange()
-            => root.visible = Bootstrapper.GameState != GameState.Playing;
+            => root.visible = GameState.Current != GameState.Playing;
 
-        private void HandleSaveExitClicked(ClickEvent _)
+        private async void HandleSaveExitClicked(ClickEvent _)
         {
             SaveGame();
             quitFlyoutButton.value = false;
-            Bootstrapper.ReturnToMainMenu();
+            await GameState.SwitchTo(GameState.MainMenu);
             optionsButton.value = false;
         }
 
-        private void HandleQuitClicked(ClickEvent _) => Bootstrapper.QuitGame();
+        private void HandleQuitClicked(ClickEvent _) => GameState.QuitGame();
 
         // TODO: save game
         private void SaveGame() => Debug.Log("Saving...");
@@ -107,7 +107,7 @@ namespace Tulip.UI
             root.visible = true;
             container.visible = false;
 
-            Bootstrapper.OnGameStateChange += HandleGameStateChange;
+            GameState.OnGameStateChange += HandleGameStateChange;
             inputHelper.Actions.Player.Menu.performed += HandlePause;
             inputHelper.Actions.UI.Cancel.performed += HandleResume;
             inputHelper.Actions.UI.SwitchTab.performed += HandleTabSwitch;
@@ -118,7 +118,7 @@ namespace Tulip.UI
             root.visible = false;
             container.visible = false;
 
-            Bootstrapper.OnGameStateChange -= HandleGameStateChange;
+            GameState.OnGameStateChange -= HandleGameStateChange;
         }
     }
 }
