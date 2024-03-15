@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3f0cf03d5bb94472a4080d98f2b505aa, type: 3}
-  m_Name: Tile Aquatic
+  m_Name: Tile Stone Wall
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: -502003605, guid: ef7b919bed58fcc42a5a05ba9e91e9d2, type: 3}
   m_DefaultGameObject: {fileID: 0}
-  m_DefaultColliderType: 2
+  m_DefaultColliderType: 0
   m_TilingRules:
   - m_Id: 7
     m_Sprites:
@@ -24,7 +24,7 @@ MonoBehaviour:
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 030000000300000001000000010000000300000001000000
     m_NeighborPositions:
@@ -43,7 +43,7 @@ MonoBehaviour:
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 2
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 030000000100000001000000030000000300000001000000
     m_NeighborPositions:
@@ -62,7 +62,7 @@ MonoBehaviour:
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 0300000001000000010000000100000003000000030000000100000001000000
     m_NeighborPositions:
@@ -83,7 +83,7 @@ MonoBehaviour:
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 2
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 0300000001000000010000000300000003000000010000000100000001000000
     m_NeighborPositions:
@@ -104,7 +104,7 @@ MonoBehaviour:
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
     m_Output: 0
-    m_ColliderType: 1
+    m_ColliderType: 0
     m_RandomTransform: 0
     m_Neighbors: 03000000010000000100000001000000
     m_NeighborPositions:

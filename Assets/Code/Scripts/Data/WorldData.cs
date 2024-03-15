@@ -16,24 +16,13 @@ namespace Tulip.Data
         public AnimationCurve heightDensityCurve;
 
         [Header("Blocks")]
-        public WorldTile dirt;
+        public WorldTile grass;
         public WorldTile stone;
-        public WorldTile deepstone;
-        public WorldTile jungle;
-        public WorldTile flesh;
-        public WorldTile aquatic;
 
         [Header("Background Tiles")]
-        public WorldTile backgroundDirt;
+        public WorldTile backgroundStone;
 
         [Header("Earth Layers")]
-        public int dirtLayerHeight = 10;
-        public int stoneLayerHeight = 10;
-
-        [Header("Biomes")]
-        public int aquaticBiomeWidth = 10;
-        public int starterBiomeWidth = 10;
-        public int jungleBiomeWidth = 10;
-        public int fleshBiomeWidth = 10;
+        public int grassLayerHeight = 10;
     }
 }
