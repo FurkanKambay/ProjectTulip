@@ -21,7 +21,7 @@ namespace Tulip.Core
 
         public static GameState Current
         {
-            get => (bool)currentState ? currentState : Empty;
+            get => (bool)currentState ? currentState : currentState = Empty;
             private set
             {
                 if (currentState == value) return;
@@ -87,8 +87,12 @@ namespace Tulip.Core
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         private static async void Init()
         {
-            Debug.Log("Reset game state.");
+            Debug.Log("[Game State] Initializing.");
             currentState = Empty;
+
+            if (currentState == null)
+                Debug.LogError("[Game State] Empty game state is null.");
+
             await SwitchTo(MainMenu);
         }
 
