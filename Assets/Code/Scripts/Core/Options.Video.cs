@@ -45,7 +45,7 @@ namespace Tulip.Core
             [CreateProperty]
             public string Resolution
             {
-                get => IsResolutionValid(resolution) ? resolution : Resolution = SupportedResolutions[0];
+                get => IsResolutionValid(resolution) ? resolution : resolution = SupportedResolutions[0];
                 set
                 {
                     if (!IsResolutionValid(value)) return;
