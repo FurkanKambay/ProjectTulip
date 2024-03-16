@@ -13,7 +13,7 @@ namespace Tulip.UI
 
         private void Awake()
         {
-            root =  GetComponent<UIDocument>().rootVisualElement.ElementAt(0);
+            root = GetComponent<UIDocument>().rootVisualElement.ElementAt(0);
             playButton = root.Q<Button>("PlayButton");
 
             settingsUI = FindAnyObjectByType<SettingsUI>();
@@ -21,16 +21,22 @@ namespace Tulip.UI
 
         private void OnEnable()
         {
-            settingsUI.OnShow += HandleSettingsShow;
-            settingsUI.OnHide += HandleSettingsHide;
+            if (settingsUI)
+            {
+                settingsUI.OnShow += HandleSettingsShow;
+                settingsUI.OnHide += HandleSettingsHide;
+            }
 
             playButton.RegisterCallback<ClickEvent>(HandlePlayClicked);
         }
 
         private void OnDisable()
         {
-            settingsUI.OnShow -= HandleSettingsShow;
-            settingsUI.OnHide -= HandleSettingsHide;
+            if (settingsUI)
+            {
+                settingsUI.OnShow -= HandleSettingsShow;
+                settingsUI.OnHide -= HandleSettingsHide;
+            }
 
             playButton.UnregisterCallback<ClickEvent>(HandlePlayClicked);
         }
