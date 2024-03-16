@@ -1,133 +1,7 @@
 fileFormatVersion: 2
 guid: d6f21244c2865c14aacbbff443b80c70
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: 5395042229362328217
-    second: AnimationSheet_0
-  - first:
-      213: 3830593889783275894
-    second: AnimationSheet_1
-  - first:
-      213: 2133254816606648248
-    second: AnimationSheet_2
-  - first:
-      213: 3843668101003850786
-    second: AnimationSheet_3
-  - first:
-      213: 5564612870647423146
-    second: AnimationSheet_4
-  - first:
-      213: -6247629916536943980
-    second: AnimationSheet_5
-  - first:
-      213: -3189005772658525236
-    second: AnimationSheet_6
-  - first:
-      213: 934836638095562576
-    second: AnimationSheet_7
-  - first:
-      213: 867419865030840676
-    second: AnimationSheet_8
-  - first:
-      213: -369817892985484666
-    second: AnimationSheet_9
-  - first:
-      213: -2847142208571099072
-    second: AnimationSheet_10
-  - first:
-      213: -4606489562658899079
-    second: AnimationSheet_11
-  - first:
-      213: -4106621665013566550
-    second: AnimationSheet_12
-  - first:
-      213: 7849473696746201260
-    second: AnimationSheet_13
-  - first:
-      213: 3259905271742951058
-    second: AnimationSheet_14
-  - first:
-      213: -1559963139539534227
-    second: AnimationSheet_15
-  - first:
-      213: 901152060307543416
-    second: AnimationSheet_16
-  - first:
-      213: -2440816121880980433
-    second: AnimationSheet_17
-  - first:
-      213: 5758485139552284488
-    second: AnimationSheet_18
-  - first:
-      213: 5924957514773154070
-    second: AnimationSheet_19
-  - first:
-      213: -3916636930331295911
-    second: AnimationSheet_20
-  - first:
-      213: -6873679903888092789
-    second: AnimationSheet_21
-  - first:
-      213: 6213121026079192848
-    second: AnimationSheet_22
-  - first:
-      213: 7381417147515762535
-    second: AnimationSheet_23
-  - first:
-      213: 5132080926058191825
-    second: AnimationSheet_24
-  - first:
-      213: 6607261012593609256
-    second: AnimationSheet_25
-  - first:
-      213: 3536287935280906882
-    second: AnimationSheet_26
-  - first:
-      213: 6969996203596629725
-    second: AnimationSheet_27
-  - first:
-      213: 3601975003354001067
-    second: AnimationSheet_28
-  - first:
-      213: 7402234790366556603
-    second: AnimationSheet_29
-  - first:
-      213: 8595143069399390791
-    second: AnimationSheet_30
-  - first:
-      213: -2674739674134144521
-    second: AnimationSheet_31
-  - first:
-      213: -5222008063671520794
-    second: AnimationSheet_32
-  - first:
-      213: -1273778967314011615
-    second: AnimationSheet_33
-  - first:
-      213: -4027249108102568607
-    second: AnimationSheet_34
-  - first:
-      213: 2818488097043476432
-    second: AnimationSheet_35
-  - first:
-      213: -1397902130740420153
-    second: AnimationSheet_36
-  - first:
-      213: 1028893449726531704
-    second: AnimationSheet_37
-  - first:
-      213: -6967188793614135786
-    second: AnimationSheet_38
-  - first:
-      213: 2782843421636728509
-    second: AnimationSheet_39
-  - first:
-      213: -6590769384429520122
-    second: AnimationSheet_40
-  - first:
-      213: -2673665796552001879
-    second: AnimationSheet_41
+  internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -918,16 +792,6 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      AnimationSheet_16: -977755743
-      AnimationSheet_17: 273731934
-      AnimationSheet_18: -1058515185
-      AnimationSheet_19: -1821868542
-      AnimationSheet_20: 812472302
-      AnimationSheet_21: -1261117768
-      AnimationSheet_22: 54740903
-      AnimationSheet_23: -1222949150
-      AnimationSheet_3: 393610328
-      AnimationSheet_42: 1764747175
       Attack_0: 1694032000
       Attack_1: -1367945193
       Die_0: 572148902
@@ -950,7 +814,6 @@ TextureImporter:
       Jump_5: -108458345
       Jump_6: 1258484500
       Jump_7: -1675823901
-      Kick_2: 1021474480
       Run_0: 1528777065
       Run_1: 1586135879
       Run_2: -549200171
