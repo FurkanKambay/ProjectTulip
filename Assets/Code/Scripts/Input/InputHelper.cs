@@ -26,7 +26,7 @@ namespace Tulip.Input
         {
             if (GameState.Current.IsPlayerInputEnabled)
             {
-                Debug.Log($"+ |{GameState.Current.name[13..]}| enabled player input.");
+                Debug.Log($"[Input] + Player input enabled by {GameState.Current}.");
                 Instance.Actions.Player.Hotbar.performed += Instance.HandleInputHotbar;
                 Instance.Actions.Player.Point.performed += Instance.HandleInputPoint;
                 Instance.Actions.Player.Enable();
@@ -34,7 +34,7 @@ namespace Tulip.Input
             }
             else
             {
-                Debug.Log($"- |{GameState.Current.name[13..]}| disabled player input.");
+                Debug.Log($"[Input] - Player input disabled by {GameState.Current}.");
                 Instance.Actions.Player.Disable();
                 Instance.Actions.UI.Enable();
             }
@@ -44,7 +44,7 @@ namespace Tulip.Input
         {
             Instance = this;
             GameState.OnGameStateChange += HandleGameStateChanged;
-            Debug.Log("Enabled input helper.");
+            Debug.Log("[Input] Enabled input helper.");
         }
     }
 }

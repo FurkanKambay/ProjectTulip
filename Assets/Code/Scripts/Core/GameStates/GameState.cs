@@ -28,8 +28,8 @@ namespace Tulip.Core
 
         public static async Awaitable<GameState> SwitchTo(GameState newState)
         {
-            Debug.Log($"Game State: |{Current.name[13..]}| to |{newState.name[13..]}|");
             if (newState == Current) return Current;
+            Debug.Log($"[Game State] Switching from {Current} to {newState}.");
 
             GameState oldState = Current;
             Current = Loading.With(oldState, newState);
@@ -66,6 +66,8 @@ namespace Tulip.Core
             currentState = Empty;
             await SwitchTo(MainMenu);
         }
+
+        public override string ToString() => $"|{name[13..]}|";
 
         private void OnEnable()
         {
