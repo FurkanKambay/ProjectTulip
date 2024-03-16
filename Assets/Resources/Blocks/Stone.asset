@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Stone
   m_EditorClassIdentifier: 
   type: 1
-  icon: {fileID: -502003605, guid: ef7b919bed58fcc42a5a05ba9e91e9d2, type: 3}
+  icon: {fileID: 178573413, guid: 1631614f4ac086d4dab5aab9a349e144, type: 3}
   iconScale: 1
   name: Stone
   description: Stone.
@@ -23,7 +23,7 @@ MonoBehaviour:
   swingTime: 0
   tileType: 1
   ruleTile: {fileID: 11400000, guid: 02e66ba5c65997f4da5eaed00f83fbc7, type: 2}
-  color: {r: 0.695, g: 1, b: 0.95425, a: 1}
+  color: {r: 1, g: 1, b: 1, a: 1}
   hardness: 100
   hitSound: {fileID: 8300000, guid: b65b9caeebb3648408ca1136889f421d, type: 3}
   destroySound: {fileID: 8300000, guid: 21bf617b37a8d484d8f8bf78669d77b9, type: 3}
