@@ -76,8 +76,8 @@ SpriteRenderer:
   m_SortingLayerID: 1297104123
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1666409347, guid: dab16c0dcad35ec43a8bda7ea7be5624, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 1694032000, guid: d6f21244c2865c14aacbbff443b80c70, type: 3}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -97,7 +97,7 @@ Animator:
   m_GameObject: {fileID: 1673359338847146882}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 1cee7acf1f25cb34bacc567caa5cf382, type: 2}
+  m_Controller: {fileID: 9100000, guid: a7fedc2d7ce9cea47a4346ac07c33c27, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 6617792195242906573}
   - component: {fileID: 8482037247629914829}
   m_Layer: 7
-  m_Name: Skeleton
+  m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
