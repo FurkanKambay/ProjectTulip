@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Tulip.Data
 {
     [CreateAssetMenu(fileName = "WorldData", menuName = "Data/World", order = 0)]
-    public class WorldData : ScriptableObject
+    public class WorldGenConfig : ScriptableObject
     {
         [Header("Settings")]
         public int width = 100;

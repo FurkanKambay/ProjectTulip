@@ -7,7 +7,7 @@ namespace Tulip.GameWorld.Generation
 {
     public class WorldGeneration : MonoBehaviour
     {
-        [SerializeField] WorldData data;
+        [SerializeField] WorldGenConfig config;
         [SerializeField] Tilemap tilemap;
         [SerializeField] Tilemap backgroundTilemap;
 
@@ -16,18 +16,18 @@ namespace Tulip.GameWorld.Generation
 
         private void SetTiles()
         {
-            for (int y = 0; y < data.height; y++)
+            for (int y = 0; y < config.height; y++)
             {
-                float densityCutoff = data.heightDensityCurve.Evaluate(y / (float)data.height);
+                float densityCutoff = config.heightDensityCurve.Evaluate(y / (float)config.height);
 
-                for (int x = 0; x < data.width; x++)
+                for (int x = 0; x < config.width; x++)
                 {
                     WorldTile tile = PerlinNoise[x, y] > densityCutoff ? null
-                        : data.height - y < data.grassLayerHeight ? data.grass
-                        : data.stone;
+                        : config.height - y < config.grassLayerHeight ? config.grass
+                        : config.stone;
 
                     tilemap.SetTile(new Vector3Int(x, y, 0), tile ? tile.RuleTile : null);
-                    backgroundTilemap.SetTile(new Vector3Int(x, y, 0), data.backgroundStone.RuleTile);
+                    backgroundTilemap.SetTile(new Vector3Int(x, y, 0), config.backgroundStone.RuleTile);
                 }
             }
         }
@@ -52,17 +52,17 @@ namespace Tulip.GameWorld.Generation
 
         private float[,] CalculateNoise()
         {
-            float[,] noise = new float[data.width, data.height];
+            float[,] noise = new float[config.width, config.height];
             float y = 0f;
 
-            while (y < data.height)
+            while (y < config.height)
             {
                 float x = 0f;
-                while (x < data.width)
+                while (x < config.width)
                 {
                     float sample = Mathf.PerlinNoise(
-                        data.perlinOffset.x + (x / data.width * (data.width * data.densityFactor)),
-                        data.perlinOffset.y + (y / data.height * (data.height * data.densityFactor)));
+                        config.perlinOffset.x + (x / config.width * (config.width * config.densityFactor)),
+                        config.perlinOffset.y + (y / config.height * (config.height * config.densityFactor)));
 
                     noise[(int)x, (int)y] = sample;
                     x++;
@@ -76,10 +76,10 @@ namespace Tulip.GameWorld.Generation
 
         private void ResetTilemapTransform()
         {
-            tilemap.size = new Vector3Int(data.width, data.height, 1);
+            tilemap.size = new Vector3Int(config.width, config.height, 1);
             tilemap.CompressBounds();
-            tilemap.transform.position = new Vector3(-data.width / 2f, -data.height, 0);
-            backgroundTilemap.transform.position = new Vector3(-data.width / 2f, -data.height, 0);
+            tilemap.transform.position = new Vector3(-config.width / 2f, -config.height, 0);
+            backgroundTilemap.transform.position = new Vector3(-config.width / 2f, -config.height, 0);
         }
 
         [ContextMenu("Reset Tilemap")]

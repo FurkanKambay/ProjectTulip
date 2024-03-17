@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c97301a748ce7cc43af17b89912f1d22, type: 3}
-  m_Name: World
+  m_Name: World Gen Config
   m_EditorClassIdentifier: 
   width: 250
   height: 150
   perlinOffset: {x: 0, y: 0}
-  densityFactor: 0.1
+  densityFactor: 0.098
   heightDensityCurve:
     serializedVersion: 2
     m_Curve:

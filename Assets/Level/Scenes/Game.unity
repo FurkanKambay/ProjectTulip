@@ -1748,7 +1748,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62ed8242be214804f9fbc016c9e8a43d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 30e1e234c9d6a5f4a8fef293ef378762, type: 2}
+  config: {fileID: 11400000, guid: 30e1e234c9d6a5f4a8fef293ef378762, type: 2}
   tilemap: {fileID: 414399566}
   backgroundTilemap: {fileID: 414399567}
 --- !u!1660057539 &9223372036854775807
