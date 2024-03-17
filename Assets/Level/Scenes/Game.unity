@@ -1756,8 +1756,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: 30e1e234c9d6a5f4a8fef293ef378762, type: 2}
-  tilemap: {fileID: 414399566}
-  backgroundTilemap: {fileID: 414399567}
+  world: {fileID: 661774619}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

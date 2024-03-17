@@ -1,15 +1,13 @@
 using Tulip.Data;
 using Tulip.Data.Items;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 namespace Tulip.GameWorld.Generation
 {
     public class WorldGenerator : MonoBehaviour
     {
         [SerializeField] WorldGenConfig config;
-        [SerializeField] Tilemap tilemap;
-        [SerializeField] Tilemap backgroundTilemap;
+        [SerializeField] World world;
 
         private float[,] PerlinNoise => perlinNoise ??= CalculateNoise();
         private float[,] perlinNoise;
@@ -26,8 +24,9 @@ namespace Tulip.GameWorld.Generation
                         : config.height - y < config.grassLayerHeight ? config.grass
                         : config.stone;
 
-                    tilemap.SetTile(new Vector3Int(x, y, 0), tile ? tile.RuleTile : null);
-                    backgroundTilemap.SetTile(new Vector3Int(x, y, 0), config.backgroundStone.RuleTile);
+                    var cell = new Vector3Int(x, y, 0);
+                    world.SetTile(cell, TileType.Block, tile);
+                    world.SetTile(cell, TileType.Wall, config.backgroundStone);
                 }
             }
         }
@@ -35,20 +34,21 @@ namespace Tulip.GameWorld.Generation
         [ContextMenu("Reassign All Tiles")]
         private void ReassignAll()
         {
-            tilemap.ClearAllTiles();
-            ResetTilemapTransform();
+            world.ResetTilemaps();
             SetTiles();
         }
 
         private void OnValidate()
         {
             if (Application.isEditor) return;
-
-            ResetTilemapTransform();
             SetTiles();
         }
 
-        private void Start() => ReassignAll();
+        private void Start()
+        {
+            world.Size = new Vector2Int(config.width, config.height);
+            ReassignAll();
+        }
 
         private float[,] CalculateNoise()
         {
@@ -72,21 +72,6 @@ namespace Tulip.GameWorld.Generation
             }
 
             return noise;
-        }
-
-        private void ResetTilemapTransform()
-        {
-            tilemap.size = new Vector3Int(config.width, config.height, 1);
-            tilemap.CompressBounds();
-            tilemap.transform.position = new Vector3(-config.width / 2f, -config.height, 0);
-            backgroundTilemap.transform.position = new Vector3(-config.width / 2f, -config.height, 0);
-        }
-
-        [ContextMenu("Reset Tilemap")]
-        private void ResetTilemap()
-        {
-            tilemap.ClearAllTiles();
-            ResetTilemapTransform();
         }
     }
 }

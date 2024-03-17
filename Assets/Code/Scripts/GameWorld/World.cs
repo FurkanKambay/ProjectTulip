@@ -11,6 +11,8 @@ namespace Tulip.GameWorld
 {
     public class World : MonoBehaviour, IWorld
     {
+        public Vector2Int Size { get; internal set; }
+
         [SerializeField] Tilemap wallTilemap;
         [SerializeField] Tilemap blockTilemap;
         [SerializeField] Tilemap curtainTilemap;
@@ -56,11 +58,7 @@ namespace Tulip.GameWorld
             if (tilemap.HasTile(cell))
                 return InventoryModification.Empty;
 
-            // var tileChangeData = new TileChangeData(cell, worldTile.Tile, worldTile.Color, Matrix4x4.zero);
-            // tilemap.SetTile(tileChangeData, ignoreLockFlags: false);
-            tilemap.SetTile(cell, worldTile.RuleTile);
-            tilemap.SetColor(cell, worldTile.color);
-            // BUG: color doesn't work
+            SetTile(cell, worldTile.TileType, worldTile);
 
             GetDamageMap(worldTile.TileType).Remove(cell);
             OnPlaceTile?.Invoke(TileModification.FromPlaced(cell, worldTile));
@@ -105,6 +103,49 @@ namespace Tulip.GameWorld
         public bool HasTile(Vector3Int cell) => blockTilemap.HasTile(cell);
         public WorldTile GetTile(Vector3Int cell) => blockTilemap.GetTile<CustomRuleTile>(cell)?.WorldTile;
         public WorldTile GetTile(Vector3 worldPosition) => GetTile(WorldToCell(worldPosition));
+
+        internal void SetTile(Vector3Int cell, TileType tileType, WorldTile worldTile)
+        {
+            Tilemap tilemap = GetTilemap(tileType);
+
+            // var tileChangeData = new TileChangeData(cell, worldTile.Tile, worldTile.Color, Matrix4x4.zero);
+            // tilemap.SetTile(tileChangeData, ignoreLockFlags: false);
+
+            if (worldTile)
+            {
+                tilemap.SetTile(cell, worldTile.RuleTile);
+                tilemap.SetColor(cell, worldTile.color);
+                // BUG: color doesn't work
+            }
+            else
+            {
+                tilemap.SetTile(cell, null);
+            }
+        }
+
+        [ContextMenu("Reset Tilemaps")]
+        internal void ResetTilemaps()
+        {
+            wallTilemap.ClearAllTiles();
+            blockTilemap.ClearAllTiles();
+            curtainTilemap.ClearAllTiles();
+            ResetTilemapTransforms();
+        }
+
+        private void ResetTilemapTransforms()
+        {
+            wallTilemap.size = new Vector3Int(Size.x, Size.y, 1);
+            blockTilemap.size = new Vector3Int(Size.x, Size.y, 1);
+            curtainTilemap.size = new Vector3Int(Size.x, Size.y, 1);
+
+            wallTilemap.CompressBounds();
+            blockTilemap.CompressBounds();
+            curtainTilemap.CompressBounds();
+
+            blockTilemap.transform.position = new Vector3(-Size.x / 2f, -Size.y, 0);
+            wallTilemap.transform.position = new Vector3(-Size.x / 2f, -Size.y, 0);
+            curtainTilemap.transform.position = new Vector3(-Size.x / 2f, -Size.y, 0);
+        }
 
         private Tilemap GetTilemap(TileType tileType) => tileType switch
         {
