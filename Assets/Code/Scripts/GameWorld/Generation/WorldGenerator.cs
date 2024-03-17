@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 namespace Tulip.GameWorld.Generation
 {
-    public class WorldGeneration : MonoBehaviour
+    public class WorldGenerator : MonoBehaviour
     {
         [SerializeField] WorldGenConfig config;
         [SerializeField] Tilemap tilemap;
