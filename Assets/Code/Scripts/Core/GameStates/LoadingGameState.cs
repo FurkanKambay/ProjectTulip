@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace Tulip.Core
 {
     public class LoadingGameState : GameState
@@ -17,10 +15,6 @@ namespace Tulip.Core
         }
 
         protected override bool CanQuitGame() => false;
-        private void OnEnable()
-        {
-            Debug.Log("[DEBUG] loading OnEnable");
-            Loading = this;
-        }
+        private void OnEnable() => Loading = this;
     }
 }

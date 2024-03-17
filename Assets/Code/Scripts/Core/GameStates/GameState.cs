@@ -2,7 +2,6 @@ using System;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.SceneManagement;
 
 namespace Tulip.Core
 {
@@ -99,13 +98,8 @@ namespace Tulip.Core
 
             await SwitchTo(MainMenu);
         }
-
         public override string ToString() => $"|{name[13..]}|";
 
-        private void OnEnable()
-        {
-            Debug.Log("[DEBUG] abstract OnEnable: listening to Application.wantsToQuit");
-            Application.wantsToQuit += () => Current.CanQuitGame();
-        }
+        private void OnEnable() => Application.wantsToQuit += () => Current.CanQuitGame();
     }
 }
