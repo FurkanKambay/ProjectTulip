@@ -14,10 +14,6 @@ namespace Tulip.Audio
             set => backgroundMusic = AudioSource.clip = value;
         }
 
-        private void Awake()
-        {
-            DontDestroyOnLoad(gameObject);
-            AudioSource = GetComponent<AudioSource>();
-        }
+        private void Awake() => AudioSource = GetComponent<AudioSource>();
     }
 }

@@ -15,13 +15,6 @@ namespace Tulip.UI
         private VisualElement hotbarRoot;
         private VisualElement tooltipRoot;
 
-        private void Awake()
-        {
-            UIDocument document = GetComponent<UIDocument>();
-            hotbarRoot = document.rootVisualElement[0];
-            tooltipRoot = document.rootVisualElement[1];
-        }
-
         private void UpdateHotbar()
         {
             ItemStack[] items = inventory.Items;
@@ -87,6 +80,11 @@ namespace Tulip.UI
 
         private void OnEnable()
         {
+            UIDocument document = GetComponent<UIDocument>();
+            hotbarRoot = document.rootVisualElement[0];
+            tooltipRoot = document.rootVisualElement[1];
+
+            UpdateHotbar();
             inventory.OnModifyHotbar += UpdateHotbar;
             inventory.OnChangeHotbarSelection += UpdateHotbarSelection;
         }

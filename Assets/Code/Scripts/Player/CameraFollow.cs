@@ -13,12 +13,20 @@ namespace Tulip.Player
         public ZoomOptions zoom;
 
         private new Camera camera;
+        private Vector3 initialPosition;
 
-        private void Awake() => camera = GetComponent<Camera>();
+        private void Awake()
+        {
+            camera = GetComponent<Camera>();
+            initialPosition = transform.position;
+        }
+
+        private void OnEnable() => tracking.Target = initialPosition;
 
         private void Update()
         {
-            tracking.Target = player.position + (Vector3)tracking.Offset;
+            Vector3 targetPoint = (bool)player ? player.position : initialPosition;
+            tracking.Target = targetPoint + (Vector3)tracking.Offset;
 
             float zoomDelta = InputHelper.Instance.Actions.Player.Zoom.ReadValue<float>();
             zoom.Target -= zoomDelta * zoom.Sensitivity * Time.deltaTime;

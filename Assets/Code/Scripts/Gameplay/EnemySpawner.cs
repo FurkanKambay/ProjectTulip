@@ -70,7 +70,13 @@ namespace Tulip.Gameplay
         }
 
         private void OnEnable() => InvokeRepeating(nameof(SpawnRandomEnemy), 0, spawnInterval);
-        private void OnDisable() => CancelInvoke(nameof(SpawnRandomEnemy));
+        private void OnDisable()
+        {
+            CancelInvoke(nameof(SpawnRandomEnemy));
+
+            for (int i = 0; i < transform.childCount; i++)
+                Destroy(transform.GetChild(i).gameObject);
+        }
 
         private void OnDrawGizmosSelected()
         {

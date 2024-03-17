@@ -1,8 +1,8 @@
-using System;
 using Tulip.Core;
 using Tulip.Input;
 using Unity.Properties;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
@@ -10,8 +10,9 @@ namespace Tulip.UI
 {
     public class SettingsUI : MonoBehaviour
     {
-        public event Action OnShow;
-        public event Action OnHide;
+        public UnityEvent onShow;
+        public UnityEvent onHide;
+        public UnityEvent onClickExit;
 
         [SerializeField] AudioSource audioSource;
 
@@ -38,9 +39,9 @@ namespace Tulip.UI
 
         private void Awake()
         {
-            DontDestroyOnLoad(gameObject);
-
-            root = GetComponent<UIDocument>().rootVisualElement;
+            UIDocument document = GetComponent<UIDocument>();
+            document.enabled = true;
+            root = document.rootVisualElement;
 
             container = root.Q<VisualElement>("MainContainer");
             container.visible = false;
@@ -73,9 +74,9 @@ namespace Tulip.UI
             GameState.SetPaused(change.newValue);
 
             if (change.newValue)
-                OnShow?.Invoke();
+                onShow?.Invoke();
             else
-                OnHide?.Invoke();
+                onHide?.Invoke();
         }
 
         private void HandlePause(InputAction.CallbackContext context)
@@ -85,7 +86,9 @@ namespace Tulip.UI
             => optionsButton.value = GameState.Current == GameState.MainMenu && !optionsButton.value;
 
         private void HandleGameStateChange()
-            => root.visible = GameState.Current != GameState.Playing;
+        {
+            root.visible = GameState.Current != GameState.Playing;
+        }
 
         private async void HandleSaveExitClicked(ClickEvent _)
         {
@@ -93,6 +96,7 @@ namespace Tulip.UI
             quitFlyoutButton.value = false;
             await GameState.SwitchTo(GameState.MainMenu);
             optionsButton.value = false;
+            onClickExit?.Invoke();
         }
 
         private void HandleQuitClicked(ClickEvent _) => GameState.QuitGame();
