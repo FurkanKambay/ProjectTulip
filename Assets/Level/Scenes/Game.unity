@@ -1318,6 +1318,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b3a9022be2a50f42b0352cbd5f641b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  world: {fileID: 661774619}
+  camera: {fileID: 519420031}
   spawnRadius: 10
   enemyHeight: 2
   spawnInterval: 5

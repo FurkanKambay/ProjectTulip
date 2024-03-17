@@ -2,21 +2,22 @@ using System.Collections.Generic;
 using System.Linq;
 using Tulip.GameWorld;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace Tulip.Gameplay
 {
     public class EnemySpawner : MonoBehaviour
     {
+        [Header("References")]
+        [SerializeField] World world;
+        [SerializeField] new Camera camera;
+
         public Vector3Int[] SuitableSpawnCells { get; private set; }
 
+        [Header("Config")]
         [SerializeField, Min(0)] int spawnRadius = 5;
         [SerializeField, Min(1)] int enemyHeight = 2;
         [SerializeField, Min(0)] float spawnInterval = 10f;
         [SerializeField] GameObject[] enemyOptions;
-
-        private World world;
-        private Camera mainCamera;
 
         private Vector3Int EnemySize => new(1, enemyHeight, 1);
 
@@ -24,6 +25,7 @@ namespace Tulip.Gameplay
         {
             UpdateSuitableCoordinates();
             if (SuitableSpawnCells.Length == 0) return;
+            if (enemyOptions.Length == 0) return;
 
             GameObject randomEnemy = Instantiate(GetRandomEnemy(), transform);
             randomEnemy.transform.position = world.CellCenter(GetRandomSpawnCell());
@@ -36,12 +38,12 @@ namespace Tulip.Gameplay
 
         private IEnumerable<Vector3Int> FindSuitableCells()
         {
-            float camExtentY = mainCamera.orthographicSize;
-            float camExtentX = camExtentY * mainCamera.aspect;
+            float camExtentY = camera.orthographicSize;
+            float camExtentX = camExtentY * camera.aspect;
             float spawnExtentY = camExtentY + spawnRadius;
             float spawnExtentX = camExtentX + spawnRadius;
 
-            Vector3 cameraCenter = mainCamera.transform.position;
+            Vector3 cameraCenter = camera.transform.position;
 
             Vector3Int camTopRight = world.WorldToCell(cameraCenter + new Vector3(camExtentX, camExtentY));
             Vector3Int camBottomLeft = world.WorldToCell(cameraCenter - new Vector3(camExtentX, camExtentY));
@@ -60,13 +62,6 @@ namespace Tulip.Gameplay
                         yield return cell;
                 }
             }
-        }
-
-        private void Awake()
-        {
-            Assert.IsTrue(enemyOptions?.Length > 0);
-            world = FindAnyObjectByType<World>();
-            mainCamera = Camera.main;
         }
 
         private void OnEnable() => InvokeRepeating(nameof(SpawnRandomEnemy), 0, spawnInterval);
