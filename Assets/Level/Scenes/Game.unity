@@ -216,8 +216,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84342b4baf4b87e46afb980b6fab3d9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 100
+  world: {fileID: 661774619}
   worldModifier: {fileID: 2074160590}
+  renderer: {fileID: 318885851}
+  trackingSpeed: 100
 --- !u!212 &318885851
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using Tulip.Data;
 using Tulip.Data.Items;
 using Tulip.GameWorld;
 using UnityEngine;
@@ -6,24 +7,20 @@ namespace Tulip.Player
 {
     public class CellHighlighter : MonoBehaviour
     {
-        [SerializeField] float speed = 100;
+        [Header("References")]
+        [SerializeField] World world;
         [SerializeField] WorldModifier worldModifier;
+        [SerializeField] new SpriteRenderer renderer;
 
-        private World world;
-        private new SpriteRenderer renderer;
-        private Inventory inventory;
+        [Header("Config")]
+        [SerializeField] float trackingSpeed = 100;
+
+        private IItemWielder itemWielder;
 
         private Vector3 targetPosition;
         private Vector3Int? focusedCell;
 
-        private void HandleCellFocusChanged(Vector3Int? cell) => focusedCell = cell;
-
-        private void Awake()
-        {
-            world = FindAnyObjectByType<World>();
-            renderer = GetComponent<SpriteRenderer>();
-            inventory = worldModifier.GetComponent<Inventory>();
-        }
+        private void Awake() => itemWielder = worldModifier.GetComponent<IItemWielder>();
 
         private void Update()
         {
@@ -33,18 +30,19 @@ namespace Tulip.Player
                 return;
             }
 
-            Item item = inventory.HotbarSelected?.Item;
-            renderer.enabled = item is Tool tool
+            renderer.enabled = itemWielder.CurrentItem is Tool tool
                                && tool.IsUsableOn(world, focusedCell.Value);
 
             if (renderer.enabled)
                 targetPosition = world.CellCenter(focusedCell.Value);
         }
 
-        private void LateUpdate()
-            => transform.position = Vector3.Lerp(transform.position, targetPosition, speed * Time.deltaTime);
+        private void LateUpdate() =>
+            transform.position = Vector3.Lerp(transform.position, targetPosition, trackingSpeed * Time.deltaTime);
 
         private void OnEnable() => worldModifier.OnChangeCellFocus += HandleCellFocusChanged;
         private void OnDisable() => worldModifier.OnChangeCellFocus -= HandleCellFocusChanged;
+
+        private void HandleCellFocusChanged(Vector3Int? cell) => focusedCell = cell;
     }
 }
