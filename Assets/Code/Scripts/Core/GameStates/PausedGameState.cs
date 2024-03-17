@@ -6,13 +6,7 @@ namespace Tulip.Core
     {
         public override bool IsPlayerInputEnabled => false;
 
-        protected override Awaitable Activate()
-        {
-            Time.timeScale = Options.Instance.Gameplay.AllowPause ? 0 : 1;
-            return Awaitable.EndOfFrameAsync();
-        }
-
-        protected override Awaitable Deactivate() => Awaitable.EndOfFrameAsync();
+        protected override void Activate() => Time.timeScale = Options.Instance.Gameplay.AllowPause ? 0 : 1;
 
         protected override async void TrySetPaused(bool paused)
         {

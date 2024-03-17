@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Tulip.Core
 {
@@ -7,16 +6,7 @@ namespace Tulip.Core
     {
         public override bool IsPlayerInputEnabled => true;
 
-        protected override Awaitable Activate()
-        {
-            Time.timeScale = 1;
-
-            if (SceneManager.GetSceneByName("Game").isLoaded)
-                return base.Activate();
-
-            AsyncOperation operation = SceneManager.LoadSceneAsync("Game", LoadSceneMode.Additive);
-            return Awaitable.FromAsyncOperation(operation);
-        }
+        protected override void Activate() => Time.timeScale = 1;
 
         protected override async void TrySetPaused(bool paused)
         {

@@ -2,14 +2,14 @@ using System;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.SceneManagement;
 
 namespace Tulip.Core
 {
-    public class GameState : ScriptableObject
+    public abstract class GameState : ScriptableObject
     {
         public static event Action OnGameStateChange;
 
-        private static GameState Empty { get; set; }
         protected static LoadingGameState Loading { get; set; }
         public static MainMenuGameState MainMenu { get; protected set; }
         public static PlayingGameState Playing { get; protected set; }
@@ -21,7 +21,7 @@ namespace Tulip.Core
 
         public static GameState Current
         {
-            get => (bool)currentState ? currentState : currentState = Empty;
+            get => (bool)currentState ? currentState : currentState = Loading;
             private set
             {
                 if (currentState == value) return;
@@ -59,17 +59,21 @@ namespace Tulip.Core
             GameState oldState = Current;
             Current = Loading.With(oldState, newState);
 
-            await oldState.Deactivate();
-            await newState.Activate();
+            oldState.Deactivate();
+            newState.Activate();
 
             Current = newState;
             isTransitioning = false;
         }
 
-        public virtual bool IsPlayerInputEnabled => false;
+        public abstract bool IsPlayerInputEnabled { get; }
 
-        protected virtual Awaitable Activate() => Awaitable.EndOfFrameAsync();
-        protected virtual Awaitable Deactivate() => Awaitable.EndOfFrameAsync();
+        [ContextMenu(nameof(Activate))]
+        protected virtual void Activate() { }
+
+        [ContextMenu(nameof(Deactivate))]
+        protected virtual void Deactivate() { }
+
         protected virtual void TrySetPaused(bool paused) { }
         protected virtual bool CanQuitGame() => true;
 
@@ -88,7 +92,7 @@ namespace Tulip.Core
         private static async void Init()
         {
             Debug.Log("[Game State] Initializing.");
-            currentState = Empty;
+            currentState = Loading;
 
             if (currentState == null)
                 Debug.LogError("[Game State] Empty game state is null.");
@@ -100,7 +104,7 @@ namespace Tulip.Core
 
         private void OnEnable()
         {
-            Empty = this;
+            Debug.Log("[DEBUG] abstract OnEnable: listening to Application.wantsToQuit");
             Application.wantsToQuit += () => Current.CanQuitGame();
         }
     }
