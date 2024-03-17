@@ -1,6 +1,5 @@
 using System;
 using Tulip.Data.Items;
-using Tulip.Data.Tiles;
 using UnityEngine;
 
 namespace Tulip.Data
@@ -12,10 +11,10 @@ namespace Tulip.Data
         event Action<TileModification> OnDestroyTile;
 
         /// <summary>
-        /// Damages a tile at the given cell coordinates.
+        /// Damages a tile of the given type at the given cell coordinates.
         /// </summary>
         /// <returns>Whether the tile was destroyed.</returns>
-        InventoryModification DamageTile(Vector3Int cell, int damage);
+        InventoryModification DamageTile(Vector3Int cell, TileType tileType, int damage);
 
         /// <summary>
         /// Tries to place a tile at the given cell coordinates.
