@@ -592,7 +592,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 2100611436}
   - {fileID: 318885852}
   - {fileID: 414399568}
   - {fileID: 1766718190}
@@ -1027,6 +1026,7 @@ Transform:
   m_Children:
   - {fileID: 1051898249}
   - {fileID: 1760523199}
+  - {fileID: 2100611436}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1572344358
@@ -1722,7 +1722,7 @@ GameObject:
   - component: {fileID: 2100611436}
   - component: {fileID: 2100611437}
   m_Layer: 0
-  m_Name: World Generation
+  m_Name: World Generator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1741,7 +1741,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 661774618}
+  m_Father: {fileID: 1423174218}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2100611437
 MonoBehaviour:
