@@ -6,14 +6,9 @@ namespace Tulip.Audio
 {
     public class WorldAudio : MonoBehaviour
     {
-        private World world;
-        private AudioSource audioSource;
-
-        private void Awake()
-        {
-            world = FindAnyObjectByType<World>();
-            audioSource = GetComponent<AudioSource>();
-        }
+        [Header("References")]
+        [SerializeField] World world;
+        [SerializeField] AudioSource audioSource;
 
         private void HandleTilePlaced(TileModification modification)
             => audioSource.PlayOneShot(modification.WorldTile.placeSound);
