@@ -104,12 +104,12 @@ namespace Tulip.GameWorld
         public WorldTile GetTile(Vector3Int cell) => blockTilemap.GetTile<CustomRuleTile>(cell)?.WorldTile;
         public WorldTile GetTile(Vector3 worldPosition) => GetTile(WorldToCell(worldPosition));
 
+        internal void SetTiles(TileType tileType, TileChangeData[] tileChangeData)
+            => GetTilemap(tileType).SetTiles(tileChangeData, ignoreLockFlags: true);
+
         internal void SetTile(Vector3Int cell, TileType tileType, WorldTile worldTile)
         {
             Tilemap tilemap = GetTilemap(tileType);
-
-            // var tileChangeData = new TileChangeData(cell, worldTile.Tile, worldTile.Color, Matrix4x4.zero);
-            // tilemap.SetTile(tileChangeData, ignoreLockFlags: false);
 
             if (worldTile)
             {
