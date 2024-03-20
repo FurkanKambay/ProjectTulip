@@ -1,4 +1,5 @@
 using System;
+using Tulip.Core;
 using Tulip.Data;
 using Tulip.Input;
 using UnityEngine;
@@ -7,7 +8,13 @@ namespace Tulip.Player
 {
     public class CameraFollow : MonoBehaviour
     {
+        [Header("References")]
         [SerializeField] Transform player;
+
+        [Header("Config")]
+        [SerializeField, Range(-0.5f, 0.5f)] float menuPeekAmountX;
+        [SerializeField, Range(-0.5f, 0.5f)] float menuPeekAmountY;
+        [SerializeField] Vector2 menuOffset;
 
         public TrackingOptions tracking;
         public ZoomOptions zoom;
@@ -25,11 +32,22 @@ namespace Tulip.Player
 
         private void Update()
         {
-            Vector3 targetPoint = (bool)player ? player.position : initialPosition;
-            tracking.Target = targetPoint + (Vector3)tracking.Offset;
+            if (GameState.Current == GameState.MainMenu)
+            {
+                Vector2 mouseScreenPoint = InputHelper.Instance.Actions.UI.Point.ReadValue<Vector2>();
+                Vector3 mouseWorldPoint = camera.ScreenToWorldPoint(mouseScreenPoint);
+                Vector3 peekAmount = mouseWorldPoint * new Vector2(menuPeekAmountX, menuPeekAmountY);
 
-            float zoomDelta = InputHelper.Instance.Actions.Player.Zoom.ReadValue<float>();
-            zoom.Target -= zoomDelta * zoom.Sensitivity * Time.deltaTime;
+                tracking.Target = initialPosition + peekAmount;
+            }
+            else if (GameState.Current == GameState.Playing)
+            {
+                Vector3 targetPoint = (bool)player ? player.position : initialPosition;
+                tracking.Target = targetPoint + (Vector3)tracking.Offset;
+
+                float zoomDelta = InputHelper.Instance.Actions.Player.Zoom.ReadValue<float>();
+                zoom.Target -= zoomDelta * zoom.Sensitivity * Time.deltaTime;
+            }
         }
 
         private void LateUpdate()
@@ -44,6 +62,12 @@ namespace Tulip.Player
             float targetX = Mathf.Abs(distance.x) < tracking.SnapValue ? tracking.Target.x : lerpX;
             float targetY = Mathf.Abs(distance.y) < tracking.SnapValue ? tracking.Target.y : lerpY;
             transform.position = new Vector3(targetX, targetY, tracking.Target.z);
+        }
+
+        private void OnValidate()
+        {
+            initialPosition = new Vector3(menuOffset.x, menuOffset.y, -10);
+            transform.position = initialPosition;
         }
 
         [Serializable]
