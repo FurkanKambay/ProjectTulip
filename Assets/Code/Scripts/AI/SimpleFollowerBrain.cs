@@ -37,12 +37,15 @@ namespace Tulip.AI
 
             timeSinceLastJump += Time.deltaTime;
 
-            Vector3 distance = target.transform.position - transform.position;
+            Vector3 distanceToTarget = target.transform.position - transform.position;
+            float sqrStopDistance = stopDistance * stopDistance;
 
-            float movementAmount = Mathf.Abs(distance.x) > stopDistance ? distance.normalized.x : default;
+            float movementAmount = distanceToTarget.sqrMagnitude > sqrStopDistance
+                ? Mathf.Sign(distanceToTarget.x)
+                : default;
+
             RaiseOnMoveLateral(movementAmount);
-
-            TryJump(distance.y);
+            TryJump(distanceToTarget.y);
         }
 
         private void TryJump(float heightDifference)
