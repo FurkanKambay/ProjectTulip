@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Tulip.Character
 {
+    [RequireComponent(typeof(IJumperBrain))]
     public class CharacterJump : MonoBehaviour, ICharacterJump
     {
         public JumpConfig config;
@@ -11,7 +12,7 @@ namespace Tulip.Character
         public bool IsJumping { get; private set; }
 
         [Header("Components")]
-        private ICharacterBrain brain;
+        private IJumperBrain brain;
         private Rigidbody2D body;
         private GroundChecker ground;
 
@@ -30,7 +31,7 @@ namespace Tulip.Character
 
         private void Awake()
         {
-            brain = GetComponent<ICharacterBrain>();
+            brain = GetComponent<IJumperBrain>();
             body = GetComponent<Rigidbody2D>();
             ground = GetComponent<GroundChecker>();
             defaultGravityScale = 1f;

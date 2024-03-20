@@ -5,8 +5,9 @@ using UnityEngine;
 
 namespace Tulip.Character
 {
-    [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(IWalkerBrain))]
     [RequireComponent(typeof(GroundChecker))]
+    [RequireComponent(typeof(Rigidbody2D))]
     public class CharacterMovement : MonoBehaviour, ICharacterMovement
     {
         public MovementConfig config;
@@ -25,14 +26,14 @@ namespace Tulip.Character
         private bool isGrounded;
         private bool hasAnyMovement;
 
-        private ICharacterBrain brain;
+        private IWalkerBrain brain;
         private Rigidbody2D body;
         private SpriteRenderer spriteRenderer;
         private GroundChecker ground;
 
         private void Awake()
         {
-            brain = GetComponent<ICharacterBrain>();
+            brain = GetComponent<IWalkerBrain>();
             body = GetComponent<Rigidbody2D>();
             ground = GetComponent<GroundChecker>();
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();

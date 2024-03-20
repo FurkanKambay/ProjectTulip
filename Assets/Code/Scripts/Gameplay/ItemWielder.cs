@@ -61,7 +61,7 @@ namespace Tulip.Gameplay
         {
             timeSinceLastUse += Time.deltaTime;
 
-            float deltaToTarget = brain.FocusPosition.x - transform.position.x;
+            float deltaToTarget = brain.AimPosition.x - transform.position.x;
             intendedSwingDirection = deltaToTarget switch
             {
                 < 0 => ItemSwingDirection.Left,
@@ -70,10 +70,10 @@ namespace Tulip.Gameplay
                 // TODO: implement up/down swing
             };
 
-            bool shouldShowItem = timeSinceLastUse < itemStowDelay || brain.IsUseInProgress;
+            bool shouldShowItem = timeSinceLastUse < itemStowDelay || brain.WantsToUse;
             UpdateItemVisual(shouldShowItem ? intendedSwingDirection : ItemSwingDirection.None);
 
-            if (brain.IsUseInProgress)
+            if (brain.WantsToUse)
                 ChargeAndSwing(intendedSwingDirection);
         }
 

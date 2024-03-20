@@ -1,7 +1,9 @@
+using Tulip.Data;
 using UnityEngine;
 
 namespace Tulip.Character
 {
+    [RequireComponent(typeof(IDasherBrain))]
     public class Dasher : MonoBehaviour
     {
         public float dashSpeed = 10f;
@@ -9,12 +11,16 @@ namespace Tulip.Character
 
         [SerializeField] ForceMode2D forceMode;
 
-        private PlayerBrain brain;
+        private IDasherBrain brain;
         private Rigidbody2D body;
 
         private float timeSinceLastDash;
 
-        private void Awake() => body = GetComponent<Rigidbody2D>();
+        private void Awake()
+        {
+            brain = GetComponent<IDasherBrain>();
+            body = GetComponent<Rigidbody2D>();
+        }
 
         private void Update()
         {

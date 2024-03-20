@@ -1,19 +1,25 @@
-using Tulip.Character;
+using System;
 using Tulip.Data;
 using UnityEngine;
 
 namespace Tulip.AI
 {
-    public class SimpleFollowerBrain : WielderBrain
+    public class SimpleFollowerBrain : MonoBehaviour, IWalkerBrain, IJumperBrain, IWielderBrain
     {
+        public event Action OnJump;
+        public event Action OnJumpReleased;
+
         [Header("Movement")]
         [SerializeField] float stopDistance;
 
         [Header("Jump")]
         [SerializeField] float heightThresholdToJump;
-        [SerializeField] private float jumpCooldown;
+        [SerializeField] float jumpCooldown;
 
-        public override Vector3 FocusPosition { get; protected set; }
+        public float HorizontalMovement { get; private set; }
+
+        public Vector3 AimPosition { get; private set; }
+        public bool WantsToUse { get; private set; }
 
         private IHealth health;
         private Transform target;
@@ -32,21 +38,19 @@ namespace Tulip.AI
 
             if (health.IsDead)
             {
-                RaiseOnMoveLateral(default);
-                RaiseOnJumpReleased();
+                OnJumpReleased?.Invoke();
                 return;
             }
 
             timeSinceLastJump += Time.deltaTime;
 
-            FocusPosition = target.transform.position;
-            Vector3 distanceToTarget = FocusPosition - transform.position;
+            AimPosition = target.transform.position;
+            Vector3 distanceToTarget = AimPosition - transform.position;
             float sqrStopDistance = stopDistance * stopDistance;
 
-            IsUseInProgress = distanceToTarget.sqrMagnitude < sqrStopDistance;
-            HorizontalMovement = IsUseInProgress ? default : Mathf.Sign(distanceToTarget.x);
+            WantsToUse = distanceToTarget.sqrMagnitude < sqrStopDistance;
+            HorizontalMovement = WantsToUse ? default : Mathf.Sign(distanceToTarget.x);
 
-            RaiseOnMoveLateral(HorizontalMovement);
             TryJump(distanceToTarget.y);
         }
 
@@ -56,7 +60,7 @@ namespace Tulip.AI
             if (heightDifference <= heightThresholdToJump) return;
 
             timeSinceLastJump = 0f;
-            RaiseOnJump();
+            OnJump?.Invoke();
         }
     }
 }
