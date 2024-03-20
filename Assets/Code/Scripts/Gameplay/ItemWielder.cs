@@ -10,15 +10,17 @@ using UnityEngine.Assertions;
 
 namespace Tulip.Gameplay
 {
-    [RequireComponent(typeof(IInventory))]
+    [RequireComponent(typeof(IWielderBrain))]
     public class ItemWielder : MonoBehaviour, IItemWielder
     {
         public event Action<Usable> OnCharge;
         public event Action<Usable, ItemSwingDirection> OnSwing;
         public event Action<Usable> OnReady;
 
-        public Item CurrentItem => inventory.HotbarSelected?.Item;
+        public Item CurrentItem => HotbarSelectedItem ? HotbarSelectedItem : equippedItem;
+        private Item HotbarSelectedItem => inventory?.HotbarSelected?.Item;
 
+        [SerializeField] Usable equippedItem;
         [SerializeField] Transform itemPivot;
 
         [Header("Item Visuals")]
@@ -29,12 +31,13 @@ namespace Tulip.Gameplay
         [SerializeField] float swingAngle = -90f;
 
         private IInventory inventory;
+        private IWielderBrain brain;
         private Transform itemVisual;
         private SpriteRenderer itemRenderer;
-        private Camera mainCamera;
 
         private Usable itemToSwing;
         private ItemSwingState itemState;
+        private ItemSwingDirection intendedSwingDirection;
         private ItemSwingDirection itemVisualState;
         private float timeSinceLastUse;
 
@@ -43,9 +46,9 @@ namespace Tulip.Gameplay
             Assert.IsNotNull(itemPivot);
 
             inventory = GetComponent<IInventory>();
+            brain = GetComponent<IWielderBrain>();
             itemRenderer = itemPivot.GetComponentInChildren<SpriteRenderer>();
             itemVisual = itemRenderer.transform;
-            mainCamera = Camera.main;
 
             itemVisual.localEulerAngles = Vector3.forward * readyAngle;
         }
@@ -54,18 +57,19 @@ namespace Tulip.Gameplay
         {
             timeSinceLastUse += Time.deltaTime;
 
-            Vector3 mouseWorld = mainCamera.ScreenToWorldPoint(InputHelper.Instance.MouseScreenPoint);
-            float deltaToMouse = mouseWorld.x - transform.position.x;
+            float deltaToTarget = brain.FocusPosition.x - transform.position.x;
+            intendedSwingDirection = deltaToTarget switch
+            {
+                < 0 => ItemSwingDirection.Left,
+                > 0 => ItemSwingDirection.Right,
+                _ => ItemSwingDirection.None
+                // TODO: implement up/down swing
+            };
 
-            // TODO: implement up/down swing
-            ItemSwingDirection intendedSwingDirection = deltaToMouse < 0
-                ? ItemSwingDirection.Left
-                : ItemSwingDirection.Right;
-
-            bool shouldShowItem = timeSinceLastUse < itemStowDelay || InputHelper.Instance.Actions.Player.Use.inProgress;
+            bool shouldShowItem = timeSinceLastUse < itemStowDelay || brain.IsUseInProgress;
             UpdateItemVisual(shouldShowItem ? intendedSwingDirection : ItemSwingDirection.None);
 
-            if (InputHelper.Instance.Actions.Player.Use.inProgress)
+            if (brain.IsUseInProgress)
                 ChargeAndSwing(intendedSwingDirection);
         }
 
@@ -136,7 +140,7 @@ namespace Tulip.Gameplay
 
         private void UpdateItemSprite(int _)
         {
-            Item item = inventory.HotbarSelected?.Item;
+            Item item = CurrentItem;
 
             float scale = item ? item.IconScale : 1;
             Color tint = Color.white;
@@ -152,8 +156,19 @@ namespace Tulip.Gameplay
             itemRenderer.transform.localScale = Vector2.one * scale;
         }
 
-        private void OnEnable() => inventory.OnChangeHotbarSelection += UpdateItemSprite;
-        private void OnDisable() => inventory.OnChangeHotbarSelection -= UpdateItemSprite;
+        private void OnEnable()
+        {
+            UpdateItemSprite(0);
+
+            if (inventory == null) return;
+            inventory.OnChangeHotbarSelection += UpdateItemSprite;
+        }
+
+        private void OnDisable()
+        {
+            if (inventory == null) return;
+            inventory.OnChangeHotbarSelection -= UpdateItemSprite;
+        }
 
         private enum ItemSwingState
         {

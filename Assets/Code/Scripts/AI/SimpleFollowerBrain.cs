@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Tulip.AI
 {
-    public class SimpleFollowerBrain : CharacterBrain
+    public class SimpleFollowerBrain : WielderBrain
     {
         [Header("Movement")]
         [SerializeField] float stopDistance;
@@ -12,6 +12,8 @@ namespace Tulip.AI
         [Header("Jump")]
         [SerializeField] float heightThresholdToJump;
         [SerializeField] private float jumpCooldown;
+
+        public override Vector3 FocusPosition { get; protected set; }
 
         private IHealth health;
         private Transform target;
@@ -37,12 +39,12 @@ namespace Tulip.AI
 
             timeSinceLastJump += Time.deltaTime;
 
-            Vector3 distanceToTarget = target.transform.position - transform.position;
+            FocusPosition = target.transform.position;
+            Vector3 distanceToTarget = FocusPosition - transform.position;
             float sqrStopDistance = stopDistance * stopDistance;
 
-            float movementAmount = distanceToTarget.sqrMagnitude > sqrStopDistance
-                ? Mathf.Sign(distanceToTarget.x)
-                : default;
+            IsUseInProgress = distanceToTarget.sqrMagnitude < sqrStopDistance;
+            float movementAmount = IsUseInProgress ? default : Mathf.Sign(distanceToTarget.x);
 
             RaiseOnMoveLateral(movementAmount);
             TryJump(distanceToTarget.y);
