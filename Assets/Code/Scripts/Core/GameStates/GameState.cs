@@ -59,6 +59,7 @@ namespace Tulip.Core
             Current = Loading.With(oldState, newState);
 
             oldState.Deactivate();
+            await Awaitable.NextFrameAsync();
             newState.Activate();
 
             Current = newState;

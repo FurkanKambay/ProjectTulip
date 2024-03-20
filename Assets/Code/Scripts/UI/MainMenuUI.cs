@@ -31,8 +31,8 @@ namespace Tulip.UI
             playButton.text = "Loading...";
             await Awaitable.NextFrameAsync();
 
-            await GameState.SwitchTo(GameState.Playing);
             onClickPlay?.Invoke();
+            await GameState.SwitchTo(GameState.Playing);
         }
     }
 }
