@@ -15,7 +15,6 @@ namespace Tulip.Character
         public Vector2 Velocity => velocity;
 
         // Calculations
-        private float inputX;
         private Vector2 velocity;
         private float maxSpeedChange;
         private float acceleration;
@@ -39,19 +38,14 @@ namespace Tulip.Character
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         }
 
-        private void OnEnable() => brain.OnMoveLateral += HandleMoveLateral;
-        private void OnDisable() => brain.OnMoveLateral -= HandleMoveLateral;
-
-        private void HandleMoveLateral(float value) => inputX = value;
-
         private void Update()
         {
-            hasAnyMovement = inputX != 0;
+            hasAnyMovement = brain.HorizontalMovement != 0;
 
             if (hasAnyMovement)
-                spriteRenderer.flipX = inputX < 0;
+                spriteRenderer.flipX = brain.HorizontalMovement < 0;
 
-            DesiredVelocity = new Vector2(inputX, default) * Mathf.Max(config.maxSpeed - config.friction, 0f);
+            DesiredVelocity = new Vector2(brain.HorizontalMovement, default) * Mathf.Max(config.maxSpeed - config.friction, 0f);
         }
 
         private void FixedUpdate()
@@ -76,7 +70,7 @@ namespace Tulip.Character
             maxSpeedChange = hasAnyMovement switch
             {
                 // ReSharper disable once CompareOfFloatsByEqualityOperator
-                true when Mathf.Sign(inputX) != Mathf.Sign(Velocity.x) => turnSpeed * Time.deltaTime,
+                true when Mathf.Sign(brain.HorizontalMovement) != Mathf.Sign(Velocity.x) => turnSpeed * Time.deltaTime,
                 true => acceleration * Time.deltaTime,
                 _ => deceleration * Time.deltaTime
             };

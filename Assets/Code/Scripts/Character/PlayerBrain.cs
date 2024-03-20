@@ -13,6 +13,7 @@ namespace Tulip.Character
         private void RaisePlayerJumpReleased(InputAction.CallbackContext _) => RaiseOnJumpReleased();
 
         public override Vector3 FocusPosition { get; protected set; }
+        public bool WantsToDash { get; private set; }
 
         private Camera mainCamera;
 
@@ -21,7 +22,9 @@ namespace Tulip.Character
         private void Update()
         {
             FocusPosition = mainCamera.ScreenToWorldPoint(InputHelper.Instance.MouseScreenPoint);
+            HorizontalMovement = InputHelper.Instance.Actions.Player.MoveX.ReadValue<float>();
             IsUseInProgress = InputHelper.Instance.Actions.Player.Use.inProgress;
+            WantsToDash = InputHelper.Instance.Actions.Player.Dash.inProgress;
         }
 
         private void OnEnable()

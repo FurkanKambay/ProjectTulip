@@ -1,6 +1,4 @@
-using Tulip.Input;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Tulip.Character
 {
@@ -11,28 +9,23 @@ namespace Tulip.Character
 
         [SerializeField] ForceMode2D forceMode;
 
+        private PlayerBrain brain;
         private Rigidbody2D body;
-        private InputAction movement;
 
         private float timeSinceLastDash;
+
+        private void Awake() => body = GetComponent<Rigidbody2D>();
 
         private void Update()
         {
             timeSinceLastDash += Time.deltaTime;
-            bool dashing = InputHelper.Instance.Actions.Player.Dash.IsInProgress();
-            if (!dashing || timeSinceLastDash < dashCooldown) return;
+            if (!brain.WantsToDash || timeSinceLastDash < dashCooldown) return;
 
             timeSinceLastDash = 0f;
-            float direction = movement.ReadValue<float>();
+            float direction = brain.HorizontalMovement;
 
             if (Mathf.Abs(direction) > 0.1f)
                 body.AddForce(Vector2.right * (direction * dashSpeed), forceMode);
-        }
-
-        private void Awake()
-        {
-            movement = InputHelper.Instance.Actions.Player.MoveX;
-            body = GetComponent<Rigidbody2D>();
         }
     }
 }

@@ -10,6 +10,8 @@ namespace Tulip.Character
         public event Action OnJump;
         public event Action OnJumpReleased;
 
+        public float HorizontalMovement { get; protected set; }
+
         protected virtual void RaiseOnMoveLateral(float value) => OnMoveLateral?.Invoke(value);
         protected virtual void RaiseOnJump() => OnJump?.Invoke();
         protected virtual void RaiseOnJumpReleased() => OnJumpReleased?.Invoke();

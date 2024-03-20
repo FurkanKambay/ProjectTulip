@@ -44,9 +44,9 @@ namespace Tulip.AI
             float sqrStopDistance = stopDistance * stopDistance;
 
             IsUseInProgress = distanceToTarget.sqrMagnitude < sqrStopDistance;
-            float movementAmount = IsUseInProgress ? default : Mathf.Sign(distanceToTarget.x);
+            HorizontalMovement = IsUseInProgress ? default : Mathf.Sign(distanceToTarget.x);
 
-            RaiseOnMoveLateral(movementAmount);
+            RaiseOnMoveLateral(HorizontalMovement);
             TryJump(distanceToTarget.y);
         }
 

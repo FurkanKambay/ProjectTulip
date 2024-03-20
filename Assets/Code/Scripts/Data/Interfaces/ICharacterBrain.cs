@@ -7,5 +7,7 @@ namespace Tulip.Data
         public event Action<float> OnMoveLateral;
         public event Action OnJump;
         public event Action OnJumpReleased;
+
+        public float HorizontalMovement { get; }
     }
 }
