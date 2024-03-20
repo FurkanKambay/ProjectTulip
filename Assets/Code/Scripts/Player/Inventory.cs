@@ -13,7 +13,7 @@ namespace Tulip.Player
         public override ItemStack[] Items { get; protected set; }
         public override int Capacity => capacity;
 
-        public override ItemStack HotbarSelected => Items[HotbarSelectedIndex];
+        public override ItemStack HotbarSelected => this[HotbarSelectedIndex];
         public override int HotbarSelectedIndex
         {
             get => hotbarSelectedIndex;
@@ -28,11 +28,7 @@ namespace Tulip.Player
         public override event Action<int> OnChangeHotbarSelection;
         public override event Action OnModifyHotbar;
 
-        public override ItemStack this[int index]
-        {
-            get => Items[index];
-            set => Items[index] = value;
-        }
+        public override ItemStack this[int index] => index < Items?.Length ? Items?[index] : null;
 
         /// <summary>
         /// Applies the <see cref="InventoryModification"/> to the inventory by first removing the items in

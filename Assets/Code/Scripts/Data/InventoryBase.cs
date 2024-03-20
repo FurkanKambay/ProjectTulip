@@ -11,7 +11,7 @@ namespace Tulip.Data
         public abstract ItemStack HotbarSelected { get; }
         public abstract int HotbarSelectedIndex { get; protected set; }
 
-        public abstract ItemStack this[int index] { get; set; }
+        public abstract ItemStack this[int index] { get; }
 
         public abstract event Action OnModifyHotbar;
         public abstract event Action<int> OnChangeHotbarSelection;
