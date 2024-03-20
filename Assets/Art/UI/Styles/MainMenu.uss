@@ -1,5 +1,4 @@
 #Container {
-    background-color: rgba(0, 0, 0, 0.6);
     font-size: 20px;
     flex-grow: 1;
     width: 33%;
@@ -12,14 +11,19 @@
 
 #Header {
     width: 100%;
-    background-color: rgb(44, 132, 181);
     height: 33%;
     min-height: 64px;
     max-height: 140px;
     justify-content: center;
-    align-items: center;
-    font-size: 40px;
+}
+
+.title {
+    font-size: 64px;
+    color: rgb(94, 125, 79);
     -unity-font-style: bold;
+    -unity-text-outline-width: 2px;
+    -unity-text-outline-color: rgb(255, 255, 255);
+    -unity-text-align: upper-center;
 }
 
 #Body {
@@ -29,7 +33,7 @@
 }
 
 Button {
-    background-color: rgb(34, 38, 42);
+    background-color: rgb(44, 132, 181);
     border-left-width: 4px;
     border-right-width: 4px;
     border-top-width: 4px;
@@ -52,13 +56,6 @@ Button {
     height: 20%;
     min-height: 32px;
     max-height: 64px;
-}
-
-#PlayButton {
-    border-left-color: rgb(94, 125, 79);
-    border-right-color: rgb(94, 125, 79);
-    border-top-color: rgb(94, 125, 79);
-    border-bottom-color: rgb(94, 125, 79);
 }
 
 #PlayButton:hover {
