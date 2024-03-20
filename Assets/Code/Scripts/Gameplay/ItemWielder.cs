@@ -1,10 +1,11 @@
 using System;
 using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
 using Tulip.Data;
 using Tulip.Data.Gameplay;
 using Tulip.Data.Items;
 using Tulip.Gameplay.Extensions;
-using Tulip.Input;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -32,6 +33,7 @@ namespace Tulip.Gameplay
 
         private IInventory inventory;
         private IWielderBrain brain;
+        private IHealth health;
         private Transform itemVisual;
         private SpriteRenderer itemRenderer;
 
@@ -40,6 +42,7 @@ namespace Tulip.Gameplay
         private ItemSwingDirection intendedSwingDirection;
         private ItemSwingDirection itemVisualState;
         private float timeSinceLastUse;
+        private TweenerCore<Quaternion, Vector3, QuaternionOptions> currentTween;
 
         private void Awake()
         {
@@ -47,6 +50,7 @@ namespace Tulip.Gameplay
 
             inventory = GetComponent<IInventory>();
             brain = GetComponent<IWielderBrain>();
+            health = GetComponent<IHealth>();
             itemRenderer = itemPivot.GetComponentInChildren<SpriteRenderer>();
             itemVisual = itemRenderer.transform;
 
@@ -88,7 +92,8 @@ namespace Tulip.Gameplay
         private void DoCharge(Action onComplete = null)
         {
             itemState = ItemSwingState.Charging;
-            itemVisual.DOLocalRotate(Vector3.forward * chargeAngle, itemToSwing.ChargeTime)
+            currentTween = itemVisual
+                .DOLocalRotate(Vector3.forward * chargeAngle, itemToSwing.ChargeTime)
                 .OnComplete(() =>
                 {
                     itemState = ItemSwingState.Charged;
@@ -100,7 +105,8 @@ namespace Tulip.Gameplay
         private void DoSwing(ItemSwingDirection swingDirection, Action onComplete = null)
         {
             itemState = ItemSwingState.Swinging;
-            itemVisual.DOLocalRotate(Vector3.forward * swingAngle, itemToSwing.SwingTime)
+            currentTween = itemVisual
+                .DOLocalRotate(Vector3.forward * swingAngle, itemToSwing.SwingTime)
                 .OnComplete(() =>
                 {
                     OnSwing?.Invoke(itemToSwing, swingDirection);
@@ -114,7 +120,8 @@ namespace Tulip.Gameplay
             if (itemState == ItemSwingState.Ready) return;
 
             itemState = ItemSwingState.Resetting;
-            itemVisual.DOLocalRotate(Vector3.forward * readyAngle, itemToSwing.SwingTime)
+            currentTween = itemVisual
+                .DOLocalRotate(Vector3.forward * readyAngle, itemToSwing.SwingTime)
                 .OnComplete(() =>
                 {
                     itemState = ItemSwingState.Ready;
@@ -156,9 +163,17 @@ namespace Tulip.Gameplay
             itemRenderer.transform.localScale = Vector2.one * scale;
         }
 
+        private void HandleDie(DamageEventArgs _)
+        {
+            currentTween.Kill();
+            itemRenderer.enabled = false;
+        }
+
         private void OnEnable()
         {
             UpdateItemSprite(0);
+
+            health.OnDie += HandleDie;
 
             if (inventory == null) return;
             inventory.OnChangeHotbarSelection += UpdateItemSprite;
@@ -166,6 +181,8 @@ namespace Tulip.Gameplay
 
         private void OnDisable()
         {
+            health.OnDie -= HandleDie;
+
             if (inventory == null) return;
             inventory.OnChangeHotbarSelection -= UpdateItemSprite;
         }
