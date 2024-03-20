@@ -72,3 +72,7 @@ Button {
     border-top-color: rgb(75, 99, 63);
     border-bottom-color: rgb(75, 99, 63);
 }
+
+#PlayButton:disabled {
+    background-color: rgb(75, 99, 63);
+}

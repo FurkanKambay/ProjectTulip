@@ -27,6 +27,10 @@ namespace Tulip.UI
 
         private async void HandlePlayClicked(ClickEvent _)
         {
+            playButton.SetEnabled(false);
+            playButton.text = "Loading...";
+            await Awaitable.NextFrameAsync();
+
             await GameState.SwitchTo(GameState.Playing);
             onClickPlay?.Invoke();
         }
