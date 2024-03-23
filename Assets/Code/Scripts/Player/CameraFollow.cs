@@ -34,8 +34,12 @@ namespace Tulip.Player
         {
             if (GameState.Current == GameState.MainMenu)
             {
-                Vector2 mouseScreenPoint = InputHelper.Instance.Actions.UI.Point.ReadValue<Vector2>();
-                Vector3 mouseWorldPoint = camera.ScreenToWorldPoint(mouseScreenPoint);
+                Vector2 mousePoint = InputHelper.Instance.Actions.UI.Point.ReadValue<Vector2>();
+                var clampedScreenPoint = new Vector3(
+                    x: Mathf.Clamp(mousePoint.x, 0, camera.pixelWidth),
+                    y: Mathf.Clamp(mousePoint.y, 0, camera.pixelHeight));
+
+                Vector3 mouseWorldPoint = camera.ScreenToWorldPoint(clampedScreenPoint);
                 Vector3 peekAmount = mouseWorldPoint * new Vector2(menuPeekAmountX, menuPeekAmountY);
 
                 tracking.Target = initialPosition + peekAmount;
