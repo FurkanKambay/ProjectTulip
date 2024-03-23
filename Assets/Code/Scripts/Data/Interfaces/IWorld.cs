@@ -1,4 +1,3 @@
-using System;
 using Tulip.Data.Items;
 using UnityEngine;
 
@@ -6,9 +5,11 @@ namespace Tulip.Data
 {
     public interface IWorld
     {
-        event Action<TileModification> OnPlaceTile;
-        event Action<TileModification> OnHitTile;
-        event Action<TileModification> OnDestroyTile;
+        public delegate void WorldTileEvent(TileModification modification);
+
+        event WorldTileEvent OnPlaceTile;
+        event WorldTileEvent OnHitTile;
+        event WorldTileEvent OnDestroyTile;
 
         /// <summary>
         /// Damages a tile of the given type at the given cell coordinates.

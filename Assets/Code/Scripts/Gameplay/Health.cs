@@ -1,4 +1,3 @@
-using System;
 using Tulip.Data;
 using Tulip.Data.Gameplay;
 using UnityEngine;
@@ -22,8 +21,8 @@ namespace Tulip.Gameplay
         public Health LastDamageSource { get; private set; }
         public Health LastDeathSource { get; private set; }
 
-        public event Action<DamageEventArgs> OnHurt;
-        public event Action<DamageEventArgs> OnDie;
+        public event IHealth.DamageEvent OnHurt;
+        public event IHealth.DeathEvent OnDie;
 
         public void TakeDamage(float damage, Health source)
         {

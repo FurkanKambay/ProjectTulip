@@ -17,9 +17,9 @@ namespace Tulip.GameWorld
         [SerializeField] Tilemap blockTilemap;
         [SerializeField] Tilemap curtainTilemap;
 
-        public event Action<TileModification> OnPlaceTile;
-        public event Action<TileModification> OnHitTile;
-        public event Action<TileModification> OnDestroyTile;
+        public event IWorld.WorldTileEvent OnPlaceTile;
+        public event IWorld.WorldTileEvent OnHitTile;
+        public event IWorld.WorldTileEvent OnDestroyTile;
 
         private readonly Dictionary<Vector3Int, int> blockDamageMap = new();
         private readonly Dictionary<Vector3Int, int> wallDamageMap = new();
