@@ -6,9 +6,11 @@ namespace Tulip.Data
     {
         public delegate void DamageEvent(DamageEventArgs damage);
         public delegate void DeathEvent(DamageEventArgs death);
+        public delegate void ReviveEvent(IHealth source);
 
         event DamageEvent OnHurt;
         event DeathEvent OnDie;
+        event ReviveEvent OnRevive;
 
         float CurrentHealth { get; }
         float MaxHealth { get; }

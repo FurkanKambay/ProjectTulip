@@ -23,6 +23,7 @@ namespace Tulip.Gameplay
 
         public event IHealth.DamageEvent OnHurt;
         public event IHealth.DeathEvent OnDie;
+        public event IHealth.ReviveEvent OnRevive;
 
         public void TakeDamage(float damage, Health source)
         {
@@ -40,6 +41,13 @@ namespace Tulip.Gameplay
             LastDeathSource = source;
             OnDie?.Invoke(damageArgs);
             enabled = false;
+        }
+
+        public void Revive(IHealth source = null)
+        {
+            CurrentHealth = maxHealth;
+            enabled = true;
+            OnRevive?.Invoke(source ?? this);
         }
 
         [ContextMenu("Take 10 Damage")]
