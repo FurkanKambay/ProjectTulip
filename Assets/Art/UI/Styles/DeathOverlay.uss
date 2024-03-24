@@ -1,0 +1,39 @@
+.container {
+    background-color: rgba(0, 0, 0, 0.63);
+    align-items: center;
+    justify-content: center;
+    color: rgb(255, 255, 255);
+    flex-grow: 1;
+}
+
+.death-reason {
+    flex-direction: row;
+}
+
+Button {
+    background-color: rgb(44, 132, 181);
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    padding-top: 12px;
+    padding-right: 24px;
+    padding-bottom: 12px;
+    padding-left: 24px;
+}
+
+Button:hover {
+    background-color: rgb(94, 125, 79);
+}
+
+Button:active {
+    background-color: rgb(75, 99, 63);
+}
+
+Button:disabled {
+    background-color: rgb(75, 99, 63);
+}

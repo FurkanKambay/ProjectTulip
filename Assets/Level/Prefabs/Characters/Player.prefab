@@ -438,8 +438,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba2b896b557446e890bfeb8085addabc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoRespawn: 1
-  respawnDelay: 1
+  autoRespawn: 0
+  respawnDelay: 3
   respawnPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &5025328033675842091
 MonoBehaviour:
