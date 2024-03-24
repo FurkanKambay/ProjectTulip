@@ -14,6 +14,9 @@ namespace Tulip.Gameplay
         [SerializeField, Min(0)] float maxHealth = 100f;
         [SerializeField, Min(0)] float currentHealth = 100f;
         [SerializeField, Min(0)] float invulnerabilityDuration;
+        [SerializeField] new string name;
+
+        public string Name => name;
 
         public float CurrentHealth
         {
@@ -68,5 +71,7 @@ namespace Tulip.Gameplay
         public void TakeDamage() => TakeDamage(10f, this);
 
         private void OnValidate() => CurrentHealth = currentHealth;
+
+        public override string ToString() => Name;
     }
 }

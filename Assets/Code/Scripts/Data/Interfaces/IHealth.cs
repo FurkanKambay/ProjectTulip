@@ -12,6 +12,8 @@ namespace Tulip.Data
         event DeathEvent OnDie;
         event ReviveEvent OnRevive;
 
+        string Name { get; }
+
         float CurrentHealth { get; }
         float MaxHealth { get; }
         bool IsInvulnerable { get; }

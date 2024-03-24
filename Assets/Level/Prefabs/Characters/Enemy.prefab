@@ -290,6 +290,7 @@ MonoBehaviour:
   maxHealth: 50
   currentHealth: 50
   invulnerabilityDuration: 0
+  name: Enemy
 --- !u!114 &3638435280784630108
 MonoBehaviour:
   m_ObjectHideFlags: 0
