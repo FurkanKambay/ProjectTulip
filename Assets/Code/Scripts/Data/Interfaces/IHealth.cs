@@ -15,6 +15,12 @@ namespace Tulip.Data
         float CurrentHealth { get; }
         float MaxHealth { get; }
 
+        IHealth LatestDamageSource { get; }
+        IHealth LatestDeathSource { get; }
+
+        void TakeDamage(float damage, IHealth source);
+        void Revive(IHealth source = null);
+
         float Ratio => CurrentHealth / MaxHealth;
         bool IsAlive => CurrentHealth > 0;
         bool IsDead => CurrentHealth <= 0;

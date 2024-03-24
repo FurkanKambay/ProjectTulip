@@ -18,27 +18,27 @@ namespace Tulip.Gameplay
             private set => currentHealth = Mathf.Clamp(value, 0, MaxHealth);
         }
 
-        public Health LastDamageSource { get; private set; }
-        public Health LastDeathSource { get; private set; }
+        public IHealth LatestDamageSource { get; private set; }
+        public IHealth LatestDeathSource { get; private set; }
 
         public event IHealth.DamageEvent OnHurt;
         public event IHealth.DeathEvent OnDie;
         public event IHealth.ReviveEvent OnRevive;
 
-        public void TakeDamage(float damage, Health source)
+        public void TakeDamage(float damage, IHealth source)
         {
             var self = (IHealth)this;
             if (self.IsDead) return;
 
             CurrentHealth -= damage;
-            LastDamageSource = source;
+            LatestDamageSource = source;
 
             var damageArgs = new DamageEventArgs(damage, source, this);
             OnHurt?.Invoke(damageArgs);
 
             if (self.IsAlive) return;
 
-            LastDeathSource = source;
+            LatestDeathSource = source;
             OnDie?.Invoke(damageArgs);
             enabled = false;
         }
