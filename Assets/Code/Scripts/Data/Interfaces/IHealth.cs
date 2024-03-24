@@ -14,6 +14,7 @@ namespace Tulip.Data
 
         float CurrentHealth { get; }
         float MaxHealth { get; }
+        bool IsInvulnerable { get; }
 
         IHealth LatestDamageSource { get; }
         IHealth LatestDeathSource { get; }
