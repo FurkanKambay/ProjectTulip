@@ -33,7 +33,8 @@ namespace Tulip.Gameplay
             CurrentHealth -= damage;
             LatestDamageSource = source;
 
-            var damageArgs = new DamageEventArgs(damage, source, this);
+            Vector3 sourcePosition = source is Health sourceHealth ? sourceHealth.transform.position : transform.position;
+            var damageArgs = new DamageEventArgs(damage, source, this, sourcePosition);
             OnHurt?.Invoke(damageArgs);
 
             if (self.IsAlive) return;
