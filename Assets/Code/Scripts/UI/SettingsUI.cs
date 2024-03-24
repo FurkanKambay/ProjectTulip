@@ -16,13 +16,13 @@ namespace Tulip.UI
 
         [SerializeField] AudioSource audioSource;
 
+        // ReSharper disable UnusedMember.Global
         [CreateProperty]
-        public Visibility QuitConfirmButtonVisibility
-            => IsInMainMenu && ShouldShowQuitButton ? Visibility.Visible : Visibility.Hidden;
+        public Visibility QuitConfirmButtonVisibility => (IsInMainMenu && ShouldShowQuitButton).ToVisibility();
 
         [CreateProperty]
-        public Visibility SaveExitButtonVisibility
-            => !IsInMainMenu && ShouldShowQuitButton ? Visibility.Visible : Visibility.Hidden;
+        public Visibility SaveExitButtonVisibility => (!IsInMainMenu && ShouldShowQuitButton).ToVisibility();
+        // ReSharper restore UnusedMember.Global
 
         private static bool IsInMainMenu => GameState.Current == GameState.MainMenu;
         private bool ShouldShowQuitButton => container.visible && quitFlyoutButton.value;
