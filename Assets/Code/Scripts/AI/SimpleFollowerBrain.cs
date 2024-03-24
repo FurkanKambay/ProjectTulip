@@ -23,13 +23,15 @@ namespace Tulip.AI
 
         private IHealth health;
         private Transform target;
+        private IHealth targetHealth;
 
         private float timeSinceLastJump;
 
         private void Awake()
         {
             health = GetComponent<IHealth>();
-            if (!target) target = GameObject.FindGameObjectWithTag("Player").transform;
+            target = GameObject.FindGameObjectWithTag("Player").transform;
+            targetHealth = target.GetComponent<IHealth>();
         }
 
         private void Update()
@@ -44,12 +46,12 @@ namespace Tulip.AI
 
             timeSinceLastJump += Time.deltaTime;
 
-            AimPosition = target.transform.position;
+            AimPosition = target.position;
             Vector3 distanceToTarget = AimPosition - transform.position;
-            float sqrStopDistance = stopDistance * stopDistance;
+            bool withinAttackingRange = distanceToTarget.sqrMagnitude < stopDistance * stopDistance;
 
-            WantsToUse = distanceToTarget.sqrMagnitude < sqrStopDistance;
-            HorizontalMovement = WantsToUse ? default : Mathf.Sign(distanceToTarget.x);
+            WantsToUse = withinAttackingRange && targetHealth.IsAlive;
+            HorizontalMovement = withinAttackingRange ? default : Mathf.Sign(distanceToTarget.x);
 
             TryJump(distanceToTarget.y);
         }
