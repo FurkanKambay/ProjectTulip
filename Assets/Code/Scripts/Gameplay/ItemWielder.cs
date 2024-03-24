@@ -169,11 +169,14 @@ namespace Tulip.Gameplay
             itemRenderer.enabled = false;
         }
 
+        private void HandleRevived(IHealth source) => itemRenderer.enabled = true;
+
         private void OnEnable()
         {
             UpdateItemSprite(0);
 
             health.OnDie += HandleDie;
+            health.OnRevive += HandleRevived;
 
             if (inventory == null) return;
             inventory.OnChangeHotbarSelection += UpdateItemSprite;
@@ -182,6 +185,7 @@ namespace Tulip.Gameplay
         private void OnDisable()
         {
             health.OnDie -= HandleDie;
+            health.OnRevive -= HandleRevived;
 
             if (inventory == null) return;
             inventory.OnChangeHotbarSelection -= UpdateItemSprite;
