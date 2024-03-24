@@ -51,7 +51,7 @@ namespace Tulip.AI
             bool withinAttackingRange = distanceToTarget.sqrMagnitude < stopDistance * stopDistance;
 
             WantsToUse = withinAttackingRange && targetHealth.IsAlive;
-            HorizontalMovement = withinAttackingRange ? default : Mathf.Sign(distanceToTarget.x);
+            HorizontalMovement = withinAttackingRange || targetHealth.IsDead ? default : Mathf.Sign(distanceToTarget.x);
 
             TryJump(distanceToTarget.y);
         }
