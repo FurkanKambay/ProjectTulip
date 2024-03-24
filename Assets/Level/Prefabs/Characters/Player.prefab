@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2526430196951330804}
   - component: {fileID: 4019848646787942259}
   - component: {fileID: 6461720170399778386}
-  - component: {fileID: 6074248624756913443}
+  - component: {fileID: 6519093728166802202}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -110,7 +110,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &6074248624756913443
+--- !u!114 &6519093728166802202
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -119,9 +119,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1673359338847146882}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6a88ae105624f9185a7b4aea0b0844a, type: 3}
+  m_Script: {fileID: 11500000, guid: c36735ade5ba44c78de1e439a9ac9ddf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: {fileID: 932277356281954448}
+  animator: {fileID: 6461720170399778386}
+  destroyAfterDeath: 0
 --- !u!1 &2859632988072890709
 GameObject:
   m_ObjectHideFlags: 0

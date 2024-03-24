@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2526430196951330804}
   - component: {fileID: 4019848646787942259}
   - component: {fileID: 6461720170399778386}
+  - component: {fileID: 1325961344147965949}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -109,6 +110,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1325961344147965949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1673359338847146882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c36735ade5ba44c78de1e439a9ac9ddf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: {fileID: 1755906629218326450}
+  animator: {fileID: 6461720170399778386}
+  destroyAfterDeath: 1
 --- !u!1 &2365869114127520824
 GameObject:
   m_ObjectHideFlags: 0
@@ -153,7 +169,6 @@ GameObject:
   - component: {fileID: 270610127142405494}
   - component: {fileID: 7560684870690709998}
   - component: {fileID: 1755906629218326450}
-  - component: {fileID: 273717479303549709}
   - component: {fileID: 3638435280784630108}
   - component: {fileID: 5586229237376469597}
   - component: {fileID: 4684650910519606172}
@@ -274,20 +289,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 50
   currentHealth: 50
---- !u!114 &273717479303549709
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2859632988072890709}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c36735ade5ba44c78de1e439a9ac9ddf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: {fileID: 1755906629218326450}
-  animator: {fileID: 6461720170399778386}
 --- !u!114 &3638435280784630108
 MonoBehaviour:
   m_ObjectHideFlags: 0
