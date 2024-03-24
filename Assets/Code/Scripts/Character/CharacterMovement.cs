@@ -43,7 +43,7 @@ namespace Tulip.Character
         {
             hasAnyMovement = brain.HorizontalMovement != 0;
 
-            if (hasAnyMovement)
+            if (hasAnyMovement && spriteRenderer)
                 spriteRenderer.flipX = brain.HorizontalMovement < 0;
 
             DesiredVelocity = new Vector2(brain.HorizontalMovement, default) * Mathf.Max(config.maxSpeed - config.friction, 0f);
