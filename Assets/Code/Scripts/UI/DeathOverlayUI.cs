@@ -32,7 +32,10 @@ namespace Tulip.UI
 
         private void OnEnable()
         {
-            root = GetComponent<UIDocument>().rootVisualElement;
+            UIDocument document = GetComponent<UIDocument>();
+            document.enabled = true;
+
+            root = document.rootVisualElement;
             root.dataSource = this;
 
             respawnButton = root.Q<Button>();
