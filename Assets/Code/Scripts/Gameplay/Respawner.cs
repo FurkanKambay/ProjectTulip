@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Tulip.Gameplay
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class Respawner : MonoBehaviour
+    public class Respawner : MonoBehaviour, IRespawner
     {
         [SerializeField] bool autoRespawn = true;
         [SerializeField] float respawnDelay;
