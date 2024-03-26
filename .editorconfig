@@ -1,6 +1,6 @@
 root = true
 
-[{.*,*.cs,*.md,*.json,*.txt}]
+[{.*,*.cs,*.md,*.json,*.txt,*.uxml,*.uss}]
 charset = utf-8
 end_of_line = lf
 indent_size = 4

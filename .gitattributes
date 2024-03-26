@@ -1,28 +1,34 @@
 [attr]lfs                   -text filter=lfs diff=lfs merge=lfs
-[attr]unity-yaml            text merge=unityyamlmerge linguist-language=yaml
+[attr]unity-json            eol=lf linguist-language=json
+[attr]unity-yaml            eol=lf linguist-language=yaml merge=unityyamlmerge
 
 *                           text=auto eol=lf
-*.cs                        text diff=csharp
-*.md                        text diff=markdown
+*.cs                        eol=lf diff=csharp
+*.md                        eol=lf diff=markdown
+
+# Exclude third-party plugins and the packages lockfile from GitHub stats and diffs
+Assets/Plugins/**           linguist-generated
+Packages/packages-lock.json linguist-generated
 
 # Unity shader files
-*.cginc                     text
-*.compute                   text linguist-language=hlsl
-*.raytrace                  text linguist-language=hlsl
-*.shader                    text
+*.cginc                     eol=lf
+*.compute                   eol=lf linguist-language=hlsl
+*.hlsl                      eol=lf linguist-language=hlsl
+*.raytrace                  eol=lf linguist-language=hlsl
+*.shader                    eol=lf
 
 # Unity JSON files
-*.asmdef                    text linguist-language=json
-*.asmref                    text linguist-language=json
-*.index                     text linguist-language=json
-*.inputactions              text linguist-language=json
-*.shadergraph               text linguist-language=json
-*.shadersubgraph            text linguist-language=json
+*.asmdef                    unity-json
+*.asmref                    unity-json
+*.index                     unity-json
+*.inputactions              unity-json
+*.shadergraph               unity-json
+*.shadersubgraph            unity-json
 
 # Unity UI Toolkit files
-*.tss                       text linguist-language=css diff=css
-*.uss                       text linguist-language=css diff=css
-*.uxml                      text linguist-language=xml linguist-detectable
+*.tss                       eol=lf linguist-language=css diff=css
+*.uss                       eol=lf linguist-language=css diff=css
+*.uxml                      eol=lf linguist-language=xml linguist-detectable
 
 # Unity YAML files
 *.anim                      unity-yaml
@@ -53,10 +59,6 @@
 *.spriteatlasv2             unity-yaml
 *.terrainlayer              unity-yaml
 *.unity                     unity-yaml
-
-# Hide settings and plugins from GitHub stats and diffs
-Assets/Plugins/**           linguist-generated
-Packages/packages-lock.json linguist-generated
 
 # Image formats
 *.exr                       lfs
