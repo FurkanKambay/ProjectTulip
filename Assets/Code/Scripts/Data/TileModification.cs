@@ -1,4 +1,4 @@
-﻿using Tulip.Data.Items;
+using Tulip.Data.Items;
 using UnityEngine;
 
 namespace Tulip.Data

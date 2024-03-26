@@ -1,4 +1,4 @@
-﻿using Tulip.Core;
+using Tulip.Core;
 using UnityEngine;
 using UnityEngine.Audio;
 
