@@ -28,14 +28,14 @@ namespace Tulip.GameWorld
         public InventoryModification DamageTile(Vector3Int cell, TileType tileType, int damage)
         {
             Tilemap tilemap = GetTilemap(tileType);
-            Dictionary<Vector3Int, int> damageMap = GetDamageMap(tileType);
+            WorldTile worldTile = GetTile(cell);
 
-            if (!tilemap.HasTile(cell))
+            if (!tilemap.HasTile(cell) || worldTile.isUnbreakable)
                 return InventoryModification.Empty;
 
+            Dictionary<Vector3Int, int> damageMap = GetDamageMap(tileType);
             damageMap.TryAdd(cell, 0);
 
-            WorldTile worldTile = GetTile(cell);
             int damageTaken = damageMap[cell] += damage;
             int hardness = worldTile.hardness;
 

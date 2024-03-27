@@ -22,6 +22,7 @@ namespace Tulip.Data.Items
 
         [Header("World Tile Data")]
         [Min(1)] public int hardness = 50;
+        public bool isUnbreakable;
 
         [Header("Sounds")]
         public AudioClip hitSound;
