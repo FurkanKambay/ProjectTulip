@@ -1,7 +1,6 @@
 using System;
 using Tulip.Core;
 using Tulip.Data;
-using Tulip.Data.Gameplay;
 using Tulip.Data.Items;
 using Tulip.GameWorld;
 using Tulip.Input;
@@ -53,7 +52,7 @@ namespace Tulip.Player
             AssignCells();
         }
 
-        private void HandleItemSwing(Usable item, ItemSwingDirection _)
+        private void HandleItemSwing(Usable item, Vector3 _)
         {
             if (item is not Tool tool) return;
 

@@ -5,7 +5,6 @@ using DG.Tweening.Plugins.Options;
 using Tulip.Data;
 using Tulip.Data.Gameplay;
 using Tulip.Data.Items;
-using Tulip.Gameplay.Extensions;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -15,7 +14,7 @@ namespace Tulip.Gameplay
     public class ItemWielder : MonoBehaviour, IItemWielder
     {
         public event Action<Usable> OnCharge;
-        public event Action<Usable, ItemSwingDirection> OnSwing;
+        public event Action<Usable, Vector3> OnSwing;
         public event Action<Usable> OnReady;
 
         public Item CurrentItem => HotbarSelectedItem ? HotbarSelectedItem : equippedItem;
@@ -39,8 +38,7 @@ namespace Tulip.Gameplay
 
         private Usable itemToSwing;
         private ItemSwingState itemState;
-        private ItemSwingDirection intendedSwingDirection;
-        private ItemSwingDirection itemVisualState;
+        private bool isItemVisible;
         private float timeSinceLastUse;
         private TweenerCore<Quaternion, Vector3, QuaternionOptions> currentTween;
 
@@ -61,23 +59,14 @@ namespace Tulip.Gameplay
         {
             timeSinceLastUse += Time.deltaTime;
 
-            float deltaToTarget = brain.AimPosition.x - transform.position.x;
-            intendedSwingDirection = deltaToTarget switch
-            {
-                < 0 => ItemSwingDirection.Left,
-                > 0 => ItemSwingDirection.Right,
-                _ => ItemSwingDirection.None
-                // TODO: implement up/down swing
-            };
-
             bool shouldShowItem = timeSinceLastUse < itemStowDelay || brain.WantsToUse;
-            UpdateItemVisual(shouldShowItem ? intendedSwingDirection : ItemSwingDirection.None);
+            UpdateItemVisual(shouldShowItem);
 
             if (brain.WantsToUse)
-                ChargeAndSwing(intendedSwingDirection);
+                ChargeAndSwing();
         }
 
-        private void ChargeAndSwing(ItemSwingDirection swingDirection)
+        private void ChargeAndSwing()
         {
             if (itemState != ItemSwingState.Ready) return;
 
@@ -86,7 +75,7 @@ namespace Tulip.Gameplay
 
             itemToSwing = CurrentItem as Usable;
             timeSinceLastUse = 0f;
-            DoCharge(onComplete: () => DoSwing(swingDirection));
+            DoCharge(onComplete: () => DoSwing());
         }
 
         private void DoCharge(Action onComplete = null)
@@ -102,14 +91,14 @@ namespace Tulip.Gameplay
                 });
         }
 
-        private void DoSwing(ItemSwingDirection swingDirection, Action onComplete = null)
+        private void DoSwing(Action onComplete = null)
         {
             itemState = ItemSwingState.Swinging;
             currentTween = itemVisual
                 .DOLocalRotate(Vector3.forward * swingAngle, itemToSwing.SwingTime)
                 .OnComplete(() =>
                 {
-                    OnSwing?.Invoke(itemToSwing, swingDirection);
+                    OnSwing?.Invoke(itemToSwing, brain.AimPosition);
                     onComplete?.Invoke();
                     ResetState();
                 });
@@ -132,17 +121,24 @@ namespace Tulip.Gameplay
                 });
         }
 
-        private void UpdateItemVisual(ItemSwingDirection swingDirection)
+        private void UpdateItemVisual(bool shouldShow)
         {
-            if (itemVisualState == swingDirection) return;
+            if (isItemVisible != shouldShow)
+            {
+                itemVisual.DOScale(shouldShow ? Vector3.one : Vector3.zero, itemDrawStowDuration);
+                isItemVisible = shouldShow;
+            }
 
-            // Don't update item visuals in the middle of swinging
+            // Don't rotate item in the middle of swinging
             if (itemState != ItemSwingState.Ready) return;
 
-            var endValue = new Vector3(swingDirection.ToVector2().x, 1, 1);
-            itemPivot.DOScale(endValue, itemDrawStowDuration);
+            Vector3 pivotPosition = itemPivot.position;
+            Vector3 aimDirection =  brain.AimPosition - pivotPosition;
+            float aimAngle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
 
-            itemVisualState = swingDirection;
+            bool isLeft = aimAngle is < -90 or > 90;
+            itemPivot.localScale = new Vector3(1, isLeft ? -1 : 1, 1);
+            itemPivot.rotation = Quaternion.AngleAxis(aimAngle, Vector3.forward);
         }
 
         private void UpdateItemSprite(int _)

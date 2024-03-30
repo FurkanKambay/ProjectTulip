@@ -35,7 +35,7 @@ namespace Tulip.Character
                 return;
             }
 
-            AimPosition = mainCamera.ScreenToWorldPoint(InputHelper.Instance.MouseScreenPoint);
+            AimPosition = (Vector2)mainCamera.ScreenToWorldPoint(InputHelper.Instance.MouseScreenPoint);
             HorizontalMovement = InputHelper.Instance.Actions.Player.MoveX.ReadValue<float>();
             WantsToUse = InputHelper.Instance.Actions.Player.Use.inProgress;
             WantsToDash = InputHelper.Instance.Actions.Player.Dash.inProgress;

@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Tulip.Data.Gameplay;
 using Tulip.Data.Items;
-using Tulip.Gameplay.Extensions;
 using UnityEngine;
 
 namespace Tulip.Gameplay
@@ -15,24 +13,22 @@ namespace Tulip.Gameplay
 
         private Health health;
         private ItemWielder itemWielder;
-        private new SpriteRenderer renderer;
 
         private Weapon weapon;
-        private ItemSwingDirection swingDirection;
+        private Vector3 aimPosition;
         private Collider2D[] hits = Array.Empty<Collider2D>();
 
         private void Awake()
         {
             health = GetComponent<Health>();
             itemWielder = GetComponent<ItemWielder>();
-            renderer = GetComponentInChildren<SpriteRenderer>();
         }
 
-        private void Attack(Usable usable, ItemSwingDirection direction)
+        private void Attack(Usable usable, Vector3 position)
         {
             if (usable is not Weapon usedWeapon) return;
             weapon = usedWeapon;
-            swingDirection = direction;
+            aimPosition = position;
 
             Array.Resize(ref hits, weapon.IsMultiTarget ? maxMultiTargetAmount : 1);
 
@@ -45,35 +41,20 @@ namespace Tulip.Gameplay
 
         private IEnumerable<Health> GetTargets()
         {
-            Vector2 position = transform.position;
-            renderer.flipX = swingDirection == ItemSwingDirection.Left;
-            // renderer.flipY = swingDirection == ItemSwingDirection.Down;
+            Vector3 position = transform.position;
+            var aimDirection = Vector3.Normalize(aimPosition - position);
+            float aimAngle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
 
-            var direction = swingDirection.ToVector2();
-            Vector2 point = position + new Vector2(weapon.Range / 2f * direction.x, 1f * direction.y);
+            Vector2 point = (Vector2)position + new Vector2(weapon.Range / 2f * aimDirection.x, 1f * aimDirection.y);
             var attackBoxSize = new Vector2(weapon.Range, 1f);
 
             // TODO: find the closest hit instead for single hit?
             // BUG: attacks shouldn't go through walls
-            int hitCount = Physics2D.OverlapBox(point, attackBoxSize, default, hitContactFilter, hits);
+            int hitCount = Physics2D.OverlapBox(point, attackBoxSize, aimAngle, hitContactFilter, hits);
             return hits.Take(hitCount)
                 .TakeWhile(hit => (bool)hit)
                 .Select(hit => hit.GetComponent<Health>())
                 .Where(hitHealth => (bool)hitHealth);
-        }
-
-        private void OnDrawGizmosSelected()
-        {
-            if (!enabled) return;
-
-            Vector2 position = transform.position;
-
-            if (!weapon) return;
-            var box = new Vector3(weapon.Range, 1f, 1f);
-            var offset = new Vector3(box.x / 2f * swingDirection.ToVector2().x, 1f);
-
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireCube((Vector3)position + offset, box);
         }
 
         private void OnEnable() => itemWielder.OnSwing += Attack;
