@@ -39,6 +39,7 @@ namespace Tulip.Gameplay
         private Usable itemToSwing;
         private ItemSwingState itemState;
         private bool isItemVisible;
+        private Vector3 rendererScale;
         private float timeSinceLastUse;
         private TweenerCore<Quaternion, Vector3, QuaternionOptions> currentTween;
 
@@ -125,7 +126,7 @@ namespace Tulip.Gameplay
         {
             if (isItemVisible != shouldShow)
             {
-                itemVisual.DOScale(shouldShow ? Vector3.one : Vector3.zero, itemDrawStowDuration);
+                itemVisual.DOScale(shouldShow ? rendererScale : Vector3.zero, itemDrawStowDuration);
                 isItemVisible = shouldShow;
             }
 
@@ -133,7 +134,7 @@ namespace Tulip.Gameplay
             if (itemState != ItemSwingState.Ready) return;
 
             Vector3 pivotPosition = itemPivot.position;
-            Vector3 aimDirection =  brain.AimPosition - pivotPosition;
+            Vector3 aimDirection = brain.AimPosition - pivotPosition;
             float aimAngle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
 
             bool isLeft = aimAngle is < -90 or > 90;
@@ -156,7 +157,9 @@ namespace Tulip.Gameplay
 
             itemRenderer.sprite = item ? item.Icon : null;
             itemRenderer.color = tint;
-            itemRenderer.transform.localScale = Vector2.one * scale;
+
+            rendererScale = Vector2.one * scale;
+            itemRenderer.transform.localScale = rendererScale;
         }
 
         private void HandleDie(DamageEventArgs _)
