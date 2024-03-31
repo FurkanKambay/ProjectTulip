@@ -30,9 +30,9 @@ namespace Tulip.Player
         public event Action<Vector3Int?> OnChangeCellFocus;
 
         private World world;
+        private IWielderBrain brain;
         private Inventory inventory;
         private IItemWielder itemWielder;
-        private Camera mainCamera;
 
         private Vector3Int? focusedCell;
         private Vector2 rangePath;
@@ -41,9 +41,9 @@ namespace Tulip.Player
         private void Awake()
         {
             world = FindAnyObjectByType<World>();
+            brain = GetComponent<IWielderBrain>();
             inventory = GetComponent<Inventory>();
             itemWielder = GetComponent<IItemWielder>();
-            mainCamera = Camera.main;
         }
 
         private void Update()
@@ -74,15 +74,14 @@ namespace Tulip.Player
 
         private void AssignCells()
         {
-            Vector2 mouseWorld = mainCamera.ScreenToWorldPoint(InputHelper.Instance.MouseScreenPoint);
-            MouseCell = world.WorldToCell(mouseWorld);
+            MouseCell = world.WorldToCell(brain.AimPosition);
 
             Vector2 hotspot = (Vector2)transform.position + hotspotOffset;
-            rangePath = Vector2.ClampMagnitude(mouseWorld - hotspot, range);
+            rangePath = Vector2.ClampMagnitude((Vector2)brain.AimPosition - hotspot, range);
 
             if (!Options.Instance.Gameplay.UseSmartCursor || inventory.HotbarSelected?.Item is not Pickaxe)
             {
-                float distance = Vector3.Distance(hotspot, mouseWorld);
+                float distance = Vector3.Distance(hotspot, brain.AimPosition);
                 FocusedCell = distance <= range ? MouseCell : null;
                 return;
             }
