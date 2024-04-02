@@ -35,7 +35,7 @@ namespace Tulip.Gameplay
         private void DestroyAfterAnimation(float extraDelay = 0f)
         {
             float length = animator.GetCurrentAnimatorStateInfo(0).length;
-            Destroy(gameObject, length + extraDelay);
+            Destroy(health.gameObject, length + extraDelay);
         }
 
         private void Awake()
