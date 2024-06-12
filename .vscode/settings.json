@@ -25,5 +25,19 @@
         "Rigidbody",
         "Scriptable",
         "superquit"
-    ]
+    ],
+    "conventionalCommits.scopes": [
+        "art",
+        "audio",
+        "gameplay",
+        "tiles",
+        "ui",
+        "tool"
+    ],
+    "conventionalCommits.gitmoji": false,
+    "conventionalCommits.promptFooter": false,
+    "commitlint.config.extend.rules": {
+        "subject-case": [2, "never", ["sentence-case", "start-case", "pascal-case", "upper-case"]],
+        "type-empty": [2, "never"]
+    }
 }
