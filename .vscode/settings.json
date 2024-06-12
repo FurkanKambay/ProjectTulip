@@ -6,10 +6,10 @@
         "Assets/Plugins": true
     },
     "files.readonlyInclude": {
-        "**/*.asset": true,
-        "**/*.meta": true,
-        "**/*.prefab": true,
-        "**/*.unity": true,
+        // "**/*.asset": true,
+        // "**/*.meta": true,
+        // "**/*.prefab": true,
+        // "**/*.unity": true,
         "Packages/packages-lock.json": true
     },
     "cSpell.words": [
