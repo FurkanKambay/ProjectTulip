@@ -17,7 +17,7 @@ namespace Tulip.Input
         public Vector2 MouseScreenPoint { get; private set; }
 
         private void HandleInputHotbar(InputAction.CallbackContext context)
-            => OnSelectHotbar?.Invoke(Convert.ToInt32(context.control.name) - 1);
+            => OnSelectHotbar?.Invoke((int)context.ReadValue<float>());
 
         private void HandleInputPoint(InputAction.CallbackContext context)
             => MouseScreenPoint = context.ReadValue<Vector2>();
