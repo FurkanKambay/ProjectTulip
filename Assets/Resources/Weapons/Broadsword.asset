@@ -19,8 +19,7 @@ MonoBehaviour:
   description: A sword capable of hitting multiple targets.
   maxAmount: 1
   cooldown: 0.5
-  chargeTime: 0.1
-  swingTime: 0.1
+  swingTime: 30
   damage: 20
   range: 2
   isMultiTarget: 1

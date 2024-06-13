@@ -1,7 +1,5 @@
 using System;
-using DG.Tweening;
-using DG.Tweening.Core;
-using DG.Tweening.Plugins.Options;
+using Tulip.Core.Unity;
 using Tulip.Data;
 using Tulip.Data.Gameplay;
 using Tulip.Data.Items;
@@ -13,21 +11,19 @@ namespace Tulip.Gameplay
     [RequireComponent(typeof(IWielderBrain))]
     public class ItemWielder : MonoBehaviour, IItemWielder
     {
-        public event Action<Usable> OnCharge;
         public event Action<Usable, Vector3> OnSwing;
         public event Action<Usable> OnReady;
 
         public Item CurrentItem => HotbarSelectedItem ? HotbarSelectedItem : equippedItem;
         private Item HotbarSelectedItem => inventory?.HotbarSelected?.Item;
 
+        [Header("References")]
         [SerializeField] Usable equippedItem;
         [SerializeField] Transform itemPivot;
 
         [Header("Item Visuals")]
         [SerializeField] float itemStowDelay = 2f;
-        [SerializeField] float itemDrawStowDuration = 0.5f;
-        [SerializeField] float readyAngle = -10;
-        [SerializeField] float chargeAngle = 45f;
+        [SerializeField] float readyAngle = -10f;
         [SerializeField] float swingAngle = -90f;
 
         private IInventory inventory;
@@ -38,10 +34,8 @@ namespace Tulip.Gameplay
 
         private Usable itemToSwing;
         private ItemSwingState itemState;
-        private bool isItemVisible;
         private Vector3 rendererScale;
         private float timeSinceLastUse;
-        private TweenerCore<Quaternion, Vector3, QuaternionOptions> currentTween;
 
         private void Awake()
         {
@@ -61,75 +55,70 @@ namespace Tulip.Gameplay
             timeSinceLastUse += Time.deltaTime;
 
             bool shouldShowItem = timeSinceLastUse < itemStowDelay || brain.WantsToUse;
-            UpdateItemVisual(shouldShowItem);
+            itemVisual.localScale = shouldShowItem ? rendererScale : Vector3.zero;
+            UpdateReadyItemVisual();
 
-            if (brain.WantsToUse)
-                ChargeAndSwing();
-        }
-
-        private void ChargeAndSwing()
-        {
-            if (itemState != ItemSwingState.Ready) return;
-
-            itemToSwing = CurrentItem as Usable;
-            if (itemToSwing == null || timeSinceLastUse <= itemToSwing.Cooldown) return;
-
-            itemToSwing = CurrentItem as Usable;
-            timeSinceLastUse = 0f;
-            DoCharge(onComplete: () => DoSwing());
-        }
-
-        private void DoCharge(Action onComplete = null)
-        {
-            itemState = ItemSwingState.Charging;
-            currentTween = itemVisual
-                .DOLocalRotate(Vector3.forward * chargeAngle, itemToSwing.ChargeTime)
-                .OnComplete(() =>
-                {
-                    itemState = ItemSwingState.Charged;
-                    OnCharge?.Invoke(itemToSwing);
-                    onComplete?.Invoke();
-                });
-        }
-
-        private void DoSwing(Action onComplete = null)
-        {
-            itemState = ItemSwingState.Swinging;
-            currentTween = itemVisual
-                .DOLocalRotate(Vector3.forward * swingAngle, itemToSwing.SwingTime)
-                .OnComplete(() =>
-                {
-                    OnSwing?.Invoke(itemToSwing, brain.AimPosition);
-                    onComplete?.Invoke();
-                    ResetState();
-                });
-        }
-
-        private void ResetState()
-        {
-            if (itemState == ItemSwingState.Ready) return;
-
-            itemState = ItemSwingState.Resetting;
-            currentTween = itemVisual
-                .DOLocalRotate(Vector3.forward * readyAngle, itemToSwing.SwingTime)
-                .OnComplete(() =>
-                {
-                    itemState = ItemSwingState.Ready;
-                    itemToSwing = CurrentItem as Usable;
-
-                    if (itemToSwing != null)
-                        OnReady?.Invoke(itemToSwing);
-                });
-        }
-
-        private void UpdateItemVisual(bool shouldShow)
-        {
-            if (isItemVisible != shouldShow)
+            if (!itemToSwing)
             {
-                itemVisual.DOScale(shouldShow ? rendererScale : Vector3.zero, itemDrawStowDuration);
-                isItemVisible = shouldShow;
+                itemToSwing = CurrentItem as Usable;
+                itemState = ItemSwingState.Ready;
+                return;
             }
 
+            (float targetAngle, float decay) = itemState switch
+            {
+                ItemSwingState.Swinging => (swingAngle, itemToSwing.SwingTime),
+                _ => (readyAngle, itemToSwing.SwingTime * 2f)
+            };
+
+            SetAngle(targetAngle, decay);
+            float deltaAngle = Mathf.DeltaAngle(itemVisual.localEulerAngles.z, targetAngle);
+
+            if (Mathf.Abs(deltaAngle) > 0.1f) return;
+            // reached the current target angle
+
+            switch (itemState)
+            {
+                case ItemSwingState.Ready when brain.WantsToUse:
+                    itemToSwing = CurrentItem as Usable;
+                    if (!itemToSwing || timeSinceLastUse <= itemToSwing.Cooldown)
+                        break;
+
+                    itemState = ItemSwingState.Swinging;
+                    timeSinceLastUse = 0f;
+                    break;
+
+                case ItemSwingState.Swinging:
+                    itemState = ItemSwingState.Resetting;
+                    OnSwing?.Invoke(itemToSwing, brain.AimPosition);
+                    break;
+
+                default:
+                case ItemSwingState.Resetting:
+                    // Can't swap item mid-swing
+                    GetItemReady();
+                    break;
+            }
+        }
+
+        private void GetItemReady()
+        {
+            itemState = ItemSwingState.Ready;
+            itemToSwing = CurrentItem as Usable;
+            if (itemToSwing)
+                OnReady?.Invoke(itemToSwing);
+        }
+
+        private void SetAngle(float target, float decay)
+        {
+            float angle = itemVisual.localEulerAngles.z;
+            float delta = Mathf.DeltaAngle(angle, target);
+            float targetAngle = angle.ExpDecay(angle + delta, decay, Time.deltaTime);
+            itemVisual.localEulerAngles = Vector3.forward * targetAngle;
+        }
+
+        private void UpdateReadyItemVisual()
+        {
             // Don't rotate item in the middle of swinging
             if (itemState != ItemSwingState.Ready) return;
 
@@ -162,12 +151,7 @@ namespace Tulip.Gameplay
             itemRenderer.transform.localScale = rendererScale;
         }
 
-        private void HandleDie(DamageEventArgs _)
-        {
-            currentTween.Kill();
-            itemRenderer.enabled = false;
-        }
-
+        private void HandleDie(DamageEventArgs _) => itemRenderer.enabled = false;
         private void HandleRevived(IHealth source) => itemRenderer.enabled = true;
 
         private void OnEnable()
@@ -193,8 +177,6 @@ namespace Tulip.Gameplay
         private enum ItemSwingState
         {
             Ready,
-            Charging,
-            Charged,
             Swinging,
             Resetting
         }

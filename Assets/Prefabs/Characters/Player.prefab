@@ -294,10 +294,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   equippedItem: {fileID: 0}
   itemPivot: {fileID: 5170996385232603194}
-  itemStowDelay: 3
-  itemDrawStowDuration: 0.15
-  readyAngle: -10
-  chargeAngle: 60
+  itemStowDelay: 5
+  readyAngle: 20
   swingAngle: -120
 --- !u!114 &6482861320932609866
 MonoBehaviour:
@@ -510,7 +508,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hurtSound: {fileID: 8300000, guid: d80a10ccd98f50d4ca4c823716892e82, type: 3}
   dieSound: {fileID: 8300000, guid: 659e24525ad238340ab7fe7416ef1f4d, type: 3}
-  chargeSound: {fileID: 8300000, guid: ff63ff1c802c5f143854fc90988d9746, type: 3}
   swingSound: {fileID: 8300000, guid: 926f3331a9a8440468c8797da8bdb532, type: 3}
 --- !u!82 &210714920771637297
 AudioSource:

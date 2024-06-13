@@ -19,6 +19,5 @@ MonoBehaviour:
   description: The name is subject to change.
   maxAmount: 1
   cooldown: 0.3
-  chargeTime: 0.1
-  swingTime: 0.1
+  swingTime: 30
   power: 50
