@@ -712,8 +712,8 @@ MonoBehaviour:
   itemRenderer: {fileID: 3267211648343500747}
   equippedItem: {fileID: 11400000, guid: cee049b1282365f41bc068f68b0b9ef2, type: 2}
   itemStowDelay: 0
-  readyAngle: -10
-  swingAngle: -90
+  readyAngle: 20
+  swingAngle: -120
 --- !u!1 &5343163629913544783
 GameObject:
   m_ObjectHideFlags: 0

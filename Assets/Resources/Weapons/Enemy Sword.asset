@@ -19,8 +19,7 @@ MonoBehaviour:
   description: A sword used by the enemies.
   maxAmount: 1
   cooldown: 1
-  chargeTime: 0.5
-  swingTime: 0.1
+  swingTime: 30
   damage: 5
   range: 1.6
   isMultiTarget: 0
