@@ -9,8 +9,11 @@ namespace Tulip.GameWorld.Generation
 {
     public class WorldGenerator : MonoBehaviour
     {
-        [SerializeField] WorldGenConfig config;
+        [Header("References")]
         [SerializeField] World world;
+
+        [Header("Config")]
+        [SerializeField] WorldGenConfig config;
         [SerializeField] UnityEvent onReady;
 
         private float[,] PerlinNoise => perlinNoise ??= CalculateNoise();

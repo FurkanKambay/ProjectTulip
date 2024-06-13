@@ -1,19 +1,20 @@
+using SaintsField;
 using UnityEngine;
 
 namespace Tulip.Audio
 {
     public class GlobalAudio : MonoBehaviour
     {
-        public AudioSource AudioSource { get; private set; }
+        [Header("References")]
+        [SerializeField, Required] AudioSource audioSource;
 
+        [Header("Config")]
         [SerializeField] AudioClip backgroundMusic;
 
         public AudioClip BackgroundMusic
         {
             get => backgroundMusic;
-            set => backgroundMusic = AudioSource.clip = value;
+            set => backgroundMusic = audioSource.clip = value;
         }
-
-        private void Awake() => AudioSource = GetComponent<AudioSource>();
     }
 }

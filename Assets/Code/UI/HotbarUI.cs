@@ -1,4 +1,5 @@
 using System.Collections;
+using SaintsField;
 using Tulip.Data;
 using Tulip.Data.Items;
 using UnityEngine;
@@ -8,8 +9,12 @@ namespace Tulip.UI
 {
     public class HotbarUI : MonoBehaviour
     {
-        [SerializeField] AudioSource audioSource;
-        [SerializeField] InventoryBase inventory;
+        [Header("References")]
+        [SerializeField, Required] UIDocument document;
+        [SerializeField, Required] AudioSource audioSource;
+        [SerializeField, Required] InventoryBase inventory;
+
+        [Header("Config")]
         [SerializeField] float tooltipShowDuration;
 
         private VisualElement hotbarRoot;
@@ -80,7 +85,6 @@ namespace Tulip.UI
 
         private void OnEnable()
         {
-            UIDocument document = GetComponent<UIDocument>();
             hotbarRoot = document.rootVisualElement[0];
             tooltipRoot = document.rootVisualElement[1];
 

@@ -1,5 +1,5 @@
 using System;
-using Tulip.Data;
+using SaintsField;
 using Tulip.GameWorld;
 using UnityEngine;
 
@@ -7,6 +7,12 @@ namespace Tulip.Character
 {
     public class AutoStepper : MonoBehaviour
     {
+        [Header("References")]
+        [SerializeField, GetComponentInScene] World world;
+        [SerializeField, Required] Rigidbody2D body;
+        [SerializeField, Required] CharacterMovement movement;
+        [SerializeField, Required] GroundChecker ground;
+
         [Header("Step")]
         [SerializeField] float stepHeight = 1f;
         [SerializeField] float stepWidth;
@@ -17,23 +23,12 @@ namespace Tulip.Character
         [SerializeField] float range = .5f;
         [SerializeField] Vector3 offset = Vector3.up * .5f;
 
-        private World world;
-        private ICharacterMovement movement;
-        private GroundChecker ground;
-        private Rigidbody2D body;
-
         private Vector2? targetPosition;
-
-        private void Awake()
-        {
-            world = FindAnyObjectByType<World>();
-            movement = GetComponent<ICharacterMovement>();
-            ground = GetComponent<GroundChecker>();
-            body = GetComponent<Rigidbody2D>();
-        }
 
         private void Update()
         {
+            if (!world) return;
+
             AutoStepDirection stepDirection = CanStepUp();
 
             if (stepDirection == AutoStepDirection.None)

@@ -1,3 +1,4 @@
+using SaintsField;
 using Tulip.Core;
 using UnityEngine;
 using UnityEngine.Events;
@@ -7,7 +8,11 @@ namespace Tulip.UI
 {
     public class MainMenuUI : MonoBehaviour
     {
-        [SerializeField] private UnityEvent onClickPlay;
+        [Header("References")]
+        [SerializeField, Required] UIDocument document;
+
+        [Header("Config")]
+        [SerializeField] UnityEvent onClickPlay;
 
         private VisualElement root;
         private Button playButton;
@@ -18,7 +23,7 @@ namespace Tulip.UI
         {
             Time.timeScale = 1;
 
-            root = GetComponent<UIDocument>().rootVisualElement.ElementAt(0);
+            root = document.rootVisualElement.ElementAt(0);
             playButton = root.Q<Button>("PlayButton");
             playButton.RegisterCallback<ClickEvent>(HandlePlayClicked);
         }

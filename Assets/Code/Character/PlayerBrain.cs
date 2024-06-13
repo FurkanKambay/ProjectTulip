@@ -1,4 +1,5 @@
 using System;
+using SaintsField;
 using Tulip.Data;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,6 +11,10 @@ namespace Tulip.Character
         public event Action OnJump;
         public event Action OnJumpReleased;
 
+        [Header("References")]
+        [SerializeField, Required] SaintsInterface<Component, IHealth> health;
+
+        [Header("Input")]
         [SerializeField] InputActionReference point;
         [SerializeField] InputActionReference move;
         [SerializeField] InputActionReference jump;
@@ -23,17 +28,12 @@ namespace Tulip.Character
         public Vector3 AimPosition { get; private set; }
 
         private Camera mainCamera;
-        private IHealth health;
 
-        private void Awake()
-        {
-            mainCamera = Camera.main;
-            health = GetComponent<IHealth>();
-        }
+        private void Awake() => mainCamera = Camera.main;
 
         private void Update()
         {
-            if (health.IsDead)
+            if (health.I.IsDead)
             {
                 OnJumpReleased?.Invoke();
                 return;

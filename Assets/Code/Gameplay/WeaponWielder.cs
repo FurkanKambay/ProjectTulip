@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using SaintsField;
 using Tulip.Data.Items;
 using UnityEngine;
 
@@ -8,21 +9,17 @@ namespace Tulip.Gameplay
 {
     public class WeaponWielder : MonoBehaviour
     {
+        [Header("References")]
+        [SerializeField, Required] Health health;
+        [SerializeField, Required] ItemWielder itemWielder;
+
+        [Header("Config")]
         [SerializeField] ContactFilter2D hitContactFilter;
         [SerializeField] int maxMultiTargetAmount = 9;
-
-        private Health health;
-        private ItemWielder itemWielder;
 
         private Weapon weapon;
         private Vector3 aimPosition;
         private Collider2D[] hits = Array.Empty<Collider2D>();
-
-        private void Awake()
-        {
-            health = GetComponent<Health>();
-            itemWielder = GetComponent<ItemWielder>();
-        }
 
         private void Attack(Usable usable, Vector3 position)
         {

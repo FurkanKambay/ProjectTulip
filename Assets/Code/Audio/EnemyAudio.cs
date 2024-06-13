@@ -1,3 +1,4 @@
+using SaintsField;
 using Tulip.Data;
 using Tulip.Data.Gameplay;
 using UnityEngine;
@@ -6,18 +7,13 @@ namespace Tulip.Audio
 {
     public class EnemyAudio : MonoBehaviour
     {
+        [Header("References")]
+        [SerializeField, Required] AudioSource audioSource;
+        [SerializeField, Required] SaintsInterface<Component, IHealth> health;
+
         [Header("Health")]
         [SerializeField] AudioClip hurtSound;
         [SerializeField] AudioClip dieSound;
-
-        private AudioSource audioSource;
-        private IHealth health;
-
-        private void Awake()
-        {
-            audioSource = GetComponent<AudioSource>();
-            health = GetComponentInParent<IHealth>();
-        }
 
         private void HandleHurt(DamageEventArgs damage) => audioSource.PlayOneShot(hurtSound);
 
@@ -25,14 +21,14 @@ namespace Tulip.Audio
 
         private void OnEnable()
         {
-            health.OnHurt += HandleHurt;
-            health.OnDie += HandleDied;
+            health.I.OnHurt += HandleHurt;
+            health.I.OnDie += HandleDied;
         }
 
         private void OnDisable()
         {
-            health.OnHurt -= HandleHurt;
-            health.OnDie -= HandleDied;
+            health.I.OnHurt -= HandleHurt;
+            health.I.OnDie -= HandleDied;
         }
     }
 }

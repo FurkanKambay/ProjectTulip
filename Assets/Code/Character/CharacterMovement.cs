@@ -1,15 +1,20 @@
 using System;
+using SaintsField;
 using Tulip.Data.Gameplay;
 using Tulip.Data;
 using UnityEngine;
 
 namespace Tulip.Character
 {
-    [RequireComponent(typeof(IWalkerBrain))]
-    [RequireComponent(typeof(GroundChecker))]
-    [RequireComponent(typeof(Rigidbody2D))]
     public class CharacterMovement : MonoBehaviour, ICharacterMovement
     {
+        [Header("References")]
+        [SerializeField, Required] Rigidbody2D body;
+        [SerializeField, Required] SaintsInterface<Component, IWalkerBrain> brain;
+        [SerializeField, Required] GroundChecker ground;
+        [SerializeField, Required] SpriteRenderer spriteRenderer;
+
+        [Header("Config")]
         public MovementConfig config;
 
         public Vector2 DesiredVelocity { get; private set; }
@@ -26,27 +31,14 @@ namespace Tulip.Character
         private bool isGrounded;
         private bool hasAnyMovement;
 
-        private IWalkerBrain brain;
-        private Rigidbody2D body;
-        private SpriteRenderer spriteRenderer;
-        private GroundChecker ground;
-
-        private void Awake()
-        {
-            brain = GetComponent<IWalkerBrain>();
-            body = GetComponent<Rigidbody2D>();
-            ground = GetComponent<GroundChecker>();
-            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        }
-
         private void Update()
         {
-            hasAnyMovement = brain.HorizontalMovement != 0;
+            hasAnyMovement = brain.I.HorizontalMovement != 0;
 
             if (hasAnyMovement && spriteRenderer)
-                spriteRenderer.flipX = brain.HorizontalMovement < 0;
+                spriteRenderer.flipX = brain.I.HorizontalMovement < 0;
 
-            DesiredVelocity = new Vector2(brain.HorizontalMovement, default) * Mathf.Max(config.maxSpeed - config.friction, 0f);
+            DesiredVelocity = new Vector2(brain.I.HorizontalMovement, default) * Mathf.Max(config.maxSpeed - config.friction, 0f);
         }
 
         private void FixedUpdate()
@@ -71,7 +63,7 @@ namespace Tulip.Character
             maxSpeedChange = hasAnyMovement switch
             {
                 // ReSharper disable once CompareOfFloatsByEqualityOperator
-                true when Mathf.Sign(brain.HorizontalMovement) != Mathf.Sign(Velocity.x) => turnSpeed * Time.deltaTime,
+                true when Mathf.Sign(brain.I.HorizontalMovement) != Mathf.Sign(Velocity.x) => turnSpeed * Time.deltaTime,
                 true => acceleration * Time.deltaTime,
                 _ => deceleration * Time.deltaTime
             };

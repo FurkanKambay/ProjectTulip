@@ -1,4 +1,5 @@
 using System;
+using SaintsField;
 using Tulip.Core;
 using Tulip.Data;
 using UnityEngine;
@@ -9,7 +10,10 @@ namespace Tulip.Player
     public class CameraFollow : MonoBehaviour
     {
         [Header("References")]
+        [SerializeField, Required] new Camera camera;
         [SerializeField] Transform player;
+
+        [Header("Input")]
         [SerializeField] InputActionReference point;
         [SerializeField] InputActionReference zoom;
 
@@ -21,14 +25,9 @@ namespace Tulip.Player
         public TrackingOptions trackingConfig;
         public ZoomOptions zoomConfig;
 
-        private new Camera camera;
         private Vector3 initialPosition;
 
-        private void Awake()
-        {
-            camera = GetComponent<Camera>();
-            initialPosition = transform.position;
-        }
+        private void Awake() => initialPosition = transform.position;
 
         private void OnEnable() => trackingConfig.Target = initialPosition;
 

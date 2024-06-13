@@ -1,36 +1,37 @@
 using System;
+using SaintsField;
 using Tulip.Core.Unity;
 using Tulip.Data;
 using Tulip.Data.Gameplay;
 using Tulip.Data.Items;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace Tulip.Gameplay
 {
-    [RequireComponent(typeof(IWielderBrain))]
     public class ItemWielder : MonoBehaviour, IItemWielder
     {
         public event Action<Usable, Vector3> OnSwing;
         public event Action<Usable> OnReady;
 
         public Item CurrentItem => HotbarSelectedItem ? HotbarSelectedItem : equippedItem;
-        private Item HotbarSelectedItem => inventory?.HotbarSelected?.Item;
+        private Item HotbarSelectedItem => inventory.I?.HotbarSelected?.Item;
 
         [Header("References")]
+        [SerializeField, Required] Health health;
+        [SerializeField, Required] SaintsInterface<Component, IWielderBrain> brain;
+        [SerializeField] SaintsInterface<Component, IInventory> inventory;
+        [SerializeField, Required] SpriteRenderer itemRenderer;
+
+        [Header("Config")]
         [SerializeField] Usable equippedItem;
-        [SerializeField] Transform itemPivot;
 
         [Header("Item Visuals")]
         [SerializeField] float itemStowDelay = 2f;
         [SerializeField] float readyAngle = -10f;
         [SerializeField] float swingAngle = -90f;
 
-        private IInventory inventory;
-        private IWielderBrain brain;
-        private IHealth health;
+        private Transform itemPivot;
         private Transform itemVisual;
-        private SpriteRenderer itemRenderer;
 
         private Usable itemToSwing;
         private ItemSwingState itemState;
@@ -39,12 +40,7 @@ namespace Tulip.Gameplay
 
         private void Awake()
         {
-            Assert.IsNotNull(itemPivot);
-
-            inventory = GetComponent<IInventory>();
-            brain = GetComponent<IWielderBrain>();
-            health = GetComponent<IHealth>();
-            itemRenderer = itemPivot.GetComponentInChildren<SpriteRenderer>();
+            itemPivot = itemRenderer.transform.parent;
             itemVisual = itemRenderer.transform;
 
             itemVisual.localEulerAngles = Vector3.forward * readyAngle;
@@ -54,7 +50,7 @@ namespace Tulip.Gameplay
         {
             timeSinceLastUse += Time.deltaTime;
 
-            bool shouldShowItem = timeSinceLastUse < itemStowDelay || brain.WantsToUse;
+            bool shouldShowItem = timeSinceLastUse < itemStowDelay || brain.I.WantsToUse;
             itemVisual.localScale = shouldShowItem ? rendererScale : Vector3.zero;
             UpdateReadyItemVisual();
 
@@ -79,7 +75,7 @@ namespace Tulip.Gameplay
 
             switch (itemState)
             {
-                case ItemSwingState.Ready when brain.WantsToUse:
+                case ItemSwingState.Ready when brain.I.WantsToUse:
                     itemToSwing = CurrentItem as Usable;
                     if (!itemToSwing || timeSinceLastUse <= itemToSwing.Cooldown)
                         break;
@@ -90,7 +86,7 @@ namespace Tulip.Gameplay
 
                 case ItemSwingState.Swinging:
                     itemState = ItemSwingState.Resetting;
-                    OnSwing?.Invoke(itemToSwing, brain.AimPosition);
+                    OnSwing?.Invoke(itemToSwing, brain.I.AimPosition);
                     break;
 
                 default:
@@ -123,7 +119,7 @@ namespace Tulip.Gameplay
             if (itemState != ItemSwingState.Ready) return;
 
             Vector3 pivotPosition = itemPivot.position;
-            Vector3 aimDirection = brain.AimPosition - pivotPosition;
+            Vector3 aimDirection = brain.I.AimPosition - pivotPosition;
             float aimAngle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
 
             bool isLeft = aimAngle is < -90 or > 90;
@@ -161,8 +157,8 @@ namespace Tulip.Gameplay
             health.OnDie += HandleDie;
             health.OnRevive += HandleRevived;
 
-            if (inventory == null) return;
-            inventory.OnChangeHotbarSelection += UpdateItemSprite;
+            if (inventory.I == null) return;
+            inventory.I.OnChangeHotbarSelection += UpdateItemSprite;
         }
 
         private void OnDisable()
@@ -170,8 +166,8 @@ namespace Tulip.Gameplay
             health.OnDie -= HandleDie;
             health.OnRevive -= HandleRevived;
 
-            if (inventory == null) return;
-            inventory.OnChangeHotbarSelection -= UpdateItemSprite;
+            if (inventory.I == null) return;
+            inventory.I.OnChangeHotbarSelection -= UpdateItemSprite;
         }
 
         private enum ItemSwingState

@@ -1,4 +1,5 @@
 using System;
+using SaintsField;
 using Tulip.Data;
 using UnityEngine;
 
@@ -8,6 +9,11 @@ namespace Tulip.AI
     {
         public event Action OnJump;
         public event Action OnJumpReleased;
+
+        [Header("References")]
+        [SerializeField, Required] SaintsInterface<Component, IHealth> health;
+        private Transform target;
+        private IHealth targetHealth;
 
         [Header("Movement")]
         [SerializeField] float stopDistance;
@@ -21,15 +27,10 @@ namespace Tulip.AI
         public Vector3 AimPosition { get; private set; }
         public bool WantsToUse { get; private set; }
 
-        private IHealth health;
-        private Transform target;
-        private IHealth targetHealth;
-
         private float timeSinceLastJump;
 
         private void Awake()
         {
-            health = GetComponent<IHealth>();
             target = GameObject.FindGameObjectWithTag("Player").transform;
             targetHealth = target.GetComponent<IHealth>();
         }
@@ -38,7 +39,7 @@ namespace Tulip.AI
         {
             if (!target) return;
 
-            if (health.IsDead)
+            if (health.I.IsDead)
             {
                 OnJumpReleased?.Invoke();
                 return;

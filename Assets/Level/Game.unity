@@ -218,7 +218,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   world: {fileID: 661774619}
-  worldModifier: {fileID: 2074160590}
+  worldModifier: {fileID: 565227066}
+  itemWielder:
+    <V>k__BackingField: {fileID: 565227064}
   renderer: {fileID: 318885851}
   trackingSpeed: 100
 --- !u!212 &318885851
@@ -460,6 +462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fdfdff2c1ac25943b5f45bf68fb38e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camera: {fileID: 519420031}
   player: {fileID: 1986012726}
   point: {fileID: 2247111929073154336, guid: a92862044b24ac64ba40ebf339dc22ab, type: 3}
   zoom: {fileID: -4753524853136224464, guid: a92862044b24ac64ba40ebf339dc22ab, type: 3}
@@ -484,6 +487,39 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
+--- !u!114 &565227064 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 647329674294491017, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
+  m_PrefabInstance: {fileID: 1154427126}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 221a2bf0379152f4b81a63414840b5da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &565227065 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8062635673245977012, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
+  m_PrefabInstance: {fileID: 1154427126}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dbac43252630dd499875c6a60daacdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &565227066 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6031139440825835018, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
+  m_PrefabInstance: {fileID: 1154427126}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3e487889f14636458692cc46f41321d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -793,8 +829,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72704d37797ebee40afab671ba602024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  document: {fileID: 708079354}
   audioSource: {fileID: 708079357}
-  inventory: {fileID: 2074160593}
+  inventory: {fileID: 565227065}
   tooltipShowDuration: 2
 --- !u!82 &708079357
 AudioSource:
@@ -898,6 +935,17 @@ Tilemap:
   m_CorrespondingSourceObject: {fileID: 6191996856151981255, guid: f424f79dcd083e14b805387a89e2929f, type: 3}
   m_PrefabInstance: {fileID: 414399565}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1051015082 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7714693470157540598, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
+  m_PrefabInstance: {fileID: 1154427126}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba2b896b557446e890bfeb8085addabc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1051898246
 GameObject:
   m_ObjectHideFlags: 0
@@ -988,6 +1036,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 6031139440825835018, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
+      propertyPath: world
+      value: 
+      objectReference: {fileID: 661774619}
+    - target: {fileID: 6615088291576059394, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
+      propertyPath: world
+      value: 
+      objectReference: {fileID: 661774619}
     - target: {fileID: 8291246366843984804, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
@@ -1066,7 +1122,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 800c452c5a3ea0340890ace7c2fc48ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1986012726}
+  document: {fileID: 1406129968}
+  health:
+    <V>k__BackingField: {fileID: 2074160604}
+  respawner:
+    <V>k__BackingField: {fileID: 1051015082}
 --- !u!1 &1423174217
 GameObject:
   m_ObjectHideFlags: 0
@@ -1231,6 +1291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87e9e46f99c726045ad9a6bb4ae5b098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: {fileID: 1760523201}
   backgroundMusic: {fileID: 8300000, guid: 02dd0fc2c09d7294f8b37caf8c0980d7, type: 3}
 --- !u!82 &1760523201
 AudioSource:
@@ -1455,6 +1516,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b14510e3ad34628b0f264c3030b5103, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  document: {fileID: 1795025821}
+  audioSource: {fileID: 1795025823}
+  menu: {fileID: -5214709563405804261, guid: a92862044b24ac64ba40ebf339dc22ab, type: 3}
+  cancel: {fileID: 174961218743309079, guid: a92862044b24ac64ba40ebf339dc22ab, type: 3}
+  switchTab: {fileID: -8827449429561561328, guid: a92862044b24ac64ba40ebf339dc22ab, type: 3}
   onShow:
     m_PersistentCalls:
       m_Calls:
@@ -1536,9 +1602,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 2074160594}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Tulip.Gameplay.Respawner, Tulip.Gameplay
-        m_MethodName: Respawn
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1548,10 +1614,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  menu: {fileID: -5214709563405804261, guid: a92862044b24ac64ba40ebf339dc22ab, type: 3}
-  cancel: {fileID: 174961218743309079, guid: a92862044b24ac64ba40ebf339dc22ab, type: 3}
-  switchTab: {fileID: -8827449429561561328, guid: a92862044b24ac64ba40ebf339dc22ab, type: 3}
-  audioSource: {fileID: 1795025823}
 --- !u!82 &1795025823
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1710,6 +1772,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53aba4a0dc101a940a103699635d128b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  document: {fileID: 1808102682}
   onClickPlay:
     m_PersistentCalls:
       m_Calls:
@@ -1742,37 +1805,15 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8291246366843984804, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
   m_PrefabInstance: {fileID: 1154427126}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2074160590 stripped
+--- !u!114 &2074160604 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8720202020251607731, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
+  m_CorrespondingSourceObject: {fileID: 932277356281954448, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
   m_PrefabInstance: {fileID: 1154427126}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3e487889f14636458692cc46f41321d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2074160593 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4266250971387899883, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
-  m_PrefabInstance: {fileID: 1154427126}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1dbac43252630dd499875c6a60daacdf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2074160594 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3291173784550934210, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
-  m_PrefabInstance: {fileID: 1154427126}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba2b896b557446e890bfeb8085addabc, type: 3}
+  m_Script: {fileID: 11500000, guid: 992d83c1bd31b8b41aec2663aa6ead9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2100611435
@@ -1819,8 +1860,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62ed8242be214804f9fbc016c9e8a43d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config: {fileID: 11400000, guid: 30e1e234c9d6a5f4a8fef293ef378762, type: 2}
   world: {fileID: 661774619}
+  config: {fileID: 11400000, guid: 30e1e234c9d6a5f4a8fef293ef378762, type: 2}
   onReady:
     m_PersistentCalls:
       m_Calls:

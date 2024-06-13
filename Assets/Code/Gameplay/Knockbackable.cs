@@ -1,3 +1,4 @@
+using SaintsField;
 using Tulip.Data;
 using Tulip.Data.Gameplay;
 using UnityEngine;
@@ -6,17 +7,13 @@ namespace Tulip.Gameplay
 {
     public class Knockbackable : MonoBehaviour
     {
+        [Header("References")]
+        [SerializeField, Required] Rigidbody2D body;
+        [SerializeField, Required] Health health;
+
+        [Header("Config")]
         [SerializeField] float hurtForceAmount;
         [SerializeField] float deathForceAmount;
-
-        private Health health;
-        private Rigidbody2D body;
-
-        private void Awake()
-        {
-            health = GetComponent<Health>();
-            body = GetComponent<Rigidbody2D>();
-        }
 
         private void HandleHurt(DamageEventArgs damage) => ApplyKnockback(hurtForceAmount, damage.SourcePosition);
         private void HandleDeath(DamageEventArgs death) => ApplyKnockback(deathForceAmount, death.SourcePosition);

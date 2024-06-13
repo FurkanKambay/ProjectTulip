@@ -1,3 +1,4 @@
+using SaintsField;
 using Tulip.Core;
 using Unity.Properties;
 using UnityEngine;
@@ -9,17 +10,19 @@ namespace Tulip.UI
 {
     public class SettingsUI : MonoBehaviour
     {
-        public UnityEvent onShow;
-        public UnityEvent onHide;
-        public UnityEvent onClickExit;
+        [Header("References")]
+        [SerializeField, Required] UIDocument document;
+        [SerializeField, Required] AudioSource audioSource;
 
         [Header("Input")]
         [SerializeField] InputActionReference menu;
         [SerializeField] InputActionReference cancel;
         [SerializeField] InputActionReference switchTab;
 
-        [Header("References")]
-        [SerializeField] AudioSource audioSource;
+        [Header("Config")]
+        public UnityEvent onShow;
+        public UnityEvent onHide;
+        public UnityEvent onClickExit;
 
         // ReSharper disable UnusedMember.Global
         [CreateProperty]
@@ -44,7 +47,6 @@ namespace Tulip.UI
 
         private void Awake()
         {
-            UIDocument document = GetComponent<UIDocument>();
             document.enabled = true;
             root = document.rootVisualElement;
 
@@ -65,6 +67,22 @@ namespace Tulip.UI
 
             // UXML binding does not work
             resolutionDropdown.choices = Options.Instance.Video.SupportedResolutions;
+        }
+
+        private void OnEnable()
+        {
+            root.visible = true;
+            container.visible = false;
+
+            GameState.OnGameStateChange += HandleGameStateChange;
+        }
+
+        private void OnDisable()
+        {
+            root.visible = false;
+            container.visible = false;
+
+            GameState.OnGameStateChange -= HandleGameStateChange;
         }
 
         private void Update()
@@ -111,21 +129,5 @@ namespace Tulip.UI
 
         // TODO: save game
         private void SaveGame() => Debug.Log("Saving...");
-
-        private void OnEnable()
-        {
-            root.visible = true;
-            container.visible = false;
-
-            GameState.OnGameStateChange += HandleGameStateChange;
-        }
-
-        private void OnDisable()
-        {
-            root.visible = false;
-            container.visible = false;
-
-            GameState.OnGameStateChange -= HandleGameStateChange;
-        }
     }
 }

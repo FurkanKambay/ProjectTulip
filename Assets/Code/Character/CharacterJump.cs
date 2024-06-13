@@ -1,24 +1,24 @@
+using SaintsField;
 using Tulip.Data;
 using Tulip.Data.Gameplay;
 using UnityEngine;
 
 namespace Tulip.Character
 {
-    [RequireComponent(typeof(IJumperBrain))]
     public class CharacterJump : MonoBehaviour, ICharacterJump
     {
         public JumpConfig config;
 
         public bool IsJumping { get; private set; }
 
-        [Header("Components")]
-        private IJumperBrain brain;
-        private Rigidbody2D body;
-        private GroundChecker ground;
+        [Header("References")]
+        [SerializeField, Required] Rigidbody2D body;
+        [SerializeField, Required] SaintsInterface<Component, IJumperBrain> brain;
+        [SerializeField, Required] GroundChecker ground;
 
         [Header("Calculations")]
         private float jumpSpeed;
-        private float defaultGravityScale;
+        private float defaultGravityScale = 1f;
         private float gravityMultiplier;
 
         [Header("Current State")]
@@ -29,24 +29,16 @@ namespace Tulip.Character
         private bool isPressingJump;
         private bool isGrounded;
 
-        private void Awake()
-        {
-            brain = GetComponent<IJumperBrain>();
-            body = GetComponent<Rigidbody2D>();
-            ground = GetComponent<GroundChecker>();
-            defaultGravityScale = 1f;
-        }
-
         private void OnEnable()
         {
-            brain.OnJump += HandleJump;
-            brain.OnJumpReleased += HandleJumpReleased;
+            brain.I.OnJump += HandleJump;
+            brain.I.OnJumpReleased += HandleJumpReleased;
         }
 
         private void OnDisable()
         {
-            brain.OnJump -= HandleJump;
-            brain.OnJumpReleased -= HandleJumpReleased;
+            brain.I.OnJump -= HandleJump;
+            brain.I.OnJumpReleased -= HandleJumpReleased;
         }
 
         private void Update()

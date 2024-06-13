@@ -1,12 +1,17 @@
+using SaintsField;
 using Tulip.Data;
 using Tulip.Data.Gameplay;
 using UnityEngine;
 
 namespace Tulip.Gameplay
 {
-    [RequireComponent(typeof(Rigidbody2D))]
     public class Respawner : MonoBehaviour, IRespawner
     {
+        [Header("References")]
+        [SerializeField, Required] Health health;
+        [SerializeField, Required] Rigidbody2D body;
+
+        [Header("Config")]
         [SerializeField] bool autoRespawn = true;
         [SerializeField] float respawnDelay;
         [SerializeField] Vector3 respawnPosition;
@@ -14,18 +19,9 @@ namespace Tulip.Gameplay
         public float SecondsUntilRespawn { get; private set; }
         public bool CanRespawn => SecondsUntilRespawn <= 0;
 
-        private IHealth health;
-        private Rigidbody2D body;
-
-        private void Awake()
-        {
-            health = GetComponent<IHealth>();
-            body = GetComponent<Rigidbody2D>();
-        }
-
         private void Update()
         {
-            if (health.IsAlive) return;
+            if (((IHealth)health).IsAlive) return;
 
             SecondsUntilRespawn -= Time.deltaTime;
             if (!CanRespawn) return;

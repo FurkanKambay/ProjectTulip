@@ -1,3 +1,4 @@
+using SaintsField;
 using Tulip.Data;
 using UnityEngine;
 
@@ -5,29 +6,30 @@ namespace Tulip.UI
 {
     public class HealthBarUI : MonoBehaviour
     {
+        [Header("References")]
+        [SerializeField, Required] SaintsInterface<Component, IHealth> health;
+        [SerializeField, Required] SpriteRenderer healthBarSprite;
+
+        [Header("Config")]
         [SerializeField] float changeSpeed = 10f;
         [SerializeField] bool showBar = true;
 
-        private IHealth health;
-        private SpriteRenderer healthBarSprite;
         private float targetValue;
 
         private static readonly int healthShaderValue = Shader.PropertyToID("_Value");
 
         private void Awake()
         {
-            health = GetComponentInParent<IHealth>();
-            healthBarSprite = GetComponent<SpriteRenderer>();
             healthBarSprite.enabled = false;
-            targetValue = health.MaxHealth;
+            targetValue = health.I.MaxHealth;
         }
 
         private void Update()
         {
-            healthBarSprite.enabled = showBar && health.IsHurt;
+            healthBarSprite.enabled = showBar && health.I.IsHurt;
             if (!showBar) return;
 
-            targetValue = Mathf.Lerp(targetValue, health.Ratio, changeSpeed * Time.deltaTime);
+            targetValue = Mathf.Lerp(targetValue, health.I.Ratio, changeSpeed * Time.deltaTime);
             healthBarSprite.material.SetFloat(healthShaderValue, targetValue);
         }
     }

@@ -1,3 +1,4 @@
+using SaintsField;
 using Tulip.Data;
 using Tulip.Data.Gameplay;
 using Tulip.Data.Items;
@@ -7,6 +8,11 @@ namespace Tulip.Audio
 {
     public class PlayerAudio : MonoBehaviour
     {
+        [Header("References")]
+        [SerializeField, Required] AudioSource audioSource;
+        [SerializeField, Required] SaintsInterface<Component, IHealth> health;
+        [SerializeField, Required] SaintsInterface<Component, IItemWielder> itemWielder;
+
         [Header("Health")]
         [SerializeField] AudioClip hurtSound;
         [SerializeField] AudioClip dieSound;
@@ -14,33 +20,22 @@ namespace Tulip.Audio
         [Header("Item Wielder")]
         [SerializeField] AudioClip swingSound;
 
-        private AudioSource audioSource;
-        private IHealth health;
-        private IItemWielder itemWielder;
-
-        private void Awake()
-        {
-            audioSource = GetComponent<AudioSource>();
-            itemWielder = GetComponentInParent<IItemWielder>();
-            health = GetComponentInParent<IHealth>();
-        }
-
         private void HandleHurt(DamageEventArgs damage) => audioSource.PlayOneShot(hurtSound);
         private void HandleDied(DamageEventArgs damage) => audioSource.PlayOneShot(dieSound);
         private void HandleItemSwing(Usable item, Vector3 _) => audioSource.PlayOneShot(swingSound);
 
         private void OnEnable()
         {
-            health.OnHurt += HandleHurt;
-            health.OnDie += HandleDied;
-            itemWielder.OnSwing += HandleItemSwing;
+            health.I.OnHurt += HandleHurt;
+            health.I.OnDie += HandleDied;
+            itemWielder.I.OnSwing += HandleItemSwing;
         }
 
         private void OnDisable()
         {
-            health.OnHurt -= HandleHurt;
-            health.OnDie -= HandleDied;
-            itemWielder.OnSwing -= HandleItemSwing;
+            health.I.OnHurt -= HandleHurt;
+            health.I.OnDie -= HandleDied;
+            itemWielder.I.OnSwing -= HandleItemSwing;
         }
     }
 }

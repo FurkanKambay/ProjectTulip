@@ -1,4 +1,5 @@
 using System;
+using SaintsField;
 using Tulip.Core;
 using Tulip.Data;
 using Tulip.Data.Items;
@@ -10,6 +11,12 @@ namespace Tulip.Player
 {
     public class WorldModifier : MonoBehaviour
     {
+        [Header("References")]
+        [SerializeField, GetComponentInScene] World world;
+        [SerializeField, Required] SaintsInterface<Component, IWielderBrain> brain;
+        [SerializeField, Required] Inventory inventory;
+        [SerializeField, Required] SaintsInterface<Component, IItemWielder> itemWielder;
+
         [Header("Input")]
         [SerializeField] InputActionReference smartCursor;
 
@@ -32,29 +39,19 @@ namespace Tulip.Player
 
         public event Action<Vector3Int?> OnChangeCellFocus;
 
-        private World world;
-        private IWielderBrain brain;
-        private Inventory inventory;
-        private IItemWielder itemWielder;
-
         private Vector3Int? focusedCell;
         private Vector2 rangePath;
         private Vector3 hitPoint;
 
-        private void Awake()
-        {
-            world = FindAnyObjectByType<World>();
-            brain = GetComponent<IWielderBrain>();
-            inventory = GetComponent<Inventory>();
-            itemWielder = GetComponent<IItemWielder>();
-        }
+        private void OnEnable() => itemWielder.I.OnSwing += HandleItemSwing;
+        private void OnDisable() => itemWielder.I.OnSwing -= HandleItemSwing;
 
         private void Update()
         {
             if (smartCursor.action.triggered)
                 Options.Instance.Gameplay.UseSmartCursor = !Options.Instance.Gameplay.UseSmartCursor;
 
-            if (itemWielder.CurrentItem is not Tool) return;
+            if (itemWielder.I.CurrentItem is not Tool) return;
             AssignCells();
         }
 
@@ -80,14 +77,14 @@ namespace Tulip.Player
 
         private void AssignCells()
         {
-            MouseCell = world.WorldToCell(brain.AimPosition);
+            MouseCell = world.WorldToCell(brain.I.AimPosition);
 
             Vector2 hotspot = (Vector2)transform.position + hotspotOffset;
-            rangePath = Vector2.ClampMagnitude((Vector2)brain.AimPosition - hotspot, range);
+            rangePath = Vector2.ClampMagnitude((Vector2)brain.I.AimPosition - hotspot, range);
 
             if (!Options.Instance.Gameplay.UseSmartCursor || inventory.HotbarSelected?.Item is not Pickaxe)
             {
-                float distance = Vector3.Distance(hotspot, brain.AimPosition);
+                float distance = Vector3.Distance(hotspot, brain.I.AimPosition);
                 FocusedCell = distance <= range ? MouseCell : null;
                 return;
             }
@@ -112,8 +109,5 @@ namespace Tulip.Player
             Gizmos.color = Color.green;
             Gizmos.DrawSphere(hitPoint, .1f);
         }
-
-        private void OnEnable() => itemWielder.OnSwing += HandleItemSwing;
-        private void OnDisable() => itemWielder.OnSwing -= HandleItemSwing;
     }
 }

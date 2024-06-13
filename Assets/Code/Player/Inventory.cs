@@ -9,6 +9,19 @@ namespace Tulip.Player
 {
     public sealed class Inventory : InventoryBase
     {
+        public override event Action<int> OnChangeHotbarSelection;
+        public override event Action OnModifyHotbar;
+
+        [Header("Input")]
+        [SerializeField] InputActionReference scroll;
+        [SerializeField] InputActionReference hotbar;
+
+        [Header("Config")]
+        [SerializeField] InventoryData inventoryData;
+        [SerializeField, Min(0)] int capacity = 9;
+
+        public override ItemStack this[int index] => index < Items?.Length ? Items?[index] : null;
+
         public override ItemStack[] Items { get; protected set; }
         public override int Capacity => capacity;
 
@@ -19,20 +32,34 @@ namespace Tulip.Player
             protected set => hotbarSelectedIndex = Mathf.Clamp(value, 0, Items.Length - 1);
         }
 
-        [Header("Input")]
-        [SerializeField] InputActionReference scroll;
-        [SerializeField] InputActionReference hotbar;
-
-        [Header("Config")]
-        [SerializeField] InventoryData inventoryData;
-        [SerializeField, Min(0)] int capacity = 9;
-
         private int hotbarSelectedIndex;
 
-        public override event Action<int> OnChangeHotbarSelection;
-        public override event Action OnModifyHotbar;
+        private void Awake()
+        {
+            ItemStack[] startingInventory = inventoryData.Inventory.Select(stack => new ItemStack(stack)).ToArray();
+            Array.Resize(ref startingInventory, capacity);
 
-        public override ItemStack this[int index] => index < Items?.Length ? Items?[index] : null;
+            Items = startingInventory;
+
+            OnModifyHotbar?.Invoke();
+            OnChangeHotbarSelection?.Invoke(HotbarSelectedIndex);
+        }
+
+        private void Update()
+        {
+            if (scroll.action.inProgress)
+            {
+                float delta = scroll.action.ReadValue<float>();
+                if (delta != 0)
+                    HandleHotbarSelected(HotbarSelectedIndex - Math.Sign(delta));
+            }
+
+            if (hotbar.action.inProgress)
+            {
+                int i = (int)hotbar.action.ReadValue<float>();
+                HandleHotbarSelected(i);
+            }
+        }
 
         /// <summary>
         /// Applies the <see cref="InventoryModification"/> to the inventory by first removing the items in
@@ -165,33 +192,6 @@ namespace Tulip.Player
 
             HotbarSelectedIndex = index;
             OnChangeHotbarSelection?.Invoke(HotbarSelectedIndex);
-        }
-
-        private void Awake()
-        {
-            ItemStack[] startingInventory = inventoryData.Inventory.Select(stack => new ItemStack(stack)).ToArray();
-            Array.Resize(ref startingInventory, capacity);
-
-            Items = startingInventory;
-
-            OnModifyHotbar?.Invoke();
-            OnChangeHotbarSelection?.Invoke(HotbarSelectedIndex);
-        }
-
-        private void Update()
-        {
-            if (scroll.action.inProgress)
-            {
-                float delta = scroll.action.ReadValue<float>();
-                if (delta != 0)
-                    HandleHotbarSelected(HotbarSelectedIndex - Math.Sign(delta));
-            }
-
-            if (hotbar.action.inProgress)
-            {
-                int i = (int)hotbar.action.ReadValue<float>();
-                HandleHotbarSelected(i);
-            }
         }
     }
 }
