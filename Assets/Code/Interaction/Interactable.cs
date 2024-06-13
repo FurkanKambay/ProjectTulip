@@ -1,5 +1,4 @@
 using System;
-using Tulip.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,31 +7,30 @@ namespace Tulip.Interaction
     [RequireComponent(typeof(BoxCollider2D))]
     public class Interactable : MonoBehaviour
     {
-        [SerializeField] BoxCollider2D trigger;
-
         public event Action OnInteract;
 
+        [Header("Input")]
+        [SerializeField] InputActionReference point;
+        [SerializeField] InputActionReference interact;
+
+        [Header("References")]
+        [SerializeField] BoxCollider2D trigger;
+
         private Camera mainCamera;
-
-        private bool isHovering;
-
-        private void HandleInteract(InputAction.CallbackContext context)
-        {
-            if (!isHovering) return;
-            OnInteract?.Invoke();
-        }
 
         private void Awake() => mainCamera = Camera.main;
 
         // TODO: highlight sprite outline
         private void Update()
         {
-            Vector3 mouseWorld = mainCamera.ScreenToWorldPoint(InputHelper.Instance.MouseScreenPoint);
-            isHovering = trigger.OverlapPoint(mouseWorld);
-        }
+            Vector3 mouseWorld = mainCamera.ScreenToWorldPoint(point.action.ReadValue<Vector2>());
+            bool isHovering = trigger.OverlapPoint(mouseWorld);
 
-        private void OnEnable() => InputHelper.Instance.Actions.Player.Interact.performed += HandleInteract;
-        private void OnDisable() => InputHelper.Instance.Actions.Player.Interact.performed -= HandleInteract;
+            if (!isHovering) return;
+
+            if (interact.action.triggered)
+                OnInteract?.Invoke();
+        }
 
         private void OnValidate()
         {

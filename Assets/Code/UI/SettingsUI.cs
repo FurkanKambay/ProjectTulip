@@ -1,5 +1,4 @@
 using Tulip.Core;
-using Tulip.Input;
 using Unity.Properties;
 using UnityEngine;
 using UnityEngine.Events;
@@ -14,6 +13,12 @@ namespace Tulip.UI
         public UnityEvent onHide;
         public UnityEvent onClickExit;
 
+        [Header("Input")]
+        [SerializeField] InputActionReference menu;
+        [SerializeField] InputActionReference cancel;
+        [SerializeField] InputActionReference switchTab;
+
+        [Header("References")]
         [SerializeField] AudioSource audioSource;
 
         // ReSharper disable UnusedMember.Global
@@ -62,8 +67,17 @@ namespace Tulip.UI
             resolutionDropdown.choices = Options.Instance.Video.SupportedResolutions;
         }
 
-        private void HandleTabSwitch(InputAction.CallbackContext context)
-            => tabView.selectedTabIndex += (int)context.ReadValue<float>();
+        private void Update()
+        {
+            if (menu.action.triggered)
+                optionsButton.value = true;
+
+            if (cancel.action.triggered)
+                optionsButton.value = GameState.Current == GameState.MainMenu && !optionsButton.value;
+
+            if (switchTab.action.triggered)
+                tabView.selectedTabIndex += (int)switchTab.action.ReadValue<float>();
+        }
 
         private void HandleOptionsToggle(ChangeEvent<bool> change)
         {
@@ -78,12 +92,6 @@ namespace Tulip.UI
             else
                 onHide?.Invoke();
         }
-
-        private void HandlePause(InputAction.CallbackContext context)
-            => optionsButton.value = true;
-
-        private void HandleResume(InputAction.CallbackContext context)
-            => optionsButton.value = GameState.Current == GameState.MainMenu && !optionsButton.value;
 
         private void HandleGameStateChange()
         {
@@ -110,9 +118,6 @@ namespace Tulip.UI
             container.visible = false;
 
             GameState.OnGameStateChange += HandleGameStateChange;
-            InputHelper.Instance.Actions.Player.Menu.performed += HandlePause;
-            InputHelper.Instance.Actions.UI.Cancel.performed += HandleResume;
-            InputHelper.Instance.Actions.UI.SwitchTab.performed += HandleTabSwitch;
         }
 
         private void OnDisable()

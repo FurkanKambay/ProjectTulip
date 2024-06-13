@@ -3,7 +3,6 @@ using Tulip.Core;
 using Tulip.Data;
 using Tulip.Data.Items;
 using Tulip.GameWorld;
-using Tulip.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,6 +10,10 @@ namespace Tulip.Player
 {
     public class WorldModifier : MonoBehaviour
     {
+        [Header("Input")]
+        [SerializeField] InputActionReference smartCursor;
+
+        [Header("Config")]
         [SerializeField] Vector2 hotspotOffset;
         public float range = 5f;
 
@@ -48,6 +51,9 @@ namespace Tulip.Player
 
         private void Update()
         {
+            if (smartCursor.action.triggered)
+                Options.Instance.Gameplay.UseSmartCursor = !Options.Instance.Gameplay.UseSmartCursor;
+
             if (itemWielder.CurrentItem is not Tool) return;
             AssignCells();
         }
@@ -107,19 +113,7 @@ namespace Tulip.Player
             Gizmos.DrawSphere(hitPoint, .1f);
         }
 
-        private void HandleToggleSmartCursor(InputAction.CallbackContext _)
-            => Options.Instance.Gameplay.UseSmartCursor = !Options.Instance.Gameplay.UseSmartCursor;
-
-        private void OnEnable()
-        {
-            InputHelper.Instance.Actions.Player.ToggleSmartCursor.performed += HandleToggleSmartCursor;
-            itemWielder.OnSwing += HandleItemSwing;
-        }
-
-        private void OnDisable()
-        {
-            InputHelper.Instance.Actions.Player.ToggleSmartCursor.performed -= HandleToggleSmartCursor;
-            itemWielder.OnSwing -= HandleItemSwing;
-        }
+        private void OnEnable() => itemWielder.OnSwing += HandleItemSwing;
+        private void OnDisable() => itemWielder.OnSwing -= HandleItemSwing;
     }
 }

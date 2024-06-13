@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using Tulip.Data;
 using Tulip.Data.Items;
-using Tulip.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -20,6 +19,11 @@ namespace Tulip.Player
             protected set => hotbarSelectedIndex = Mathf.Clamp(value, 0, Items.Length - 1);
         }
 
+        [Header("Input")]
+        [SerializeField] InputActionReference scroll;
+        [SerializeField] InputActionReference hotbar;
+
+        [Header("Config")]
         [SerializeField] InventoryData inventoryData;
         [SerializeField, Min(0)] int capacity = 9;
 
@@ -171,27 +175,23 @@ namespace Tulip.Player
             Items = startingInventory;
 
             OnModifyHotbar?.Invoke();
-        }
-
-        private void OnScroll(InputAction.CallbackContext context)
-        {
-            float delta = context.ReadValue<float>();
-            if (delta == 0) return;
-
-            HandleHotbarSelected(HotbarSelectedIndex - Math.Sign(delta));
-        }
-
-        private void OnEnable()
-        {
-            InputHelper.Instance.Actions.Player.Scroll.performed += OnScroll;
-            InputHelper.Instance.OnSelectHotbar += HandleHotbarSelected;
             OnChangeHotbarSelection?.Invoke(HotbarSelectedIndex);
         }
 
-        private void OnDisable()
+        private void Update()
         {
-            InputHelper.Instance.Actions.Player.Scroll.performed -= OnScroll;
-            InputHelper.Instance.OnSelectHotbar -= HandleHotbarSelected;
+            if (scroll.action.inProgress)
+            {
+                float delta = scroll.action.ReadValue<float>();
+                if (delta != 0)
+                    HandleHotbarSelected(HotbarSelectedIndex - Math.Sign(delta));
+            }
+
+            if (hotbar.action.inProgress)
+            {
+                int i = (int)hotbar.action.ReadValue<float>();
+                HandleHotbarSelected(i);
+            }
         }
     }
 }

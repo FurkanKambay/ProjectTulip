@@ -1,8 +1,8 @@
 using System;
 using Tulip.Core;
 using Tulip.Data;
-using Tulip.Input;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Tulip.Player
 {
@@ -10,14 +10,16 @@ namespace Tulip.Player
     {
         [Header("References")]
         [SerializeField] Transform player;
+        [SerializeField] InputActionReference point;
+        [SerializeField] InputActionReference zoom;
 
         [Header("Config")]
         [SerializeField, Range(-0.5f, 0.5f)] float menuPeekAmountX;
         [SerializeField, Range(-0.5f, 0.5f)] float menuPeekAmountY;
         [SerializeField] Vector2 menuOffset;
 
-        public TrackingOptions tracking;
-        public ZoomOptions zoom;
+        public TrackingOptions trackingConfig;
+        public ZoomOptions zoomConfig;
 
         private new Camera camera;
         private Vector3 initialPosition;
@@ -28,13 +30,13 @@ namespace Tulip.Player
             initialPosition = transform.position;
         }
 
-        private void OnEnable() => tracking.Target = initialPosition;
+        private void OnEnable() => trackingConfig.Target = initialPosition;
 
         private void Update()
         {
             if (GameState.Current == GameState.MainMenu)
             {
-                Vector2 mousePoint = InputHelper.Instance.Actions.UI.Point.ReadValue<Vector2>();
+                Vector2 mousePoint = point.action.ReadValue<Vector2>();
                 var clampedScreenPoint = new Vector3(
                     x: Mathf.Clamp(mousePoint.x, 0, camera.pixelWidth),
                     y: Mathf.Clamp(mousePoint.y, 0, camera.pixelHeight));
@@ -42,30 +44,30 @@ namespace Tulip.Player
                 Vector3 mouseWorldPoint = camera.ScreenToWorldPoint(clampedScreenPoint);
                 Vector3 peekAmount = mouseWorldPoint * new Vector2(menuPeekAmountX, menuPeekAmountY);
 
-                tracking.Target = initialPosition + peekAmount;
+                trackingConfig.Target = initialPosition + peekAmount;
             }
             else if (GameState.Current == GameState.Playing)
             {
                 Vector3 targetPoint = (bool)player ? player.position : initialPosition;
-                tracking.Target = targetPoint + (Vector3)tracking.Offset;
+                trackingConfig.Target = targetPoint + (Vector3)trackingConfig.Offset;
 
-                float zoomDelta = InputHelper.Instance.Actions.Player.Zoom.ReadValue<float>();
-                zoom.Target -= zoomDelta * zoom.Sensitivity * Time.deltaTime;
+                float zoomDelta = zoom.action.ReadValue<float>();
+                zoomConfig.Target -= zoomDelta * zoomConfig.Sensitivity * Time.deltaTime;
             }
         }
 
         private void LateUpdate()
         {
-            camera.orthographicSize = Mathf.Lerp(camera.orthographicSize, zoom.Target, Time.deltaTime * zoom.Speed);
+            camera.orthographicSize = Mathf.Lerp(camera.orthographicSize, zoomConfig.Target, Time.deltaTime * zoomConfig.Speed);
 
             Vector3 position = transform.position;
-            float lerpX = Mathf.Lerp(position.x, tracking.Target.x, Time.deltaTime * tracking.Speed.x);
-            float lerpY = Mathf.Lerp(position.y, tracking.Target.y, Time.deltaTime * tracking.Speed.y);
+            float lerpX = Mathf.Lerp(position.x, trackingConfig.Target.x, Time.deltaTime * trackingConfig.Speed.x);
+            float lerpY = Mathf.Lerp(position.y, trackingConfig.Target.y, Time.deltaTime * trackingConfig.Speed.y);
 
-            Vector3 distance = tracking.Target - position;
-            float targetX = Mathf.Abs(distance.x) < tracking.SnapValue ? tracking.Target.x : lerpX;
-            float targetY = Mathf.Abs(distance.y) < tracking.SnapValue ? tracking.Target.y : lerpY;
-            transform.position = new Vector3(targetX, targetY, tracking.Target.z);
+            Vector3 distance = trackingConfig.Target - position;
+            float targetX = Mathf.Abs(distance.x) < trackingConfig.SnapValue ? trackingConfig.Target.x : lerpX;
+            float targetY = Mathf.Abs(distance.y) < trackingConfig.SnapValue ? trackingConfig.Target.y : lerpY;
+            transform.position = new Vector3(targetX, targetY, trackingConfig.Target.z);
         }
 
         private void OnValidate()

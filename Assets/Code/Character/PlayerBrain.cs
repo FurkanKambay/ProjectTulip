@@ -1,7 +1,5 @@
 using System;
 using Tulip.Data;
-using Tulip.Data.Gameplay;
-using Tulip.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,6 +9,12 @@ namespace Tulip.Character
     {
         public event Action OnJump;
         public event Action OnJumpReleased;
+
+        [SerializeField] InputActionReference point;
+        [SerializeField] InputActionReference move;
+        [SerializeField] InputActionReference jump;
+        [SerializeField] InputActionReference dash;
+        [SerializeField] InputActionReference use;
 
         public float HorizontalMovement { get; private set; }
         public bool WantsToDash { get; private set; }
@@ -35,34 +39,15 @@ namespace Tulip.Character
                 return;
             }
 
-            AimPosition = (Vector2)mainCamera.ScreenToWorldPoint(InputHelper.Instance.MouseScreenPoint);
-            HorizontalMovement = InputHelper.Instance.Actions.Player.MoveX.ReadValue<float>();
-            WantsToUse = InputHelper.Instance.Actions.Player.Use.inProgress;
-            WantsToDash = InputHelper.Instance.Actions.Player.Dash.inProgress;
-        }
+            AimPosition = mainCamera.ScreenToWorldPoint(point.action.ReadValue<Vector2>());
+            HorizontalMovement = move.action.ReadValue<float>();
+            WantsToDash = dash.action.inProgress;
+            WantsToUse = use.action.inProgress;
 
-        private void OnEnable()
-        {
-            InputHelper.Instance.Actions.Player.Jump.performed += RaisePlayerJump;
-            InputHelper.Instance.Actions.Player.Jump.canceled += RaisePlayerJumpReleased;
-        }
-
-        private void OnDisable()
-        {
-            InputHelper.Instance.Actions.Player.Jump.performed -= RaisePlayerJump;
-            InputHelper.Instance.Actions.Player.Jump.canceled -= RaisePlayerJumpReleased;
-        }
-
-        private void RaisePlayerJump(InputAction.CallbackContext _)
-        {
-            if (health.IsDead) return;
-            OnJump?.Invoke();
-        }
-
-        private void RaisePlayerJumpReleased(InputAction.CallbackContext _)
-        {
-            if (health.IsDead) return;
-            OnJumpReleased?.Invoke();
+            if (jump.action.triggered)
+                OnJump?.Invoke();
+            else if (jump.action.WasReleasedThisFrame())
+                OnJumpReleased?.Invoke();
         }
     }
 }

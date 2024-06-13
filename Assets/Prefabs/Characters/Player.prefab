@@ -276,6 +276,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dbac43252630dd499875c6a60daacdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scroll: {fileID: 8440640951329392643, guid: a92862044b24ac64ba40ebf339dc22ab, type: 3}
+  hotbar: {fileID: 2316462975043431007, guid: a92862044b24ac64ba40ebf339dc22ab, type: 3}
   inventoryData: {fileID: 11400000, guid: 1265edbba7f76c84ba1e9ba37adf7f80, type: 2}
   capacity: 9
 --- !u!114 &3140798728654723148
@@ -336,6 +338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3e487889f14636458692cc46f41321d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  smartCursor: {fileID: 7948866572207815054, guid: a92862044b24ac64ba40ebf339dc22ab, type: 3}
   hotspotOffset: {x: 0, y: 1}
   range: 5
 --- !u!114 &868025074711396792
@@ -426,6 +429,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34fe02ae195a4934ab403049c6892884, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  point: {fileID: 2247111929073154336, guid: a92862044b24ac64ba40ebf339dc22ab, type: 3}
+  move: {fileID: -3389890875533128060, guid: a92862044b24ac64ba40ebf339dc22ab, type: 3}
+  jump: {fileID: 850327633142129784, guid: a92862044b24ac64ba40ebf339dc22ab, type: 3}
+  dash: {fileID: -2695561156368533582, guid: a92862044b24ac64ba40ebf339dc22ab, type: 3}
+  use: {fileID: -2453027523714613957, guid: a92862044b24ac64ba40ebf339dc22ab, type: 3}
 --- !u!114 &3291173784550934210
 MonoBehaviour:
   m_ObjectHideFlags: 0
