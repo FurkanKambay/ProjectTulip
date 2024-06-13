@@ -9,6 +9,7 @@
 # Exclude third-party plugins and the packages lockfile from GitHub stats and diffs
 Assets/Plugins/**           linguist-generated
 Packages/packages-lock.json linguist-generated
+*.g.cs                      linguist-generated
 
 # Unity shader files
 *.cginc                     eol=lf
