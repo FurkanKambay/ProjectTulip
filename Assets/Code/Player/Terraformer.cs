@@ -9,7 +9,7 @@ using UnityEngine.InputSystem;
 
 namespace Tulip.Player
 {
-    public class WorldModifier : MonoBehaviour
+    public class Terraformer : MonoBehaviour
     {
         [Header("References")]
         [SerializeField, GetComponentInScene] World world;

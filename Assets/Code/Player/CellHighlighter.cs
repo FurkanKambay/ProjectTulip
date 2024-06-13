@@ -10,7 +10,7 @@ namespace Tulip.Player
     {
         [Header("References")]
         [SerializeField, Required] World world;
-        [SerializeField, Required] WorldModifier worldModifier;
+        [SerializeField, Required] Terraformer terraformer;
         [SerializeField, Required] SaintsInterface<Component, IItemWielder> itemWielder;
         [SerializeField] new SpriteRenderer renderer;
 
@@ -38,8 +38,8 @@ namespace Tulip.Player
         private void LateUpdate() =>
             transform.position = Vector3.Lerp(transform.position, targetPosition, trackingSpeed * Time.deltaTime);
 
-        private void OnEnable() => worldModifier.OnChangeCellFocus += HandleCellFocusChanged;
-        private void OnDisable() => worldModifier.OnChangeCellFocus -= HandleCellFocusChanged;
+        private void OnEnable() => terraformer.OnChangeCellFocus += HandleCellFocusChanged;
+        private void OnDisable() => terraformer.OnChangeCellFocus -= HandleCellFocusChanged;
 
         private void HandleCellFocusChanged(Vector3Int? cell) => focusedCell = cell;
     }

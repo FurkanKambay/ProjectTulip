@@ -218,7 +218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   world: {fileID: 661774619}
-  worldModifier: {fileID: 565227066}
+  terraformer: {fileID: 565227066}
   itemWielder:
     <V>k__BackingField: {fileID: 565227064}
   renderer: {fileID: 318885851}
