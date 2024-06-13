@@ -1,35 +1,31 @@
 #Container {
-    font-size: 20px;
     flex-grow: 1;
+    margin-left: 5%;
     width: 33%;
-    min-width: 300px;
-    max-width: 600px;
-    align-self: center;
-    align-items: stretch;
+    justify-content: center;
     color: rgb(250, 250, 250);
+    background-color: rgba(0, 0, 0, 0.45);
 }
 
 #Header {
-    width: 100%;
-    height: 33%;
-    min-height: 64px;
-    max-height: 140px;
-    justify-content: center;
-}
-
-.title {
-    font-size: 64px;
+    flex-grow: 2;
+    align-self: stretch;
+    align-items: center;
+    justify-content: flex-end;
     color: rgb(94, 125, 79);
+    font-size: 72px;
     -unity-font-style: bold;
-    -unity-text-outline-width: 2px;
+    -unity-text-outline-width: 1px;
     -unity-text-outline-color: rgb(255, 255, 255);
     -unity-text-align: upper-center;
 }
 
 #Body {
-    flex-grow: 1;
+    font-size: 40px;
+    flex-grow: 3;
     justify-content: center;
-    align-self: center;
+    align-self: stretch;
+    align-items: center;
 }
 
 Button {
@@ -38,12 +34,6 @@ Button {
     border-right-width: 4px;
     border-top-width: 4px;
     border-bottom-width: 4px;
-    padding-top: 16px;
-    padding-right: 16px;
-    padding-bottom: 16px;
-    padding-left: 16px;
-    margin-top: 4px;
-    margin-bottom: 4px;
     border-left-color: rgba(0, 0, 0, 0);
     border-right-color: rgba(0, 0, 0, 0);
     border-top-color: rgba(0, 0, 0, 0);
@@ -52,10 +42,9 @@ Button {
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
     border-bottom-left-radius: 8px;
-    width: 240px;
-    height: 20%;
-    min-height: 32px;
-    max-height: 64px;
+    width: 50%;
+    height: 15%;
+    -unity-text-align: middle-center;
 }
 
 #PlayButton:hover {
@@ -68,6 +57,7 @@ Button {
     border-right-color: rgb(75, 99, 63);
     border-top-color: rgb(75, 99, 63);
     border-bottom-color: rgb(75, 99, 63);
+    -unity-font-style: bold;
 }
 
 #PlayButton:disabled {

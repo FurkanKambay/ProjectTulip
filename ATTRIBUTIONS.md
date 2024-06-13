@@ -15,3 +15,7 @@ These assets are used for prototyping purposes only.
 - "Survival Effects I" by Darkworld Audio — https://darkworldaudio.itch.io/sound-effects-survival-i
 - "knife slash" sounds by beerbelly38 — https://freesound.org/people/beerbelly38
 - "UI Audio" by Kenney — https://www.kenney.nl/assets/ui-audio
+
+## Font
+
+- "Monogram" font by Vinícius Menézio — https://datagoblin.itch.io/monogram

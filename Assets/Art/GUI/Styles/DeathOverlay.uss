@@ -1,4 +1,4 @@
-.container {
+#Main {
     background-color: rgba(0, 0, 0, 0.63);
     align-items: center;
     justify-content: center;
@@ -6,8 +6,22 @@
     flex-grow: 1;
 }
 
-.death-reason {
+#DeathMessage {
+    font-size: 48px;
+}
+
+#ReasonPanel {
     flex-direction: row;
+}
+
+#ReasonTitle {
+    color: rgb(183, 183, 183);
+    -unity-text-align: middle-right;
+}
+
+#RespawnPanel {
+    margin-top: 32px;
+    align-items: center;
 }
 
 Button {
@@ -36,4 +50,13 @@ Button:active {
 
 Button:disabled {
     background-color: rgb(75, 99, 63);
+}
+
+#RespawnButton {
+    position: absolute;
+}
+
+#RespawnCountdown {
+    font-size: 36px;
+    position: absolute;
 }

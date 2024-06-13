@@ -1,5 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <Style src="project://database/Assets/Art/UI/Styles/HotbarSlot.uss?fileID=7433441132597879392&amp;guid=b91d2fb014259ce46b0052909a5dfc72&amp;type=3#HotbarSlot" />
+    <Style src="project://database/Assets/Art/GUI/Styles/HotbarSlot.uss?fileID=7433441132597879392&amp;guid=b91d2fb014259ce46b0052909a5dfc72&amp;type=3#HotbarSlot" />
     <ui:Button enable-rich-text="false" class="hotbar-slot">
         <ui:Image class="hotbar-slot-icon" />
         <ui:Label text="100" class="label-amount" />

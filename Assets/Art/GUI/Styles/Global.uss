@@ -1,3 +1,8 @@
+:root {
+    -unity-font-definition: url("project://database/Assets/Art/monogram-extended.ttf?fileID=12800000&guid=5ca88aa0ed910a14ab34417b970d76fd&type=3#monogram-extended");
+    font-size: 26px;
+}
+
 .unity-base-dropdown__container-inner {
     background-color: rgba(39, 87, 110, 0.95);
     color: white;

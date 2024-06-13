@@ -24,7 +24,6 @@
 }
 
 .tooltip-label-description {
-    font-size: 12px;
     margin: 0;
     padding-left: 4px;
     padding-right: 4px;

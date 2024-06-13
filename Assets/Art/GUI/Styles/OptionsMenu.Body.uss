@@ -1,5 +1,4 @@
 #MainContainer {
-    font-size: 22px;
     flex-grow: 1;
     background-color: rgba(0, 0, 0, 0.6);
 }
