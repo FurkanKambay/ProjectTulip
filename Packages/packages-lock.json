@@ -164,7 +164,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.inputsystem": {
-      "version": "1.7.0",
+      "version": "1.8.2",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -258,7 +258,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.timeline": {
-      "version": "1.8.6",
+      "version": "1.8.7",
       "depth": 0,
       "source": "registry",
       "dependencies": {
