@@ -6,7 +6,7 @@ These assets are used for prototyping purposes only.
 
 - "Pixel Protagonist" by Penzilla — https://penzilla.itch.io/protagonist-character
 - "Seamless HD landscape in parts" by PWL — https://opengameart.org/content/seamless-hd-landscape-in-parts
-- "Animated Axe Cursor" by smallmak — https://smallmak.itch.io/animated-axe-cursor
+- "Cursor Pack (1.0)" by Kenney — https://www.kenney.nl/assets/cursor-pack
 - "Xelu's Free Controller Prompts" by Xelu — https://thoseawesomeguys.com/prompts
 
 ## Audio
