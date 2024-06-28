@@ -345,19 +345,7 @@ PrefabInstance:
   m_Modification:
     serializedVersion: 3
     m_TransformParent: {fileID: 661774618}
-    m_Modifications:
-    - target: {fileID: 5034274105396919754, guid: f424f79dcd083e14b805387a89e2929f, type: 3}
-      propertyPath: m_Name
-      value: Walls
-      objectReference: {fileID: 0}
-    - target: {fileID: 7216450001828290549, guid: f424f79dcd083e14b805387a89e2929f, type: 3}
-      propertyPath: m_Name
-      value: Blocks
-      objectReference: {fileID: 0}
-    - target: {fileID: 8338648715202396677, guid: f424f79dcd083e14b805387a89e2929f, type: 3}
-      propertyPath: m_Name
-      value: Curtains
-      objectReference: {fileID: 0}
+    m_Modifications: []
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
