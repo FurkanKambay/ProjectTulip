@@ -129,7 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 122205217}
   m_Layer: 5
-  m_Name: GUI
+  m_Name: '- GUI'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -164,7 +164,7 @@ GameObject:
   m_Component:
   - component: {fileID: 316423897}
   m_Layer: 0
-  m_Name: Global Lights
+  m_Name: '- Lights'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -218,7 +218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   world: {fileID: 661774619}
-  terraformer: {fileID: 565227066}
+  terraformer: {fileID: 1186004516}
   itemWielder:
     <V>k__BackingField: {fileID: 565227064}
   renderer: {fileID: 318885851}
@@ -590,28 +590,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 221a2bf0379152f4b81a63414840b5da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &565227065 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8062635673245977012, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
-  m_PrefabInstance: {fileID: 1154427126}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1dbac43252630dd499875c6a60daacdf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &565227066 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6031139440825835018, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
-  m_PrefabInstance: {fileID: 1154427126}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3e487889f14636458692cc46f41321d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -909,7 +887,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   document: {fileID: 708079354}
   audioSource: {fileID: 708079357}
-  inventory: {fileID: 565227065}
+  inventory: {fileID: 1002056024}
   tooltipShowDuration: 2
 --- !u!82 &708079357
 AudioSource:
@@ -1008,6 +986,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1002056024 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4728014676095277497, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
+  m_PrefabInstance: {fileID: 1154427126}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dbac43252630dd499875c6a60daacdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1839735485 &1011634099 stripped
 Tilemap:
   m_CorrespondingSourceObject: {fileID: 6191996856151981255, guid: f424f79dcd083e14b805387a89e2929f, type: 3}
@@ -1114,14 +1103,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 6031139440825835018, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
-      propertyPath: world
-      value: 
-      objectReference: {fileID: 661774619}
-    - target: {fileID: 6615088291576059394, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
-      propertyPath: world
-      value: 
-      objectReference: {fileID: 661774619}
     - target: {fileID: 8291246366843984804, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
@@ -1134,11 +1115,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8960991211226391304, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
+      propertyPath: world
+      value: 
+      objectReference: {fileID: 661774619}
+    - target: {fileID: 8962699432725922889, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
+      propertyPath: world
+      value: 
+      objectReference: {fileID: 661774619}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
+--- !u!114 &1186004516 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8962699432725922889, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
+  m_PrefabInstance: {fileID: 1154427126}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3e487889f14636458692cc46f41321d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1406129966
 GameObject:
   m_ObjectHideFlags: 0
@@ -1215,7 +1215,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1423174218}
   m_Layer: 0
-  m_Name: Systems
+  m_Name: '- Systems'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1681,9 +1681,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1051015082}
         m_TargetAssemblyTypeName: Tulip.Gameplay.Respawner, Tulip.Gameplay
-        m_MethodName: 
+        m_MethodName: Respawn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

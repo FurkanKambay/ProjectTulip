@@ -118,8 +118,8 @@ namespace Tulip.Gameplay
             // Don't rotate item in the middle of swinging
             if (itemState != ItemSwingState.Ready) return;
 
-            Vector3 pivotPosition = itemPivot.position;
-            Vector3 aimDirection = brain.I.AimPosition - pivotPosition;
+            Vector2 pivotPosition = itemPivot.position;
+            Vector2 aimDirection = brain.I.AimPosition - pivotPosition;
             float aimAngle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
 
             bool isLeft = aimAngle is < -90 or > 90;

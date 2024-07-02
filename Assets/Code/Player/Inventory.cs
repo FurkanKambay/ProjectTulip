@@ -3,7 +3,6 @@ using System.Linq;
 using Tulip.Data;
 using Tulip.Data.Items;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Tulip.Player
 {
@@ -11,10 +10,6 @@ namespace Tulip.Player
     {
         public override event Action<int> OnChangeHotbarSelection;
         public override event Action OnModifyHotbar;
-
-        [Header("Input")]
-        [SerializeField] InputActionReference scroll;
-        [SerializeField] InputActionReference hotbar;
 
         [Header("Config")]
         [SerializeField] InventoryData inventoryData;
@@ -45,22 +40,6 @@ namespace Tulip.Player
             OnChangeHotbarSelection?.Invoke(HotbarSelectedIndex);
         }
 
-        private void Update()
-        {
-            if (scroll.action.inProgress)
-            {
-                float delta = scroll.action.ReadValue<float>();
-                if (delta != 0)
-                    HandleHotbarSelected(HotbarSelectedIndex - Math.Sign(delta));
-            }
-
-            if (hotbar.action.inProgress)
-            {
-                int i = (int)hotbar.action.ReadValue<float>();
-                HandleHotbarSelected(i);
-            }
-        }
-
         /// <summary>
         /// Applies the <see cref="InventoryModification"/> to the inventory by first removing the items in
         /// <see cref="InventoryModification.ToRemove"/>, then adding items to the inventory from
@@ -78,6 +57,15 @@ namespace Tulip.Player
                     modification.WouldRemove ? notRemoved : null,
                     modification.WouldAdd ? notAdded : null
                 );
+        }
+
+        internal void ChangeHotbarSelection(int index)
+        {
+            if (index == HotbarSelectedIndex)
+                return;
+
+            HotbarSelectedIndex = index;
+            OnChangeHotbarSelection?.Invoke(HotbarSelectedIndex);
         }
 
         private int RemoveItem(ItemStack itemStack)
@@ -183,15 +171,6 @@ namespace Tulip.Player
             }
 
             return -1;
-        }
-
-        private void HandleHotbarSelected(int index)
-        {
-            if (index == HotbarSelectedIndex)
-                return;
-
-            HotbarSelectedIndex = index;
-            OnChangeHotbarSelection?.Invoke(HotbarSelectedIndex);
         }
     }
 }

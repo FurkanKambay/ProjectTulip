@@ -24,7 +24,7 @@ namespace Tulip.AI
 
         public float HorizontalMovement { get; private set; }
 
-        public Vector3 AimPosition { get; private set; }
+        public Vector2 AimPosition { get; private set; }
         public bool WantsToUse { get; private set; }
 
         private float timeSinceLastJump;
@@ -48,7 +48,7 @@ namespace Tulip.AI
             timeSinceLastJump += Time.deltaTime;
 
             AimPosition = target.position;
-            Vector3 distanceToTarget = AimPosition - transform.position;
+            Vector2 distanceToTarget = AimPosition - (Vector2)transform.position;
             bool withinAttackingRange = distanceToTarget.sqrMagnitude < stopDistance * stopDistance;
 
             WantsToUse = withinAttackingRange && targetHealth.IsAlive;

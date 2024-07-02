@@ -5,7 +5,6 @@ using Tulip.Data;
 using Tulip.Data.Items;
 using Tulip.GameWorld;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Tulip.Player
 {
@@ -16,9 +15,6 @@ namespace Tulip.Player
         [SerializeField, Required] SaintsInterface<Component, IWielderBrain> brain;
         [SerializeField, Required] Inventory inventory;
         [SerializeField, Required] SaintsInterface<Component, IItemWielder> itemWielder;
-
-        [Header("Input")]
-        [SerializeField] InputActionReference smartCursor;
 
         [Header("Config")]
         [SerializeField] Vector2 hotspotOffset;
@@ -48,9 +44,6 @@ namespace Tulip.Player
 
         private void Update()
         {
-            if (smartCursor.action.triggered)
-                Options.Instance.Gameplay.UseSmartCursor = !Options.Instance.Gameplay.UseSmartCursor;
-
             if (itemWielder.I.CurrentItem is not Tool) return;
             AssignCells();
         }
