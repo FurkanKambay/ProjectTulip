@@ -20,4 +20,5 @@ MonoBehaviour:
   maxAmount: 1
   cooldown: 0.3
   swingTime: 30
+  isInstantSwing: 0
   power: 50

@@ -10,9 +10,11 @@ namespace Tulip.Data.Items
     {
         public virtual float Cooldown => cooldown;
         public virtual float SwingTime => swingTime;
+        public virtual bool IsInstantSwing => isInstantSwing;
 
         [Header("Usable Data")]
         [SerializeField, Min(0)] protected float cooldown = 0.5f;
-        [SerializeField, Min(0)] protected float swingTime = 0.1f;
+        [SerializeField, Min(1)] protected float swingTime = 10f;
+        [SerializeField] protected bool isInstantSwing;
     }
 }

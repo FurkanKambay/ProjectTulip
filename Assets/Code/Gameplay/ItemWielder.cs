@@ -68,7 +68,11 @@ namespace Tulip.Gameplay
                 _ => (readyAngle, itemToSwing.SwingTime * 2f)
             };
 
-            SetAngle(targetAngle, decay);
+            if (itemToSwing.IsInstantSwing)
+                SetAngleInstant(targetAngle);
+            else
+                SetAngle(targetAngle, decay);
+
             float deltaAngle = Mathf.DeltaAngle(itemVisual.localEulerAngles.z, targetAngle);
 
             if (Mathf.Abs(deltaAngle) > 0.1f)
@@ -113,6 +117,9 @@ namespace Tulip.Gameplay
                 OnReady?.Invoke(itemToSwing);
         }
 
+        private void SetAngleInstant(float target)
+            => itemVisual.localEulerAngles = Vector3.forward * target;
+
         private void SetAngle(float target, float decay)
         {
             float angle = itemVisual.localEulerAngles.z;
@@ -127,6 +134,8 @@ namespace Tulip.Gameplay
             if (itemState != ItemSwingState.Ready)
                 return;
 
+            UpdateItemSprite();
+
             Vector2 pivotPosition = itemPivot.position;
             Vector2 aimDirection = brain.I.AimPosition - pivotPosition;
             float aimAngle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
@@ -136,7 +145,7 @@ namespace Tulip.Gameplay
             itemPivot.rotation = Quaternion.AngleAxis(aimAngle, Vector3.forward);
         }
 
-        private void UpdateItemSprite(int _)
+        private void UpdateItemSprite()
         {
             Item item = CurrentItem;
 
@@ -158,10 +167,11 @@ namespace Tulip.Gameplay
 
         private void HandleDie(DamageEventArgs _) => itemRenderer.enabled = false;
         private void HandleRevived(IHealth source) => itemRenderer.enabled = true;
+        private void HandleHotbarSelectionChanged(int _) => UpdateItemSprite();
 
         private void OnEnable()
         {
-            UpdateItemSprite(0);
+            UpdateItemSprite();
 
             health.OnDie += HandleDie;
             health.OnRevive += HandleRevived;
@@ -169,7 +179,7 @@ namespace Tulip.Gameplay
             if (hotbar.I == null)
                 return;
 
-            hotbar.I.OnChangeSelection += UpdateItemSprite;
+            hotbar.I.OnChangeSelection += HandleHotbarSelectionChanged;
         }
 
         private void OnDisable()
@@ -180,7 +190,7 @@ namespace Tulip.Gameplay
             if (hotbar.I == null)
                 return;
 
-            hotbar.I.OnChangeSelection -= UpdateItemSprite;
+            hotbar.I.OnChangeSelection -= HandleHotbarSelectionChanged;
         }
 
         private enum ItemSwingState

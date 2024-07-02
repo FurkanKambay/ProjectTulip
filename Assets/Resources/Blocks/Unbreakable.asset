@@ -19,8 +19,8 @@ MonoBehaviour:
   description: An unbreakable block.
   maxAmount: 999
   cooldown: 0
-  chargeTime: 0
-  swingTime: 0
+  swingTime: 100
+  isInstantSwing: 1
   tileType: 1
   ruleTile: {fileID: 11400000, guid: 10a5f690be4115c4ab08acf2b123d0cc, type: 2}
   color: {r: 1, g: 1, b: 1, a: 1}

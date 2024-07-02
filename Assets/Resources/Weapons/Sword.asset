@@ -20,6 +20,7 @@ MonoBehaviour:
   maxAmount: 1
   cooldown: 0.4
   swingTime: 30
+  isInstantSwing: 0
   damage: 10
   range: 2
   isMultiTarget: 0

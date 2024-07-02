@@ -12,7 +12,6 @@ namespace Tulip.Data.Items
 
         public override Sprite Icon => ruleTile.m_DefaultSprite;
         public override float Cooldown => 0.25f;
-        public override float SwingTime => 0f;
 
         [Header("Tile Data")]
         [SerializeField] TileType tileType;

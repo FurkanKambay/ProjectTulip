@@ -19,12 +19,13 @@ MonoBehaviour:
   description: A stone wall.
   maxAmount: 999
   cooldown: 0.5
-  chargeTime: 0
-  swingTime: 0
+  swingTime: 100
+  isInstantSwing: 1
   tileType: 0
   ruleTile: {fileID: 11400000, guid: 2fb86c8156c8f9f4d806fdbeb58c8578, type: 2}
   color: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 1}
   hardness: 20
+  isUnbreakable: 0
   hitSound: {fileID: 8300000, guid: 1c58ef9024d97c946911c88ce0b23e68, type: 3}
   destroySound: {fileID: 0}
   placeSound: {fileID: 8300000, guid: 06a72ce793aec6e47acd9cd16493da2c, type: 3}

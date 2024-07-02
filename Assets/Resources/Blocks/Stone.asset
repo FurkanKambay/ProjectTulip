@@ -19,12 +19,13 @@ MonoBehaviour:
   description: Stone.
   maxAmount: 999
   cooldown: 0.5
-  chargeTime: 0
-  swingTime: 0
+  swingTime: 100
+  isInstantSwing: 1
   tileType: 1
   ruleTile: {fileID: 11400000, guid: 02e66ba5c65997f4da5eaed00f83fbc7, type: 2}
   color: {r: 1, g: 1, b: 1, a: 1}
   hardness: 100
+  isUnbreakable: 0
   hitSound: {fileID: 8300000, guid: b65b9caeebb3648408ca1136889f421d, type: 3}
   destroySound: {fileID: 8300000, guid: 21bf617b37a8d484d8f8bf78669d77b9, type: 3}
   placeSound: {fileID: 8300000, guid: 06a72ce793aec6e47acd9cd16493da2c, type: 3}
