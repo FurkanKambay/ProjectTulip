@@ -2,7 +2,8 @@
     "name": "Tulip.Data",
     "rootNamespace": "Tulip",
     "references": [
-        "GUID:613783dc1674e844b87788ea74ede0f6"
+        "GUID:613783dc1674e844b87788ea74ede0f6",
+        "GUID:9b261077c7a2ac34886513ec1345f8e0"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

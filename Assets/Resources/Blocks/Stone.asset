@@ -19,8 +19,7 @@ MonoBehaviour:
   description: Stone.
   maxAmount: 999
   cooldown: 0.5
-  swingTime: 100
-  isInstantSwing: 1
+  swingType: {fileID: 11400000, guid: 35ff93fda544a594a94ebfe5599470a9, type: 2}
   tileType: 1
   ruleTile: {fileID: 11400000, guid: 02e66ba5c65997f4da5eaed00f83fbc7, type: 2}
   color: {r: 1, g: 1, b: 1, a: 1}

@@ -1,6 +1,5 @@
 using System;
 using SaintsField;
-using Tulip.Core.Unity;
 using Tulip.Data;
 using Tulip.Data.Gameplay;
 using Tulip.Data.Items;
@@ -13,7 +12,7 @@ namespace Tulip.Gameplay
         public event Action<Usable, Vector3> OnSwing;
         public event Action<Usable> OnReady;
 
-        public Item CurrentItem => HotbarSelectedItem ? HotbarSelectedItem : equippedItem;
+        public Item CurrentItem => HotbarSelectedItem ? HotbarSelectedItem : fallbackItem;
         private Item HotbarSelectedItem => hotbar.I?.SelectedStack?.Item;
 
         [Header("References")]
@@ -23,151 +22,272 @@ namespace Tulip.Gameplay
         [SerializeField, Required] SpriteRenderer itemRenderer;
 
         [Header("Config")]
-        [SerializeField] Usable equippedItem;
-
-        [Header("Item Visuals")]
+        [SerializeField] Usable fallbackItem;
         [SerializeField] float itemStowDelay = 2f;
-        [SerializeField] float readyAngle = -10f;
-        [SerializeField] float swingAngle = -90f;
 
         private Transform itemPivot;
         private Transform itemVisual;
 
+        // state
         private Usable itemToSwing;
-        private ItemSwingState itemState;
-        private Vector3 rendererScale;
         private float timeSinceLastUse;
+        private ItemSwingState swingState;
+        private Vector3 rendererScale;
+
+        // state: phase (motion)
+        private bool wantsToSwapItems;
+        private int phaseIndex;
+        private MotionState motion;
 
         private void Awake()
         {
-            itemPivot = itemRenderer.transform.parent;
             itemVisual = itemRenderer.transform;
-
-            itemVisual.localEulerAngles = Vector3.forward * readyAngle;
+            itemPivot = itemVisual.parent;
+            RefreshItem();
         }
 
         private void Update()
         {
             timeSinceLastUse += Time.deltaTime;
+            TickSwingState();
+        }
 
-            bool shouldShowItem = timeSinceLastUse < itemStowDelay || brain.I.WantsToUse;
-            itemVisual.localScale = shouldShowItem ? rendererScale : Vector3.zero;
-            UpdateReadyItemVisual();
+        private void TickSwingState()
+        {
+            if (!itemToSwing)
+                return;
+
+            bool wantsToUse = brain.I.WantsToUse && !wantsToSwapItems;
+            ItemSwingType swingType = itemToSwing.SwingType;
+            UsePhase phase = swingType.Phases.Length > 0 ? swingType.Phases[phaseIndex] : default;
+
+            AimItem();
+
+            switch (swingState)
+            {
+                case ItemSwingState.Ready:
+                    // Only update sprite when ready to swing again
+                    bool shouldDisplay = wantsToUse || timeSinceLastUse < itemStowDelay;
+                    itemVisual.localScale = shouldDisplay ? rendererScale : Vector3.zero;
+
+                    if (wantsToUse && timeSinceLastUse > itemToSwing.Cooldown)
+                    {
+                        SwitchState(ItemSwingState.Swinging);
+                        timeSinceLastUse = 0f;
+                    }
+
+                    break;
+                case ItemSwingState.Swinging:
+                    // cancel the swing if needed
+                    if (phase.isCancelable && !wantsToUse)
+                    {
+                        SwitchState(ItemSwingState.Resetting);
+                        break;
+                    }
+
+                    // proceed normally (not interrupting the motion)
+                    TickMotionLerp();
+
+                    // we're still Lerping, so we skip to the next tick
+                    if (!IsMotionDone())
+                        break;
+
+                    // we reached the target angle. move to next phase or reset after final phase
+
+                    // if no phases, hit and reset swing
+                    if (swingType.Phases.Length == 0)
+                    {
+                        OnSwing?.Invoke(itemToSwing, brain.I.AimPosition);
+                        SwitchState(ItemSwingState.Resetting);
+                        break;
+                    }
+
+                    // hit if we need to before checking for final exit
+                    if (phase.shouldHit)
+                    {
+                        OnSwing?.Invoke(itemToSwing, brain.I.AimPosition);
+
+                        // TODO: no more blocks in slot, what to do?
+                        // itemToSwing = CurrentItem as Usable;
+                    }
+
+                    bool isFinalPhase = phaseIndex == swingType.Phases.Length - 1;
+
+                    if (isFinalPhase && !wantsToUse)
+                    {
+                        SwitchState(ItemSwingState.Resetting);
+                        break;
+                    }
+
+                    // still not ending so next phase. keeps swinging without resetting
+                    // looping: start from phase 0 again
+
+                    // TODO: should this be a setting?
+                    if (++phaseIndex >= swingType.Phases.Length)
+                        phaseIndex = 0;
+
+                    // this belongs in a state machine. Motion is a sub-state machine of Swing
+                    SetMotionToPhase();
+
+                    break;
+                case ItemSwingState.Resetting:
+                    TickMotionLerp();
+
+                    if (IsMotionDone())
+                        SwitchState(ItemSwingState.Ready);
+
+                    break;
+                default: throw new ArgumentOutOfRangeException(nameof(swingState));
+            }
+        }
+
+        private void SwitchState(ItemSwingState state)
+        {
+            if (state == swingState)
+                return;
 
             if (!itemToSwing)
             {
-                itemToSwing = CurrentItem as Usable;
-                itemState = ItemSwingState.Ready;
-
+                swingState = ItemSwingState.Ready;
                 return;
             }
 
-            (float targetAngle, float decay) = itemState switch
+            ItemSwingType swingType = itemToSwing.SwingType;
+            swingState = state;
+
+            switch (state)
             {
-                ItemSwingState.Swinging => (swingAngle, itemToSwing.SwingTime),
-                _ => (readyAngle, itemToSwing.SwingTime * 2f)
-            };
+                case ItemSwingState.Ready:
+                    // Only swap items when reset and ready
+                    wantsToSwapItems = false;
+                    RefreshItem();
+                    UpdateItemSprite();
 
-            if (itemToSwing.IsInstantSwing)
-                SetAngleInstant(targetAngle);
-            else
-                SetAngle(targetAngle, decay);
-
-            float deltaAngle = Mathf.DeltaAngle(itemVisual.localEulerAngles.z, targetAngle);
-
-            if (Mathf.Abs(deltaAngle) > 0.1f)
-                return;
-
-            // reached the current target angle
-
-            switch (itemState)
-            {
-                case ItemSwingState.Ready when brain.I.WantsToUse:
-                    itemToSwing = CurrentItem as Usable;
-
-                    if (!itemToSwing || timeSinceLastUse <= itemToSwing.Cooldown)
-                        break;
-
-                    itemState = ItemSwingState.Swinging;
-                    timeSinceLastUse = 0f;
-
+                    SetSpriteTransformInstant(swingType.ReadyPosition, swingType.ReadyAngle);
+                    OnReady?.Invoke(itemToSwing);
                     break;
-
                 case ItemSwingState.Swinging:
-                    itemState = ItemSwingState.Resetting;
-                    OnSwing?.Invoke(itemToSwing, brain.I.AimPosition);
-
+                    phaseIndex = 0;
+                    SetMotionToPhase();
                     break;
-
-                default:
                 case ItemSwingState.Resetting:
-                    // Can't swap item mid-swing
-                    GetItemReady();
-
+                    SetMotionToReady();
                     break;
+                default: throw new ArgumentOutOfRangeException(nameof(state));
             }
         }
 
-        private void GetItemReady()
+        private void RefreshItem()
         {
-            itemState = ItemSwingState.Ready;
             itemToSwing = CurrentItem as Usable;
+            phaseIndex = 0;
+            ResetMotionStart();
 
             if (itemToSwing)
-                OnReady?.Invoke(itemToSwing);
+                SetSpriteTransformInstant(itemToSwing.SwingType.ReadyPosition, itemToSwing.SwingType.ReadyAngle);
         }
 
-        private void SetAngleInstant(float target)
-            => itemVisual.localEulerAngles = Vector3.forward * target;
+#region Motion Helpers
 
-        private void SetAngle(float target, float decay)
+        private void SetMotionToPhase()
         {
-            float angle = itemVisual.localEulerAngles.z;
-            float delta = Mathf.DeltaAngle(angle, target);
-            float targetAngle = angle.ExpDecay(angle + delta, decay, Time.deltaTime);
+            ItemSwingType swingType = itemToSwing.SwingType;
+            UsePhase phase = swingType.Phases.Length > 0 ? swingType.Phases[phaseIndex] : default;
+
+            ResetMotionStart();
+            motion.EndPosition = swingType.ReadyPosition + phase.moveDelta;
+            motion.EndAngle = swingType.ReadyAngle + phase.turnDelta;
+            motion.MoveDuration = phase.moveDuration;
+            motion.TurnDuration = phase.turnDuration;
+        }
+
+        private void SetMotionToReady()
+        {
+            ItemSwingType swingType = itemToSwing.SwingType;
+
+            ResetMotionStart();
+            motion.EndPosition = swingType.ReadyPosition;
+            motion.EndAngle = swingType.ReadyAngle;
+            motion.MoveDuration = swingType.ResetMoveDuration;
+            motion.TurnDuration = swingType.ResetTurnDuration;
+        }
+
+        private void ResetMotionStart()
+        {
+            motion = default;
+            motion.StartPosition = itemVisual.localPosition;
+            motion.StartAngle = itemVisual.localEulerAngles.z;
+            // need to reset lerp values too here
+            motion.LerpMove = 0;
+            motion.LerpTurn = 0;
+        }
+
+        private void TickMotionLerp()
+        {
+            motion.LerpMove = motion.MoveDuration <= 0 || motion.LerpMove >= 1 ? 1
+                : Mathf.MoveTowards(motion.LerpMove, 1, Time.deltaTime / motion.MoveDuration);
+
+            motion.LerpTurn = motion.TurnDuration <= 0 || motion.LerpTurn >= 1 ? 1
+                : Mathf.MoveTowards(motion.LerpTurn, 1, Time.deltaTime / motion.TurnDuration);
+
+            SetSpriteTransformInstant(
+                Vector2.Lerp(motion.StartPosition, motion.EndPosition, motion.LerpMove),
+                Mathf.LerpAngle(motion.StartAngle, motion.EndAngle, motion.LerpTurn)
+            );
+        }
+
+        private bool IsMotionDone() => Mathf.Approximately(motion.LerpMove, 1) && Mathf.Approximately(motion.LerpTurn, 1);
+
+#endregion
+
+        private void SetSpriteTransformInstant(Vector2 targetPosition, float targetAngle)
+        {
+            itemVisual.localPosition = targetPosition;
             itemVisual.localEulerAngles = Vector3.forward * targetAngle;
         }
 
-        private void UpdateReadyItemVisual()
+        private void AimItem()
         {
-            // Don't rotate item in the middle of swinging
-            if (itemState != ItemSwingState.Ready)
-                return;
-
-            UpdateItemSprite();
-
-            Vector2 pivotPosition = itemPivot.position;
-            Vector2 aimDirection = brain.I.AimPosition - pivotPosition;
+            Vector2 aimDirection = brain.I.AimPosition - (Vector2)itemPivot.position;
             float aimAngle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
-
             bool isLeft = aimAngle is < -90 or > 90;
+
             itemPivot.localScale = new Vector3(1, isLeft ? -1 : 1, 1);
             itemPivot.rotation = Quaternion.AngleAxis(aimAngle, Vector3.forward);
         }
 
         private void UpdateItemSprite()
         {
-            Item item = CurrentItem;
-
-            float scale = item ? item.IconScale : 1;
+            float scale = itemToSwing ? itemToSwing.IconScale : 1;
             Color tint = Color.white;
 
-            if (item is WorldTile tile)
+            if (itemToSwing is WorldTile tile)
             {
-                scale = item.IconScale * 0.8f;
+                scale = itemToSwing.IconScale * 0.8f;
                 tint = tile.color;
             }
 
-            itemRenderer.sprite = item ? item.Icon : null;
-            itemRenderer.color = tint;
-
             rendererScale = Vector2.one * scale;
+
             itemRenderer.transform.localScale = rendererScale;
+            itemRenderer.sprite = itemToSwing ? itemToSwing.Icon : null;
+            itemRenderer.color = tint;
         }
 
         private void HandleDie(DamageEventArgs _) => itemRenderer.enabled = false;
         private void HandleRevived(IHealth source) => itemRenderer.enabled = true;
-        private void HandleHotbarSelectionChanged(int _) => UpdateItemSprite();
+
+        private void HandleHotbarSelectionChanged(int _)
+        {
+            if (swingState != ItemSwingState.Ready)
+            {
+                wantsToSwapItems = true;
+                return;
+            }
+
+            RefreshItem();
+            UpdateItemSprite();
+        }
 
         private void OnEnable()
         {
@@ -176,10 +296,8 @@ namespace Tulip.Gameplay
             health.OnDie += HandleDie;
             health.OnRevive += HandleRevived;
 
-            if (hotbar.I == null)
-                return;
-
-            hotbar.I.OnChangeSelection += HandleHotbarSelectionChanged;
+            if (hotbar.I != null)
+                hotbar.I.OnChangeSelection += HandleHotbarSelectionChanged;
         }
 
         private void OnDisable()
@@ -187,10 +305,21 @@ namespace Tulip.Gameplay
             health.OnDie -= HandleDie;
             health.OnRevive -= HandleRevived;
 
-            if (hotbar.I == null)
-                return;
+            if (hotbar.I != null)
+                hotbar.I.OnChangeSelection -= HandleHotbarSelectionChanged;
+        }
 
-            hotbar.I.OnChangeSelection -= HandleHotbarSelectionChanged;
+        private struct MotionState
+        {
+            public Vector2 StartPosition;
+            public Vector2 EndPosition;
+            public float StartAngle;
+            public float EndAngle;
+
+            public float MoveDuration;
+            public float TurnDuration;
+            public float LerpMove;
+            public float LerpTurn;
         }
 
         private enum ItemSwingState

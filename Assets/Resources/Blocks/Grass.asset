@@ -19,8 +19,7 @@ MonoBehaviour:
   description: A patch of grass.
   maxAmount: 999
   cooldown: 0.5
-  swingTime: 100
-  isInstantSwing: 1
+  swingType: {fileID: 11400000, guid: 35ff93fda544a594a94ebfe5599470a9, type: 2}
   tileType: 1
   ruleTile: {fileID: 11400000, guid: ac9ed5d0821cecb458eb05aa0c46c6a5, type: 2}
   color: {r: 1, g: 1, b: 1, a: 1}

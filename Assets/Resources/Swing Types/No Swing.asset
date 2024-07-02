@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f047f8c4f7534bd4b561aa759cbeb58d, type: 3}
+  m_Name: No Swing
+  m_EditorClassIdentifier: 
+  readyPosition: {x: 0, y: 0}
+  readyAngle: 0
+  resetMoveDuration: 0
+  resetTurnDuration: 0
+  phases: []
