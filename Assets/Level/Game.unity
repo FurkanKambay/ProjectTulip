@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -242,6 +241,7 @@ SpriteRenderer:
   m_RayTraceProcedural: 0
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -858,6 +858,9 @@ MonoBehaviour:
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 7811d9828d268fc42ae58a989e52d893, type: 3}
   m_SortingOrder: 0
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
 --- !u!4 &708079355
 Transform:
   m_ObjectHideFlags: 0
@@ -887,7 +890,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   document: {fileID: 708079354}
   audioSource: {fileID: 708079357}
-  inventory: {fileID: 1002056024}
+  hotbar:
+    <V>k__BackingField: {fileID: 1154427127}
   tooltipShowDuration: 2
 --- !u!82 &708079357
 AudioSource:
@@ -986,17 +990,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1002056024 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4728014676095277497, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
-  m_PrefabInstance: {fileID: 1154427126}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1dbac43252630dd499875c6a60daacdf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1839735485 &1011634099 stripped
 Tilemap:
   m_CorrespondingSourceObject: {fileID: 6191996856151981255, guid: f424f79dcd083e14b805387a89e2929f, type: 3}
@@ -1128,6 +1121,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
+--- !u!114 &1154427127 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 542648804553045035, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
+  m_PrefabInstance: {fileID: 1154427126}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8dd693b70f6477e9a4f2fec2b5bf252, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1186004516 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8962699432725922889, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
@@ -1188,6 +1192,9 @@ MonoBehaviour:
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: d9636a5f9290e574993ee9fda5700566, type: 3}
   m_SortingOrder: 2
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
 --- !u!114 &1406129969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1583,6 +1590,9 @@ MonoBehaviour:
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 38f92bafee39faf4aa1d6c29308188b9, type: 3}
   m_SortingOrder: 5
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
 --- !u!114 &1795025822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1839,6 +1849,9 @@ MonoBehaviour:
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 99944831f029e6f408f34f46e44cf7ff, type: 3}
   m_SortingOrder: 0
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
 --- !u!114 &1808102683
 MonoBehaviour:
   m_ObjectHideFlags: 0

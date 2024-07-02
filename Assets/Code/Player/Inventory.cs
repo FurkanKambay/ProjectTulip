@@ -8,26 +8,17 @@ namespace Tulip.Player
 {
     public sealed class Inventory : InventoryBase
     {
-        public override event Action<int> OnChangeHotbarSelection;
-        public override event Action OnModifyHotbar;
+        // TODO: provide affected indexes
+        public override event Action OnModify;
 
         [Header("Config")]
         [SerializeField] InventoryData inventoryData;
         [SerializeField, Min(0)] int capacity = 9;
 
-        public override ItemStack this[int index] => index < Items?.Length ? Items?[index] : null;
-
         public override ItemStack[] Items { get; protected set; }
         public override int Capacity => capacity;
 
-        public override ItemStack HotbarSelected => this[HotbarSelectedIndex];
-        public override int HotbarSelectedIndex
-        {
-            get => hotbarSelectedIndex;
-            protected set => hotbarSelectedIndex = Mathf.Clamp(value, 0, Items.Length - 1);
-        }
-
-        private int hotbarSelectedIndex;
+        public override ItemStack this[int index] => index >= 0 && index < Capacity ? Items?[index] : null;
 
         private void Awake()
         {
@@ -35,9 +26,6 @@ namespace Tulip.Player
             Array.Resize(ref startingInventory, capacity);
 
             Items = startingInventory;
-
-            OnModifyHotbar?.Invoke();
-            OnChangeHotbarSelection?.Invoke(HotbarSelectedIndex);
         }
 
         /// <summary>
@@ -51,6 +39,7 @@ namespace Tulip.Player
         {
             var notRemoved = new ItemStack(modification.ToRemove?.Item, RemoveItem(modification.ToRemove));
             var notAdded = new ItemStack(modification.ToAdd?.Item, AddItem(modification.ToAdd));
+
             return !modification.WouldModify
                 ? InventoryModification.Empty
                 : new InventoryModification(
@@ -59,26 +48,16 @@ namespace Tulip.Player
                 );
         }
 
-        internal void ChangeHotbarSelection(int index)
-        {
-            if (index == HotbarSelectedIndex)
-                return;
-
-            HotbarSelectedIndex = index;
-            OnChangeHotbarSelection?.Invoke(HotbarSelectedIndex);
-        }
-
         private int RemoveItem(ItemStack itemStack)
         {
             if (itemStack is not { IsValid: true })
                 return 0;
 
             int remainingAmount = itemStack.Amount;
+
             while (remainingAmount > 0)
             {
-                int foundIndex = HotbarSelected.Item == itemStack.Item
-                    ? HotbarSelectedIndex
-                    : FindFirstItemIndex(itemStack.Item, includeFullStacks: true);
+                int foundIndex = FindFirstItemIndex(itemStack.Item, includeFullStacks: true);
 
                 if (foundIndex < 0)
                     break;
@@ -92,7 +71,8 @@ namespace Tulip.Player
                     Items[foundIndex] = null;
             }
 
-            OnModifyHotbar?.Invoke();
+            OnModify?.Invoke();
+
             return remainingAmount;
         }
 
@@ -102,9 +82,11 @@ namespace Tulip.Player
                 return 0;
 
             int remainingAmount = itemStack.Amount;
+
             while (remainingAmount > 0)
             {
                 int foundIndex = FindFirstItemIndex(itemStack.Item, includeFullStacks: false);
+
                 if (foundIndex < 0)
                 {
                     foundIndex = CreateNewStack(itemStack.Item);
@@ -120,7 +102,7 @@ namespace Tulip.Player
             }
 
             if (remainingAmount == 0)
-                OnModifyHotbar?.Invoke();
+                OnModify?.Invoke();
 
             return remainingAmount;
         }
@@ -140,20 +122,26 @@ namespace Tulip.Player
         private int CreateNewStack(Item item)
         {
             int firstEmptyIndex = FindFirstEmptyIndex();
-            if (firstEmptyIndex < 0) return -1;
+
+            if (firstEmptyIndex < 0)
+                return -1;
 
             Items[firstEmptyIndex] = new ItemStack(item, 0);
+
             return firstEmptyIndex;
         }
 
         private int FindFirstItemIndex(Item item, bool includeFullStacks = false)
         {
-            if (item == null) return -1;
+            if (item == null)
+                return -1;
 
             for (int itemIndex = 0; itemIndex < Items.Length; itemIndex++)
             {
                 ItemStack currentItem = Items[itemIndex];
-                if (currentItem == null) continue;
+
+                if (currentItem == null)
+                    continue;
 
                 if (currentItem.Item == item && (includeFullStacks || currentItem.Amount < item.MaxAmount))
                     return itemIndex;

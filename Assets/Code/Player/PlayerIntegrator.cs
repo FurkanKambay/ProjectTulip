@@ -7,12 +7,14 @@ namespace Tulip.Player
 {
     public sealed class PlayerIntegrator : MonoBehaviour
     {
+        [Header("References")]
         [SerializeField, Required] SaintsInterface<Component, IPlayerBrain> brain;
-        [SerializeField] Inventory inventory;
+        [SerializeField] PlayerHotbar hotbar;
 
         private void Update()
         {
-            if (!brain.V) enabled = false;
+            if (!brain.V)
+                enabled = false;
 
             HandleSmartCursor();
             HandleHotbarSelection();
@@ -20,18 +22,20 @@ namespace Tulip.Player
 
         private void HandleHotbarSelection()
         {
-            if (!inventory) return;
+            if (!hotbar)
+                return;
 
             if (brain.I.HotbarSelectionIndex.HasValue)
             {
-                inventory.ChangeHotbarSelection(brain.I.HotbarSelectionIndex.Value);
+                hotbar.Select(brain.I.HotbarSelectionIndex.Value);
                 return;
             }
 
-            if (brain.I.HotbarSelectionDelta == 0) return;
+            if (brain.I.HotbarSelectionDelta == 0)
+                return;
 
-            int currentIndex = inventory.HotbarSelectedIndex;
-            inventory.ChangeHotbarSelection(currentIndex - brain.I.HotbarSelectionDelta);
+            int currentIndex = hotbar.SelectedIndex;
+            hotbar.Select(currentIndex - brain.I.HotbarSelectionDelta);
         }
 
         private void HandleSmartCursor()

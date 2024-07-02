@@ -14,12 +14,12 @@ namespace Tulip.Gameplay
         public event Action<Usable> OnReady;
 
         public Item CurrentItem => HotbarSelectedItem ? HotbarSelectedItem : equippedItem;
-        private Item HotbarSelectedItem => inventory.I?.HotbarSelected?.Item;
+        private Item HotbarSelectedItem => hotbar.I?.SelectedStack?.Item;
 
         [Header("References")]
         [SerializeField, Required] Health health;
         [SerializeField, Required] SaintsInterface<Component, IWielderBrain> brain;
-        [SerializeField] SaintsInterface<Component, IInventory> inventory;
+        [SerializeField] SaintsInterface<Component, IPlayerHotbar> hotbar;
         [SerializeField, Required] SpriteRenderer itemRenderer;
 
         [Header("Config")]
@@ -58,6 +58,7 @@ namespace Tulip.Gameplay
             {
                 itemToSwing = CurrentItem as Usable;
                 itemState = ItemSwingState.Ready;
+
                 return;
             }
 
@@ -70,29 +71,35 @@ namespace Tulip.Gameplay
             SetAngle(targetAngle, decay);
             float deltaAngle = Mathf.DeltaAngle(itemVisual.localEulerAngles.z, targetAngle);
 
-            if (Mathf.Abs(deltaAngle) > 0.1f) return;
+            if (Mathf.Abs(deltaAngle) > 0.1f)
+                return;
+
             // reached the current target angle
 
             switch (itemState)
             {
                 case ItemSwingState.Ready when brain.I.WantsToUse:
                     itemToSwing = CurrentItem as Usable;
+
                     if (!itemToSwing || timeSinceLastUse <= itemToSwing.Cooldown)
                         break;
 
                     itemState = ItemSwingState.Swinging;
                     timeSinceLastUse = 0f;
+
                     break;
 
                 case ItemSwingState.Swinging:
                     itemState = ItemSwingState.Resetting;
                     OnSwing?.Invoke(itemToSwing, brain.I.AimPosition);
+
                     break;
 
                 default:
                 case ItemSwingState.Resetting:
                     // Can't swap item mid-swing
                     GetItemReady();
+
                     break;
             }
         }
@@ -101,6 +108,7 @@ namespace Tulip.Gameplay
         {
             itemState = ItemSwingState.Ready;
             itemToSwing = CurrentItem as Usable;
+
             if (itemToSwing)
                 OnReady?.Invoke(itemToSwing);
         }
@@ -116,7 +124,8 @@ namespace Tulip.Gameplay
         private void UpdateReadyItemVisual()
         {
             // Don't rotate item in the middle of swinging
-            if (itemState != ItemSwingState.Ready) return;
+            if (itemState != ItemSwingState.Ready)
+                return;
 
             Vector2 pivotPosition = itemPivot.position;
             Vector2 aimDirection = brain.I.AimPosition - pivotPosition;
@@ -157,8 +166,10 @@ namespace Tulip.Gameplay
             health.OnDie += HandleDie;
             health.OnRevive += HandleRevived;
 
-            if (inventory.I == null) return;
-            inventory.I.OnChangeHotbarSelection += UpdateItemSprite;
+            if (hotbar.I == null)
+                return;
+
+            hotbar.I.OnChangeSelection += UpdateItemSprite;
         }
 
         private void OnDisable()
@@ -166,8 +177,10 @@ namespace Tulip.Gameplay
             health.OnDie -= HandleDie;
             health.OnRevive -= HandleRevived;
 
-            if (inventory.I == null) return;
-            inventory.I.OnChangeHotbarSelection -= UpdateItemSprite;
+            if (hotbar.I == null)
+                return;
+
+            hotbar.I.OnChangeSelection -= UpdateItemSprite;
         }
 
         private enum ItemSwingState

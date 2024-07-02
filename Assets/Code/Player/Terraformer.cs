@@ -73,9 +73,9 @@ namespace Tulip.Player
             MouseCell = world.WorldToCell(brain.I.AimPosition);
 
             Vector2 hotspot = (Vector2)transform.position + hotspotOffset;
-            rangePath = Vector2.ClampMagnitude((Vector2)brain.I.AimPosition - hotspot, range);
+            rangePath = Vector2.ClampMagnitude(brain.I.AimPosition - hotspot, range);
 
-            if (!Options.Instance.Gameplay.UseSmartCursor || inventory.HotbarSelected?.Item is not Pickaxe)
+            if (!Options.Instance.Gameplay.UseSmartCursor || itemWielder.I.CurrentItem is not Pickaxe)
             {
                 float distance = Vector3.Distance(hotspot, brain.I.AimPosition);
                 FocusedCell = distance <= range ? MouseCell : null;

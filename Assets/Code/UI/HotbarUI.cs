@@ -12,7 +12,7 @@ namespace Tulip.UI
         [Header("References")]
         [SerializeField, Required] UIDocument document;
         [SerializeField, Required] AudioSource audioSource;
-        [SerializeField, Required] InventoryBase inventory;
+        [SerializeField, Required] SaintsInterface<Component, IPlayerHotbar> hotbar;
 
         [Header("Config")]
         [SerializeField] float tooltipShowDuration;
@@ -22,7 +22,7 @@ namespace Tulip.UI
 
         private void UpdateHotbar()
         {
-            ItemStack[] items = inventory.Items;
+            ItemStack[] items = hotbar.I.Items;
             for (int i = 0; i < items.Length; i++)
             {
                 ItemStack slot = items[i];
@@ -55,7 +55,7 @@ namespace Tulip.UI
 
         private void UpdateTooltip()
         {
-            Item selectedItem = inventory.HotbarSelected?.Item;
+            Item selectedItem = hotbar.I.SelectedStack?.Item;
             tooltipRoot.visible = selectedItem != null;
 
             Label nameLabel = tooltipRoot.Q<Label>("tooltip-name");
@@ -63,7 +63,7 @@ namespace Tulip.UI
             nameLabel.text = selectedItem ? selectedItem.Name : null;
             descriptionLabel.text = selectedItem ? selectedItem.Description : null;
 
-            int slotIndex = inventory.HotbarSelectedIndex;
+            int slotIndex = hotbar.I.SelectedIndex;
             Vector3 slotPosition = hotbarRoot[slotIndex].layout.position;
             float offset = (tooltipRoot.layout.size.x / 2f) - (hotbarRoot[slotIndex].layout.size.x / 2f);
 
@@ -89,14 +89,14 @@ namespace Tulip.UI
             tooltipRoot = document.rootVisualElement[1];
 
             UpdateHotbar();
-            inventory.OnModifyHotbar += UpdateHotbar;
-            inventory.OnChangeHotbarSelection += UpdateHotbarSelection;
+            hotbar.I.OnModify += UpdateHotbar;
+            hotbar.I.OnChangeSelection += UpdateHotbarSelection;
         }
 
         private void OnDisable()
         {
-            inventory.OnModifyHotbar -= UpdateHotbar;
-            inventory.OnChangeHotbarSelection -= UpdateHotbarSelection;
+            hotbar.I.OnModify -= UpdateHotbar;
+            hotbar.I.OnChangeSelection -= UpdateHotbarSelection;
         }
     }
 }
