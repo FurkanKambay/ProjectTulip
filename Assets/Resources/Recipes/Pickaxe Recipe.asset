@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ItemResult>k__BackingField: {fileID: 11400000, guid: c478888b16953144286cffad52968cc0, type: 2}
   <Ingredients>k__BackingField:
-  - <Item>k__BackingField: {fileID: 11400000, guid: 6d3857252a8becc409275c487eef4913, type: 2}
+  - item: {fileID: 11400000, guid: 6d3857252a8becc409275c487eef4913, type: 2}
     amount: 5

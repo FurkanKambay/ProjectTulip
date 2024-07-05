@@ -14,9 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   capacity: 9
   inventory:
-  - <Item>k__BackingField: {fileID: 11400000, guid: 5efcb26fcf7c35443bfebf105a319f3d, type: 2}
+  - item: {fileID: 11400000, guid: 5efcb26fcf7c35443bfebf105a319f3d, type: 2}
     amount: 1
-  - <Item>k__BackingField: {fileID: 11400000, guid: 9b57593f7b5cd0541984229247126e42, type: 2}
+  - item: {fileID: 11400000, guid: 9b57593f7b5cd0541984229247126e42, type: 2}
     amount: 1
-  - <Item>k__BackingField: {fileID: 11400000, guid: 6d3857252a8becc409275c487eef4913, type: 2}
+  - item: {fileID: 11400000, guid: 6d3857252a8becc409275c487eef4913, type: 2}
+    amount: 100
+  - item: {fileID: 11400000, guid: 0491a0de59d86f9408b7f2902c563f0e, type: 2}
     amount: 100

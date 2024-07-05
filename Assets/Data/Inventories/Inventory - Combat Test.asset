@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   capacity: 9
   inventory:
-  - <Item>k__BackingField: {fileID: 11400000, guid: 9b57593f7b5cd0541984229247126e42, type: 2}
+  - item: {fileID: 11400000, guid: 9b57593f7b5cd0541984229247126e42, type: 2}
     amount: 1
-  - <Item>k__BackingField: {fileID: 11400000, guid: a8bb0906d948d4341a37fd2b33eb06e0, type: 2}
+  - item: {fileID: 11400000, guid: a8bb0906d948d4341a37fd2b33eb06e0, type: 2}
     amount: 1

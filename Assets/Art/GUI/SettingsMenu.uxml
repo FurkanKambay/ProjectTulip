@@ -59,12 +59,12 @@
         </ui:TabView>
         <ui:Button text="Quit to desktop" name="QuitConfirmButton" focusable="false" class="header-button quit-button">
             <Bindings>
-                <ui:DataBinding property="style.visibility" binding-mode="ToTarget" data-source-path="QuitConfirmButtonVisibility" />
+                <ui:DataBinding property="style.visibility" binding-mode="ToTarget" data-source-path="IsQuitConfirmButtonVisible" />
             </Bindings>
         </ui:Button>
         <ui:Button text="Save &amp; Quit" name="SaveExitButton" focusable="false" class="header-button quit-button" style="visibility: hidden;">
             <Bindings>
-                <ui:DataBinding property="style.visibility" binding-mode="ToTarget" data-source-path="SaveExitButtonVisibility" />
+                <ui:DataBinding property="style.visibility" binding-mode="ToTarget" data-source-path="IsSaveExitButtonVisible" />
             </Bindings>
         </ui:Button>
         <ui:Toggle name="QuitFlyoutButton" enable-rich-text="false" emoji-fallback-support="false" class="header-button" />

@@ -1,32 +1,25 @@
-.hotbar-container {
+#hotbar-container {
     flex-direction: row;
     justify-content: center;
     align-items: flex-start;
 }
 
 .selected > Button {
-    background-color: rgb(119, 136, 153);
+    background-color: rgb(45, 99, 153);
     border-color: midnightblue;
     border-width: 2px;
 }
 
-.tooltip-container {
-    background-color: rgba(0, 108, 111, 0.51);
-    width: 200px;
+#tooltip-container {
+    background-color: rgba(45, 99, 153, 0.4);
     align-self: center;
     margin-top: 4px;
-}
-
-.tooltip-label-name {
-    margin: 0;
-    background-color: rgba(0, 0, 0, 0.13);
-    -unity-text-align: upper-center;
-}
-
-.tooltip-label-description {
-    margin: 0;
-    padding-left: 4px;
     padding-right: 4px;
-    width: 200px;
-    white-space: normal;
+    padding-left: 4px;
+}
+
+#tooltip-item-name {
+    margin: 0;
+    -unity-text-align: upper-center;
+    color: rgb(38, 38, 38);
 }

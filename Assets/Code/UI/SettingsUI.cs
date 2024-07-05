@@ -24,13 +24,10 @@ namespace Tulip.UI
         public UnityEvent onHide;
         public UnityEvent onClickExit;
 
-        // ReSharper disable UnusedMember.Global
-        [CreateProperty]
-        public Visibility QuitConfirmButtonVisibility => (IsInMainMenu && ShouldShowQuitButton).ToVisibility();
-
-        [CreateProperty]
-        public Visibility SaveExitButtonVisibility => (!IsInMainMenu && ShouldShowQuitButton).ToVisibility();
-        // ReSharper restore UnusedMember.Global
+        // ReSharper disable UnusedMember.Local
+        [CreateProperty] bool IsQuitConfirmButtonVisible => IsInMainMenu && ShouldShowQuitButton;
+        [CreateProperty] bool IsSaveExitButtonVisible => !IsInMainMenu && ShouldShowQuitButton;
+        // ReSharper restore UnusedMember.Local
 
         private static bool IsInMainMenu => GameState.Current == GameState.MainMenu;
         private bool ShouldShowQuitButton => container.visible && quitFlyoutButton.value;

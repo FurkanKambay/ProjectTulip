@@ -13,18 +13,18 @@
         <engine:VisualElement name="RespawnPanel">
             <engine:Button text="Respawn" name="RespawnButton">
                 <Bindings>
-                    <engine:DataBinding property="style.display" binding-mode="ToTarget" data-source-path="RespawnButtonDisplay" />
+                    <engine:DataBinding property="style.display" binding-mode="ToTarget" data-source-path="IsRespawnButtonDisplayed" />
                 </Bindings>
             </engine:Button>
             <engine:Label name="RespawnCountdown">
                 <Bindings>
                     <engine:DataBinding property="text" binding-mode="ToTarget" data-source-path="SecondsUntilRespawn" />
-                    <engine:DataBinding property="style.display" binding-mode="ToTarget" data-source-path="CountdownDisplay" />
+                    <engine:DataBinding property="style.display" binding-mode="ToTarget" data-source-path="IsCountdownDisplayed" />
                 </Bindings>
             </engine:Label>
         </engine:VisualElement>
         <Bindings>
-            <engine:DataBinding property="style.display" binding-mode="ToTarget" data-source-path="OverlayDisplay" />
+            <engine:DataBinding property="style.display" binding-mode="ToTarget" data-source-path="IsOverlayDisplayed" />
         </Bindings>
     </engine:VisualElement>
 </engine:UXML>

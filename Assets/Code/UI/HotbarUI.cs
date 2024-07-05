@@ -2,6 +2,7 @@ using System.Collections;
 using SaintsField;
 using Tulip.Data;
 using Tulip.Data.Items;
+using Unity.Properties;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -15,32 +16,41 @@ namespace Tulip.UI
         [SerializeField, Required] SaintsInterface<Component, IPlayerHotbar> hotbar;
 
         [Header("Config")]
-        [SerializeField] float tooltipShowDuration;
+        [OverlayRichLabel("<color=grey>ms")]
+        [SerializeField] int tooltipShowDuration = 1000;
+
+        [OverlayRichLabel("<color=grey>ms")]
+        [SerializeField] int tooltipSlideDuration = 100;
+
+        // ReSharper disable NotAccessedField.Local
+        [CreateProperty] string itemName;
+        [CreateProperty] ItemStack[] items;
+        // ReSharper restore NotAccessedField.Local
 
         private VisualElement hotbarRoot;
         private VisualElement tooltipRoot;
 
-        private void UpdateHotbar()
+        private void Start() => UpdateTooltip();
+
+        private void OnEnable()
         {
-            ItemStack[] items = hotbar.I.Items;
-            for (int i = 0; i < items.Length; i++)
-            {
-                ItemStack slot = items[i];
-                Item item = slot?.Item;
+            hotbarRoot = document.rootVisualElement[0];
+            tooltipRoot = document.rootVisualElement[1];
 
-                VisualElement button = hotbarRoot[i];
-                Label slotLabel = button.Q<Label>();
-                Image slotImage = button.Q<Image>();
+            document.rootVisualElement.dataSource = this;
+            UpdateHotbar();
 
-                slotLabel.visible = item is { MaxAmount: > 1 };
-                slotLabel.text = slot?.Amount.ToString();
-                slotImage.sprite = item ? item.Icon : null;
-
-                if (item == null) continue;
-                slotImage.transform.scale = Vector3.one * item.IconScale;
-                slotImage.tintColor = item is WorldTile tile ? tile.color : Color.white;
-            }
+            hotbar.I.OnModify += UpdateHotbar;
+            hotbar.I.OnChangeSelection += UpdateHotbarSelection;
         }
+
+        private void OnDisable()
+        {
+            hotbar.I.OnModify -= UpdateHotbar;
+            hotbar.I.OnChangeSelection -= UpdateHotbarSelection;
+        }
+
+        private void UpdateHotbar() => items = hotbar.I.Items;
 
         private void UpdateHotbarSelection(int index)
         {
@@ -56,21 +66,20 @@ namespace Tulip.UI
         private void UpdateTooltip()
         {
             Item selectedItem = hotbar.I.SelectedStack?.Item;
-            tooltipRoot.visible = selectedItem != null;
+            tooltipRoot.visible = (bool)selectedItem;
 
-            Label nameLabel = tooltipRoot.Q<Label>("tooltip-name");
-            Label descriptionLabel = tooltipRoot.Q<Label>("tooltip-description");
-            nameLabel.text = selectedItem ? selectedItem.Name : null;
-            descriptionLabel.text = selectedItem ? selectedItem.Description : null;
+            itemName = selectedItem ? selectedItem.Name : string.Empty;
 
             int slotIndex = hotbar.I.SelectedIndex;
             Vector3 slotPosition = hotbarRoot[slotIndex].layout.position;
             float offset = (tooltipRoot.layout.size.x / 2f) - (hotbarRoot[slotIndex].layout.size.x / 2f);
 
             float newPositionX = slotPosition.x - tooltipRoot.layout.position.x - offset;
-            tooltipRoot.transform.position = Vector3.right * newPositionX;
+            tooltipRoot.experimental.animation.Position(Vector3.right * newPositionX, tooltipSlideDuration);
 
-            if (!tooltipRoot.visible) return;
+            if (!tooltipRoot.visible)
+                return;
+
             StopAllCoroutines();
             StartCoroutine(showTooltip());
             return;
@@ -78,25 +87,9 @@ namespace Tulip.UI
             IEnumerator showTooltip()
             {
                 tooltipRoot.visible = true;
-                yield return new WaitForSeconds(tooltipShowDuration);
+                yield return new WaitForSeconds(tooltipShowDuration / 1000f);
                 tooltipRoot.visible = false;
             }
-        }
-
-        private void OnEnable()
-        {
-            hotbarRoot = document.rootVisualElement[0];
-            tooltipRoot = document.rootVisualElement[1];
-
-            UpdateHotbar();
-            hotbar.I.OnModify += UpdateHotbar;
-            hotbar.I.OnChangeSelection += UpdateHotbarSelection;
-        }
-
-        private void OnDisable()
-        {
-            hotbar.I.OnModify -= UpdateHotbar;
-            hotbar.I.OnChangeSelection -= UpdateHotbarSelection;
         }
     }
 }

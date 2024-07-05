@@ -13,14 +13,14 @@ namespace Tulip.UI
         [SerializeField, Required] HealthBase health;
         [SerializeField, Required] SaintsInterface<Component, IRespawner> respawner;
 
-        // ReSharper disable UnusedMember.Global
-        [CreateProperty] public DisplayStyle OverlayDisplay => health.IsDead.ToDisplay();
-        [CreateProperty] public DisplayStyle RespawnButtonDisplay => respawner.I.CanRespawn.ToDisplay();
-        [CreateProperty] public DisplayStyle CountdownDisplay => respawner.I.CanRespawn.ToDisplayInverse();
+        // ReSharper disable UnusedMember.Local
+        [CreateProperty] bool IsOverlayDisplayed => health.IsDead;
+        [CreateProperty] bool IsRespawnButtonDisplayed => respawner.I.CanRespawn;
+        [CreateProperty] bool IsCountdownDisplayed => !respawner.I.CanRespawn;
 
-        [CreateProperty] public string DeathReason => health?.LatestDeathSource?.Name;
-        [CreateProperty] public int SecondsUntilRespawn => Mathf.CeilToInt(respawner.I.SecondsUntilRespawn);
-        // ReSharper restore UnusedMember.Global
+        [CreateProperty] string DeathReason => health?.LatestDeathSource?.Name;
+        [CreateProperty] int SecondsUntilRespawn => Mathf.CeilToInt(respawner.I.SecondsUntilRespawn);
+        // ReSharper restore UnusedMember.Local
 
         private VisualElement root;
         private Button respawnButton;

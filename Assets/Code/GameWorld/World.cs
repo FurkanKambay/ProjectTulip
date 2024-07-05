@@ -48,7 +48,7 @@ namespace Tulip.GameWorld
             tilemap.SetTile(cell, null);
             damageMap.Remove(cell);
             OnDestroyTile?.Invoke(TileModification.FromDestroyed(cell, worldTile));
-            return new InventoryModification(toAdd: new ItemStack(item: worldTile));
+            return new InventoryModification(toAdd: new ItemStack(worldTile, 1));
         }
 
         public InventoryModification PlaceTile(Vector3Int cell, WorldTile worldTile)
@@ -62,7 +62,7 @@ namespace Tulip.GameWorld
 
             GetDamageMap(worldTile.TileType).Remove(cell);
             OnPlaceTile?.Invoke(TileModification.FromPlaced(cell, worldTile));
-            return new InventoryModification(toRemove: new ItemStack(item: worldTile));
+            return new InventoryModification(toRemove: new ItemStack(worldTile, 1));
         }
 
         public bool CanAccommodate(Vector3Int cell, Vector2Int entitySize)
@@ -76,6 +76,7 @@ namespace Tulip.GameWorld
             Vector3Int cellToCheck = cell;
 
             var floor = new Vector3Int(cellToCheck.x, cellToCheck.y - 1);
+
             if (!HasTile(floor) || !GetTile(floor).IsSafe)
                 return false;
 

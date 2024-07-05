@@ -903,7 +903,8 @@ MonoBehaviour:
   audioSource: {fileID: 708079357}
   hotbar:
     <V>k__BackingField: {fileID: 1154427127}
-  tooltipShowDuration: 2
+  tooltipShowDuration: 2000
+  tooltipSlideDuration: 100
 --- !u!82 &708079357
 AudioSource:
   m_ObjectHideFlags: 0

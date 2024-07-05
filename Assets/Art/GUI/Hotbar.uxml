@@ -1,19 +1,22 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:Template name="HotbarSlot" src="project://database/Assets/Art/GUI/Templates/HotbarSlot.uxml?fileID=9197481963319205126&amp;guid=0177eda6d9ac7864caa5afb35515f330&amp;type=3#HotbarSlot" />
     <Style src="project://database/Assets/Art/GUI/Styles/Hotbar.uss?fileID=7433441132597879392&amp;guid=35dca9aad35424341a464822cf25276a&amp;type=3#Hotbar" />
-    <ui:VisualElement name="hotbar-container" class="hotbar-container">
-        <ui:Instance template="HotbarSlot" name="slot-0" class="selected" />
-        <ui:Instance template="HotbarSlot" name="slot-1" />
-        <ui:Instance template="HotbarSlot" name="slot-2" />
-        <ui:Instance template="HotbarSlot" name="slot-3" />
-        <ui:Instance template="HotbarSlot" name="slot-4" />
-        <ui:Instance template="HotbarSlot" name="slot-5" />
-        <ui:Instance template="HotbarSlot" name="slot-6" />
-        <ui:Instance template="HotbarSlot" name="slot-7" />
-        <ui:Instance template="HotbarSlot" name="slot-8" />
+    <ui:VisualElement name="hotbar-container" data-source-type="Tulip.UI.HotbarUI, Tulip.UI" class="hotbar-container">
+        <ui:Instance template="HotbarSlot" name="slot-0" data-source-path="items[0]" class="selected" />
+        <ui:Instance template="HotbarSlot" name="slot-1" data-source-path="items[1]" />
+        <ui:Instance template="HotbarSlot" name="slot-2" data-source-path="items[2]" />
+        <ui:Instance template="HotbarSlot" name="slot-3" data-source-path="items[3]" />
+        <ui:Instance template="HotbarSlot" name="slot-4" data-source-path="items[4]" />
+        <ui:Instance template="HotbarSlot" name="slot-5" data-source-path="items[5]" />
+        <ui:Instance template="HotbarSlot" name="slot-6" data-source-path="items[6]" />
+        <ui:Instance template="HotbarSlot" name="slot-7" data-source-path="items[7]" />
+        <ui:Instance template="HotbarSlot" name="slot-8" data-source-path="items[8]" />
     </ui:VisualElement>
-    <ui:VisualElement name="tooltip-container" class="tooltip-container">
-        <ui:Label name="tooltip-name" class="tooltip-label-name" enable-rich-text="false" text="Item name" />
-        <ui:Label name="tooltip-description" class="tooltip-label-description" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
+    <ui:VisualElement name="tooltip-container" data-source-type="Tulip.UI.HotbarUI, Tulip.UI">
+        <ui:Label name="tooltip-item-name" text="Item name" class="tooltip-label-name">
+            <Bindings>
+                <ui:DataBinding property="text" data-source-path="itemName" binding-mode="ToTarget" />
+            </Bindings>
+        </ui:Label>
     </ui:VisualElement>
 </ui:UXML>

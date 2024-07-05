@@ -1,3 +1,4 @@
+using Unity.Properties;
 using UnityEngine;
 
 namespace Tulip.Data.Items
@@ -14,6 +15,11 @@ namespace Tulip.Data.Items
         public virtual string Name => name;
         public virtual string Description => description;
         public virtual int MaxAmount => maxAmount;
+
+        // ReSharper disable UnusedMember.Local
+        [CreateProperty] bool CanHaveMultiple => MaxAmount > 1;
+        [CreateProperty] float IconHeight => IconScale * 24f;
+        // ReSharper restore UnusedMember.Local
 
         [Header("Item Data")]
         [SerializeField] protected ItemType type;
