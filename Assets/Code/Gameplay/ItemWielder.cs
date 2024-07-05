@@ -104,12 +104,7 @@ namespace Tulip.Gameplay
 
                     // hit if we need to before checking for final exit
                     if (phase.shouldHit)
-                    {
                         OnSwing?.Invoke(itemToSwing, brain.I.AimPosition);
-
-                        // TODO: no more blocks in slot, what to do?
-                        // itemToSwing = CurrentItem as Usable;
-                    }
 
                     bool isFinalPhase = phaseIndex == swingType.Phases.Length - 1;
 

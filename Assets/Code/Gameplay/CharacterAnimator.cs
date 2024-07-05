@@ -52,7 +52,7 @@ namespace Tulip.Gameplay
         private void DestroyAfterAnimation(float extraDelay = 0f)
         {
             float length = animator.GetCurrentAnimatorStateInfo(0).length;
-            Destroy(health.gameObject, length + extraDelay);
+            Destroy(health.transform.parent.gameObject, length + extraDelay);
         }
     }
 }
