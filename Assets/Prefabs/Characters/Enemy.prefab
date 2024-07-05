@@ -238,7 +238,6 @@ GameObject:
   - component: {fileID: 8291246366843984804}
   - component: {fileID: 270610127142405494}
   - component: {fileID: 7560684870690709998}
-  - component: {fileID: 1755906629218326450}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Enemy
@@ -264,6 +263,7 @@ Transform:
   - {fileID: 1795201085845774880}
   - {fileID: 351480472563880154}
   - {fileID: 810672411270772136}
+  - {fileID: 5777834135092849321}
   - {fileID: 5366052400381717419}
   - {fileID: 7260239761629546054}
   - {fileID: 1503169798523780801}
@@ -342,22 +342,6 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &1755906629218326450
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2859632988072890709}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 992d83c1bd31b8b41aec2663aa6ead9d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 50
-  currentHealth: 50
-  invulnerabilityDuration: 0
-  name: Enemy
 --- !u!1 &3767203261702702095
 GameObject:
   m_ObjectHideFlags: 0
@@ -436,7 +420,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 7114080759001476472}
   health:
-    <V>k__BackingField: {fileID: 1755906629218326450}
+    <V>k__BackingField: {fileID: 1334333901957425893}
   hurtSound: {fileID: 8300000, guid: 9c9d0c42db7ad844199181c53108352c, type: 3}
   dieSound: {fileID: 8300000, guid: e3c885f39a4f04f4c8ad904e97743e29, type: 3}
 --- !u!82 &7114080759001476472
@@ -636,8 +620,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2f6f9192efd45219b90fa99ac6d52e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health:
-    <V>k__BackingField: {fileID: 1755906629218326450}
+  health: {fileID: 1334333901957425893}
   healthBarSprite: {fileID: 2877314810792179112}
   changeSpeed: 10
   showBar: 1
@@ -687,7 +670,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 221a2bf0379152f4b81a63414840b5da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: {fileID: 1755906629218326450}
+  health: {fileID: 1334333901957425893}
   brain:
     <V>k__BackingField: {fileID: 5945291673912604298}
   hotbar:
@@ -727,6 +710,54 @@ Transform:
   - {fileID: 8480558047925952218}
   m_Father: {fileID: 7260239761629546054}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5508681197350535666
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5777834135092849321}
+  - component: {fileID: 1334333901957425893}
+  m_Layer: 0
+  m_Name: Health
+  m_TagString: Untagged
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5777834135092849321
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5508681197350535666}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8291246366843984804}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1334333901957425893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5508681197350535666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 992d83c1bd31b8b41aec2663aa6ead9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 50
+  currentHealth: 50
+  invulnerabilityDuration: 0
+  name: Enemy
 --- !u!1 &6025555610824796458
 GameObject:
   m_ObjectHideFlags: 0
@@ -771,8 +802,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8a96e8e20d94ab2b04f029fd11b79e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health:
-    <V>k__BackingField: {fileID: 1755906629218326450}
+  health: {fileID: 1334333901957425893}
   stopDistance: 1.5
   heightThresholdToJump: 1.8
   jumpCooldown: 1.5
@@ -874,7 +904,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c36735ade5ba44c78de1e439a9ac9ddf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: {fileID: 1755906629218326450}
+  health: {fileID: 1334333901957425893}
   animator: {fileID: 6461720170399778386}
   movement:
     <V>k__BackingField: {fileID: 9212041135445022483}
@@ -1142,7 +1172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be49605a98e97be4f8107b2403c172b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: {fileID: 1755906629218326450}
+  health: {fileID: 1334333901957425893}
   itemWielder: {fileID: 6883005073613853074}
   hitContactFilter:
     useTriggers: 0

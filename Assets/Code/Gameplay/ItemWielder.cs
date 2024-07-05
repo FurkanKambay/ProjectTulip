@@ -16,7 +16,7 @@ namespace Tulip.Gameplay
         private Item HotbarSelectedItem => hotbar.I?.SelectedStack?.Item;
 
         [Header("References")]
-        [SerializeField, Required] Health health;
+        [SerializeField, Required] HealthBase health;
         [SerializeField, Required] SaintsInterface<Component, IWielderBrain> brain;
         [SerializeField] SaintsInterface<Component, IPlayerHotbar> hotbar;
         [SerializeField, Required] SpriteRenderer itemRenderer;

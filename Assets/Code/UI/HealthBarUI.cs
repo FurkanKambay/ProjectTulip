@@ -7,7 +7,7 @@ namespace Tulip.UI
     public class HealthBarUI : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField, Required] SaintsInterface<Component, IHealth> health;
+        [SerializeField, Required] HealthBase health;
         [SerializeField, Required] SpriteRenderer healthBarSprite;
 
         [Header("Config")]
@@ -21,15 +21,15 @@ namespace Tulip.UI
         private void Awake()
         {
             healthBarSprite.enabled = false;
-            targetValue = health.I.MaxHealth;
+            targetValue = health.MaxHealth;
         }
 
         private void Update()
         {
-            healthBarSprite.enabled = showBar && health.I.IsHurt;
+            healthBarSprite.enabled = showBar && health.IsHurt;
             if (!showBar) return;
 
-            targetValue = Mathf.Lerp(targetValue, health.I.Ratio, changeSpeed * Time.deltaTime);
+            targetValue = Mathf.Lerp(targetValue, health.Ratio, changeSpeed * Time.deltaTime);
             healthBarSprite.material.SetFloat(healthShaderValue, targetValue);
         }
     }

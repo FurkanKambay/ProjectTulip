@@ -9,7 +9,7 @@ namespace Tulip.Gameplay
     {
         [Header("References")]
         [SerializeField, Required] Rigidbody2D body;
-        [SerializeField, Required] Health health;
+        [SerializeField, Required] HealthBase health;
 
         [Header("Config")]
         [SerializeField] float hurtForceAmount;

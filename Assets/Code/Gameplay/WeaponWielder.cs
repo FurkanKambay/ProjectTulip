@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using SaintsField;
+using Tulip.Data;
 using Tulip.Data.Items;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ namespace Tulip.Gameplay
     public class WeaponWielder : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField, Required] Health health;
+        [SerializeField, Required] HealthBase health;
         [SerializeField, Required] ItemWielder itemWielder;
 
         [Header("Config")]
@@ -27,14 +28,14 @@ namespace Tulip.Gameplay
 
             Array.Resize(ref hits, weapon.IsMultiTarget ? maxMultiTargetAmount : 1);
 
-            foreach (Health target in GetTargets(transform.position, targetPoint))
+            foreach (HealthBase target in GetTargets(transform.position, targetPoint))
             {
                 if (!target.enabled) continue;
                 target.TakeDamage(weapon.Damage, health);
             }
         }
 
-        private IEnumerable<Health> GetTargets(Vector2 origin, Vector2 aimPoint)
+        private IEnumerable<HealthBase> GetTargets(Vector2 origin, Vector2 aimPoint)
         {
             Vector2 direction = (aimPoint - origin).normalized;
 
@@ -47,7 +48,7 @@ namespace Tulip.Gameplay
             return hits
                 .Take(hitCount)
                 .TakeWhile(hit => (bool)hit)
-                .Select(hit => hit.GetComponent<Health>())
+                .Select(hit => hit.GetComponentInChildren<HealthBase>())
                 .TakeWhile(hitHealth => (bool)hitHealth);
         }
 

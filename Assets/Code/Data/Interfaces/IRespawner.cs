@@ -5,6 +5,6 @@ namespace Tulip.Data
         float SecondsUntilRespawn { get; }
         bool CanRespawn { get; }
 
-        void Respawn();
+        void TryRespawn();
     }
 }

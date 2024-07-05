@@ -12,7 +12,7 @@ namespace Tulip.Character
         public event Action OnJumpReleased;
 
         [Header("References")]
-        [SerializeField, Required] SaintsInterface<Component, IHealth> health;
+        [SerializeField, Required] Health health;
 
         [Header("Input - Basic")]
         [SerializeField] InputActionReference point;
@@ -41,7 +41,7 @@ namespace Tulip.Character
 
         private void Update()
         {
-            if (health.I.IsDead)
+            if (health.IsDead)
             {
                 OnJumpReleased?.Invoke();
                 return;

@@ -10,15 +10,15 @@ namespace Tulip.UI
     {
         [Header("References")]
         [SerializeField, Required] UIDocument document;
-        [SerializeField, Required] SaintsInterface<Component, IHealth> health;
+        [SerializeField, Required] HealthBase health;
         [SerializeField, Required] SaintsInterface<Component, IRespawner> respawner;
 
         // ReSharper disable UnusedMember.Global
-        [CreateProperty] public DisplayStyle OverlayDisplay => health.I.IsDead.ToDisplay();
+        [CreateProperty] public DisplayStyle OverlayDisplay => health.IsDead.ToDisplay();
         [CreateProperty] public DisplayStyle RespawnButtonDisplay => respawner.I.CanRespawn.ToDisplay();
         [CreateProperty] public DisplayStyle CountdownDisplay => respawner.I.CanRespawn.ToDisplayInverse();
 
-        [CreateProperty] public string DeathReason => health?.I.LatestDeathSource?.Name;
+        [CreateProperty] public string DeathReason => health?.LatestDeathSource?.Name;
         [CreateProperty] public int SecondsUntilRespawn => Mathf.CeilToInt(respawner.I.SecondsUntilRespawn);
         // ReSharper restore UnusedMember.Global
 
@@ -38,6 +38,6 @@ namespace Tulip.UI
 
         private void OnDisable() => respawnButton.UnregisterCallback<ClickEvent>(HandleRespawnClicked);
 
-        private void HandleRespawnClicked(ClickEvent _) => respawner.I.Respawn();
+        private void HandleRespawnClicked(ClickEvent _) => respawner.I.TryRespawn();
     }
 }

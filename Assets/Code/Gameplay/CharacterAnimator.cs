@@ -8,7 +8,7 @@ namespace Tulip.Gameplay
     public class CharacterAnimator : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField, Required] Health health;
+        [SerializeField, Required] HealthBase health;
         [SerializeField, Required] Animator animator;
         [SerializeField, Required] SaintsInterface<Object, ICharacterMovement> movement;
         [SerializeField, Required] SaintsInterface<Object, ICharacterJump> jumper;

@@ -12,22 +12,20 @@ namespace Tulip.Data
         event DeathEvent OnDie;
         event ReviveEvent OnRevive;
 
-        string Name { get; }
-
         float CurrentHealth { get; }
         float MaxHealth { get; }
+        float Ratio { get; }
+        bool IsAlive { get; }
+        bool IsDead { get; }
+        bool IsFull { get; }
+        bool IsHurt { get; }
         bool IsInvulnerable { get; }
 
+        string Name { get; }
         IHealth LatestDamageSource { get; }
         IHealth LatestDeathSource { get; }
 
         void TakeDamage(float damage, IHealth source);
         void Revive(IHealth source = null);
-
-        float Ratio => CurrentHealth / MaxHealth;
-        bool IsAlive => CurrentHealth > 0;
-        bool IsDead => CurrentHealth <= 0;
-        bool IsFull => CurrentHealth >= MaxHealth;
-        bool IsHurt => CurrentHealth < MaxHealth && !IsDead;
     }
 }

@@ -8,7 +8,7 @@ namespace Tulip.Gameplay
     public class Respawner : MonoBehaviour, IRespawner
     {
         [Header("References")]
-        [SerializeField, Required] Health health;
+        [SerializeField, Required] HealthBase health;
         [SerializeField, Required] Rigidbody2D body;
 
         [Header("Config")]
@@ -21,23 +21,23 @@ namespace Tulip.Gameplay
 
         private void Update()
         {
-            if (((IHealth)health).IsAlive) return;
+            if (health.IsAlive)
+                return;
 
             SecondsUntilRespawn -= Time.deltaTime;
-            if (!CanRespawn) return;
 
             if (autoRespawn)
-                Respawn();
+                TryRespawn();
         }
 
-        [ContextMenu(nameof(Respawn))]
-        public void Respawn()
+        [ContextMenu(nameof(TryRespawn))]
+        public void TryRespawn()
         {
-            if (!CanRespawn) return;
+            if (!CanRespawn)
+                return;
 
             health.Revive();
             body.MovePosition(respawnPosition);
-
             SecondsUntilRespawn = 0;
         }
 
