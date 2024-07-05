@@ -55,6 +55,9 @@ TagManager:
   - name: Player
     uniqueID: 102921957
     locked: 0
+  - name: Item
+    uniqueID: 2114400491
+    locked: 0
   - name: Overlay
     uniqueID: 4016270629
     locked: 0
