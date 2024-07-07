@@ -43,6 +43,14 @@ namespace Tulip.Character
         {
             if (health.IsDead)
             {
+                HorizontalMovement = default;
+                WantsToDash = false;
+                WantsToUse = false;
+
+                WantsToToggleSmartCursor = false;
+                HotbarSelectionDelta = 0;
+                HotbarSelectionIndex = null;
+
                 OnJumpReleased?.Invoke();
                 return;
             }
