@@ -28,7 +28,7 @@ namespace Tulip.Player
                 return;
             }
 
-            renderer.enabled = itemWielder.I.CurrentItem is Tool tool
+            renderer.enabled = itemWielder.I.CurrentStack.item is Tool tool
                                && tool.IsUsableOn(world, focusedCell.Value);
 
             if (renderer.enabled)

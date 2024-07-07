@@ -6,9 +6,9 @@ namespace Tulip.Data
 {
     public interface IItemWielder
     {
-        event Action<Usable> OnReady;
-        event Action<Usable, Vector3> OnSwing;
+        event Action<ItemStack> OnReady;
+        event Action<ItemStack, Vector3> OnSwing;
 
-        Item CurrentItem { get; }
+        ItemStack CurrentStack { get; }
     }
 }

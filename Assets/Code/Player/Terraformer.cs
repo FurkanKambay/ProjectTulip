@@ -18,6 +18,7 @@ namespace Tulip.Player
 
         [Header("Config")]
         [SerializeField] Vector2 hotspotOffset;
+
         public float range = 5f;
 
         public Vector3Int MouseCell { get; private set; }
@@ -27,7 +28,9 @@ namespace Tulip.Player
             get => focusedCell;
             private set
             {
-                if (focusedCell == value) return;
+                if (focusedCell == value)
+                    return;
+
                 focusedCell = value;
                 OnChangeCellFocus?.Invoke(focusedCell);
             }
@@ -44,28 +47,43 @@ namespace Tulip.Player
 
         private void Update()
         {
-            if (itemWielder.I.CurrentItem is not Tool) return;
+            if (itemWielder.I.CurrentStack.item is not Tool)
+                return;
+
             AssignCells();
         }
 
-        private void HandleItemSwing(Usable item, Vector3 _)
+        private void HandleItemSwing(ItemStack stack, Vector3 _)
         {
-            if (item is not Tool tool) return;
+            if (stack.item is not Tool tool)
+                return;
 
-            if (!FocusedCell.HasValue) return;
+            if (!FocusedCell.HasValue)
+                return;
 
             Bounds bounds = world.CellBoundsWorld(FocusedCell.Value);
             Vector2 topLeft = bounds.center - bounds.extents + (Vector3.one * 0.02f);
             Vector2 bottomRight = bounds.center + bounds.extents - (Vector3.one * 0.02f);
 
             int layerMask = LayerMask.GetMask("Enemy", "Player", "NPC");
+
             if (Physics2D.OverlapArea(topLeft, bottomRight, layerMask))
                 return;
 
-            if (!tool.IsUsableOn(world, FocusedCell.Value)) return;
+            if (!tool.IsUsableOn(world, FocusedCell.Value))
+                return;
 
             InventoryModification modification = tool.UseOn(world, FocusedCell.Value);
-            inventory.ApplyModification(modification);
+            InventoryModification remaining = inventory.ApplyModification(modification);
+
+            if (!remaining.WouldModify)
+                return;
+
+            Debug.LogWarning(
+                "[Terraformer] Remaining items: "
+                + (!remaining.WouldAdd ? "" : $"[{remaining.ToAdd}] not added, ")
+                + (!remaining.WouldRemove ? "" : $"[{remaining.ToRemove}] not removed.")
+            );
         }
 
         private void AssignCells()
@@ -75,24 +93,22 @@ namespace Tulip.Player
             Vector2 hotspot = (Vector2)transform.position + hotspotOffset;
             rangePath = Vector2.ClampMagnitude(brain.I.AimPosition - hotspot, range);
 
-            if (!Options.Instance.Gameplay.UseSmartCursor || itemWielder.I.CurrentItem is not Pickaxe)
+            if (!Options.Instance.Gameplay.UseSmartCursor || itemWielder.I.CurrentStack.item is not Pickaxe)
             {
                 float distance = Vector3.Distance(hotspot, brain.I.AimPosition);
                 FocusedCell = distance <= range ? MouseCell : null;
                 return;
             }
 
-            RaycastHit2D hit = Physics2D.Raycast(
-                hotspot, rangePath, range,
-                LayerMask.GetMask("World"));
-
+            RaycastHit2D hit = Physics2D.Raycast(hotspot, rangePath, range, LayerMask.GetMask("World"));
             hitPoint = hit.point - (hit.normal * 0.1f);
             FocusedCell = hit.collider ? world.WorldToCell(hitPoint) : null;
         }
 
         private void OnDrawGizmosSelected()
         {
-            if (!Options.Instance.Gameplay.UseSmartCursor) return;
+            if (!Options.Instance.Gameplay.UseSmartCursor)
+                return;
 
             Vector2 hotspot = (Vector2)transform.position + hotspotOffset;
 

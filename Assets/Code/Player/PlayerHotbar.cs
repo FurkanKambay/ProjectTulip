@@ -27,7 +27,7 @@ namespace Tulip.Player
             private set => selectedIndex = Mathf.Clamp(value, 0, Size - 1);
         }
 
-        public ItemStack this[int index] => index >= 0 && index < Size ? Items[index] : null;
+        public ItemStack this[int index] => index >= 0 && index < Size ? Items[index] : default;
 
         private int selectedIndex;
 

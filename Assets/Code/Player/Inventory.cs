@@ -18,11 +18,11 @@ namespace Tulip.Player
         public override ItemStack[] Items { get; protected set; }
         public override int Capacity => capacity;
 
-        public override ItemStack this[int index] => index >= 0 && index < Capacity ? Items?[index] : null;
+        public override ItemStack this[int index] => index >= 0 && index < Capacity ? Items[index] : default;
 
         private void Awake()
         {
-            ItemStack[] startingInventory = inventoryData.Inventory.Select(stack => new ItemStack(stack)).ToArray();
+            ItemStack[] startingInventory = inventoryData.Inventory.ToArray();
             Array.Resize(ref startingInventory, capacity);
 
             Items = startingInventory;
@@ -37,128 +37,137 @@ namespace Tulip.Player
         /// <returns>The remaining item stacks that could not be removed or added.</returns>
         public InventoryModification ApplyModification(InventoryModification modification)
         {
-            var notRemoved = new ItemStack(modification.ToRemove?.Item, RemoveItem(modification.ToRemove));
-            var notAdded = new ItemStack(modification.ToAdd?.Item, AddItem(modification.ToAdd));
+            int removeRemainder = RemoveItem(modification.ToRemove);
+            int addRemainder = AddItem(modification.ToAdd);
+
+            var stackNotRemoved = new ItemStack(modification.ToRemove.item, removeRemainder);
+            var stackNotAdded = new ItemStack(modification.ToAdd.item, addRemainder);
 
             return !modification.WouldModify
                 ? InventoryModification.Empty
                 : new InventoryModification(
-                    modification.WouldRemove ? notRemoved : null,
-                    modification.WouldAdd ? notAdded : null
+                    modification.WouldRemove ? stackNotRemoved : default,
+                    modification.WouldAdd ? stackNotAdded : default
                 );
         }
 
         private int RemoveItem(ItemStack itemStack)
         {
-            if (itemStack is not { IsValid: true })
+            if (!itemStack.IsValid)
                 return 0;
 
-            int remainingAmount = itemStack.Amount;
+            int remaining = itemStack.Amount;
 
-            while (remainingAmount > 0)
+            while (remaining > 0)
             {
-                int foundIndex = FindFirstItemIndex(itemStack.Item, includeFullStacks: true);
+                // TODO: first remove from selected hotbar slot
+                int? foundIndex = GetFirstSlotWith(itemStack.item, intentToRemove: true);
 
-                if (foundIndex < 0)
+                if (!foundIndex.HasValue)
                     break;
 
-                ItemStack foundStack = Items[foundIndex];
+                ItemStack foundStack = Items[foundIndex.Value];
                 int oldAmount = foundStack.Amount;
-                foundStack.Amount -= remainingAmount;
-                remainingAmount -= oldAmount - foundStack.Amount;
 
-                if (foundStack.Amount == 0)
-                    Items[foundIndex] = null;
+                int newAmount = Items[foundIndex.Value].Amount -= remaining;
+                remaining -= oldAmount - newAmount;
             }
 
-            OnModify?.Invoke();
+            if (remaining != itemStack.Amount)
+                OnModify?.Invoke();
 
-            return remainingAmount;
+            return remaining;
         }
 
         private int AddItem(ItemStack itemStack)
         {
-            if (itemStack is not { IsValid: true })
+            if (!itemStack.IsValid)
                 return 0;
 
-            int remainingAmount = itemStack.Amount;
+            int remaining = itemStack.Amount;
 
-            while (remainingAmount > 0)
+            while (remaining > 0)
             {
-                int foundIndex = FindFirstItemIndex(itemStack.Item, includeFullStacks: false);
+                int? foundIndex = GetFirstSlotWith(itemStack.item, intentToRemove: false);
 
-                if (foundIndex < 0)
+                if (!foundIndex.HasValue)
                 {
-                    foundIndex = CreateNewStack(itemStack.Item);
+                    foundIndex = CreateNewStackWith(itemStack.item);
 
-                    if (foundIndex < 0)
+                    if (!foundIndex.HasValue)
                     {
                         // Inventory is full
-                        return itemStack.Amount;
+                        break;
                     }
                 }
 
-                remainingAmount = AddToExistingStack(foundIndex, remainingAmount);
+                remaining = AddToExistingSlot(foundIndex.Value, remaining);
             }
 
-            if (remainingAmount == 0)
+            if (remaining != itemStack.Amount)
                 OnModify?.Invoke();
 
-            return remainingAmount;
+            return remaining;
         }
 
-        private int AddToExistingStack(int stackIndex, int amount)
+        private int AddToExistingSlot(int stackIndex, int amount)
         {
-            ItemStack existingStack = Items[stackIndex];
-            existingStack.Amount += amount;
+            ItemStack stack = Items[stackIndex];
+            int wouldTotal = stack.Amount + amount;
 
-            int total = existingStack.Amount + amount;
-            bool hasOverflow = total > existingStack.Item.MaxAmount;
-            int remainingAmount = total - existingStack.Item.MaxAmount;
+            Items[stackIndex].Amount += amount;
 
-            return hasOverflow ? remainingAmount : 0;
+            bool hasOverflow = wouldTotal > stack.item.MaxAmount;
+            int overflowAmount = wouldTotal - stack.item.MaxAmount;
+            return hasOverflow ? overflowAmount : 0;
         }
 
-        private int CreateNewStack(Item item)
+        private int? CreateNewStackWith(Item item)
         {
-            int firstEmptyIndex = FindFirstEmptyIndex();
+            int? firstEmptyIndex = GetFirstEmptySlot();
 
-            if (firstEmptyIndex < 0)
-                return -1;
+            if (!firstEmptyIndex.HasValue)
+                return null;
 
-            Items[firstEmptyIndex] = new ItemStack(item, 0);
-
+            Items[firstEmptyIndex.Value] = new ItemStack(item, 0);
             return firstEmptyIndex;
         }
 
-        private int FindFirstItemIndex(Item item, bool includeFullStacks = false)
+        private int? GetFirstSlotWith(Item item, bool intentToRemove)
         {
-            if (item == null)
-                return -1;
+            if (!item)
+                return null;
 
             for (int itemIndex = 0; itemIndex < Items.Length; itemIndex++)
             {
                 ItemStack currentItem = Items[itemIndex];
 
-                if (currentItem == null)
+                if (currentItem.item != item)
                     continue;
 
-                if (currentItem.Item == item && (includeFullStacks || currentItem.Amount < item.MaxAmount))
-                    return itemIndex;
+                // don't allow full stacks when adding
+                if (!intentToRemove && currentItem.Amount >= item.MaxAmount)
+                    continue;
+
+                // don't allow empty stacks when removing
+                if (intentToRemove && currentItem.Amount < 1)
+                    continue;
+
+                return itemIndex;
             }
 
-            return -1;
+            return null;
         }
 
-        private int FindFirstEmptyIndex()
+        private int? GetFirstEmptySlot()
         {
             for (int i = 0; i < Items.Length; i++)
             {
-                if (Items[i]?.Item is null)
+                if (!Items[i].item)
                     return i;
             }
 
-            return -1;
+            return null;
         }
     }
 }

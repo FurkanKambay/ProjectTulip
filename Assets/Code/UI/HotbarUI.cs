@@ -1,7 +1,6 @@
 using System.Collections;
 using SaintsField;
 using Tulip.Data;
-using Tulip.Data.Items;
 using Unity.Properties;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -23,7 +22,7 @@ namespace Tulip.UI
         [SerializeField] int tooltipSlideDuration = 100;
 
         // ReSharper disable NotAccessedField.Local
-        [CreateProperty] string itemName;
+        [CreateProperty] ItemStack heldItem;
         [CreateProperty] ItemStack[] items;
         // ReSharper restore NotAccessedField.Local
 
@@ -65,10 +64,11 @@ namespace Tulip.UI
 
         private void UpdateTooltip()
         {
-            Item selectedItem = hotbar.I.SelectedStack?.Item;
-            tooltipRoot.visible = (bool)selectedItem;
+            ItemStack selectedStack = hotbar.I.SelectedStack;
+            heldItem = selectedStack;
 
-            itemName = selectedItem ? selectedItem.Name : string.Empty;
+            // BUG: tooltip doesn't hide when amount becomes 0
+            tooltipRoot.visible = selectedStack.IsValid;
 
             int slotIndex = hotbar.I.SelectedIndex;
             Vector3 slotPosition = hotbarRoot[slotIndex].layout.position;

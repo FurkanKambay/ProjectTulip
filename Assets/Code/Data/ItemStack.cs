@@ -1,4 +1,5 @@
 using System;
+using SaintsField;
 using Tulip.Data.Items;
 using Unity.Properties;
 using UnityEngine;
@@ -6,33 +7,46 @@ using UnityEngine;
 namespace Tulip.Data
 {
     [Serializable]
-    public class ItemStack : IValidate
+    public struct ItemStack
     {
-        [SerializeField] Item item;
-        [SerializeField, Min(0)] int amount;
+        public Item item;
+        public bool isLocked;
 
-        public Item Item => item;
+        [Min(0), MaxValue(nameof(MaxAmount))]
+        [SerializeField] int amount;
+
+        public int MaxAmount => item ? item.MaxAmount : 0;
+
         public int Amount
         {
             get => amount;
-            set => amount = Mathf.Clamp(value, 0, Item ? Item.MaxAmount : 0);
+            set
+            {
+                amount = Mathf.Clamp(value, 0, MaxAmount);
+
+                if (amount == 0 && !isLocked)
+                    item = null;
+            }
         }
 
         [CreateProperty]
-        public bool IsValid => Item && amount > 0;
+        public bool IsValid => item && amount > 0;
 
-        public ItemStack(Item item, int amount)
+        // ReSharper disable UnusedMember.Local
+        [CreateProperty] bool ShowAmount => MaxAmount > 1;
+        [CreateProperty] bool ShowIcon => isLocked || IsValid;
+        [CreateProperty] float IconHeight => item ? item.IconScale * 24f : 0f;
+        [CreateProperty] float IconOpacity => isLocked && amount == 0 ? 0.5f : 1f;
+        // ReSharper restore UnusedMember.Local
+
+        public ItemStack(Item item, int amount) : this()
         {
             this.item = item;
-            Amount = amount;
+            this.amount = Mathf.Clamp(amount, 0, MaxAmount);
         }
 
-        public ItemStack(ItemStack other)
-        {
-            item = other.Item;
-            Amount = other.Amount;
-        }
+        public ItemStack(ItemStack other) : this(other.item, other.Amount) { }
 
-        public void OnValidate() => Amount = amount;
+        public override string ToString() => $"{Amount} {item}";
     }
 }

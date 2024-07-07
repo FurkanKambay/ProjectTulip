@@ -22,7 +22,7 @@ namespace Tulip.Audio
 
         private void HandleHurt(DamageEventArgs damage) => audioSource.PlayOneShot(hurtSound);
         private void HandleDied(DamageEventArgs damage) => audioSource.PlayOneShot(dieSound);
-        private void HandleItemSwing(Usable item, Vector3 _) => audioSource.PlayOneShot(swingSound);
+        private void HandleItemSwing(ItemStack stack, Vector3 _) => audioSource.PlayOneShot(swingSound);
 
         private void OnEnable()
         {

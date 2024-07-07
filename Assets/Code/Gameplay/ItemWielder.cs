@@ -3,33 +3,34 @@ using SaintsField;
 using Tulip.Data;
 using Tulip.Data.Gameplay;
 using Tulip.Data.Items;
+using Tulip.Player;
 using UnityEngine;
 
 namespace Tulip.Gameplay
 {
     public class ItemWielder : MonoBehaviour, IItemWielder
     {
-        public event Action<Usable, Vector3> OnSwing;
-        public event Action<Usable> OnReady;
+        public event Action<ItemStack, Vector3> OnSwing;
+        public event Action<ItemStack> OnReady;
 
-        public Item CurrentItem => HotbarSelectedItem ? HotbarSelectedItem : fallbackItem;
-        private Item HotbarSelectedItem => hotbar.I?.SelectedStack?.Item;
+        public ItemStack CurrentStack => HotbarItem.IsValid ? HotbarItem : fallbackStack;
+        private ItemStack HotbarItem => hotbar ? hotbar.SelectedStack : default;
 
         [Header("References")]
         [SerializeField, Required] HealthBase health;
         [SerializeField, Required] SaintsInterface<Component, IWielderBrain> brain;
-        [SerializeField] SaintsInterface<Component, IPlayerHotbar> hotbar;
+        [SerializeField] PlayerHotbar hotbar;
         [SerializeField, Required] SpriteRenderer itemRenderer;
 
         [Header("Config")]
-        [SerializeField] Usable fallbackItem;
+        [SerializeField] ItemStack fallbackStack;
         [SerializeField] float itemStowDelay = 2f;
 
         private Transform itemPivot;
         private Transform itemVisual;
 
         // state
-        private Usable itemToSwing;
+        private ItemStack handStack;
         private float timeSinceLastUse;
         private ItemSwingState swingState;
         private Vector3 rendererScale;
@@ -54,11 +55,11 @@ namespace Tulip.Gameplay
 
         private void TickSwingState()
         {
-            if (!itemToSwing)
+            if (!handStack.item || handStack.item is not Usable usable)
                 return;
 
             bool wantsToUse = brain.I.WantsToUse && !wantsToSwapItems;
-            ItemSwingType swingType = itemToSwing.SwingType;
+            ItemSwingType swingType = usable.SwingType;
             UsePhase phase = swingType.Phases.Length > 0 ? swingType.Phases[phaseIndex] : default;
 
             AimItem();
@@ -70,7 +71,7 @@ namespace Tulip.Gameplay
                     bool shouldDisplay = wantsToUse || timeSinceLastUse < itemStowDelay;
                     itemVisual.localScale = shouldDisplay ? rendererScale : Vector3.zero;
 
-                    if (wantsToUse && timeSinceLastUse > itemToSwing.Cooldown)
+                    if (wantsToUse && timeSinceLastUse > usable.Cooldown)
                     {
                         SwitchState(ItemSwingState.Swinging);
                         timeSinceLastUse = 0f;
@@ -97,14 +98,14 @@ namespace Tulip.Gameplay
                     // if no phases, hit and reset swing
                     if (swingType.Phases.Length == 0)
                     {
-                        OnSwing?.Invoke(itemToSwing, brain.I.AimPosition);
+                        OnSwing?.Invoke(handStack, brain.I.AimPosition);
                         SwitchState(ItemSwingState.Resetting);
                         break;
                     }
 
                     // hit if we need to before checking for final exit
                     if (phase.shouldHit)
-                        OnSwing?.Invoke(itemToSwing, brain.I.AimPosition);
+                        OnSwing?.Invoke(handStack, brain.I.AimPosition);
 
                     bool isFinalPhase = phaseIndex == swingType.Phases.Length - 1;
 
@@ -141,13 +142,13 @@ namespace Tulip.Gameplay
             if (state == swingState)
                 return;
 
-            if (!itemToSwing)
+            if (!handStack.IsValid || handStack.item is not Usable usable)
             {
                 swingState = ItemSwingState.Ready;
                 return;
             }
 
-            ItemSwingType swingType = itemToSwing.SwingType;
+            ItemSwingType swingType = usable.SwingType;
             swingState = state;
 
             switch (state)
@@ -159,7 +160,7 @@ namespace Tulip.Gameplay
                     UpdateItemSprite();
 
                     SetSpriteTransformInstant(swingType.ReadyPosition, swingType.ReadyAngle);
-                    OnReady?.Invoke(itemToSwing);
+                    OnReady?.Invoke(handStack);
                     break;
                 case ItemSwingState.Swinging:
                     phaseIndex = 0;
@@ -174,19 +175,22 @@ namespace Tulip.Gameplay
 
         private void RefreshItem()
         {
-            itemToSwing = CurrentItem as Usable;
+            handStack = CurrentStack;
             phaseIndex = 0;
             ResetMotionStart();
 
-            if (itemToSwing)
-                SetSpriteTransformInstant(itemToSwing.SwingType.ReadyPosition, itemToSwing.SwingType.ReadyAngle);
+            if (handStack.item is Usable usable)
+                SetSpriteTransformInstant(usable.SwingType.ReadyPosition, usable.SwingType.ReadyAngle);
         }
 
 #region Motion Helpers
 
         private void SetMotionToPhase()
         {
-            ItemSwingType swingType = itemToSwing.SwingType;
+            if (handStack.item is not Usable usable)
+                return;
+
+            ItemSwingType swingType = usable.SwingType;
             UsePhase phase = swingType.Phases.Length > 0 ? swingType.Phases[phaseIndex] : default;
 
             ResetMotionStart();
@@ -198,7 +202,10 @@ namespace Tulip.Gameplay
 
         private void SetMotionToReady()
         {
-            ItemSwingType swingType = itemToSwing.SwingType;
+            if (handStack.item is not Usable usable)
+                return;
+
+            ItemSwingType swingType = usable.SwingType;
 
             ResetMotionStart();
             motion.EndPosition = swingType.ReadyPosition;
@@ -253,19 +260,21 @@ namespace Tulip.Gameplay
 
         private void UpdateItemSprite()
         {
-            float scale = itemToSwing ? itemToSwing.IconScale : 1;
+            Item item = handStack.item;
+
+            float scale = item ? item.IconScale : 1;
             Color tint = Color.white;
 
-            if (itemToSwing is WorldTile tile)
+            if (item is WorldTile tile)
             {
-                scale = itemToSwing.IconScale * 0.8f;
+                scale = item.IconScale * 0.8f;
                 tint = tile.color;
             }
 
             rendererScale = Vector2.one * scale;
 
             itemRenderer.transform.localScale = rendererScale;
-            itemRenderer.sprite = itemToSwing ? itemToSwing.Icon : null;
+            itemRenderer.sprite = item ? item.Icon : null;
             itemRenderer.color = tint;
         }
 
@@ -291,8 +300,8 @@ namespace Tulip.Gameplay
             health.OnDie += HandleDie;
             health.OnRevive += HandleRevived;
 
-            if (hotbar.I != null)
-                hotbar.I.OnChangeSelection += HandleHotbarSelectionChanged;
+            if (hotbar)
+                hotbar.OnChangeSelection += HandleHotbarSelectionChanged;
         }
 
         private void OnDisable()
@@ -300,8 +309,8 @@ namespace Tulip.Gameplay
             health.OnDie -= HandleDie;
             health.OnRevive -= HandleRevived;
 
-            if (hotbar.I != null)
-                hotbar.I.OnChangeSelection -= HandleHotbarSelectionChanged;
+            if (hotbar)
+                hotbar.OnChangeSelection -= HandleHotbarSelectionChanged;
         }
 
         private struct MotionState

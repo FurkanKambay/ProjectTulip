@@ -16,11 +16,6 @@ namespace Tulip.Data.Items
         public virtual string Description => description;
         public virtual int MaxAmount => maxAmount;
 
-        // ReSharper disable UnusedMember.Local
-        [CreateProperty] bool CanHaveMultiple => MaxAmount > 1;
-        [CreateProperty] float IconHeight => IconScale * 24f;
-        // ReSharper restore UnusedMember.Local
-
         [Header("Item Data")]
         [SerializeField] protected ItemType type;
         [SerializeField] protected Sprite icon;
@@ -28,5 +23,7 @@ namespace Tulip.Data.Items
         [SerializeField] protected new string name;
         [SerializeField, Multiline] protected string description;
         [SerializeField, Min(1)] protected int maxAmount = 1;
+
+        public override string ToString() => Name;
     }
 }

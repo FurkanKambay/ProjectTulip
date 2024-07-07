@@ -1,4 +1,5 @@
 using System;
+using SaintsField;
 using UnityEngine;
 
 namespace Tulip.Data
@@ -10,6 +11,8 @@ namespace Tulip.Data
         public ItemStack[] Inventory => inventory;
 
         [SerializeField] int capacity = 9;
+
+        [SaintsRow(inline: true)]
         [SerializeField] ItemStack[] inventory;
 
         public void OnValidate()

@@ -11,7 +11,7 @@ namespace Tulip.Data
         public readonly ItemStack ToRemove;
         public readonly ItemStack ToAdd;
 
-        public InventoryModification(ItemStack toRemove = null, ItemStack toAdd = null)
+        public InventoryModification(ItemStack toRemove = default, ItemStack toAdd = default)
         {
             ToRemove = toRemove;
             ToAdd = toAdd;

@@ -21,9 +21,11 @@ namespace Tulip.Gameplay
         private Weapon weapon;
         private Collider2D[] hits = Array.Empty<Collider2D>();
 
-        private void Attack(Usable usable, Vector3 targetPoint)
+        private void Attack(ItemStack stack, Vector3 targetPoint)
         {
-            if (usable is not Weapon usedWeapon) return;
+            if (stack.item is not Weapon usedWeapon)
+                return;
+
             weapon = usedWeapon;
 
             Array.Resize(ref hits, weapon.IsMultiTarget ? maxMultiTargetAmount : 1);
