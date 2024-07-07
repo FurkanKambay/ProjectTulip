@@ -377,7 +377,7 @@ GameObject:
   - component: {fileID: 474014648}
   - component: {fileID: 474014649}
   m_Layer: 0
-  m_Name: Audio
+  m_Name: World Audio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -705,10 +705,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 318885852}
-  - {fileID: 474014648}
-  - {fileID: 414399568}
   - {fileID: 1766718190}
+  - {fileID: 474014648}
+  - {fileID: 318885852}
+  - {fileID: 414399568}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &661774619
@@ -1546,9 +1546,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   world: {fileID: 661774619}
   camera: {fileID: 519420031}
-  spawnRadius: 10
+  spawnParent: {fileID: 1985613754}
+  maxSpawns: 10
+  radius: 10
+  interval: 10
+  gracePeriod: 2
   enemyHeight: 2
-  spawnInterval: 15
   enemyOptions:
   - {fileID: 2859632988072890709, guid: e80f529ddf142384a9f35b19b774a636, type: 3}
 --- !u!1 &1795025818
@@ -1903,6 +1906,37 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+--- !u!1 &1985613753
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1985613754}
+  m_Layer: 0
+  m_Name: Enemies
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1985613754
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985613753}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1986012726 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8291246366843984804, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
@@ -2003,3 +2037,4 @@ SceneRoots:
   - {fileID: 122205217}
   - {fileID: 1154427126}
   - {fileID: 661774618}
+  - {fileID: 1985613754}
