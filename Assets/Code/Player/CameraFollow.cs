@@ -45,7 +45,7 @@ namespace Tulip.Player
 
                 trackingConfig.Target = initialPosition + peekAmount;
             }
-            else if (GameState.Current == GameState.Playing)
+            else if (GameState.Current == GameState.Playing || GameState.Current == GameState.Testing)
             {
                 Vector3 targetPoint = (bool)player ? player.position : initialPosition;
                 trackingConfig.Target = targetPoint + (Vector3)trackingConfig.Offset;

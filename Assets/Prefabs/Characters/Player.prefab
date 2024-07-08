@@ -892,7 +892,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -278696667
+  m_SortingLayerID: 1615786543
   m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 7dc0350900b34344aad570db474b4a39, type: 3}
@@ -1190,6 +1190,7 @@ MonoBehaviour:
   itemRenderer: {fileID: 3639728673497933778}
   fallbackStack:
     item: {fileID: 0}
+    isLocked: 0
     amount: 0
   itemStowDelay: 5
 --- !u!1 &6415558275367011905

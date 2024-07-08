@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -163,7 +162,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2578b4d5d1c444c3b7c7c3b109fad6dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilemap: {fileID: 1046791016}
+  wallTilemap: {fileID: 1320527741}
+  blockTilemap: {fileID: 1907150967}
+  curtainTilemap: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -221,12 +222,12 @@ MonoBehaviour:
   m_RequiresColorTexture: 0
   m_Version: 2
   m_TaaSettings:
-    quality: 3
-    frameInfluence: 0.1
-    jitterScale: 1
-    mipBias: 0
-    varianceClampScale: 0.9
-    contrastAdaptiveSharpening: 0
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -287,7 +288,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 8, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -305,16 +306,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fdfdff2c1ac25943b5f45bf68fb38e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camera: {fileID: 519420031}
   player: {fileID: 1540160968}
-  tracking:
-    <Offset>k__BackingField: {x: 0, y: 0}
-    <Speed>k__BackingField: {x: 10, y: 10}
-    <SnapValue>k__BackingField: 0.5
-  zoom:
-    target: 10
-    <Min>k__BackingField: 1
-    <Max>k__BackingField: 100
-    <Sensitivity>k__BackingField: 0.01
+  point: {fileID: 2247111929073154336, guid: a92862044b24ac64ba40ebf339dc22ab, type: 3}
+  zoom: {fileID: -4753524853136224464, guid: a92862044b24ac64ba40ebf339dc22ab, type: 3}
+  menuPeekAmountX: 0.1
+  menuPeekAmountY: 0.1
+  menuOffset: {x: 0, y: 8}
+  trackingConfig:
+    <Offset>k__BackingField: {x: 0, y: 1.45}
+    <Speed>k__BackingField: {x: 4, y: 4}
+    <SnapValue>k__BackingField: 0.01
+  zoomConfig:
+    target: 12
+    <Min>k__BackingField: 2
+    <Max>k__BackingField: 20
+    <Sensitivity>k__BackingField: 6
     <Speed>k__BackingField: 10
 --- !u!1001 &749162057
 PrefabInstance:
@@ -323,25 +330,39 @@ PrefabInstance:
   m_Modification:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
-    m_RemovedComponents:
-    - {fileID: 8720202020251607731, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
-    - {fileID: 6482861320932609866, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
-    - {fileID: 3140798728654723148, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
-    - {fileID: 4266250971387899883, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
-    - {fileID: 932277356281954448, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
-    - {fileID: 1603745574418207456, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
-    - {fileID: 1339656561824154237, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
-    m_RemovedGameObjects:
-    - {fileID: 3988847855271664023, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
-    - {fileID: 8809969866287856108, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
-    - {fileID: 4949441114708843498, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
+    m_Modifications:
+    - target: {fileID: 636144049404075224, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3500122598979994782, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3988847855271664023, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4068249101980331751, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4949441114708843498, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5985570404151572858, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
---- !u!1839735485 &1046791016 stripped
+--- !u!1839735485 &1320527741 stripped
 Tilemap:
-  m_CorrespondingSourceObject: {fileID: 253149860080770689, guid: 2716f732d51c76f499f2c4e9096dabb7, type: 3}
+  m_CorrespondingSourceObject: {fileID: 3298477787207529110, guid: 2716f732d51c76f499f2c4e9096dabb7, type: 3}
   m_PrefabInstance: {fileID: 1805653503}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1422868160
@@ -381,7 +402,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 13ba5518000000001b2fe205256d63effb3c504de5762206
+  m_ApplyToSortingLayers: 0ba53ecf13ba5518000000001b2fe205fb3c504de5762206eb30077e2ff24e60d79c00cf256d63ef
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -494,6 +515,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2716f732d51c76f499f2c4e9096dabb7, type: 3}
+--- !u!1839735485 &1907150967 stripped
+Tilemap:
+  m_CorrespondingSourceObject: {fileID: 253149860080770689, guid: 2716f732d51c76f499f2c4e9096dabb7, type: 3}
+  m_PrefabInstance: {fileID: 1805653503}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
