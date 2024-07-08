@@ -14,7 +14,7 @@ namespace Tulip.Character
         [Header("References")]
         [SerializeField, Required] Rigidbody2D body;
         [SerializeField, Required] SaintsInterface<Component, IJumperBrain> brain;
-        [SerializeField, Required] GroundChecker ground;
+        [SerializeField, Required] SurroundsChecker surrounds;
 
         [Header("Calculations")]
         private float jumpSpeed;
@@ -45,7 +45,7 @@ namespace Tulip.Character
         {
             SetGravity();
 
-            isGrounded = ground.IsGrounded;
+            isGrounded = surrounds.IsGrounded;
 
             if (config.jumpBuffer > 0)
             {
@@ -113,6 +113,7 @@ namespace Tulip.Character
                         gravityMultiplier = config.upwardGravityMultiplier;
                     else
                         gravityMultiplier = config.jumpCutOff;
+
                     break;
                 }
                 case > 0.01f:
@@ -122,6 +123,7 @@ namespace Tulip.Character
                     gravityMultiplier = isGrounded
                         ? defaultGravityScale
                         : config.downwardGravityMultiplier;
+
                     break;
                 default:
                 {

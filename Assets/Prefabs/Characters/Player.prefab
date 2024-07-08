@@ -95,7 +95,7 @@ MonoBehaviour:
   body: {fileID: 7560684870690709998}
   brain:
     <V>k__BackingField: {fileID: 3825264036527423534}
-  ground: {fileID: 7131764425725607556}
+  surrounds: {fileID: 7131764425725607556}
 --- !u!1 &1673359338847146882
 GameObject:
   m_ObjectHideFlags: 0
@@ -423,7 +423,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 1
   m_Material: {fileID: 6200000, guid: 6ee3b5dc8b31a6e44bb9622d0e24683c, type: 2}
   m_IncludeLayers:
@@ -516,7 +516,7 @@ MonoBehaviour:
   body: {fileID: 7560684870690709998}
   brain:
     <V>k__BackingField: {fileID: 3825264036527423534}
-  ground: {fileID: 7131764425725607556}
+  surrounds: {fileID: 7131764425725607556}
   spriteRenderer: {fileID: 4019848646787942259}
   config: {fileID: 11400000, guid: 8d2ea2dc215d77946b11e690ac378276, type: 2}
 --- !u!1 &3500122598979994782
@@ -1098,7 +1098,7 @@ GameObject:
   - component: {fileID: 6244475172154510034}
   - component: {fileID: 7131764425725607556}
   m_Layer: 6
-  m_Name: Ground Checker
+  m_Name: Surrounds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1131,11 +1131,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcb02de31839e9a4da59ca29b4bafbc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collider: {fileID: 270610127142405494}
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  checkHeight: 0.5
-  offset: 0.35
+  groundRange: 0.5
+  groundWidth: 0.35
+  sidesLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  sideRange: 0.5
+  sideHeight: 0.5
 --- !u!1 &5985570404151572858
 GameObject:
   m_ObjectHideFlags: 0
@@ -1423,7 +1429,7 @@ MonoBehaviour:
   world: {fileID: 0}
   body: {fileID: 7560684870690709998}
   movement: {fileID: 3529033824618618864}
-  ground: {fileID: 7131764425725607556}
+  surrounds: {fileID: 7131764425725607556}
   stepHeight: 2
   stepWidth: 0.6
   stepSpeed: {x: 30, y: 30}

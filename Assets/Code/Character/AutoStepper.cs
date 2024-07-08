@@ -11,7 +11,7 @@ namespace Tulip.Character
         [SerializeField, GetComponentInScene] World world;
         [SerializeField, Required] Rigidbody2D body;
         [SerializeField, Required] CharacterMovement movement;
-        [SerializeField, Required] GroundChecker ground;
+        [SerializeField, Required] SurroundsChecker surrounds;
 
         [Header("Step")]
         [SerializeField] float stepHeight = 1f;
@@ -27,7 +27,8 @@ namespace Tulip.Character
 
         private void Update()
         {
-            if (!world) return;
+            if (!world)
+                return;
 
             AutoStepDirection stepDirection = CanStepUp();
 
@@ -37,7 +38,8 @@ namespace Tulip.Character
                 return;
             }
 
-            if (!ground.IsGrounded) return;
+            if (!surrounds.IsGrounded)
+                return;
 
             Vector2 position = body.position;
             float width = stepDirection == AutoStepDirection.Left ? -stepWidth : stepWidth;
@@ -46,7 +48,8 @@ namespace Tulip.Character
 
         private void FixedUpdate()
         {
-            if (!targetPosition.HasValue) return;
+            if (!targetPosition.HasValue)
+                return;
 
             Vector2 position = body.position;
             Vector2 moveDirection = (targetPosition.Value - position).normalized;
@@ -57,22 +60,22 @@ namespace Tulip.Character
         private AutoStepDirection CanStepUp()
         {
             float velocity = movement.DesiredVelocity.x;
+
             if (Mathf.Abs(velocity) < velocityThreshold)
                 return AutoStepDirection.None;
 
             Vector2 direction = Vector2.right * Math.Sign(velocity);
             Vector2 hotspot = transform.position + offset;
 
-            RaycastHit2D hit = Physics2D.Raycast(
-                hotspot, direction, range,
-                LayerMask.GetMask("World"));
+            RaycastHit2D hit = Physics2D.Raycast(hotspot, direction, range, LayerMask.GetMask("World"));
 
             Vector2 hitPoint = hit.point - (hit.normal * 0.1f);
             Vector3Int cell1 = world.WorldToCell(hitPoint) + Vector3Int.up;
             Vector3Int cell2 = cell1 + Vector3Int.up;
             Vector3Int cell3 = cell2 + (velocity < 0 ? Vector3Int.right : Vector3Int.left);
 
-            if (!hit) return AutoStepDirection.None;
+            if (!hit)
+                return AutoStepDirection.None;
 
             if (world.HasTile(cell1) || world.HasTile(cell2) || world.HasTile(cell3))
                 return AutoStepDirection.None;
@@ -82,8 +85,11 @@ namespace Tulip.Character
 
         private void OnDrawGizmosSelected()
         {
-            if (!Application.isPlaying) return;
-            if (!targetPosition.HasValue) return;
+            if (!Application.isPlaying)
+                return;
+
+            if (!targetPosition.HasValue)
+                return;
 
             Gizmos.color = Color.green;
             Gizmos.DrawSphere(targetPosition.Value, .3f);

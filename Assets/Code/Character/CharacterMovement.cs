@@ -11,7 +11,7 @@ namespace Tulip.Character
         [Header("References")]
         [SerializeField, Required] Rigidbody2D body;
         [SerializeField, Required] SaintsInterface<Component, IWalkerBrain> brain;
-        [SerializeField, Required] GroundChecker ground;
+        [SerializeField, Required] SurroundsChecker surrounds;
         [SerializeField, Required] SpriteRenderer spriteRenderer;
 
         [Header("Config")]
@@ -38,12 +38,15 @@ namespace Tulip.Character
             if (hasAnyMovement && spriteRenderer)
                 spriteRenderer.flipX = brain.I.HorizontalMovement < 0;
 
-            DesiredVelocity = new Vector2(brain.I.HorizontalMovement, default) * Mathf.Max(config.maxSpeed - config.friction, 0f);
+            bool isFacingObstacle = brain.I.HorizontalMovement < 0 ? surrounds.IsLeftBlocked : surrounds.IsRightBlocked;
+            float velocityX = brain.I.HorizontalMovement * Mathf.Max(config.maxSpeed - config.friction, 0f);
+
+            DesiredVelocity = isFacingObstacle ? Vector2.zero : new Vector2(velocityX, 0);
         }
 
         private void FixedUpdate()
         {
-            isGrounded = ground.IsGrounded;
+            isGrounded = surrounds.IsGrounded;
             velocity = body.velocity;
 
             if (config.useAcceleration)
@@ -62,8 +65,7 @@ namespace Tulip.Character
 
             maxSpeedChange = hasAnyMovement switch
             {
-                // ReSharper disable once CompareOfFloatsByEqualityOperator
-                true when Mathf.Sign(brain.I.HorizontalMovement) != Mathf.Sign(Velocity.x) => turnSpeed * Time.deltaTime,
+                true when Math.Sign(brain.I.HorizontalMovement) != Math.Sign(Velocity.x) => turnSpeed * Time.deltaTime,
                 true => acceleration * Time.deltaTime,
                 _ => deceleration * Time.deltaTime
             };

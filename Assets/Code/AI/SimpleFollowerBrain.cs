@@ -55,7 +55,8 @@ namespace Tulip.AI
             WantsToUse = withinAttackingRange && targetHealth.IsAlive;
             HorizontalMovement = withinAttackingRange || targetHealth.IsDead ? default : Mathf.Sign(distanceToTarget.x);
 
-            TryJump(distanceToTarget.y);
+            // TODO: some enemies may be able to jump later
+            // TryJump(distanceToTarget.y);
         }
 
         private void TryJump(float heightDifference)
