@@ -1,6 +1,7 @@
 {
     "recommendations": [
         "visualstudiotoolsforunity.vstuc",
-        "editorconfig.editorconfig"
+        "editorconfig.editorconfig",
+        "vivaxy.vscode-conventional-commits"
     ]
 }

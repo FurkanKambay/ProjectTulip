@@ -29,10 +29,13 @@
     "conventionalCommits.scopes": [
         "art",
         "audio",
+        "balance",
+        "content",
+        "core",
         "gameplay",
-        "tiles",
-        "ui",
-        "tool"
+        "juice",
+        "tool",
+        "ui"
     ],
     "conventionalCommits.gitmoji": false,
     "conventionalCommits.promptFooter": false,
