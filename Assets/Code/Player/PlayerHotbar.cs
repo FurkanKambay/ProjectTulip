@@ -16,9 +16,8 @@ namespace Tulip.Player
         [Header("Config")]
         [SerializeField, Min(0)] int size = 9;
 
-        public ItemStack[] Items => inventory.Items[..Size];
         public int Size => size;
-
+        public ItemStack[] Items => inventory[..Size];
         public ItemStack SelectedStack => this[SelectedIndex];
 
         public int SelectedIndex
@@ -27,7 +26,7 @@ namespace Tulip.Player
             private set => selectedIndex = Mathf.Clamp(value, 0, Size - 1);
         }
 
-        public ItemStack this[int index] => index >= 0 && index < Size ? Items[index] : default;
+        public ItemStack this[int index] => index >= Items.Length ? default : Items[index];
 
         private int selectedIndex;
 

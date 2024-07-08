@@ -15,10 +15,8 @@ namespace Tulip.Player
         [SerializeField] InventoryData inventoryData;
         [SerializeField, Min(0)] int capacity = 9;
 
-        public override ItemStack[] Items { get; protected set; }
         public override int Capacity => capacity;
-
-        public override ItemStack this[int index] => index >= 0 && index < Capacity ? Items[index] : default;
+        public override ItemStack[] Items { get; protected set; }
 
         private void Awake()
         {

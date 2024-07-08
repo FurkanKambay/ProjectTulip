@@ -8,8 +8,12 @@ namespace Tulip.Data
         public abstract event Action OnModify;
 
         public abstract int Capacity { get; }
-
         public abstract ItemStack[] Items { get; protected set; }
-        public abstract ItemStack this[int index] { get; }
+
+        public virtual ItemStack this[int index] =>
+            index < 0 || index >= Items.Length ? default : Items[index];
+
+        public virtual ItemStack[] this[Range range] =>
+            range.Start.Value < 0 || range.End.Value >= Items.Length ? Array.Empty<ItemStack>() : Items[range];
     }
 }
