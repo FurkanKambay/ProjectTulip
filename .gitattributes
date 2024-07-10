@@ -58,8 +58,12 @@ Packages/packages-lock.json linguist-generated
 *.signal                    unity-yaml
 *.spriteatlas               unity-yaml
 *.spriteatlasv2             unity-yaml
+*.spriteLib                 unity-yaml
 *.terrainlayer              unity-yaml
 *.unity                     unity-yaml
+*.vfx                       unity-yaml
+*.vfxblock                  unity-yaml
+*.vfxoperator               unity-yaml
 
 # FMOD Banks
 *.bank                      lfs
