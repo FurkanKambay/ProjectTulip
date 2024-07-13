@@ -84,11 +84,21 @@ namespace Tulip.UI
 
         private void Update()
         {
-            if (menu.action.triggered)
-                optionsButton.value = true;
+            // TODO: rewrite this in a better way
+            if (GameState.Current == GameState.MainMenu)
+            {
+                // same as <cancel.action.triggered> in Main Menu
+                if (menu.action.triggered)
+                    optionsButton.value = !optionsButton.value;
+            }
+            else
+            {
+                if (menu.action.triggered)
+                    optionsButton.value = true;
 
-            if (cancel.action.triggered)
-                optionsButton.value = GameState.Current == GameState.MainMenu && !optionsButton.value;
+                if (cancel.action.triggered)
+                    optionsButton.value = false;
+            }
 
             if (switchTab.action.triggered)
                 tabView.selectedTabIndex += (int)switchTab.action.ReadValue<float>();

@@ -67,6 +67,7 @@ namespace Tulip.Core
         }
 
         public abstract bool IsPlayerInputEnabled { get; }
+        public virtual bool IsUIInputEnabled => !IsPlayerInputEnabled;
 
         [ContextMenu(nameof(Activate))]
         protected virtual void Activate() { }

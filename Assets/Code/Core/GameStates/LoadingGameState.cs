@@ -3,6 +3,7 @@ namespace Tulip.Core
     public class LoadingGameState : GameState
     {
         public override bool IsPlayerInputEnabled => false;
+        public override bool IsUIInputEnabled => false;
 
         public GameState From { get; set; }
         public GameState To { get; set; }

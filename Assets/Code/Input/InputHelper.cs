@@ -14,13 +14,22 @@ namespace Tulip.Input
             {
                 Debug.Log($"[Input] + Player input enabled by {GameState.Current}.");
                 InputSystem.actions.actionMaps[0].Enable();
-                InputSystem.actions.actionMaps[1].Disable();
             }
             else
             {
                 Debug.Log($"[Input] - Player input disabled by {GameState.Current}.");
                 InputSystem.actions.actionMaps[0].Disable();
+            }
+
+            if (GameState.Current.IsUIInputEnabled)
+            {
+                Debug.Log($"[Input] - UI input enabled by {GameState.Current}.");
                 InputSystem.actions.actionMaps[1].Enable();
+            }
+            else
+            {
+                Debug.Log($"[Input] - UI input disabled by {GameState.Current}.");
+                InputSystem.actions.actionMaps[1].Disable();
             }
         }
 
