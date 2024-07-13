@@ -39,7 +39,7 @@ namespace Tulip.Gameplay
 
         [Button]
         // ReSharper disable once UnusedMember.Local
-        private void DestroyAllSpawns()
+        public void DestroyAllSpawns()
         {
             for (int i = 0; i < spawnParent.childCount; i++)
                 Destroy(spawnParent.GetChild(i).gameObject);

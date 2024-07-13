@@ -2,7 +2,7 @@ namespace Tulip.Core
 {
     public class MainMenuGameState : GameState
     {
-        public override bool IsPlayerInputEnabled => false;
+        public override bool IsPlayerInputEnabled => true;
 
         private void OnEnable() => MainMenu = this;
     }
