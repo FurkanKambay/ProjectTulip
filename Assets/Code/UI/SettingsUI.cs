@@ -64,6 +64,10 @@ namespace Tulip.UI
 
             // UXML binding does not work
             resolutionDropdown.choices = Options.Instance.Video.SupportedResolutions;
+
+#if UNITY_WEBGL
+            resolutionDropdown.RemoveFromHierarchy();
+#endif
         }
 
         private void OnEnable()

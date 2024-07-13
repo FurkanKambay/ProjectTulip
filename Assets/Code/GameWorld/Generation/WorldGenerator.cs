@@ -38,7 +38,9 @@ namespace Tulip.GameWorld.Generation
 
         private async Awaitable GenerateWorldData()
         {
+#if !UNITY_WEBGL
             await Awaitable.BackgroundThreadAsync();
+#endif
 
             world.Size = new Vector2Int(config.width, config.height);
             int tileCount = config.width * config.height;

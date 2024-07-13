@@ -15,23 +15,28 @@ namespace Tulip.Core
             [SerializeField] string resolution;
 
             private List<string> supportedResolutions;
+
             public List<string> SupportedResolutions
             {
                 get
                 {
-                    if (supportedResolutions == null || !supportedResolutions.Any())
-                        supportedResolutions = Screen.resolutions.Select(r => $"{r.width}\u00d7{r.height}").Reverse().ToList();
+                    if (supportedResolutions is not { Count: > 0})
+                    {
+                        supportedResolutions = Screen.resolutions
+                            .Select(r => $"{r.width}\u00d7{r.height}")
+                            .Reverse()
+                            .ToList();
+                    }
 
                     return supportedResolutions;
                 }
-                private set => supportedResolutions = value;
             }
 
             private VideoOptions() { }
 
             internal void LoadValues()
             {
-                resolution = LoadOption(Keys.Resolution, SupportedResolutions[0]);
+                resolution = LoadOption(Keys.Resolution, GetDefaultResolution());
                 FullScreenMode = LoadOption(Keys.FullScreenMode, FullScreenMode.FullScreenWindow);
             }
 
@@ -45,10 +50,11 @@ namespace Tulip.Core
             [CreateProperty]
             public string Resolution
             {
-                get => IsResolutionValid(resolution) ? resolution : resolution = SupportedResolutions[0];
+                get => IsResolutionValid(resolution) ? resolution : resolution = GetDefaultResolution();
                 set
                 {
-                    if (!IsResolutionValid(value)) return;
+                    if (!IsResolutionValid(value))
+                        return;
 
                     string[] resolutionParts = Resolution.Split('\u00d7', 2);
                     int width = int.Parse(resolutionParts[0]);
@@ -59,7 +65,11 @@ namespace Tulip.Core
                 }
             }
 
-            private bool IsResolutionValid(string value) => SupportedResolutions.Contains(value);
+            private string GetDefaultResolution() =>
+                SupportedResolutions.Count > 0 ? SupportedResolutions[0] : string.Empty;
+
+            private bool IsResolutionValid(string value) =>
+                SupportedResolutions.Contains(value);
 
             void ISerializationCallbackReceiver.OnBeforeSerialize() => resolution = Resolution;
             void ISerializationCallbackReceiver.OnAfterDeserialize() { }

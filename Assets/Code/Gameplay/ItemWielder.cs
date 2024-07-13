@@ -44,8 +44,9 @@ namespace Tulip.Gameplay
         {
             itemVisual = itemRenderer.transform;
             itemPivot = itemVisual.parent;
-            RefreshItem();
         }
+
+        private void Start() => RefreshItem();
 
         private void Update()
         {
