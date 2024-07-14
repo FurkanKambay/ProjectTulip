@@ -141,7 +141,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 1aedbefae8dd10947b4f8f345ab9df64, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -163,7 +163,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: -184146533, guid: d6f21244c2865c14aacbbff443b80c70, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -940,11 +940,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: {fileID: 1334333901957425893}
   animator: {fileID: 6461720170399778386}
+  sprite: {fileID: 4019848646787942259}
   movement:
     <V>k__BackingField: {fileID: 9212041135445022483}
   jumper:
     <V>k__BackingField: {fileID: 7389629672759855050}
   destroyAfterDeath: 1
+  hurtVisualDuration: 0.1
 --- !u!1 &7311166122315869526
 GameObject:
   m_ObjectHideFlags: 0

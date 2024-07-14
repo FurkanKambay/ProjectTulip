@@ -1377,11 +1377,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: {fileID: 7186377946535505526}
   animator: {fileID: 6461720170399778386}
+  sprite: {fileID: 4019848646787942259}
   movement:
     <V>k__BackingField: {fileID: 3529033824618618864}
   jumper:
     <V>k__BackingField: {fileID: 2609030180661286187}
   destroyAfterDeath: 0
+  hurtVisualDuration: 0.1
 --- !u!1 &7919986324676621856
 GameObject:
   m_ObjectHideFlags: 0
