@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Tulip.UI
 {
-    public class HealthBarUI : MonoBehaviour
+    public class HealthBarPresenter : MonoBehaviour
     {
         [Header("References")]
         [SerializeField, Required] HealthBase health;

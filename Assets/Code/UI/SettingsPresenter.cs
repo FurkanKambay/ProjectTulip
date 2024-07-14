@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 
 namespace Tulip.UI
 {
-    public class SettingsUI : MonoBehaviour
+    public class SettingsPresenter : MonoBehaviour
     {
         [Header("References")]
         [SerializeField, Required] UIDocument document;

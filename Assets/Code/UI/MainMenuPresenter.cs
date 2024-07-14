@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 namespace Tulip.UI
 {
-    public class MainMenuUI : MonoBehaviour
+    public class MainMenuPresenter : MonoBehaviour
     {
         [Header("References")]
         [SerializeField, Required] UIDocument document;
