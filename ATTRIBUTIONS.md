@@ -5,7 +5,7 @@ These assets are used for prototyping purposes only.
 ## Sprites
 
 - "Pixel Protagonist" by Penzilla — https://penzilla.itch.io/protagonist-character
-- "Seamless HD landscape in parts" by PWL — https://opengameart.org/content/seamless-hd-landscape-in-parts
+- "Parallax Backgrounds: Plains" by Admurin — https://admurin.itch.io/parallax-backgrounds-plains
 - "Cursor Pack (1.0)" by Kenney — https://www.kenney.nl/assets/cursor-pack
 - "Xelu's Free Controller Prompts" by Xelu — https://thoseawesomeguys.com/prompts
 
