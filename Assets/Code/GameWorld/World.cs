@@ -11,15 +11,25 @@ namespace Tulip.GameWorld
 {
     public class World : MonoBehaviour, IWorld
     {
-        public Vector2Int Size { get; internal set; }
-
+        [Header("References")]
         [SerializeField] Tilemap wallTilemap;
         [SerializeField] Tilemap blockTilemap;
         [SerializeField] Tilemap curtainTilemap;
 
+        [Header("Config")]
+        public bool isReadonly;
+
         public event IWorld.WorldTileEvent OnPlaceTile;
         public event IWorld.WorldTileEvent OnHitTile;
         public event IWorld.WorldTileEvent OnDestroyTile;
+
+        public Vector2Int Size { get; internal set; }
+
+        public bool IsReadonly
+        {
+            get => isReadonly;
+            set => isReadonly = value;
+        }
 
         private readonly Dictionary<Vector3Int, int> blockDamageMap = new();
         private readonly Dictionary<Vector3Int, int> wallDamageMap = new();
@@ -27,6 +37,9 @@ namespace Tulip.GameWorld
 
         public InventoryModification DamageTile(Vector3Int cell, TileType tileType, int damage)
         {
+            if (isReadonly)
+                return InventoryModification.Empty;
+
             Tilemap tilemap = GetTilemap(tileType);
             WorldTile worldTile = GetTile(cell);
 
@@ -53,6 +66,9 @@ namespace Tulip.GameWorld
 
         public InventoryModification PlaceTile(Vector3Int cell, WorldTile worldTile)
         {
+            if (isReadonly)
+                return InventoryModification.Empty;
+
             Tilemap tilemap = GetTilemap(worldTile.TileType);
 
             if (tilemap.HasTile(cell))
@@ -91,11 +107,11 @@ namespace Tulip.GameWorld
             return true;
         }
 
-        public int GetTileDamage(Vector3Int cell, TileType tileType)
-            => GetDamageMap(tileType).GetValueOrDefault(cell, 0);
+        public int GetTileDamage(Vector3Int cell, TileType tileType) =>
+            GetDamageMap(tileType).GetValueOrDefault(cell, 0);
 
-        public bool CellIntersects(Vector3Int cell, Bounds other)
-            => CellBoundsWorld(cell).Intersects(other);
+        public bool CellIntersects(Vector3Int cell, Bounds other) =>
+            CellBoundsWorld(cell).Intersects(other);
 
         public Vector3Int WorldToCell(Vector3 worldPosition) => blockTilemap.WorldToCell(worldPosition);
         public Vector3 CellCenter(Vector3Int cell) => blockTilemap.GetCellCenterWorld(cell);
@@ -105,8 +121,8 @@ namespace Tulip.GameWorld
         public WorldTile GetTile(Vector3Int cell) => blockTilemap.GetTile<CustomRuleTile>(cell)?.WorldTile;
         public WorldTile GetTile(Vector3 worldPosition) => GetTile(WorldToCell(worldPosition));
 
-        internal void SetTiles(TileType tileType, TileChangeData[] tileChangeData)
-            => GetTilemap(tileType).SetTiles(tileChangeData, ignoreLockFlags: true);
+        internal void SetTiles(TileType tileType, TileChangeData[] tileChangeData) =>
+            GetTilemap(tileType).SetTiles(tileChangeData, ignoreLockFlags: true);
 
         internal void SetTile(Vector3Int cell, TileType tileType, WorldTile worldTile)
         {

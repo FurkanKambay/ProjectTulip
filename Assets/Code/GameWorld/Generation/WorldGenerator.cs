@@ -31,6 +31,7 @@ namespace Tulip.GameWorld.Generation
             world.SetTiles(TileType.Wall, walls.ToArray());
             world.SetTiles(TileType.Block, blocks.ToArray());
             world.SetTiles(TileType.Curtain, curtains.ToArray());
+            world.isReadonly = false;
 
             await Awaitable.NextFrameAsync();
             onReady?.Invoke();

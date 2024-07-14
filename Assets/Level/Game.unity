@@ -727,6 +727,7 @@ MonoBehaviour:
   wallTilemap: {fileID: 414399567}
   blockTilemap: {fileID: 414399566}
   curtainTilemap: {fileID: 1011634099}
+  isReadonly: 1
 --- !u!82 &661774620
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1729,6 +1730,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 661774619}
+        m_TargetAssemblyTypeName: Tulip.GameWorld.World, Tulip.GameWorld
+        m_MethodName: set_IsReadonly
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!82 &1795025823
 AudioSource:
