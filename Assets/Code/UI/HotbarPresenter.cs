@@ -33,18 +33,16 @@ namespace Tulip.UI
         private void OnEnable() => GameState.OnGameStateChange += HandleGameStateChange;
         private void OnDisable() => GameState.OnGameStateChange -= HandleGameStateChange;
 
-        private void Start() => UpdateTooltip();
+        private void Start() => RefreshDocument();
 
-        private void UpdateItems() => items = hotbar.I.Items;
-
-        private void UpdateHotbarSelection(int index)
+        private void RefreshDocument()
         {
-            if (!document.enabled)
-                return;
+            hotbarRoot = document.rootVisualElement[0];
+            tooltipRoot = document.rootVisualElement[1];
+            document.rootVisualElement.dataSource = this;
 
-            audioSource.Play();
-
-            SelectSlot(index);
+            UpdateItems();
+            SelectSlot(hotbar.I.SelectedIndex);
             UpdateTooltip();
         }
 
@@ -54,11 +52,13 @@ namespace Tulip.UI
                 hotbarRoot[i].RemoveFromClassList("selected");
 
             hotbarRoot[index].AddToClassList("selected");
+
+            UpdateTooltip();
         }
 
         private void UpdateTooltip()
         {
-            if (!document.enabled)
+            if (tooltipRoot == null)
                 return;
 
             ItemStack selectedStack = hotbar.I.SelectedStack;
@@ -89,26 +89,32 @@ namespace Tulip.UI
             }
         }
 
+        private void UpdateItems() => items = hotbar.I.Items;
+
+        private void HandleHotbarChangedSelection(int index)
+        {
+            if (!document.enabled)
+                return;
+
+            audioSource.Play();
+            SelectSlot(index);
+        }
+
         private void HandleGameStateChange(GameState from, GameState to)
         {
             document.enabled = to == GameState.Playing || to == GameState.Testing;
 
             if (document.enabled)
             {
-                hotbarRoot = document.rootVisualElement[0];
-                tooltipRoot = document.rootVisualElement[1];
-
-                document.rootVisualElement.dataSource = this;
-                UpdateItems();
-                SelectSlot(hotbar.I.SelectedIndex);
+                RefreshDocument();
 
                 hotbar.I.OnModify += UpdateItems;
-                hotbar.I.OnChangeSelection += UpdateHotbarSelection;
+                hotbar.I.OnChangeSelection += HandleHotbarChangedSelection;
             }
             else
             {
                 hotbar.I.OnModify -= UpdateItems;
-                hotbar.I.OnChangeSelection -= UpdateHotbarSelection;
+                hotbar.I.OnChangeSelection -= HandleHotbarChangedSelection;
             }
         }
     }

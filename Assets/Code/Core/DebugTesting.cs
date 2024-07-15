@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Tulip.Core
 {
-    public class DebugTileTest : MonoBehaviour
+    public class DebugTesting : MonoBehaviour
     {
         private async void Start() => await GameState.SwitchTo(GameState.Testing);
     }
