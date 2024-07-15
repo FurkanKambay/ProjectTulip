@@ -1,4 +1,5 @@
 using SaintsField;
+using Tulip.Core;
 using Tulip.Data;
 using Tulip.Data.Gameplay;
 using UnityEngine;
@@ -18,6 +19,26 @@ namespace Tulip.Gameplay
 
         public float SecondsUntilRespawn { get; private set; }
         public bool CanRespawn => SecondsUntilRespawn <= 0;
+
+        private void OnEnable()
+        {
+            GameState.OnGameStateChange += HandleGameStateChange;
+            health.OnDie += HandleDeath;
+        }
+
+        private void OnDisable()
+        {
+            GameState.OnGameStateChange -= HandleGameStateChange;
+            health.OnDie -= HandleDeath;
+        }
+
+        private void HandleGameStateChange(GameState oldState, GameState newState)
+        {
+            bool startedPlaying = newState == GameState.Playing && oldState != GameState.Paused;
+
+            if (newState == GameState.MainMenu || startedPlaying)
+                TryRespawn();
+        }
 
         private void Update()
         {
@@ -40,9 +61,6 @@ namespace Tulip.Gameplay
             body.MovePosition(respawnPosition);
             SecondsUntilRespawn = 0;
         }
-
-        private void OnEnable() => health.OnDie += HandleDeath;
-        private void OnDisable() => health.OnDie -= HandleDeath;
 
         private void HandleDeath(DamageEventArgs _) => SecondsUntilRespawn = respawnDelay;
     }

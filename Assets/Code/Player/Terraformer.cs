@@ -18,8 +18,9 @@ namespace Tulip.Player
 
         [Header("Config")]
         [SerializeField] Vector2 hotspotOffset;
+        [SerializeField] float range = 5f;
 
-        public float range = 5f;
+        public event Action<Vector3Int?> OnChangeCellFocus;
 
         public Vector3Int MouseCell { get; private set; }
 
@@ -35,8 +36,6 @@ namespace Tulip.Player
                 OnChangeCellFocus?.Invoke(focusedCell);
             }
         }
-
-        public event Action<Vector3Int?> OnChangeCellFocus;
 
         private Vector3Int? focusedCell;
         private Vector2 rangePath;
@@ -92,6 +91,12 @@ namespace Tulip.Player
 
             Vector2 hotspot = (Vector2)transform.position + hotspotOffset;
             rangePath = Vector2.ClampMagnitude(brain.I.AimPosition - hotspot, range);
+
+            if (world.isReadonly)
+            {
+                FocusedCell = null;
+                return;
+            }
 
             if (!Options.Instance.Gameplay.UseSmartCursor || itemWielder.I.CurrentStack.item is not Pickaxe)
             {

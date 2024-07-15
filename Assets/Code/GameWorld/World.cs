@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Tulip.Core;
 using Tulip.Data;
 using Tulip.Data.Items;
 using Tulip.Data.Tiles;
@@ -34,6 +35,9 @@ namespace Tulip.GameWorld
         private readonly Dictionary<Vector3Int, int> blockDamageMap = new();
         private readonly Dictionary<Vector3Int, int> wallDamageMap = new();
         private readonly Dictionary<Vector3Int, int> curtainDamageMap = new();
+
+        private void OnEnable() => GameState.OnGameStateChange += HandleGameStateChange;
+        private void OnDisable() => GameState.OnGameStateChange -= HandleGameStateChange;
 
         public InventoryModification DamageTile(Vector3Int cell, TileType tileType, int damage)
         {
@@ -179,5 +183,8 @@ namespace Tulip.GameWorld
             TileType.Curtain => curtainDamageMap,
             _ => throw new ArgumentOutOfRangeException()
         };
+
+        private void HandleGameStateChange(GameState oldState, GameState newState) =>
+            isReadonly = newState == GameState.MainMenu;
     }
 }

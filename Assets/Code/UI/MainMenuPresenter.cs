@@ -1,42 +1,41 @@
 using SaintsField;
 using Tulip.Core;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UIElements;
 
 namespace Tulip.UI
 {
     public class MainMenuPresenter : MonoBehaviour
     {
-        [Header("References")]
         [SerializeField, Required] UIDocument document;
-
-        [Header("Config")]
-        [SerializeField] UnityEvent onClickPlay;
 
         private VisualElement root;
         private Button playButton;
 
-        public void SetRootUIVisibility(bool visible) => root.visible = visible;
+        private void OnEnable() => GameState.OnGameStateChange += HandleGameStateChange;
+        private void OnDisable() => GameState.OnGameStateChange -= HandleGameStateChange;
 
-        private void OnEnable()
+        private void HandleGameStateChange(GameState oldState, GameState newState)
         {
-            Time.timeScale = 1;
+            document.enabled = newState == GameState.MainMenu;
 
-            root = document.rootVisualElement.ElementAt(0);
-            playButton = root.Q<Button>("PlayButton");
-            playButton.RegisterCallback<ClickEvent>(HandlePlayClicked);
+            if (document.enabled)
+            {
+                root = document.rootVisualElement.ElementAt(0);
+                playButton = root.Q<Button>("PlayButton");
+                playButton.RegisterCallback<ClickEvent>(HandlePlayClicked);
+            }
+            else
+            {
+                playButton.UnregisterCallback<ClickEvent>(HandlePlayClicked);
+            }
         }
-
-        private void OnDisable() => playButton.UnregisterCallback<ClickEvent>(HandlePlayClicked);
 
         private async void HandlePlayClicked(ClickEvent _)
         {
             playButton.SetEnabled(false);
             playButton.text = "Loading...";
-            await Awaitable.NextFrameAsync();
 
-            onClickPlay?.Invoke();
             await GameState.SwitchTo(GameState.Playing);
         }
     }

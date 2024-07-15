@@ -22,7 +22,6 @@ namespace Tulip.UI
         [Header("Config")]
         public UnityEvent onShow;
         public UnityEvent onHide;
-        public UnityEvent onClickExit;
 
         // ReSharper disable UnusedMember.Local
         [CreateProperty] bool IsQuitConfirmButtonVisible => IsInMainMenu && ShouldShowQuitButton;
@@ -122,9 +121,9 @@ namespace Tulip.UI
                 onHide?.Invoke();
         }
 
-        private void HandleGameStateChange()
+        private void HandleGameStateChange(GameState oldState, GameState newState)
         {
-            root.visible = GameState.Current != GameState.Playing;
+            root.visible = newState != GameState.Playing;
         }
 
         private async void HandleSaveExitClicked(ClickEvent _)
@@ -133,7 +132,6 @@ namespace Tulip.UI
             quitFlyoutButton.value = false;
             await GameState.SwitchTo(GameState.MainMenu);
             optionsButton.value = false;
-            onClickExit?.Invoke();
         }
 
         private void HandleQuitClicked(ClickEvent _) => GameState.QuitGame();

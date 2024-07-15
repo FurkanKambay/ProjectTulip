@@ -1,4 +1,3 @@
-using System;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -7,7 +6,9 @@ namespace Tulip.Core
 {
     public abstract class GameState : ScriptableObject
     {
-        public static event Action OnGameStateChange;
+        public delegate void GameStateChangeEvent(GameState oldState, GameState newState);
+
+        public static event GameStateChangeEvent OnGameStateChange;
 
         protected static LoadingGameState Loading { get; set; }
         public static MainMenuGameState MainMenu { get; protected set; }
@@ -21,18 +22,15 @@ namespace Tulip.Core
         public static GameState Current
         {
             get => (bool)currentState ? currentState : currentState = Loading;
-            private set
-            {
-                if (currentState == value) return;
-                currentState = value;
-                OnGameStateChange?.Invoke();
-            }
+            private set => currentState = value;
         }
 
         public static async Awaitable SwitchTo(GameState newState)
         {
             Assert.IsNotNull(newState);
-            if (newState == Current) return;
+
+            if (newState == Current)
+                return;
 
             bool hasWarned = false;
             int frameWaitCount = 0;
@@ -63,6 +61,8 @@ namespace Tulip.Core
             newState.Activate();
 
             Current = newState;
+            OnGameStateChange?.Invoke(oldState, newState);
+
             isTransitioning = false;
         }
 
@@ -100,6 +100,7 @@ namespace Tulip.Core
 
             await SwitchTo(MainMenu);
         }
+
         public override string ToString() => $"|{name[13..]}|";
 
         private void OnEnable() => Application.wantsToQuit += () => Current.CanQuitGame();

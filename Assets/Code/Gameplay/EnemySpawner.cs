@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using SaintsField;
 using SaintsField.Playa;
+using Tulip.Core;
 using Tulip.GameWorld;
 using UnityEditor;
 using UnityEngine;
@@ -37,6 +38,9 @@ namespace Tulip.Gameplay
 
         private IEnumerable<Vector3Int> suitableCells;
 
+        private bool isActive;
+        private float timeSinceLastSpawn;
+
         [Button]
         // ReSharper disable once UnusedMember.Local
         public void DestroyAllSpawns()
@@ -45,27 +49,51 @@ namespace Tulip.Gameplay
                 Destroy(spawnParent.GetChild(i).gameObject);
         }
 
-        private void OnEnable() =>
-            InvokeRepeating(nameof(SpawnEnemy), gracePeriod, interval);
+        private void OnEnable() => GameState.OnGameStateChange += HandleGameStateChange;
+        private void OnDisable() => GameState.OnGameStateChange -= HandleGameStateChange;
 
-        private void OnDisable() =>
-            CancelInvoke(nameof(SpawnEnemy));
+        private void Update()
+        {
+            if (!isActive)
+            {
+                timeSinceLastSpawn = -gracePeriod;
+                return;
+            }
 
-        private void SpawnEnemy()
+            timeSinceLastSpawn += Time.deltaTime;
+
+            if (timeSinceLastSpawn < interval)
+                return;
+
+            if (TrySpawnEnemy())
+                timeSinceLastSpawn = 0;
+        }
+
+        private void HandleGameStateChange(GameState oldState, GameState newState)
+        {
+            isActive = newState != GameState.MainMenu;
+
+            if (!isActive)
+                DestroyAllSpawns();
+        }
+
+        private bool TrySpawnEnemy()
         {
             if (spawnParent.childCount >= maxSpawns)
-                return;
+                return false;
 
             if (enemyOptions.Length == 0)
-                return;
+                return false;
 
             suitableCells = GetSuitableCells();
 
             if (!suitableCells.Any())
-                return;
+                return false;
 
             GameObject randomEnemy = SpawnRandomEnemy();
             randomEnemy.transform.position = world.CellCenter(GetRandomSpawnCell());
+
+            return true;
         }
 
         private GameObject SpawnRandomEnemy() =>

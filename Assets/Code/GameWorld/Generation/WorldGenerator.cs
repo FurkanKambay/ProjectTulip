@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Tulip.Core;
 using Tulip.Data;
 using Tulip.Data.Items;
 using UnityEngine;
@@ -22,6 +23,9 @@ namespace Tulip.GameWorld.Generation
         List<TileChangeData> walls;
         List<TileChangeData> blocks;
         List<TileChangeData> curtains;
+
+        private void OnEnable() => GameState.OnGameStateChange += HandleGameStateChange;
+        private void OnDisable() => GameState.OnGameStateChange -= HandleGameStateChange;
 
         private async void Start() => await GenerateWorldData();
 
@@ -102,6 +106,12 @@ namespace Tulip.GameWorld.Generation
             }
 
             return noise;
+        }
+
+        private void HandleGameStateChange(GameState oldState, GameState newState)
+        {
+            if (oldState == GameState.MainMenu && newState == GameState.Playing)
+                SetupWorld();
         }
     }
 }

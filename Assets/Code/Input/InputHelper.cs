@@ -12,30 +12,30 @@ namespace Tulip.Input
             Debug.Log("[Input] Enabled input helper.");
         }
 
-        private static void HandleGameStateChanged()
+        private static void HandleGameStateChanged(GameState oldState, GameState newState)
         {
             InputActionMap playerControls = InputSystem.actions.actionMaps[0];
             InputActionMap uiControls = InputSystem.actions.actionMaps[1];
 
-            if (GameState.Current.IsPlayerInputEnabled)
+            if (newState.IsPlayerInputEnabled)
             {
-                Debug.Log($"[Input] + Player input enabled by {GameState.Current}.");
+                Debug.Log($"[Input] + Player input enabled by {newState}.");
                 playerControls.Enable();
             }
             else
             {
-                Debug.Log($"[Input] - Player input disabled by {GameState.Current}.");
+                Debug.Log($"[Input] - Player input disabled by {newState}.");
                 playerControls.Disable();
             }
 
-            if (GameState.Current.IsUIInputEnabled)
+            if (newState.IsUIInputEnabled)
             {
-                Debug.Log($"[Input] - UI input enabled by {GameState.Current}.");
+                Debug.Log($"[Input] - UI input enabled by {newState}.");
                 uiControls.Enable();
             }
             else
             {
-                Debug.Log($"[Input] - UI input disabled by {GameState.Current}.");
+                Debug.Log($"[Input] - UI input disabled by {newState}.");
                 uiControls.Disable();
             }
         }

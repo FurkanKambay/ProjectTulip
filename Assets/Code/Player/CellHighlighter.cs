@@ -20,6 +20,9 @@ namespace Tulip.Player
         private Vector3 targetPosition;
         private Vector3Int? focusedCell;
 
+        private void OnEnable() => terraformer.OnChangeCellFocus += HandleCellFocusChanged;
+        private void OnDisable() => terraformer.OnChangeCellFocus -= HandleCellFocusChanged;
+
         private void Update()
         {
             if (!focusedCell.HasValue)
@@ -38,9 +41,7 @@ namespace Tulip.Player
         private void LateUpdate() =>
             transform.position = Vector3.Lerp(transform.position, targetPosition, trackingSpeed * Time.deltaTime);
 
-        private void OnEnable() => terraformer.OnChangeCellFocus += HandleCellFocusChanged;
-        private void OnDisable() => terraformer.OnChangeCellFocus -= HandleCellFocusChanged;
-
-        private void HandleCellFocusChanged(Vector3Int? cell) => focusedCell = cell;
+        private void HandleCellFocusChanged(Vector3Int? cell) =>
+            focusedCell = cell;
     }
 }

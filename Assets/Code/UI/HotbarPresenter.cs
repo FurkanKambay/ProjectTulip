@@ -1,5 +1,6 @@
 using System.Collections;
 using SaintsField;
+using Tulip.Core;
 using Tulip.Data;
 using Unity.Properties;
 using UnityEngine;
@@ -29,41 +30,37 @@ namespace Tulip.UI
         private VisualElement hotbarRoot;
         private VisualElement tooltipRoot;
 
+        private void OnEnable() => GameState.OnGameStateChange += HandleGameStateChange;
+        private void OnDisable() => GameState.OnGameStateChange -= HandleGameStateChange;
+
         private void Start() => UpdateTooltip();
 
-        private void OnEnable()
-        {
-            hotbarRoot = document.rootVisualElement[0];
-            tooltipRoot = document.rootVisualElement[1];
-
-            document.rootVisualElement.dataSource = this;
-            UpdateHotbar();
-
-            hotbar.I.OnModify += UpdateHotbar;
-            hotbar.I.OnChangeSelection += UpdateHotbarSelection;
-        }
-
-        private void OnDisable()
-        {
-            hotbar.I.OnModify -= UpdateHotbar;
-            hotbar.I.OnChangeSelection -= UpdateHotbarSelection;
-        }
-
-        private void UpdateHotbar() => items = hotbar.I.Items;
+        private void UpdateItems() => items = hotbar.I.Items;
 
         private void UpdateHotbarSelection(int index)
         {
+            if (!document.enabled)
+                return;
+
             audioSource.Play();
 
+            SelectSlot(index);
+            UpdateTooltip();
+        }
+
+        private void SelectSlot(int index)
+        {
             for (int i = 0; i < hotbarRoot.childCount; i++)
                 hotbarRoot[i].RemoveFromClassList("selected");
 
             hotbarRoot[index].AddToClassList("selected");
-            UpdateTooltip();
         }
 
         private void UpdateTooltip()
         {
+            if (!document.enabled)
+                return;
+
             ItemStack selectedStack = hotbar.I.SelectedStack;
             heldItem = selectedStack;
 
@@ -89,6 +86,29 @@ namespace Tulip.UI
                 tooltipRoot.visible = true;
                 yield return new WaitForSeconds(tooltipShowDuration / 1000f);
                 tooltipRoot.visible = false;
+            }
+        }
+
+        private void HandleGameStateChange(GameState from, GameState to)
+        {
+            document.enabled = to == GameState.Playing || to == GameState.Testing;
+
+            if (document.enabled)
+            {
+                hotbarRoot = document.rootVisualElement[0];
+                tooltipRoot = document.rootVisualElement[1];
+
+                document.rootVisualElement.dataSource = this;
+                UpdateItems();
+                SelectSlot(hotbar.I.SelectedIndex);
+
+                hotbar.I.OnModify += UpdateItems;
+                hotbar.I.OnChangeSelection += UpdateHotbarSelection;
+            }
+            else
+            {
+                hotbar.I.OnModify -= UpdateItems;
+                hotbar.I.OnChangeSelection -= UpdateHotbarSelection;
             }
         }
     }
