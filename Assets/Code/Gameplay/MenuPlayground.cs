@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Tulip
+namespace Tulip.Gameplay
 {
     public class MenuPlayground : MonoBehaviour
     {

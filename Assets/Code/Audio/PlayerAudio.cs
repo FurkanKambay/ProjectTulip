@@ -1,7 +1,6 @@
 using SaintsField;
 using Tulip.Data;
 using Tulip.Data.Gameplay;
-using Tulip.Data.Items;
 using UnityEngine;
 
 namespace Tulip.Audio
