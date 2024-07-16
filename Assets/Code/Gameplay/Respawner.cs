@@ -58,7 +58,7 @@ namespace Tulip.Gameplay
                 return;
 
             health.Revive();
-            body.MovePosition(respawnPosition);
+            body.position = respawnPosition;
             SecondsUntilRespawn = 0;
         }
 
