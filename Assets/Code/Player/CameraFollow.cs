@@ -3,7 +3,6 @@ using SaintsField;
 using Tulip.Core;
 using Tulip.Data;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Tulip.Player
 {
@@ -11,19 +10,15 @@ namespace Tulip.Player
     {
         [Header("References")]
         [SerializeField, Required] new Camera camera;
-        [SerializeField] Transform player;
-
-        [Header("Input")]
-        [SerializeField] InputActionReference point;
-        [SerializeField] InputActionReference zoom;
+        [SerializeField, GetComponentInScene] SaintsInterface<Component, IPlayerBrain> brain;
 
         [Header("Config")]
         [SerializeField, Range(-0.5f, 0.5f)] float menuPeekAmountX;
         [SerializeField, Range(-0.5f, 0.5f)] float menuPeekAmountY;
         [SerializeField] Vector2 menuOffset;
 
-        public TrackingOptions trackingConfig;
-        public ZoomOptions zoomConfig;
+        [SerializeField] TrackingOptions trackingConfig;
+        [SerializeField] ZoomOptions zoomConfig;
 
         private Vector3 initialPosition;
 
@@ -35,10 +30,9 @@ namespace Tulip.Player
         {
             if (GameState.Current == GameState.MainMenu)
             {
-                Vector2 mousePoint = point.action.ReadValue<Vector2>();
                 var clampedScreenPoint = new Vector3(
-                    x: Mathf.Clamp(mousePoint.x, 0, camera.pixelWidth),
-                    y: Mathf.Clamp(mousePoint.y, 0, camera.pixelHeight));
+                    x: Mathf.Clamp(brain.I.AimPosition.x, 0, camera.pixelWidth),
+                    y: Mathf.Clamp(brain.I.AimPosition.y, 0, camera.pixelHeight));
 
                 Vector3 mouseWorldPoint = camera.ScreenToWorldPoint(clampedScreenPoint);
                 Vector3 peekAmount = mouseWorldPoint * new Vector2(menuPeekAmountX, menuPeekAmountY);
@@ -47,11 +41,9 @@ namespace Tulip.Player
             }
             else if (GameState.Current == GameState.Playing || GameState.Current == GameState.Testing)
             {
-                Vector3 targetPoint = (bool)player ? player.position : initialPosition;
+                Vector3 targetPoint = (bool)brain.V ? brain.V.transform.position : initialPosition;
                 trackingConfig.Target = targetPoint + (Vector3)trackingConfig.Offset;
-
-                float zoomDelta = zoom.action.ReadValue<float>();
-                zoomConfig.Target -= zoomDelta * zoomConfig.Sensitivity * Time.deltaTime;
+                zoomConfig.Target -= brain.I.ZoomDelta * zoomConfig.Sensitivity * Time.deltaTime;
             }
         }
 
@@ -66,13 +58,13 @@ namespace Tulip.Player
             Vector3 distance = trackingConfig.Target - position;
             float targetX = Mathf.Abs(distance.x) < trackingConfig.SnapValue ? trackingConfig.Target.x : lerpX;
             float targetY = Mathf.Abs(distance.y) < trackingConfig.SnapValue ? trackingConfig.Target.y : lerpY;
-            transform.position = new Vector3(targetX, targetY, trackingConfig.Target.z);
+            camera.transform.position = new Vector3(targetX, targetY, trackingConfig.Target.z);
         }
 
         private void OnValidate()
         {
             initialPosition = new Vector3(menuOffset.x, menuOffset.y, -10);
-            transform.position = initialPosition;
+            camera.transform.position = initialPosition;
         }
 
         [Serializable]

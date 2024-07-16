@@ -451,7 +451,6 @@ GameObject:
   - component: {fileID: 519420034}
   - component: {fileID: 519420031}
   - component: {fileID: 519420030}
-  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -567,38 +566,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 746185963}
   - {fileID: 1919041879}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &519420033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fdfdff2c1ac25943b5f45bf68fb38e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  camera: {fileID: 519420031}
-  player: {fileID: 1986012726}
-  point: {fileID: 2247111929073154336, guid: a92862044b24ac64ba40ebf339dc22ab, type: 3}
-  zoom: {fileID: -4753524853136224464, guid: a92862044b24ac64ba40ebf339dc22ab, type: 3}
-  menuPeekAmountX: 0.1
-  menuPeekAmountY: 0.1
-  menuOffset: {x: 0, y: 8}
-  trackingConfig:
-    <Offset>k__BackingField: {x: 0, y: 1.45}
-    <Speed>k__BackingField: {x: 4, y: 4}
-    <SnapValue>k__BackingField: 0.01
-  zoomConfig:
-    target: 12
-    <Min>k__BackingField: 2
-    <Max>k__BackingField: 20
-    <Sensitivity>k__BackingField: 6
-    <Speed>k__BackingField: 10
 --- !u!81 &519420034
 AudioListener:
   m_ObjectHideFlags: 0
@@ -947,6 +918,66 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &746185962
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 746185963}
+  - component: {fileID: 746185964}
+  m_Layer: 0
+  m_Name: Follower
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &746185963
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 746185962}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 519420032}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &746185964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 746185962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fdfdff2c1ac25943b5f45bf68fb38e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camera: {fileID: 519420031}
+  brain:
+    <V>k__BackingField: {fileID: 2058642785}
+  menuPeekAmountX: 0.1
+  menuPeekAmountY: 0.1
+  menuOffset: {x: 0, y: 8}
+  trackingConfig:
+    <Offset>k__BackingField: {x: 0, y: 1.45}
+    <Speed>k__BackingField: {x: 4, y: 4}
+    <SnapValue>k__BackingField: 0.01
+  zoomConfig:
+    target: 12
+    <Min>k__BackingField: 2
+    <Max>k__BackingField: 20
+    <Sensitivity>k__BackingField: 6
+    <Speed>k__BackingField: 10
 --- !u!1839735485 &1011634099 stripped
 Tilemap:
   m_CorrespondingSourceObject: {fileID: 6191996856151981255, guid: f424f79dcd083e14b805387a89e2929f, type: 3}
@@ -1779,6 +1810,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8291246366843984804, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
   m_PrefabInstance: {fileID: 1154427126}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2058642785 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3825264036527423534, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
+  m_PrefabInstance: {fileID: 1154427126}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34fe02ae195a4934ab403049c6892884, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2100611435
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,33 +4,35 @@ using Tulip.Data;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Tulip.Character
+namespace Tulip.Input
 {
-    public class PlayerBrain : MonoBehaviour, IPlayerBrain, IDasherBrain, IJumperBrain, IWielderBrain
+    public class PlayerBrain : MonoBehaviour, IPlayerBrain
     {
         public event Action OnJump;
         public event Action OnJumpReleased;
 
         [Header("References")]
-        [SerializeField, Required] Health health;
+        [SerializeField, Required] HealthBase health;
 
         [Header("Input - Basic")]
-        [SerializeField] InputActionReference point;
-        [SerializeField] InputActionReference move;
-        [SerializeField] InputActionReference jump;
-        [SerializeField] InputActionReference dash;
-        [SerializeField] InputActionReference use;
+        [SerializeField, Required] InputActionReference point;
+        [SerializeField, Required] InputActionReference move;
+        [SerializeField, Required] InputActionReference jump;
+        [SerializeField, Required] InputActionReference dash;
+        [SerializeField, Required] InputActionReference use;
 
         [Header("Input - Misc")]
-        [SerializeField] InputActionReference smartCursor;
-        [SerializeField] InputActionReference hotbarScroll;
-        [SerializeField] InputActionReference hotbar;
+        [SerializeField, Required] InputActionReference zoom;
+        [SerializeField, Required] InputActionReference smartCursor;
+        [SerializeField, Required] InputActionReference hotbarScroll;
+        [SerializeField, Required] InputActionReference hotbar;
 
         public Vector2 AimPosition { get; private set; }
         public float HorizontalMovement { get; private set; }
         public bool WantsToDash { get; private set; }
         public bool WantsToUse { get; private set; }
 
+        public float ZoomDelta { get; private set; }
         public bool WantsToToggleSmartCursor { get; private set; }
         public int HotbarSelectionDelta { get; private set; }
         public int? HotbarSelectionIndex { get; private set; }
@@ -41,7 +43,7 @@ namespace Tulip.Character
 
         private void Update()
         {
-            if (health.IsDead)
+            if (!health || health.IsDead)
             {
                 HorizontalMovement = default;
                 WantsToDash = false;
@@ -60,6 +62,7 @@ namespace Tulip.Character
             WantsToDash = dash.action.inProgress;
             WantsToUse = use.action.inProgress;
 
+            ZoomDelta = zoom.action.ReadValue<float>();
             WantsToToggleSmartCursor = smartCursor.action.triggered;
             HotbarSelectionDelta = Math.Sign(hotbarScroll.action.ReadValue<float>());
             HotbarSelectionIndex = !hotbar.action.inProgress ? null : (int)hotbar.action.ReadValue<float>();
