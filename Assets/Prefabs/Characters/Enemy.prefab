@@ -936,7 +936,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1479135307753551677}
-  - component: {fileID: 4292947777179525707}
+  - component: {fileID: 703394194994127280}
   m_Layer: 7
   m_Name: Animation
   m_TagString: Untagged
@@ -959,7 +959,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2526430196951330804}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4292947777179525707
+--- !u!114 &703394194994127280
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -968,16 +968,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6860415499060898518}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c36735ade5ba44c78de1e439a9ac9ddf, type: 3}
+  m_Script: {fileID: 11500000, guid: b4f553feb02c43d89fb4aee499dcebec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   health: {fileID: 1334333901957425893}
   animator: {fileID: 6461720170399778386}
-  sprite: {fileID: 4019848646787942259}
-  movement:
-    <V>k__BackingField: {fileID: 9212041135445022483}
-  jumper:
-    <V>k__BackingField: {fileID: 7389629672759855050}
+  movement: {fileID: 9212041135445022483}
+  jumper: {fileID: 7389629672759855050}
 --- !u!1 &7311166122315869526
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,21 +1,15 @@
-using SaintsField;
 using Tulip.Data;
 using Tulip.Data.Gameplay;
 using UnityEngine;
 
-namespace Tulip.Gameplay
+namespace Tulip.Character
 {
     public class CharacterAnimator : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField, Required] HealthBase health;
-        [SerializeField, Required] Animator animator;
-        [SerializeField, Required] SpriteRenderer sprite;
-        [SerializeField, Required] SaintsInterface<Object, ICharacterMovement> movement;
-        [SerializeField, Required] SaintsInterface<Object, ICharacterJump> jumper;
+        [SerializeField] protected HealthBase health;
+        [SerializeField] protected Animator animator;
 
-        private static readonly int animSpeed = Animator.StringToHash("speed");
-        private static readonly int animJumping = Animator.StringToHash("jumping");
         private static readonly int animHurt = Animator.StringToHash("hurt");
         private static readonly int animDead = Animator.StringToHash("dead");
 
@@ -32,9 +26,6 @@ namespace Tulip.Gameplay
             health.OnDie -= HandleDied;
             health.OnRevive -= HandleRevived;
         }
-
-        private void Update() => animator.SetBool(animJumping, jumper.I.IsJumping);
-        private void FixedUpdate() => animator.SetFloat(animSpeed, Mathf.Abs(movement.I.Velocity.x));
 
         private void HandleHurt(DamageEventArgs damage) => animator.SetTrigger(animHurt);
         private void HandleDied(DamageEventArgs damage) => animator.SetBool(animDead, true);
