@@ -1,6 +1,13 @@
 :root {
     -unity-font-definition: url("project://database/Assets/Art/monogram-extended.ttf?fileID=12800000&guid=5ca88aa0ed910a14ab34417b970d76fd&type=3#monogram-extended");
-    font-size: 26px;
+
+    --text-small: 32px;
+    --text-medium: 36px;
+    --text-big: 48px;
+    --text-large: 64px;
+    --text-huge: 72px;
+
+    font-size: var(--text-small);
 }
 
 .unity-base-dropdown__container-inner {
@@ -20,13 +27,13 @@
     -unity-background-image-tint-color: rgb(0, 160, 255);
 }
 
-.unity-base-dropdown__item:checked  .unity-base-dropdown__checkmark {
+.unity-base-dropdown__item:checked .unity-base-dropdown__checkmark {
     -unity-background-image-tint-color: rgb(0, 160, 255);
     margin-left: 2px;
     margin-right: 2px;
 }
 
-.unity-base-dropdown__item  .unity-base-dropdown__checkmark {
+.unity-base-dropdown__item .unity-base-dropdown__checkmark {
     margin-left: 2px;
     margin-right: 2px;
 }

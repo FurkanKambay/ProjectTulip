@@ -45,24 +45,33 @@ Tab > .unity-tab__content-container {
 
 .option {
     height: 48px;
+    font-size: var(--text-medium)
+    align-self: flex-start;
     margin-top: 4px;
     margin-right: 4px;
     margin-bottom: 4px;
     margin-left: 4px;
-    align-self: flex-end;
 }
 
-.option .unity-base-field__label {
+.option:hover {
+    color: rgb(0, 160, 255);
+}
+
+.option .unity-toggle__text {
     align-self: center;
     margin-top: 2px;
     margin-bottom: 2px;
     margin-right: 2px;
     margin-left: 2px;
     padding-top: 0;
-    padding-right: 16px;
+    padding-right: 0;
     padding-bottom: 0;
-    padding-left: 0;
+    padding-left: 16px;
     -unity-text-align: middle-right;
+}
+
+.slider-audio {
+    align-self: flex-end;
 }
 
 .slider-audio > Label {
@@ -74,7 +83,7 @@ Tab > .unity-tab__content-container {
 }
 
 .slider-audio > VisualElement {
-    width: 240px;
+    width: 280px;
 }
 
 .slider-audio .unity-text-field__input {
@@ -103,12 +112,11 @@ Tab > .unity-tab__content-container {
     margin-bottom: 0;
     margin-right: 0;
     margin-left: 8px;
-    width: 38px;
 }
 
 .dropdown > .unity-base-field__input {
     background-color: rgba(22, 22, 22, 0.8);
-    width: 240px;
+    width: 280px;
     border-width: 0;
 }
 

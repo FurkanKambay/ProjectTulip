@@ -7,7 +7,7 @@
 
 .header-title {
     color: rgb(255, 255, 255);
-    font-size: 40px;
+    font-size: var(--text-big);
     -unity-text-align: middle-left;
     padding-top: 0;
     padding-right: 0;
@@ -144,7 +144,7 @@
 }
 
 .unity-tab__header {
-    font-size: 40px;
+    font-size: var(--text-big);
     height: 64px;
     width: 200px;
     background-color: rgb(34, 38, 42);

@@ -13,7 +13,7 @@
     align-items: center;
     justify-content: flex-end;
     color: rgb(94, 125, 79);
-    font-size: 72px;
+    font-size: var(--text-huge);
     -unity-font-style: bold;
     -unity-text-outline-width: 1px;
     -unity-text-outline-color: rgb(255, 255, 255);
@@ -21,7 +21,7 @@
 }
 
 #Body {
-    font-size: 40px;
+    font-size: var(--text-big);
     flex-grow: 3;
     justify-content: center;
     align-self: stretch;

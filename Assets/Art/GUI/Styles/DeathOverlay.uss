@@ -7,7 +7,7 @@
 }
 
 #DeathMessage {
-    font-size: 48px;
+    font-size: var(--text-large);
 }
 
 #ReasonPanel {
@@ -57,6 +57,7 @@ Button:disabled {
 }
 
 #RespawnCountdown {
-    font-size: 36px;
+    font-size: var(--text-huge);
+    color: greenyellow;
     position: absolute;
 }
