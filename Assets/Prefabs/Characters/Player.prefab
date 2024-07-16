@@ -128,6 +128,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2045110054226266640}
+  - {fileID: 2273530516925830145}
   m_Father: {fileID: 8291246366843984804}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4019848646787942259
@@ -451,6 +452,55 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   body: {fileID: 7560684870690709998}
   health: {fileID: 7186377946535505526}
+--- !u!1 &3054966189977091430
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2273530516925830145}
+  - component: {fileID: 4490995052189427159}
+  m_Layer: 6
+  m_Name: Health Effects
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2273530516925830145
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3054966189977091430}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2526430196951330804}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4490995052189427159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3054966189977091430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b324a67502194656b9a9e6e8f4578cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: {fileID: 7186377946535505526}
+  sprite: {fileID: 4019848646787942259}
+  destroyAfterDeath: 0
+  hurtVisualDuration: 0.1
+  dissolveDuration: 2
 --- !u!1 &3237863389822308978
 GameObject:
   m_ObjectHideFlags: 0
@@ -1397,9 +1447,6 @@ MonoBehaviour:
     <V>k__BackingField: {fileID: 3529033824618618864}
   jumper:
     <V>k__BackingField: {fileID: 2609030180661286187}
-  hurtVisualDuration: 0.1
-  dissolveDuration: 2
-  destroyAfterDeath: 0
 --- !u!1 &7919986324676621856
 GameObject:
   m_ObjectHideFlags: 0

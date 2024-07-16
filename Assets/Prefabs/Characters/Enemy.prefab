@@ -84,6 +84,55 @@ Transform:
   - {fileID: 157687602700878991}
   m_Father: {fileID: 8291246366843984804}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1426463437882678885
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7156241300293656518}
+  - component: {fileID: 2572586573222672818}
+  m_Layer: 0
+  m_Name: Health Effects
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7156241300293656518
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1426463437882678885}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2526430196951330804}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2572586573222672818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1426463437882678885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b324a67502194656b9a9e6e8f4578cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: {fileID: 1334333901957425893}
+  sprite: {fileID: 4019848646787942259}
+  destroyAfterDeath: 1
+  hurtVisualDuration: 0.1
+  dissolveDuration: 3
 --- !u!1 &1673359338847146882
 GameObject:
   m_ObjectHideFlags: 0
@@ -116,6 +165,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1479135307753551677}
+  - {fileID: 7156241300293656518}
   m_Father: {fileID: 8291246366843984804}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4019848646787942259
@@ -928,9 +978,6 @@ MonoBehaviour:
     <V>k__BackingField: {fileID: 9212041135445022483}
   jumper:
     <V>k__BackingField: {fileID: 7389629672759855050}
-  hurtVisualDuration: 0.1
-  dissolveDuration: 3
-  destroyAfterDeath: 1
 --- !u!1 &7311166122315869526
 GameObject:
   m_ObjectHideFlags: 0
