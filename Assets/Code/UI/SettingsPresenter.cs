@@ -1,9 +1,9 @@
 using SaintsField;
 using Tulip.Core;
+using Tulip.Input;
 using Unity.Properties;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
 namespace Tulip.UI
@@ -12,12 +12,8 @@ namespace Tulip.UI
     {
         [Header("References")]
         [SerializeField, Required] UIDocument document;
+        [SerializeField, Required] UserBrain brain;
         [SerializeField, Required] AudioSource audioSource;
-
-        [Header("Input")]
-        [SerializeField] InputActionReference menu;
-        [SerializeField] InputActionReference cancel;
-        [SerializeField] InputActionReference switchTab;
 
         [Header("Config")]
         public UnityEvent onShow;
@@ -86,20 +82,20 @@ namespace Tulip.UI
             if (GameState.Current == GameState.MainMenu)
             {
                 // same as <cancel.action.triggered> in Main Menu
-                if (menu.action.triggered)
+                if (brain.WantsToMenu)
                     optionsButton.value = !optionsButton.value;
             }
             else
             {
-                if (menu.action.triggered)
+                if (brain.WantsToMenu)
                     optionsButton.value = true;
 
-                if (cancel.action.triggered)
+                if (brain.WantsToCancel)
                     optionsButton.value = false;
             }
 
-            if (switchTab.action.triggered)
-                tabView.selectedTabIndex += (int)switchTab.action.ReadValue<float>();
+            if (brain.TabSwitchDelta.HasValue)
+                tabView.selectedTabIndex += brain.TabSwitchDelta.Value;
         }
 
         private void HandleOptionsToggle(ChangeEvent<bool> change)

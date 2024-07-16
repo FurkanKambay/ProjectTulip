@@ -389,6 +389,7 @@ GameObject:
   m_Component:
   - component: {fileID: 513751244}
   - component: {fileID: 513751245}
+  - component: {fileID: 513751246}
   m_Layer: 0
   m_Name: Input
   m_TagString: Untagged
@@ -423,6 +424,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0528451173ba3f2419b78e5449e05192, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &513751246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 513751243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5c6b1788c594778bba752caf5f441ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menu: {fileID: -5214709563405804261, guid: a92862044b24ac64ba40ebf339dc22ab, type: 3}
+  cancel: {fileID: 174961218743309079, guid: a92862044b24ac64ba40ebf339dc22ab, type: 3}
+  switchTab: {fileID: -8827449429561561328, guid: a92862044b24ac64ba40ebf339dc22ab, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1470,10 +1486,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   document: {fileID: 1795025821}
+  brain: {fileID: 513751246}
   audioSource: {fileID: 1795025823}
-  menu: {fileID: -5214709563405804261, guid: a92862044b24ac64ba40ebf339dc22ab, type: 3}
-  cancel: {fileID: 174961218743309079, guid: a92862044b24ac64ba40ebf339dc22ab, type: 3}
-  switchTab: {fileID: -8827449429561561328, guid: a92862044b24ac64ba40ebf339dc22ab, type: 3}
   onShow:
     m_PersistentCalls:
       m_Calls: []
