@@ -24,9 +24,9 @@ namespace Tulip.Data
         InventoryModification PlaceTile(Vector3Int cell, WorldTile worldTile);
 
         bool CellIntersects(Vector3Int cell, Bounds other);
-        bool HasTile(Vector3Int cell);
-        WorldTile GetTile(Vector3Int cell);
-        WorldTile GetTile(Vector3 worldPosition);
+        bool HasBlock(Vector3Int cell);
+        WorldTile GetBlock(Vector3Int cell);
+        WorldTile GetBlock(Vector3 worldPosition);
 
         bool CanAccommodate(Vector3Int cell, Vector2Int entitySize);
     }

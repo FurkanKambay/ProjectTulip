@@ -45,7 +45,7 @@ namespace Tulip.GameWorld
                 return InventoryModification.Empty;
 
             Tilemap tilemap = GetTilemap(tileType);
-            WorldTile worldTile = GetTile(cell);
+            WorldTile worldTile = GetTile(tileType, cell);
 
             if (!tilemap.HasTile(cell) || worldTile.isUnbreakable)
                 return InventoryModification.Empty;
@@ -93,7 +93,7 @@ namespace Tulip.GameWorld
             {
                 for (int x = 0; x < entitySize.x; x++, cellToCheck.x++)
                 {
-                    if (HasTile(cell))
+                    if (HasBlock(cell))
                         return false;
                 }
             }
@@ -111,9 +111,12 @@ namespace Tulip.GameWorld
         public Vector3 CellCenter(Vector3Int cell) => blockTilemap.GetCellCenterWorld(cell);
         public Bounds CellBoundsWorld(Vector3Int cell) => new(CellCenter(cell), blockTilemap.GetBoundsLocal(cell).size);
 
-        public bool HasTile(Vector3Int cell) => blockTilemap.HasTile(cell);
-        public WorldTile GetTile(Vector3Int cell) => blockTilemap.GetTile<CustomRuleTile>(cell)?.WorldTile;
-        public WorldTile GetTile(Vector3 worldPosition) => GetTile(WorldToCell(worldPosition));
+        public bool HasBlock(Vector3Int cell) => blockTilemap.HasTile(cell);
+        public WorldTile GetBlock(Vector3Int cell) => GetTile(TileType.Block, cell);
+        public WorldTile GetBlock(Vector3 worldPosition) => GetBlock(WorldToCell(worldPosition));
+
+        private WorldTile GetTile(TileType tileType, Vector3Int cell) =>
+            GetTilemap(tileType).GetTile<CustomRuleTile>(cell)?.WorldTile;
 
         internal void SetTiles(TileType tileType, TileChangeData[] tileChangeData) =>
             GetTilemap(tileType).SetTiles(tileChangeData, ignoreLockFlags: true);

@@ -35,10 +35,9 @@ namespace Tulip.Data
             if (needsGround)
             {
                 var floorCell = new Vector3Int(cell.x, cell.y - 1);
-                WorldTile floorTile = world.GetTile(floorCell);
+                WorldTile floorTile = world.GetBlock(floorCell);
 
-                // BUG: HasTile means HasBlock
-                if (!world.HasTile(floorCell) || (needsSafeGround && !floorTile.IsSafe))
+                if (!world.HasBlock(floorCell) || (needsSafeGround && !floorTile.IsSafe))
                     return false;
 
                 if (groundTiles.Length > 0 && !groundTiles.Contains(floorTile))
@@ -53,7 +52,7 @@ namespace Tulip.Data
                 {
                     cellToCheck.y--;
 
-                    if (world.HasTile(cellToCheck))
+                    if (world.HasBlock(cellToCheck))
                         return false;
                 }
             }
