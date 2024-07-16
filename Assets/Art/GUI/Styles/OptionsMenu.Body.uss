@@ -45,7 +45,7 @@ Tab > .unity-tab__content-container {
 
 .option {
     height: 48px;
-    font-size: var(--text-medium)
+    font-size: var(--text-medium);
     align-self: flex-start;
     margin-top: 4px;
     margin-right: 4px;
