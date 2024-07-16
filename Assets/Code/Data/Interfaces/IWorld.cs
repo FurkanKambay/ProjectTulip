@@ -27,5 +27,7 @@ namespace Tulip.Data
         bool HasTile(Vector3Int cell);
         WorldTile GetTile(Vector3Int cell);
         WorldTile GetTile(Vector3 worldPosition);
+
+        bool CanAccommodate(Vector3Int cell, Vector2Int entitySize);
     }
 }

@@ -3,6 +3,7 @@ using System.Linq;
 using SaintsField;
 using SaintsField.Playa;
 using Tulip.Core;
+using Tulip.Data;
 using Tulip.GameWorld;
 using UnityEditor;
 using UnityEngine;
@@ -31,10 +32,7 @@ namespace Tulip.Gameplay
 
         [LayoutGroup("Config/Enemies", ELayout.TitleOut)]
 
-        [OverlayRichLabel("<color=gray>tiles")]
-        [SerializeField, Min(1)] int enemyHeight = 2;
-
-        [SerializeField] GameObject[] enemyOptions;
+        [SerializeField] Enemy[] enemyOptions;
 
         private IEnumerable<Vector3Int> suitableCells;
 
@@ -85,24 +83,26 @@ namespace Tulip.Gameplay
             if (enemyOptions.Length == 0)
                 return false;
 
-            suitableCells = GetSuitableCells();
+            Enemy enemy = GetRandomEnemy();
+            suitableCells = GetSuitableCells(enemy);
 
             if (!suitableCells.Any())
                 return false;
 
-            GameObject randomEnemy = SpawnRandomEnemy();
-            randomEnemy.transform.position = world.CellCenter(GetRandomSpawnCell());
+            GameObject spawnedEnemy = Spawn(enemy.Prefab);
+
+            spawnedEnemy.transform.position = world.CellCenter(GetRandomSpawnCell());
 
             return true;
         }
 
-        private GameObject SpawnRandomEnemy() =>
-            Instantiate(enemyOptions[Random.Range(0, enemyOptions.Length)], spawnParent);
+        private Enemy GetRandomEnemy() => enemyOptions[Random.Range(0, enemyOptions.Length)];
 
-        private Vector3Int GetRandomSpawnCell() =>
-            suitableCells.ElementAt(Random.Range(0, suitableCells.Count()));
+        private GameObject Spawn(GameObject prefab) => Instantiate(prefab, spawnParent);
 
-        private IEnumerable<Vector3Int> GetSuitableCells()
+        private Vector3Int GetRandomSpawnCell() => suitableCells.ElementAt(Random.Range(0, suitableCells.Count()));
+
+        private IEnumerable<Vector3Int> GetSuitableCells(Enemy enemy)
         {
             float camExtentY = camera.orthographicSize;
             float camExtentX = camExtentY * camera.aspect;
@@ -116,8 +116,6 @@ namespace Tulip.Gameplay
             Vector3Int spawnTopRight = world.WorldToCell(cameraCenter + new Vector3(spawnExtentX, spawnExtentY));
             Vector3Int spawnBottomLeft = world.WorldToCell(cameraCenter - new Vector3(spawnExtentX, spawnExtentY));
 
-            Vector2Int enemySize = new(1, enemyHeight);
-
             for (int y = spawnBottomLeft.y; y <= spawnTopRight.y; y++)
             {
                 for (int x = spawnBottomLeft.x; x <= spawnTopRight.x; x++)
@@ -127,7 +125,7 @@ namespace Tulip.Gameplay
 
                     var cell = new Vector3Int(x, y);
 
-                    if (world.CanAccommodate(cell, enemySize))
+                    if (enemy.CanSpawnAt(world, cell))
                         yield return cell;
                 }
             }
@@ -138,7 +136,7 @@ namespace Tulip.Gameplay
         {
             Handles.color = Color.yellow;
 
-            foreach (Vector3Int cell in GetSuitableCells())
+            foreach (Vector3Int cell in GetSuitableCells(enemyOptions[0]))
                 Handles.DrawSolidDisc(world.CellCenter(cell), Vector3.forward, 0.2f);
         }
 #endif

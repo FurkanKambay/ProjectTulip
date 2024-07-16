@@ -87,25 +87,15 @@ namespace Tulip.GameWorld
 
         public bool CanAccommodate(Vector3Int cell, Vector2Int entitySize)
         {
-            Assert.IsTrue(entitySize.x > 0, "entitySize.x > 0");
-            Assert.IsTrue(entitySize.y > 0, "entitySize.y > 0");
-
-            // NOTE: temporary restriction
-            Assert.IsTrue(entitySize.x == 1, "entitySize.x == 1");
-
             Vector3Int cellToCheck = cell;
 
-            var floor = new Vector3Int(cellToCheck.x, cellToCheck.y - 1);
-
-            if (!HasTile(floor) || !GetTile(floor).IsSafe)
-                return false;
-
-            for (int y = 0; y < entitySize.y; y++)
+            for (int y = 0; y < entitySize.y; y++, cellToCheck.y++)
             {
-                if (HasTile(cellToCheck))
-                    return false;
-
-                cellToCheck.y++;
+                for (int x = 0; x < entitySize.x; x++, cellToCheck.x++)
+                {
+                    if (HasTile(cell))
+                        return false;
+                }
             }
 
             return true;

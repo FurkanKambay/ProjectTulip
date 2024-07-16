@@ -1402,9 +1402,8 @@ MonoBehaviour:
   radius: 10
   interval: 2
   gracePeriod: 0
-  enemyHeight: 2
   enemyOptions:
-  - {fileID: 2859632988072890709, guid: e80f529ddf142384a9f35b19b774a636, type: 3}
+  - {fileID: 11400000, guid: ea8750a0c949971459c7425c97b8a620, type: 2}
 --- !u!1 &1795025818
 GameObject:
   m_ObjectHideFlags: 0
