@@ -37,6 +37,9 @@ namespace Tulip.UI
 
         private void RefreshDocument()
         {
+            if (document.rootVisualElement == null)
+                return;
+
             hotbarRoot = document.rootVisualElement[0];
             tooltipRoot = document.rootVisualElement[1];
             document.rootVisualElement.dataSource = this;
