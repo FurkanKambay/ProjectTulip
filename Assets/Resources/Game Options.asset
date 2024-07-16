@@ -21,5 +21,4 @@ MonoBehaviour:
     effectsVolume: 100
     uiVolume: 100
   video:
-    fullScreenMode: 1
-    resolution: "1920\xD71080"
+    windowMode: 1
