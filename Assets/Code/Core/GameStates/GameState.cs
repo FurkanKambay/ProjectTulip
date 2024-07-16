@@ -94,6 +94,7 @@ namespace Tulip.Core
         {
             Debug.Log("[Game State] Initializing.");
             currentState = Loading;
+            isTransitioning = false;
 
             if (currentState == null)
                 Debug.LogError("[Game State] Empty game state is null.");

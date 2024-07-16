@@ -54,9 +54,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _DissolveAmount: 0
     - _ReplaceColor: 0
     m_Colors:
-    - _Body_Color: {r: 0, g: 0.5803922, b: 1, a: 1}
     - _Color: {r: 0.9056604, g: 0.18369527, b: 0.18369527, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

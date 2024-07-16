@@ -42,6 +42,7 @@ namespace Tulip.AI
 
             if (health.IsDead)
             {
+                HorizontalMovement = default;
                 OnJumpReleased?.Invoke();
                 return;
             }
