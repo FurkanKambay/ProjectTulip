@@ -177,6 +177,8 @@ namespace Tulip.Gameplay
         private void RefreshItem()
         {
             handStack = CurrentStack;
+            UpdateItemSprite();
+
             phaseIndex = 0;
             ResetMotionStart();
 
