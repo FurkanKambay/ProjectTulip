@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Tulip.AI
 {
-    public class SimpleFollowerBrain : MonoBehaviour, IWalkerBrain, IJumperBrain, IWielderBrain
+    public class SimpleFollowerBrain : MonoBehaviour, ICharacterBrain, IJumperBrain
     {
         public event Action OnJump;
         public event Action OnJumpReleased;

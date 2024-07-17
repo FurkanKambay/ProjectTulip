@@ -1,6 +1,6 @@
 namespace Tulip.Data
 {
-    public interface IPlayerBrain : IWielderBrain, IJumperBrain, IDasherBrain
+    public interface IPlayerBrain : ICharacterBrain, IJumperBrain, IDasherBrain
     {
         public float ZoomDelta { get; }
         public bool WantsToToggleSmartCursor { get; }

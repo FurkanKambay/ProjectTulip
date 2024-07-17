@@ -12,7 +12,6 @@ namespace Tulip.Character
         [SerializeField, Required] Rigidbody2D body;
         [SerializeField, Required] SaintsInterface<Component, IWalkerBrain> brain;
         [SerializeField, Required] SurroundsChecker surrounds;
-        [SerializeField, Required] SpriteRenderer spriteRenderer;
 
         [Header("Config")]
         public MovementConfig config;
@@ -34,9 +33,6 @@ namespace Tulip.Character
         private void Update()
         {
             hasAnyMovement = brain.I.HorizontalMovement != 0;
-
-            if (hasAnyMovement && spriteRenderer)
-                spriteRenderer.flipX = brain.I.HorizontalMovement < 0;
 
             bool isFacingObstacle = brain.I.HorizontalMovement < 0 ? surrounds.IsLeftBlocked : surrounds.IsRightBlocked;
             float velocityX = brain.I.HorizontalMovement * Mathf.Max(config.maxSpeed - config.friction, 0f);

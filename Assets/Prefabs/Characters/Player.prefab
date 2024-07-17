@@ -582,7 +582,6 @@ MonoBehaviour:
   brain:
     <V>k__BackingField: {fileID: 3825264036527423534}
   surrounds: {fileID: 7131764425725607556}
-  spriteRenderer: {fileID: 4019848646787942259}
   config: {fileID: 11400000, guid: 8d2ea2dc215d77946b11e690ac378276, type: 2}
 --- !u!1 &3500122598979994782
 GameObject:
@@ -1407,6 +1406,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2045110054226266640}
   - component: {fileID: 6595930055843492387}
+  - component: {fileID: 1273803533565988894}
   m_Layer: 6
   m_Name: Animation
   m_TagString: Untagged
@@ -1445,6 +1445,21 @@ MonoBehaviour:
   animator: {fileID: 6461720170399778386}
   movement: {fileID: 3529033824618618864}
   jumper: {fileID: 2609030180661286187}
+--- !u!114 &1273803533565988894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7634134730077779123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3945025d2a24a429219de59262fec46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 4019848646787942259}
+  brain:
+    <V>k__BackingField: {fileID: 3825264036527423534}
 --- !u!1 &7919986324676621856
 GameObject:
   m_ObjectHideFlags: 0
