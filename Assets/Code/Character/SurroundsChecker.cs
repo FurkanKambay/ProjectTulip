@@ -22,14 +22,14 @@ namespace Tulip.Character
         [SerializeField] float sideRange = .5f;
         [SerializeField] float sideHeight = .5f;
 
-        private static readonly Vector2 safetyLeft = Vector2.left * .001f;
-        private static readonly Vector2 safetyRight = Vector2.right * .001f;
+        private static readonly Vector2 safetyLeft = new(-0.001f, 0.5f);
+        private static readonly Vector2 safetyRight = new(0.001f, 0.5f);
 
         private Vector2 MinBounds => collider.bounds.min;
         private Vector2 MaxBounds => collider.bounds.max;
 
-        private Vector2 GroundLeft => transform.position - (Vector3.right * groundWidth);
-        private Vector2 GroundRight => transform.position + (Vector3.right * groundWidth);
+        private Vector2 GroundLeft => new(collider.bounds.center.x - groundWidth, MinBounds.y);
+        private Vector2 GroundRight => new(collider.bounds.center.x + groundWidth, MinBounds.y);
 
         private Vector2 LeftTop => new Vector2(MinBounds.x, MinBounds.y + sideHeight) + safetyLeft;
         private Vector2 LeftBottom => MinBounds + safetyLeft;
@@ -56,8 +56,8 @@ namespace Tulip.Character
             bool leftBottom = Physics2D.Raycast(LeftBottom, Vector2.left, sideRange, sidesLayer);
             bool rightTop = Physics2D.Raycast(RightTop, Vector2.right, sideRange, sidesLayer);
             bool rightBottom = Physics2D.Raycast(RightBottom, Vector2.right, sideRange, sidesLayer);
-            IsLeftBlocked = leftTop || leftBottom;
-            IsRightBlocked = rightTop || rightBottom;
+            IsLeftBlocked = leftTop && leftBottom;
+            IsRightBlocked = rightTop && rightBottom;
         }
 
         private void OnDrawGizmosSelected()
