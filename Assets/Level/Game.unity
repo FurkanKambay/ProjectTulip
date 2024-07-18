@@ -289,7 +289,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1423174218}
+  m_Father: {fileID: 1808102681}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &395841230
 MonoBehaviour:
@@ -1157,7 +1157,6 @@ Transform:
   - {fileID: 513751244}
   - {fileID: 1760523199}
   - {fileID: 2100611436}
-  - {fileID: 395841229}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1572344358
@@ -1656,7 +1655,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 395841229}
   m_Father: {fileID: 122205217}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1808102682
@@ -1691,6 +1691,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   document: {fileID: 1808102682}
+  playground: {fileID: 395841230}
 --- !u!1 &1919041878
 GameObject:
   m_ObjectHideFlags: 0

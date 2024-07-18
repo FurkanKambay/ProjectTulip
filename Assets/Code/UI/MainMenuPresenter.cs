@@ -7,7 +7,9 @@ namespace Tulip.UI
 {
     public class MainMenuPresenter : MonoBehaviour
     {
+        [Header("References")]
         [SerializeField, Required] UIDocument document;
+        [SerializeField] MenuPlayground playground;
 
         private VisualElement root;
         private Button playButton;
@@ -18,17 +20,17 @@ namespace Tulip.UI
         private void HandleGameStateChange(GameState oldState, GameState newState)
         {
             document.enabled = newState == GameState.MainMenu;
+            playground.gameObject.SetActive(document.enabled);
 
-            if (document.enabled)
-            {
-                root = document.rootVisualElement.ElementAt(0);
-                playButton = root.Q<Button>("PlayButton");
-                playButton.RegisterCallback<ClickEvent>(HandlePlayClicked);
-            }
-            else
+            if (!document.enabled)
             {
                 playButton.UnregisterCallback<ClickEvent>(HandlePlayClicked);
+                return;
             }
+
+            root = document.rootVisualElement.ElementAt(0);
+            playButton = root.Q<Button>("PlayButton");
+            playButton.RegisterCallback<ClickEvent>(HandlePlayClicked);
         }
 
         private async void HandlePlayClicked(ClickEvent _)
