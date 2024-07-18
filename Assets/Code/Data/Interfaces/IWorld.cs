@@ -23,10 +23,14 @@ namespace Tulip.Data
         /// <returns>Whether the tile was placed successfully.</returns>
         InventoryModification PlaceTile(Vector3Int cell, WorldTile worldTile);
 
-        bool CellIntersects(Vector3Int cell, Bounds other);
         bool HasBlock(Vector3Int cell);
         WorldTile GetBlock(Vector3Int cell);
         WorldTile GetBlock(Vector3 worldPosition);
+
+        Vector3 CellCenter(Vector3Int cell);
+        Bounds CellBoundsWorld(Vector3Int cell);
+        Vector3Int WorldToCell(Vector3 worldPosition);
+        bool CellIntersects(Vector3Int cell, Bounds other);
 
         bool CanAccommodate(Vector3Int cell, Vector2Int entitySize);
     }

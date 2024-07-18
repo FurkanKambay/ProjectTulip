@@ -25,12 +25,6 @@ namespace Tulip.GameWorld
 
         public Vector2Int Size { get; internal set; }
 
-        public bool IsReadonly
-        {
-            get => isReadonly;
-            set => isReadonly = value;
-        }
-
         private readonly Dictionary<Vector3Int, int> blockDamageMap = new();
         private readonly Dictionary<Vector3Int, int> wallDamageMap = new();
         private readonly Dictionary<Vector3Int, int> curtainDamageMap = new();
@@ -84,6 +78,15 @@ namespace Tulip.GameWorld
             return new InventoryModification(toRemove: new ItemStack(worldTile, 1));
         }
 
+        public bool HasBlock(Vector3Int cell) => blockTilemap.HasTile(cell);
+        public WorldTile GetBlock(Vector3Int cell) => GetTile(TileType.Block, cell);
+        public WorldTile GetBlock(Vector3 worldPosition) => GetBlock(WorldToCell(worldPosition));
+
+        public Vector3 CellCenter(Vector3Int cell) => blockTilemap.GetCellCenterWorld(cell);
+        public Bounds CellBoundsWorld(Vector3Int cell) => new(CellCenter(cell), blockTilemap.GetBoundsLocal(cell).size);
+        public Vector3Int WorldToCell(Vector3 worldPosition) => blockTilemap.WorldToCell(worldPosition);
+        public bool CellIntersects(Vector3Int cell, Bounds other) => CellBoundsWorld(cell).Intersects(other);
+
         public bool CanAccommodate(Vector3Int cell, Vector2Int entitySize)
         {
             Vector3Int cellToCheck = cell;
@@ -103,61 +106,41 @@ namespace Tulip.GameWorld
         public int GetTileDamage(Vector3Int cell, TileType tileType) =>
             GetDamageMap(tileType).GetValueOrDefault(cell, 0);
 
-        public bool CellIntersects(Vector3Int cell, Bounds other) =>
-            CellBoundsWorld(cell).Intersects(other);
-
-        public Vector3Int WorldToCell(Vector3 worldPosition) => blockTilemap.WorldToCell(worldPosition);
-        public Vector3 CellCenter(Vector3Int cell) => blockTilemap.GetCellCenterWorld(cell);
-        public Bounds CellBoundsWorld(Vector3Int cell) => new(CellCenter(cell), blockTilemap.GetBoundsLocal(cell).size);
-
-        public bool HasBlock(Vector3Int cell) => blockTilemap.HasTile(cell);
-        public WorldTile GetBlock(Vector3Int cell) => GetTile(TileType.Block, cell);
-        public WorldTile GetBlock(Vector3 worldPosition) => GetBlock(WorldToCell(worldPosition));
-
-        private WorldTile GetTile(TileType tileType, Vector3Int cell) =>
-            GetTilemap(tileType).GetTile<CustomRuleTile>(cell)?.WorldTile;
-
         internal void SetTiles(TileType tileType, TileChangeData[] tileChangeData) =>
             GetTilemap(tileType).SetTiles(tileChangeData, ignoreLockFlags: true);
-
-        internal void SetTile(Vector3Int cell, TileType tileType, WorldTile worldTile)
-        {
-            Tilemap tilemap = GetTilemap(tileType);
-
-            if (worldTile)
-            {
-                tilemap.SetTile(cell, worldTile.RuleTile);
-                tilemap.SetColor(cell, worldTile.Color);
-                // BUG: color doesn't work
-            }
-            else
-            {
-                tilemap.SetTile(cell, null);
-            }
-        }
 
         [ContextMenu("Reset Tilemaps")]
         internal void ResetTilemaps()
         {
-            wallTilemap.ClearAllTiles();
-            blockTilemap.ClearAllTiles();
-            curtainTilemap.ClearAllTiles();
-            ResetTilemapTransforms();
+            ResetTilemap(wallTilemap);
+            ResetTilemap(blockTilemap);
+            ResetTilemap(curtainTilemap);
         }
 
-        private void ResetTilemapTransforms()
+        private WorldTile GetTile(TileType tileType, Vector3Int cell) =>
+            GetTilemap(tileType).GetTile<CustomRuleTile>(cell)?.WorldTile;
+
+        private void SetTile(Vector3Int cell, TileType tileType, WorldTile worldTile)
         {
-            wallTilemap.size = new Vector3Int(Size.x, Size.y, 1);
-            blockTilemap.size = new Vector3Int(Size.x, Size.y, 1);
-            curtainTilemap.size = new Vector3Int(Size.x, Size.y, 1);
+            Tilemap tilemap = GetTilemap(tileType);
 
-            wallTilemap.CompressBounds();
-            blockTilemap.CompressBounds();
-            curtainTilemap.CompressBounds();
+            if (!worldTile)
+            {
+                tilemap.SetTile(cell, null);
+                return;
+            }
 
-            blockTilemap.transform.position = new Vector3(-Size.x / 2f, -Size.y, 0);
-            wallTilemap.transform.position = new Vector3(-Size.x / 2f, -Size.y, 0);
-            curtainTilemap.transform.position = new Vector3(-Size.x / 2f, -Size.y, 0);
+            tilemap.SetTile(cell, worldTile.RuleTile);
+            tilemap.SetColor(cell, worldTile.Color);
+            // BUG: color doesn't work
+        }
+
+        private void ResetTilemap(Tilemap tilemap)
+        {
+            tilemap.ClearAllTiles();
+            tilemap.size = new Vector3Int(Size.x, Size.y, 1);
+            tilemap.CompressBounds();
+            tilemap.transform.position = new Vector3(-Size.x / 2f, -Size.y, 0);
         }
 
         private Tilemap GetTilemap(TileType tileType) => tileType switch
