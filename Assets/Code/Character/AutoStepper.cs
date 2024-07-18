@@ -8,7 +8,7 @@ namespace Tulip.Character
     public class AutoStepper : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField, GetComponentInScene] World world;
+        [SerializeField, Required] Entity entity;
         [SerializeField, Required] Rigidbody2D body;
         [SerializeField, Required] CharacterMovement movement;
         [SerializeField, Required] SurroundsChecker surrounds;
@@ -27,9 +27,6 @@ namespace Tulip.Character
 
         private void Update()
         {
-            if (!world)
-                return;
-
             AutoStepDirection stepDirection = CanStepUp();
 
             if (stepDirection == AutoStepDirection.None)
@@ -61,7 +58,7 @@ namespace Tulip.Character
         {
             float velocity = movement.DesiredVelocity.x;
 
-            if (Mathf.Abs(velocity) < velocityThreshold)
+            if (!entity.world || Mathf.Abs(velocity) < velocityThreshold)
                 return AutoStepDirection.None;
 
             Vector2 direction = Vector2.right * Math.Sign(velocity);
@@ -70,14 +67,14 @@ namespace Tulip.Character
             RaycastHit2D hit = Physics2D.Raycast(hotspot, direction, range, LayerMask.GetMask("World"));
 
             Vector2 hitPoint = hit.point - (hit.normal * 0.1f);
-            Vector3Int cell1 = world.WorldToCell(hitPoint) + Vector3Int.up;
+            Vector3Int cell1 = entity.world.WorldToCell(hitPoint) + Vector3Int.up;
             Vector3Int cell2 = cell1 + Vector3Int.up;
             Vector3Int cell3 = cell2 + (velocity < 0 ? Vector3Int.right : Vector3Int.left);
 
             if (!hit)
                 return AutoStepDirection.None;
 
-            if (world.HasBlock(cell1) || world.HasBlock(cell2) || world.HasBlock(cell3))
+            if (entity.world.HasBlock(cell1) || entity.world.HasBlock(cell2) || entity.world.HasBlock(cell3))
                 return AutoStepDirection.None;
 
             return velocity > 0 ? AutoStepDirection.Right : AutoStepDirection.Left;

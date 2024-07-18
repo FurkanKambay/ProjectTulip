@@ -31,7 +31,6 @@ namespace Tulip.Gameplay
         [SerializeField, Min(0)] float gracePeriod;
 
         [LayoutGroup("Config/Enemies", ELayout.TitleOut)]
-
         [SerializeField] Enemy[] enemyOptions;
 
         private IEnumerable<Vector3Int> suitableCells;
@@ -89,18 +88,20 @@ namespace Tulip.Gameplay
             if (!suitableCells.Any())
                 return false;
 
-            GameObject spawnedEnemy = Spawn(enemy.Prefab);
-
-            spawnedEnemy.transform.position = world.CellCenter(GetRandomSpawnCell());
+            Entity spawnedEnemy = Spawn(enemy.Prefab, world.CellCenter(GetRandomSpawnCell()));
+            spawnedEnemy.world = world;
 
             return true;
         }
 
-        private Enemy GetRandomEnemy() => enemyOptions[Random.Range(0, enemyOptions.Length)];
+        private Entity Spawn(GameObject prefab, Vector3 position) =>
+            Instantiate(prefab, position, Quaternion.identity, spawnParent).GetComponent<Entity>();
 
-        private GameObject Spawn(GameObject prefab) => Instantiate(prefab, spawnParent);
+        private Enemy GetRandomEnemy() =>
+            enemyOptions[Random.Range(0, enemyOptions.Length)];
 
-        private Vector3Int GetRandomSpawnCell() => suitableCells.ElementAt(Random.Range(0, suitableCells.Count()));
+        private Vector3Int GetRandomSpawnCell() =>
+            suitableCells.ElementAt(Random.Range(0, suitableCells.Count()));
 
         private IEnumerable<Vector3Int> GetSuitableCells(Enemy enemy)
         {
