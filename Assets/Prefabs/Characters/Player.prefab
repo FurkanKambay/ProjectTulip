@@ -878,7 +878,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: {fileID: 7186377946535505526}
-  body: {fileID: 7560684870690709998}
+  subject: {fileID: 8291246366843984804}
   autoRespawn: 1
   respawnDelay: 3
   respawnPosition: {x: 0, y: 0, z: 0}

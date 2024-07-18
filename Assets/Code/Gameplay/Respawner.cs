@@ -10,7 +10,7 @@ namespace Tulip.Gameplay
     {
         [Header("References")]
         [SerializeField, Required] HealthBase health;
-        [SerializeField, Required] Rigidbody2D body;
+        [SerializeField, Required] Transform subject;
 
         [Header("Config")]
         [SerializeField] bool autoRespawn = true;
@@ -57,9 +57,9 @@ namespace Tulip.Gameplay
             if (!CanRespawn)
                 return;
 
-            health.Revive();
-            body.position = respawnPosition;
             SecondsUntilRespawn = 0;
+            subject.position = respawnPosition;
+            health.Revive();
         }
 
         private void HandleDeath(DamageEventArgs _) => SecondsUntilRespawn = respawnDelay;
