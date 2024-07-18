@@ -37,12 +37,11 @@ namespace Tulip.AI
 
         private void Update()
         {
-            if (!target)
-                return;
-
-            if (health.IsDead)
+            if (!health || health.IsDead || !targetHealth || targetHealth.IsDead)
             {
                 HorizontalMovement = default;
+                WantsToUse = false;
+
                 OnJumpReleased?.Invoke();
                 return;
             }
@@ -53,8 +52,8 @@ namespace Tulip.AI
             Vector2 distanceToTarget = AimPosition - (Vector2)transform.position;
             bool withinAttackingRange = distanceToTarget.sqrMagnitude < stopDistance * stopDistance;
 
-            WantsToUse = withinAttackingRange && targetHealth.IsAlive;
-            HorizontalMovement = withinAttackingRange || targetHealth.IsDead ? default : Mathf.Sign(distanceToTarget.x);
+            WantsToUse = withinAttackingRange;
+            HorizontalMovement = withinAttackingRange ? default : Mathf.Sign(distanceToTarget.x);
 
             // TODO: some enemies may be able to jump later
             // TryJump(distanceToTarget.y);
