@@ -9,9 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a2313b891d4493384c143b7bb1501f5, type: 3}
-  m_Name: Red Guy
+  m_Script: {fileID: 11500000, guid: a05779f818bf60e44aceef794cb1bb08, type: 3}
+  m_Name: Movement - Red Guy
   m_EditorClassIdentifier: 
-  prefab: {fileID: 2859632988072890709, guid: e80f529ddf142384a9f35b19b774a636, type: 3}
-  size: {x: 1, y: 2}
-  spawnCondition: {fileID: 11400000, guid: 457fa30dada22e746a5b16a1234da0b2, type: 2}
+  maxSpeed: 6
+  friction: 4
+  useAcceleration: 1
+  maxAcceleration: 30
+  maxDeceleration: 80
+  maxTurnSpeed: 80
+  maxAirAcceleration: 50
+  maxAirDeceleration: 20
+  maxAirTurnSpeed: 80

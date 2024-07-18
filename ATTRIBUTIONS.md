@@ -5,6 +5,7 @@ These assets are used for prototyping purposes only.
 ## Sprites
 
 - ["Pixel Protagonist"](https://penzilla.itch.io/protagonist-character) by Penzilla
+- ["Enemy: Bones Skull"](https://admurin.itch.io/enemy-bones-skull) by Admurin
 - ["Parallax Backgrounds: Plains"](https://admurin.itch.io/parallax-backgrounds-plains) by Admurin
 - ["Cursor Pack (1.0)"](https://www.kenney.nl/assets/cursor-pack) by Kenney
 - ["Xelu's Free Controller Prompts"](https://thoseawesomeguys.com/prompts) by Xelu
