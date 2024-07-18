@@ -46,7 +46,7 @@ namespace Tulip.Player
 
         private void Update()
         {
-            if (itemWielder.I.CurrentStack.item is not Tool)
+            if (itemWielder.I.CurrentStack.item is not WorldToolBase)
                 return;
 
             AssignCells();
@@ -54,7 +54,7 @@ namespace Tulip.Player
 
         private void HandleItemSwing(ItemStack stack, Vector3 _)
         {
-            if (stack.item is not Tool tool)
+            if (stack.item is not WorldToolBase tool)
                 return;
 
             if (!FocusedCell.HasValue)
@@ -98,7 +98,7 @@ namespace Tulip.Player
                 return;
             }
 
-            if (!Options.Instance.Gameplay.UseSmartCursor || itemWielder.I.CurrentStack.item is not Pickaxe)
+            if (!Options.Instance.Gameplay.UseSmartCursor || itemWielder.I.CurrentStack.item is not WorldTool)
             {
                 float distance = Vector3.Distance(hotspot, brain.I.AimPosition);
                 FocusedCell = distance <= range ? MouseCell : null;

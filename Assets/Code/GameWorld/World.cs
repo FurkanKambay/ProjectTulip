@@ -46,14 +46,14 @@ namespace Tulip.GameWorld
             Tilemap tilemap = GetTilemap(tileType);
             WorldTile worldTile = GetTile(tileType, cell);
 
-            if (!tilemap.HasTile(cell) || worldTile.isUnbreakable)
+            if (!tilemap.HasTile(cell) || worldTile.IsUnbreakable)
                 return InventoryModification.Empty;
 
             Dictionary<Vector3Int, int> damageMap = GetDamageMap(tileType);
             damageMap.TryAdd(cell, 0);
 
             int damageTaken = damageMap[cell] += damage;
-            int hardness = worldTile.hardness;
+            int hardness = worldTile.Hardness;
 
             if (damageTaken < hardness)
             {
@@ -127,7 +127,7 @@ namespace Tulip.GameWorld
             if (worldTile)
             {
                 tilemap.SetTile(cell, worldTile.RuleTile);
-                tilemap.SetColor(cell, worldTile.color);
+                tilemap.SetColor(cell, worldTile.Color);
                 // BUG: color doesn't work
             }
             else

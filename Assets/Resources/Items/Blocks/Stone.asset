@@ -12,19 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec2778eec103403f8cae777705b279c9, type: 3}
   m_Name: Stone
   m_EditorClassIdentifier: 
-  type: 1
+  type: 0
   icon: {fileID: 178573413, guid: 1631614f4ac086d4dab5aab9a349e144, type: 3}
   iconScale: 1
   name: Stone
   description: Stone.
   maxAmount: 999
-  cooldown: 0.5
+  cooldown: 0.2
   swingType: {fileID: 11400000, guid: 35ff93fda544a594a94ebfe5599470a9, type: 2}
-  tileType: 1
-  ruleTile: {fileID: 11400000, guid: 02e66ba5c65997f4da5eaed00f83fbc7, type: 2}
   color: {r: 1, g: 1, b: 1, a: 1}
-  hardness: 100
+  ruleTile: {fileID: 11400000, guid: 02e66ba5c65997f4da5eaed00f83fbc7, type: 2}
+  tileType: 1
+  isUnsafe: 0
   isUnbreakable: 0
+  hardness: 100
+  placeSound: {fileID: 8300000, guid: 06a72ce793aec6e47acd9cd16493da2c, type: 3}
   hitSound: {fileID: 8300000, guid: b65b9caeebb3648408ca1136889f421d, type: 3}
   destroySound: {fileID: 8300000, guid: 21bf617b37a8d484d8f8bf78669d77b9, type: 3}
-  placeSound: {fileID: 8300000, guid: 06a72ce793aec6e47acd9cd16493da2c, type: 3}

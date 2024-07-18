@@ -37,7 +37,7 @@ namespace Tulip.Data
                 var floorCell = new Vector3Int(cell.x, cell.y - 1);
                 WorldTile floorTile = world.GetBlock(floorCell);
 
-                if (!world.HasBlock(floorCell) || (needsSafeGround && !floorTile.IsSafe))
+                if (!world.HasBlock(floorCell) || (needsSafeGround && floorTile.IsUnsafe))
                     return false;
 
                 if (groundTiles.Length > 0 && !groundTiles.Contains(floorTile))

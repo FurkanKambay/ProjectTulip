@@ -271,7 +271,7 @@ namespace Tulip.Gameplay
             if (item is WorldTile tile)
             {
                 scale = item.IconScale * 0.8f;
-                tint = tile.color;
+                tint = tile.Color;
             }
 
             rendererScale = Vector2.one * scale;

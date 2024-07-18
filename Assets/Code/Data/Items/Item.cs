@@ -1,4 +1,4 @@
-using Unity.Properties;
+using SaintsField;
 using UnityEngine;
 
 namespace Tulip.Data.Items
@@ -6,7 +6,7 @@ namespace Tulip.Data.Items
     /// <summary>
     /// A base item that can be stored in an inventory.
     /// </summary>
-    [CreateAssetMenu(fileName = "Item", menuName = "Items/Item")]
+    [CreateAssetMenu(menuName = "Items/Item")]
     public class Item : ScriptableObject
     {
         public virtual ItemType Type => type;
@@ -18,7 +18,10 @@ namespace Tulip.Data.Items
 
         [Header("Item Data")]
         [SerializeField] protected ItemType type;
+
+        [AssetPreview(width: 64, align: EAlign.FieldStart)]
         [SerializeField] protected Sprite icon;
+
         [SerializeField] protected float iconScale = 1f;
         [SerializeField] protected new string name;
         [SerializeField, Multiline] protected string description;

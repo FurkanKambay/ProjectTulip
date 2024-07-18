@@ -1,31 +1,40 @@
+using SaintsField.Playa;
 using Tulip.Data.Tiles;
 using UnityEngine;
 
 namespace Tulip.Data.Items
 {
-    [CreateAssetMenu(fileName = "World Tile", menuName = "Items/World Tile")]
-    public class WorldTile : Tool
+    [CreateAssetMenu(menuName = "Items/World Tile")]
+    public class WorldTile : WorldToolBase
     {
-        public bool IsSafe => true;
-        public virtual TileType TileType => tileType;
-        public CustomRuleTile RuleTile => ruleTile;
-
         public override Sprite Icon => ruleTile.m_DefaultSprite;
-        public override float Cooldown => 0.25f;
 
-        [Header("Tile Data")]
-        [SerializeField] TileType tileType;
-        [SerializeField] CustomRuleTile ruleTile;
-        public Color color = Color.white;
+        public Color Color => color;
+        public CustomRuleTile RuleTile => ruleTile;
+        public TileType TileType => tileType;
+
+        public bool IsUnsafe => isUnsafe;
+        public bool IsUnbreakable => isUnbreakable;
+        public int Hardness => hardness;
+
+        public AudioClip PlaceSound => placeSound;
+        public AudioClip HitSound => hitSound;
+        public AudioClip DestroySound => destroySound;
 
         [Header("World Tile Data")]
-        [Min(1)] public int hardness = 50;
-        public bool isUnbreakable;
+        [SerializeField] protected Color color;
+        [SerializeField] protected CustomRuleTile ruleTile;
+        [SerializeField] protected TileType tileType;
+        [SerializeField] protected bool isUnsafe;
+        [SerializeField] protected bool isUnbreakable;
+
+        [Min(1), PlayaDisableIf(nameof(isUnbreakable))]
+        [SerializeField] protected int hardness = 50;
 
         [Header("Sounds")]
-        public AudioClip hitSound;
-        public AudioClip destroySound;
-        public AudioClip placeSound;
+        [SerializeField] protected AudioClip placeSound;
+        [SerializeField] protected AudioClip hitSound;
+        [SerializeField] protected AudioClip destroySound;
 
         public override InventoryModification UseOn(IWorld world, Vector3Int cell) => tileType switch
         {
@@ -41,9 +50,22 @@ namespace Tulip.Data.Items
             _ => false
         };
 
-        private void OnEnable() => RuleTile.WorldTile = this;
-        private void OnValidate() => RuleTile.WorldTile = this;
+        private void OnEnable()
+        {
+            if (ruleTile)
+                ruleTile.WorldTile = this;
+        }
 
-        private void Reset() => maxAmount = 999;
+        private void OnValidate()
+        {
+            if (ruleTile)
+                ruleTile.WorldTile = this;
+        }
+
+        private void Reset()
+        {
+            maxAmount = 999;
+            cooldown = 0.25f;
+        }
     }
 }

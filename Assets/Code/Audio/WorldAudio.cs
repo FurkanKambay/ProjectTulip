@@ -11,13 +11,13 @@ namespace Tulip.Audio
         [SerializeField] AudioSource audioSource;
 
         private void HandleTilePlaced(TileModification modification)
-            => audioSource.PlayOneShot(modification.WorldTile.placeSound);
+            => audioSource.PlayOneShot(modification.WorldTile.PlaceSound);
 
         private void HandleTileHit(TileModification modification)
-            => audioSource.PlayOneShot(modification.WorldTile.hitSound);
+            => audioSource.PlayOneShot(modification.WorldTile.HitSound);
 
         private void HandleTileDestroyed(TileModification modification)
-            => audioSource.PlayOneShot(modification.WorldTile.destroySound);
+            => audioSource.PlayOneShot(modification.WorldTile.DestroySound);
 
         private void OnEnable()
         {

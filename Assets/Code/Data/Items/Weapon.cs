@@ -2,15 +2,12 @@ using UnityEngine;
 
 namespace Tulip.Data.Items
 {
-    /// <summary>
-    /// A weapon.
-    /// </summary>
-    [CreateAssetMenu(fileName = "Weapon", menuName = "Items/Weapon")]
+    [CreateAssetMenu(menuName = "Items/Weapon")]
     public class Weapon : Usable
     {
-        public virtual float Damage => damage;
-        public virtual float Range => range;
-        public virtual bool IsMultiTarget => isMultiTarget;
+        public float Damage => damage;
+        public float Range => range;
+        public bool IsMultiTarget => isMultiTarget;
 
         [Header("Weapon Data")]
         [SerializeField, Min(0)] protected float damage = 1f;

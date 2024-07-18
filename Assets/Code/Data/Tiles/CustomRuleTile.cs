@@ -18,7 +18,7 @@ namespace Tulip.Data.Tiles
 
         public override void GetTileData(Vector3Int location, ITilemap tilemap, ref TileData tileData)
         {
-            tileData.color = this.WorldTile.color;
+            tileData.color = this.WorldTile.Color;
             base.GetTileData(location, tilemap, ref tileData);
         }
 

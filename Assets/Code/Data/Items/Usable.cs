@@ -7,11 +7,11 @@ namespace Tulip.Data.Items
     /// <summary>
     /// A basic item that can be used.
     /// </summary>
-    [CreateAssetMenu(menuName = "Items/Usable Item")]
+    [CreateAssetMenu(menuName = "Items/Usable")]
     public class Usable : Item
     {
-        public virtual float Cooldown => cooldown;
-        public virtual ItemSwingType SwingType => swingType;
+        public float Cooldown => cooldown;
+        public ItemSwingType SwingType => swingType;
 
         [Header("Usable Data")]
         [SerializeField, Min(0)] protected float cooldown = 0.5f;
@@ -19,7 +19,7 @@ namespace Tulip.Data.Items
         [BelowRichLabel(nameof(SwingTypeLabel), isCallback: true)]
         [SerializeField] protected ItemSwingType swingType;
 
-        public float GetTimeToFirstHit()
+        private float GetTimeToFirstHit()
         {
             if (!swingType || swingType.Phases.Length == 0)
                 return 0;

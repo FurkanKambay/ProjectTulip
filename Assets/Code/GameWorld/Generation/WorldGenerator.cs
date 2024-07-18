@@ -68,10 +68,10 @@ namespace Tulip.GameWorld.Generation
                     // int index = (config.width * y) + x;
                     var cell = new Vector3Int(x, y, 0);
 
-                    walls.Add(new TileChangeData(cell, wall.RuleTile, wall.color, Matrix4x4.identity));
+                    walls.Add(new TileChangeData(cell, wall.RuleTile, wall.Color, Matrix4x4.identity));
 
                     if (block)
-                        blocks.Add(new TileChangeData(cell, block.RuleTile, block.color, Matrix4x4.identity));
+                        blocks.Add(new TileChangeData(cell, block.RuleTile, block.Color, Matrix4x4.identity));
 
                     curtains.Add(new TileChangeData(cell, null, Color.white, Matrix4x4.identity));
                 }
