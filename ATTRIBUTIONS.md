@@ -4,6 +4,7 @@ These assets are used for prototyping purposes only.
 
 ## Sprites
 
+- ["Terrain Tileset Pack"](https://penzilla.itch.io/pixel-art-terrain-pack) by Penzilla (paid asset: source files not available on GitHub)
 - ["Pixel Protagonist"](https://penzilla.itch.io/protagonist-character) by Penzilla
 - ["Enemy: Bones Skull"](https://admurin.itch.io/enemy-bones-skull) by Admurin
 - ["Parallax Backgrounds: Plains"](https://admurin.itch.io/parallax-backgrounds-plains) by Admurin
