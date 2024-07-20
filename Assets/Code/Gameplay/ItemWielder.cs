@@ -63,7 +63,8 @@ namespace Tulip.Gameplay
             ItemSwingType swingType = usable.SwingType;
             UsePhase phase = swingType.Phases.Length > 0 ? swingType.Phases[phaseIndex] : default;
 
-            AimItem();
+            if (!phase.preventAim || swingState == ItemSwingState.Ready)
+                AimItem();
 
             switch (swingState)
             {
@@ -109,8 +110,9 @@ namespace Tulip.Gameplay
                         OnSwing?.Invoke(handStack, brain.I.AimPosition);
 
                     bool isFinalPhase = phaseIndex == swingType.Phases.Length - 1;
+                    bool shouldReset = !wantsToUse || !swingType.Loop;
 
-                    if (isFinalPhase && !wantsToUse)
+                    if (isFinalPhase && shouldReset)
                     {
                         SwitchState(ItemSwingState.Resetting);
                         break;
@@ -119,9 +121,8 @@ namespace Tulip.Gameplay
                     // still not ending so next phase. keeps swinging without resetting
                     // looping: start from phase 0 again
 
-                    // TODO: should this be a setting?
-                    if (++phaseIndex >= swingType.Phases.Length)
-                        phaseIndex = 0;
+                    // "reset" to phase 0 with `phase.XDuration`, NOT `swingType.ResetXDuration`
+                    phaseIndex = isFinalPhase ? 0 : phaseIndex + 1;
 
                     // this belongs in a state machine. Motion is a sub-state machine of Swing
                     SetMotionToPhase();
@@ -143,13 +144,12 @@ namespace Tulip.Gameplay
             if (state == swingState)
                 return;
 
-            if (!handStack.IsValid || handStack.item is not Usable usable)
+            if (!handStack.IsValid || handStack.item is not Usable)
             {
                 swingState = ItemSwingState.Ready;
                 return;
             }
 
-            ItemSwingType swingType = usable.SwingType;
             swingState = state;
 
             switch (state)
@@ -158,9 +158,7 @@ namespace Tulip.Gameplay
                     // Only swap items when reset and ready
                     wantsToSwapItems = false;
                     RefreshItem();
-                    UpdateItemSprite();
 
-                    SetSpriteTransformInstant(swingType.ReadyPosition, swingType.ReadyAngle);
                     OnReady?.Invoke(handStack);
                     break;
                 case ItemSwingState.Swinging:
@@ -293,7 +291,6 @@ namespace Tulip.Gameplay
             }
 
             RefreshItem();
-            UpdateItemSprite();
         }
 
         private void OnEnable()

@@ -8,25 +8,26 @@ namespace Tulip.Data
     [Serializable]
     public struct UsePhase
     {
-        [Layout("", ELayout.Background)]
-        [Layout("/Options", ELayout.TitleOut)]
-        public bool isCancelable;
+        [LayoutGroup("", ELayout.Background)]
 
-        [Layout("/Options")]
+        [LayoutGroup("/Options", ELayout.TitleOut)]
+        public bool isCancelable;
+        public bool preventAim;
         public bool shouldHit;
 
-        [Layout("/Transform", ELayout.TitleOut | ELayout.Horizontal)]
+        [LayoutGroup("/Transform", ELayout.TitleOut | ELayout.Horizontal)]
         [PostFieldRichLabel("in")]
         public Vector2 moveDelta;
 
-        [Layout("/Transform")]
-        [OverlayRichLabel("<color=grey>sec")] public float moveDuration;
+        [OverlayRichLabel("<color=grey>sec")]
+        public float moveDuration;
 
-        [Layout("/Turn", ELayout.Horizontal)]
+        [LayoutGroup("/Turn", ELayout.Horizontal)]
         [PostFieldRichLabel("in")]
-        [OverlayRichLabel("<color=grey>deg")] public float turnDelta;
+        [OverlayRichLabel("<color=grey>deg")]
+        public float turnDelta;
 
-        [Layout("/Turn")]
-        [OverlayRichLabel("<color=grey>sec")] public float turnDuration;
+        [OverlayRichLabel("<color=grey>sec")]
+        public float turnDuration;
     }
 }
