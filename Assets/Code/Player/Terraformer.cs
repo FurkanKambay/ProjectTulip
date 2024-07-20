@@ -11,7 +11,7 @@ namespace Tulip.Player
     public class Terraformer : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField, GetComponentInScene] World world;
+        [SerializeField, Required] Entity entity;
         [SerializeField, Required] Inventory inventory;
         [SerializeField, Required] SaintsInterface<Component, IItemWielder> itemWielder;
 
@@ -58,7 +58,7 @@ namespace Tulip.Player
             if (!FocusedCell.HasValue)
                 return;
 
-            Bounds bounds = world.CellBoundsWorld(FocusedCell.Value);
+            Bounds bounds = entity.world.CellBoundsWorld(FocusedCell.Value);
             Vector2 topLeft = bounds.center - bounds.extents + (Vector3.one * 0.02f);
             Vector2 bottomRight = bounds.center + bounds.extents - (Vector3.one * 0.02f);
 
@@ -67,10 +67,10 @@ namespace Tulip.Player
             if (Physics2D.OverlapArea(topLeft, bottomRight, layerMask))
                 return;
 
-            if (!tool.IsUsableOn(world, FocusedCell.Value))
+            if (!tool.IsUsableOn(entity.world, FocusedCell.Value))
                 return;
 
-            InventoryModification modification = tool.UseOn(world, FocusedCell.Value);
+            InventoryModification modification = tool.UseOn(entity.world, FocusedCell.Value);
             InventoryModification remaining = inventory.ApplyModification(modification);
 
             if (!remaining.IsValid)
@@ -87,10 +87,10 @@ namespace Tulip.Player
             Vector2 hotspot = transform.position;
             Vector2 aimPoint = hotspot + itemWielder.I.AimDirection;
 
-            MouseCell = world.WorldToCell(aimPoint);
+            MouseCell = entity.world.WorldToCell(aimPoint);
             rangePath = Vector2.ClampMagnitude(itemWielder.I.AimDirection, range);
 
-            if (world.isReadonly)
+            if (entity.world.isReadonly)
             {
                 FocusedCell = null;
                 return;
@@ -105,7 +105,7 @@ namespace Tulip.Player
 
             RaycastHit2D hit = Physics2D.Raycast(hotspot, rangePath, range, LayerMask.GetMask("World"));
             hitPoint = hit.point - (hit.normal * 0.1f);
-            FocusedCell = hit.collider ? world.WorldToCell(hitPoint) : null;
+            FocusedCell = hit.collider ? entity.world.WorldToCell(hitPoint) : null;
         }
 
         private void OnDrawGizmosSelected()

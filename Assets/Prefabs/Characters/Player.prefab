@@ -689,7 +689,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3e487889f14636458692cc46f41321d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  world: {fileID: 0}
+  entity: {fileID: 963390074723932652}
   inventory: {fileID: 4728014676095277497}
   itemWielder:
     <V>k__BackingField: {fileID: 647329674294491017}
