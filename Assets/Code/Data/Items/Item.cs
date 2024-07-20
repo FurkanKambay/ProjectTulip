@@ -27,6 +27,8 @@ namespace Tulip.Data.Items
         [SerializeField, Multiline] protected string description;
         [SerializeField, Min(1)] protected int maxAmount = 1;
 
+        public ItemStack Stack(int amount) => new(this, amount);
+
         public override string ToString() => Name;
     }
 }

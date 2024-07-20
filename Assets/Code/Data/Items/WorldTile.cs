@@ -39,7 +39,7 @@ namespace Tulip.Data.Items
         public override InventoryModification UseOn(IWorld world, Vector3Int cell) => tileType switch
         {
             TileType.Block when IsUsableOn(world, cell) => world.PlaceTile(cell, this),
-            _ => InventoryModification.Empty
+            _ => default
         };
 
         public override bool IsUsableOn(IWorld world, Vector3Int cell) => tileType switch

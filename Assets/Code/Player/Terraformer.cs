@@ -75,13 +75,12 @@ namespace Tulip.Player
             InventoryModification modification = tool.UseOn(world, FocusedCell.Value);
             InventoryModification remaining = inventory.ApplyModification(modification);
 
-            if (!remaining.WouldModify)
+            if (!remaining.IsValid)
                 return;
 
             Debug.LogWarning(
-                "[Terraformer] Remaining items: "
-                + (!remaining.WouldAdd ? "" : $"[{remaining.ToAdd}] not added, ")
-                + (!remaining.WouldRemove ? "" : $"[{remaining.ToRemove}] not removed.")
+                $"[Terraformer] Remaining items: [{remaining.Stack}]"
+                + (remaining.WouldAdd ? "not added" : "not removed")
             );
         }
 

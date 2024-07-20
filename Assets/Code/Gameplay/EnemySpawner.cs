@@ -105,17 +105,14 @@ namespace Tulip.Gameplay
 
         private IEnumerable<Vector3Int> GetSuitableCells(Enemy enemy)
         {
-            float camExtentY = camera.orthographicSize;
-            float camExtentX = camExtentY * camera.aspect;
-            float spawnExtentY = camExtentY + radius;
-            float spawnExtentX = camExtentX + radius;
-
+            Vector3 cameraExtents = new(camera.orthographicSize * camera.aspect, camera.orthographicSize);
+            Vector3 spawnExtents = new(cameraExtents.x + radius, cameraExtents.y + radius);
             Vector3 cameraCenter = camera.transform.position;
 
-            Vector3Int camTopRight = world.WorldToCell(cameraCenter + new Vector3(camExtentX, camExtentY));
-            Vector3Int camBottomLeft = world.WorldToCell(cameraCenter - new Vector3(camExtentX, camExtentY));
-            Vector3Int spawnTopRight = world.WorldToCell(cameraCenter + new Vector3(spawnExtentX, spawnExtentY));
-            Vector3Int spawnBottomLeft = world.WorldToCell(cameraCenter - new Vector3(spawnExtentX, spawnExtentY));
+            Vector3Int camTopRight = world.WorldToCell(cameraCenter + cameraExtents);
+            Vector3Int camBottomLeft = world.WorldToCell(cameraCenter - cameraExtents);
+            Vector3Int spawnTopRight = world.WorldToCell(cameraCenter + spawnExtents);
+            Vector3Int spawnBottomLeft = world.WorldToCell(cameraCenter - spawnExtents);
 
             for (int y = spawnBottomLeft.y; y <= spawnTopRight.y; y++)
             {

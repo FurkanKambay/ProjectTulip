@@ -9,13 +9,6 @@ namespace Tulip.Data
         public readonly WorldTile WorldTile;
         public readonly TileModificationKind Kind;
 
-        public TileModification(Vector3Int cell, WorldTile worldTile, TileModificationKind kind)
-        {
-            Cell = cell;
-            WorldTile = worldTile;
-            Kind = kind;
-        }
-
         public static TileModification FromPlaced(Vector3Int cell, WorldTile worldTile) =>
             new(cell, worldTile, TileModificationKind.Placed);
 
@@ -24,5 +17,12 @@ namespace Tulip.Data
 
         public static TileModification FromDestroyed(Vector3Int cell, WorldTile worldTile) =>
             new(cell, worldTile, TileModificationKind.Destroyed);
+
+        private TileModification(Vector3Int cell, WorldTile worldTile, TileModificationKind kind)
+        {
+            Cell = cell;
+            WorldTile = worldTile;
+            Kind = kind;
+        }
     }
 }

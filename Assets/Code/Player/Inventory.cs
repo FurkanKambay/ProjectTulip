@@ -27,26 +27,24 @@ namespace Tulip.Player
         }
 
         /// <summary>
-        /// Applies the <see cref="InventoryModification"/> to the inventory by first removing the items in
-        /// <see cref="InventoryModification.ToRemove"/>, then adding items to the inventory from
-        /// <see cref="InventoryModification.ToAdd"/>.
+        /// Applies the <see cref="InventoryModification"/> to the inventory.
         /// </summary>
-        /// <param name="modification">The item stacks to remove from and add to the inventory.</param>
-        /// <returns>The remaining item stacks that could not be removed or added.</returns>
+        /// <param name="modification">The item stack to remove from / add to the inventory.</param>
+        /// <returns>The remaining item stack.</returns>
         public InventoryModification ApplyModification(InventoryModification modification)
         {
-            int removeRemainder = RemoveItem(modification.ToRemove);
-            int addRemainder = AddItem(modification.ToAdd);
+            if (!modification.IsValid)
+                return default;
 
-            var stackNotRemoved = new ItemStack(modification.ToRemove.item, removeRemainder);
-            var stackNotAdded = new ItemStack(modification.ToAdd.item, addRemainder);
+            int remainder = modification.WouldAdd
+                ? AddItem(modification.Stack)
+                : RemoveItem(modification.Stack);
 
-            return !modification.WouldModify
-                ? InventoryModification.Empty
-                : new InventoryModification(
-                    modification.WouldRemove ? stackNotRemoved : default,
-                    modification.WouldAdd ? stackNotAdded : default
-                );
+            ItemStack remainingStack = modification.Stack.item.Stack(remainder);
+
+            return modification.WouldAdd
+                ? InventoryModification.ToAdd(remainingStack)
+                : InventoryModification.ToRemove(remainingStack);
         }
 
         private int RemoveItem(ItemStack itemStack)

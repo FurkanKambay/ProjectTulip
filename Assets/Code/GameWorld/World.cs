@@ -35,13 +35,13 @@ namespace Tulip.GameWorld
         public InventoryModification DamageTile(Vector3Int cell, TileType tileType, int damage)
         {
             if (isReadonly)
-                return InventoryModification.Empty;
+                return default;
 
             Tilemap tilemap = GetTilemap(tileType);
             WorldTile worldTile = GetTile(tileType, cell);
 
             if (!tilemap.HasTile(cell) || worldTile.IsUnbreakable)
-                return InventoryModification.Empty;
+                return default;
 
             Dictionary<Vector3Int, int> damageMap = GetDamageMap(tileType);
             damageMap.TryAdd(cell, 0);
@@ -52,30 +52,30 @@ namespace Tulip.GameWorld
             if (damageTaken < hardness)
             {
                 OnHitTile?.Invoke(TileModification.FromDamaged(cell, worldTile));
-                return InventoryModification.Empty;
+                return default;
             }
 
             tilemap.SetTile(cell, null);
             damageMap.Remove(cell);
             OnDestroyTile?.Invoke(TileModification.FromDestroyed(cell, worldTile));
-            return new InventoryModification(toAdd: new ItemStack(worldTile, 1));
+            return InventoryModification.ToAdd(worldTile.Stack(1));
         }
 
         public InventoryModification PlaceTile(Vector3Int cell, WorldTile worldTile)
         {
             if (isReadonly)
-                return InventoryModification.Empty;
+                return default;
 
             Tilemap tilemap = GetTilemap(worldTile.TileType);
 
             if (tilemap.HasTile(cell))
-                return InventoryModification.Empty;
+                return default;
 
             SetTile(cell, worldTile.TileType, worldTile);
 
             GetDamageMap(worldTile.TileType).Remove(cell);
             OnPlaceTile?.Invoke(TileModification.FromPlaced(cell, worldTile));
-            return new InventoryModification(toRemove: new ItemStack(worldTile, 1));
+            return InventoryModification.ToRemove(worldTile.Stack(1));
         }
 
         public bool HasBlock(Vector3Int cell) => blockTilemap.HasTile(cell);

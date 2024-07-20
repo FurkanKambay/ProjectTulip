@@ -2,19 +2,26 @@ namespace Tulip.Data
 {
     public readonly struct InventoryModification
     {
-        public static readonly InventoryModification Empty = new();
+        public bool IsValid => Stack.IsValid;
+        public bool WouldAdd => IsValid && kind == InventoryModificationKind.Add;
+        public bool WouldRemove => IsValid && kind == InventoryModificationKind.Remove;
 
-        public bool WouldRemove => ToRemove is { IsValid: true };
-        public bool WouldAdd => ToAdd is { IsValid: true };
-        public bool WouldModify => WouldAdd || WouldRemove;
+        public readonly ItemStack Stack;
+        private readonly InventoryModificationKind kind;
 
-        public readonly ItemStack ToRemove;
-        public readonly ItemStack ToAdd;
+        public static InventoryModification ToAdd(ItemStack stack) => new(stack, InventoryModificationKind.Add);
+        public static InventoryModification ToRemove(ItemStack stack) => new(stack, InventoryModificationKind.Remove);
 
-        public InventoryModification(ItemStack toRemove = default, ItemStack toAdd = default)
+        private InventoryModification(ItemStack stack, InventoryModificationKind kind)
         {
-            ToRemove = toRemove;
-            ToAdd = toAdd;
+            Stack = stack;
+            this.kind = kind;
+        }
+
+        private enum InventoryModificationKind
+        {
+            Add,
+            Remove
         }
     }
 }
