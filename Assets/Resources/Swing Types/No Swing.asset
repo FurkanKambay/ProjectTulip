@@ -16,4 +16,5 @@ MonoBehaviour:
   readyAngle: 0
   resetMoveDuration: 0
   resetTurnDuration: 0
+  loop: 0
   phases: []

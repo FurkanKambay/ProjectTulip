@@ -14,18 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   readyPosition: {x: 0, y: 0}
   readyAngle: 0
-  resetMoveDuration: 0.1
-  resetTurnDuration: 0.1
+  resetMoveDuration: 0.25
+  resetTurnDuration: 0.25
+  loop: 0
   phases:
   - isCancelable: 0
-    shouldHit: 0
-    moveDelta: {x: 0.5, y: 0}
-    moveDuration: 0.1
-    turnDelta: -45
-    turnDuration: 0.1
-  - isCancelable: 0
+    preventAim: 1
     shouldHit: 1
     moveDelta: {x: 0.5, y: 0}
-    moveDuration: 0.4
+    moveDuration: 0.1
     turnDelta: -165
-    turnDuration: 0.4
+    turnDuration: 0.1
