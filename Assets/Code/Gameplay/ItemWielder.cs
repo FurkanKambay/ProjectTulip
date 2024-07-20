@@ -16,6 +16,8 @@ namespace Tulip.Gameplay
         public ItemStack CurrentStack => HotbarItem.IsValid ? HotbarItem : fallbackStack;
         private ItemStack HotbarItem => hotbar ? hotbar.SelectedStack : default;
 
+        public Vector2 AimDirection => lastAimDirection;
+
         [Header("References")]
         [SerializeField, Required] HealthBase health;
         [SerializeField, Required] SaintsInterface<Component, IWielderBrain> brain;
@@ -34,6 +36,7 @@ namespace Tulip.Gameplay
         private float timeSinceLastUse;
         private ItemSwingState swingState;
         private Vector3 rendererScale;
+        private Vector2 lastAimDirection;
 
         // state: phase (motion)
         private bool wantsToSwapItems;
@@ -97,17 +100,19 @@ namespace Tulip.Gameplay
 
                     // we reached the target angle. move to next phase or reset after final phase
 
+                    Vector3 aimPointWorld = itemPivot.position + (Vector3)lastAimDirection;
+
                     // if no phases, hit and reset swing
                     if (swingType.Phases.Length == 0)
                     {
-                        OnSwing?.Invoke(handStack, brain.I.AimPosition);
+                        OnSwing?.Invoke(handStack, aimPointWorld);
                         SwitchState(ItemSwingState.Resetting);
                         break;
                     }
 
                     // hit if we need to before checking for final exit
                     if (phase.shouldHit)
-                        OnSwing?.Invoke(handStack, brain.I.AimPosition);
+                        OnSwing?.Invoke(handStack, aimPointWorld);
 
                     bool isFinalPhase = phaseIndex == swingType.Phases.Length - 1;
                     bool shouldReset = !wantsToUse || !swingType.Loop;
@@ -251,8 +256,8 @@ namespace Tulip.Gameplay
 
         private void AimItem()
         {
-            Vector2 aimDirection = brain.I.AimPosition - (Vector2)itemPivot.position;
-            float aimAngle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
+            lastAimDirection = brain.I.AimPosition - (Vector2)itemPivot.position;
+            float aimAngle = Mathf.Atan2(lastAimDirection.y, lastAimDirection.x) * Mathf.Rad2Deg;
             bool isLeft = aimAngle is < -90 or > 90;
 
             itemPivot.localScale = new Vector3(1, isLeft ? -1 : 1, 1);

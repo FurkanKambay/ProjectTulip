@@ -12,12 +12,10 @@ namespace Tulip.Player
     {
         [Header("References")]
         [SerializeField, GetComponentInScene] World world;
-        [SerializeField, Required] SaintsInterface<Component, IWielderBrain> brain;
         [SerializeField, Required] Inventory inventory;
         [SerializeField, Required] SaintsInterface<Component, IItemWielder> itemWielder;
 
         [Header("Config")]
-        [SerializeField] Vector2 hotspotOffset;
         [SerializeField] float range = 5f;
 
         public event Action<Vector3Int?> OnChangeCellFocus;
@@ -52,7 +50,7 @@ namespace Tulip.Player
             AssignCells();
         }
 
-        private void HandleItemSwing(ItemStack stack, Vector3 _)
+        private void HandleItemSwing(ItemStack stack, Vector3 aimPoint)
         {
             if (stack.item is not WorldToolBase tool)
                 return;
@@ -86,10 +84,11 @@ namespace Tulip.Player
 
         private void AssignCells()
         {
-            MouseCell = world.WorldToCell(brain.I.AimPosition);
+            Vector2 hotspot = transform.position;
+            Vector2 aimPoint = hotspot + itemWielder.I.AimDirection;
 
-            Vector2 hotspot = (Vector2)transform.position + hotspotOffset;
-            rangePath = Vector2.ClampMagnitude(brain.I.AimPosition - hotspot, range);
+            MouseCell = world.WorldToCell(aimPoint);
+            rangePath = Vector2.ClampMagnitude(itemWielder.I.AimDirection, range);
 
             if (world.isReadonly)
             {
@@ -99,7 +98,7 @@ namespace Tulip.Player
 
             if (!Options.Instance.Gameplay.UseSmartCursor || itemWielder.I.CurrentStack.item is not WorldTool)
             {
-                float distance = Vector3.Distance(hotspot, brain.I.AimPosition);
+                float distance = Vector3.Distance(hotspot, aimPoint);
                 FocusedCell = distance <= range ? MouseCell : null;
                 return;
             }
@@ -114,7 +113,7 @@ namespace Tulip.Player
             if (!Options.Instance.Gameplay.UseSmartCursor)
                 return;
 
-            Vector2 hotspot = (Vector2)transform.position + hotspotOffset;
+            Vector2 hotspot = transform.position;
 
             Gizmos.color = Color.red;
             Gizmos.DrawLine(hotspot, hotspot + rangePath);

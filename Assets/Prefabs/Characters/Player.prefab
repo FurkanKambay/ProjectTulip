@@ -690,12 +690,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   world: {fileID: 0}
-  brain:
-    <V>k__BackingField: {fileID: 3825264036527423534}
   inventory: {fileID: 4728014676095277497}
   itemWielder:
     <V>k__BackingField: {fileID: 647329674294491017}
-  hotspotOffset: {x: 0, y: 1}
   range: 5
 --- !u!1 &3988847855271664023
 GameObject:

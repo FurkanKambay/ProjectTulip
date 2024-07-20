@@ -1,5 +1,4 @@
 using System;
-using Tulip.Data.Items;
 using UnityEngine;
 
 namespace Tulip.Data
@@ -10,5 +9,6 @@ namespace Tulip.Data
         event Action<ItemStack, Vector3> OnSwing;
 
         ItemStack CurrentStack { get; }
+        Vector2 AimDirection { get; }
     }
 }
