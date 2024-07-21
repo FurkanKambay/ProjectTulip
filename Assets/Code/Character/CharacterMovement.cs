@@ -43,7 +43,7 @@ namespace Tulip.Character
         private void FixedUpdate()
         {
             isGrounded = surrounds.IsGrounded;
-            velocity = body.velocity;
+            velocity = body.linearVelocity;
 
             if (config.useAcceleration)
                 RunWithAcceleration();
@@ -67,13 +67,13 @@ namespace Tulip.Character
             };
 
             velocity.x = Mathf.MoveTowards(Velocity.x, DesiredVelocity.x, maxSpeedChange);
-            body.velocity = Velocity;
+            body.linearVelocity = velocity;
         }
 
         private void RunWithoutAcceleration()
         {
             velocity.x = DesiredVelocity.x;
-            body.velocity = velocity;
+            body.linearVelocity = velocity;
         }
 
         [Serializable]

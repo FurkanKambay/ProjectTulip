@@ -519,9 +519,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 519420031}
-  player: {fileID: 1105140274}
-  point: {fileID: 2247111929073154336, guid: a92862044b24ac64ba40ebf339dc22ab, type: 3}
-  zoom: {fileID: -4753524853136224464, guid: a92862044b24ac64ba40ebf339dc22ab, type: 3}
+  brain:
+    <V>k__BackingField: {fileID: 1105140269}
   menuPeekAmountX: 0
   menuPeekAmountY: 0
   menuOffset: {x: 0, y: 0}
@@ -759,11 +758,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8dd693b70f6477e9a4f2fec2b5bf252, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &1105140274 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8291246366843984804, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
+--- !u!114 &1105140269 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3825264036527423534, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
   m_PrefabInstance: {fileID: 1105140267}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34fe02ae195a4934ab403049c6892884, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1272748338
 GameObject:
   m_ObjectHideFlags: 0

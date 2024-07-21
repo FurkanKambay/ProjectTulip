@@ -27,7 +27,7 @@ namespace Tulip.Character
 
         private void FixedUpdate()
         {
-            Velocity = body.velocity;
+            Velocity = body.linearVelocity;
 
             if (config.useAcceleration)
                 RunWithAcceleration();
@@ -47,13 +47,13 @@ namespace Tulip.Character
             };
 
             Velocity = Vector2.MoveTowards(Velocity, DesiredVelocity, maxSpeedChange);
-            body.velocity = Velocity;
+            body.linearVelocity = Velocity;
         }
 
         private void RunWithoutAcceleration()
         {
             Velocity = DesiredVelocity;
-            body.velocity = Velocity;
+            body.linearVelocity = Velocity;
         }
     }
 }

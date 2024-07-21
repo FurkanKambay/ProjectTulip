@@ -72,12 +72,12 @@ namespace Tulip.Character
 
         private void FixedUpdate()
         {
-            velocity = body.velocity;
+            velocity = body.linearVelocity;
 
             if (isJumpDesired)
             {
                 Jump();
-                body.velocity = velocity;
+                body.linearVelocity = velocity;
                 // Skip gravity calculations this frame, so currentlyJumping doesn't turn off
                 // This makes sure you can't do the coyote time double jump bug
                 return;
@@ -102,7 +102,7 @@ namespace Tulip.Character
 
         private void SetVerticalVelocity()
         {
-            switch (body.velocity.y)
+            switch (body.linearVelocity.y)
             {
                 case > 0.01f when isGrounded:
                     gravityMultiplier = defaultGravityScale;
@@ -135,7 +135,7 @@ namespace Tulip.Character
                 }
             }
 
-            body.velocity = new Vector2(velocity.x, Mathf.Clamp(velocity.y, -config.maxFallSpeed, 100));
+            body.linearVelocity = new Vector2(velocity.x, Mathf.Clamp(velocity.y, -config.maxFallSpeed, 100));
         }
 
         private void Jump()
@@ -151,7 +151,7 @@ namespace Tulip.Character
                 if (velocity.y > 0f)
                     jumpSpeed = Mathf.Max(jumpSpeed - velocity.y, 0f);
                 else if (velocity.y < 0f)
-                    jumpSpeed += Mathf.Abs(body.velocity.y);
+                    jumpSpeed += Mathf.Abs(body.linearVelocity.y);
 
                 velocity.y += jumpSpeed;
                 IsJumping = true;

@@ -17,12 +17,12 @@ namespace Tulip.Gameplay
 
         private void HandleHurt(DamageEventArgs damage) => ApplyKnockback(hurtForceAmount, damage.SourcePosition);
         private void HandleDeath(DamageEventArgs death) => ApplyKnockback(deathForceAmount, death.SourcePosition);
-        private void HandleRevived(IHealth source) => body.velocity = Vector2.zero;
+        private void HandleRevived(IHealth source) => body.linearVelocity = Vector2.zero;
 
         private void ApplyKnockback(float forceAmount, Vector3 sourcePosition)
         {
             Vector3 direction = (transform.position - sourcePosition).normalized;
-            body.velocity = direction * forceAmount;
+            body.linearVelocity = direction * forceAmount;
         }
 
         private void OnEnable()
