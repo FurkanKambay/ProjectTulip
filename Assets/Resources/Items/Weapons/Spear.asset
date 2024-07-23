@@ -19,7 +19,7 @@ MonoBehaviour:
   description: A spear that can pierce.
   maxAmount: 1
   cooldown: 0.5
-  swingType: {fileID: 11400000, guid: 8149a840107b875489f4460afb04d237, type: 2}
+  swingType: {fileID: 11400000, guid: bea895e04214f1e47ab88f5efecdd802, type: 2}
   damage: 15
   range: 2.5
   isMultiTarget: 1
