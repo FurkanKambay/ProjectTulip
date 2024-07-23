@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using SaintsField.Playa;
 using Tulip.Core;
 using Tulip.Data;
 using Tulip.Data.Items;
@@ -109,7 +110,7 @@ namespace Tulip.GameWorld
         internal void SetTiles(TileType tileType, TileChangeData[] tileChangeData) =>
             GetTilemap(tileType).SetTiles(tileChangeData, ignoreLockFlags: true);
 
-        [ContextMenu("Reset Tilemaps")]
+        [Button]
         internal void ResetTilemaps()
         {
             ResetTilemap(wallTilemap);

@@ -1,28 +1,47 @@
+using SaintsField;
 using Tulip.Data.Items;
 using UnityEngine;
 
 namespace Tulip.Data
 {
-    [CreateAssetMenu(fileName = "WorldData", menuName = "Data/World", order = 0)]
+    [CreateAssetMenu]
     public class WorldGenConfig : ScriptableObject
     {
+        public int Width => width;
+        public int Height => height;
+        public Vector2 PerlinOffset => perlinOffset;
+
+        public AnimationCurve HeightDensityCurve => heightDensityCurve;
+        public int GrassLayerHeight => grassLayerHeight;
+
+        public WorldTile Grass => grass;
+        public WorldTile Stone => stone;
+        public WorldTile StoneWall => stoneWall;
+
         [Header("Settings")]
-        public int width = 100;
-        public int height = 100;
-        public Vector2 perlinOffset;
+        [OverlayRichLabel("<color=grey>cells")]
+        [SerializeField] int width = 100;
+
+        [OverlayRichLabel("<color=grey>cells")]
+        [SerializeField] int height = 100;
+
+        [SerializeField] Vector2 perlinOffset;
 
         [Header("Density Settings")]
         [Range(.02f, .25f)] public float densityFactor = .1f;
-        public AnimationCurve heightDensityCurve;
 
-        [Header("Blocks")]
-        public WorldTile grass;
-        public WorldTile stone;
-
-        [Header("Background Tiles")]
-        public WorldTile backgroundStone;
+        [SerializeField] AnimationCurve heightDensityCurve;
 
         [Header("Earth Layers")]
-        public int grassLayerHeight = 10;
+        [OverlayRichLabel("<color=grey>cells")]
+        [SerializeField] int grassLayerHeight = 10;
+
+        [Header("Blocks")]
+        [SerializeField] WorldTile grass;
+
+        [SerializeField] WorldTile stone;
+
+        [Header("Walls")]
+        [SerializeField] WorldTile stoneWall;
     }
 }
