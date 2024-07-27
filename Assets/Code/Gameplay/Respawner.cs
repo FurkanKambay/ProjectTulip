@@ -62,6 +62,6 @@ namespace Tulip.Gameplay
             health.Revive();
         }
 
-        private void HandleDeath(DamageEventArgs _) => SecondsUntilRespawn = respawnDelay;
+        private void HandleDeath(HealthChangeEventArgs _) => SecondsUntilRespawn = respawnDelay;
     }
 }

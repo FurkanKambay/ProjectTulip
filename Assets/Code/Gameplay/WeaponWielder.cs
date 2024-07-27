@@ -33,7 +33,7 @@ namespace Tulip.Gameplay
             foreach (HealthBase target in GetTargets(transform.position, targetPoint))
             {
                 if (!target.enabled) continue;
-                target.TakeDamage(weapon.Damage, health);
+                target.Damage(weapon.Damage, health);
             }
         }
 

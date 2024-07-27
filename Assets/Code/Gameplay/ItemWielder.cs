@@ -284,8 +284,8 @@ namespace Tulip.Gameplay
             itemRenderer.color = tint;
         }
 
-        private void HandleDie(DamageEventArgs _) => itemRenderer.enabled = false;
-        private void HandleRevived(IHealth source) => itemRenderer.enabled = true;
+        private void HandleDie(HealthChangeEventArgs _) => itemRenderer.enabled = false;
+        private void HandleRevived(IHealth reviver) => itemRenderer.enabled = true;
 
         private void HandleHotbarSelectionChanged(int _)
         {

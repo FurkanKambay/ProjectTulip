@@ -15,9 +15,14 @@ namespace Tulip.Gameplay
         [SerializeField] float hurtForceAmount;
         [SerializeField] float deathForceAmount;
 
-        private void HandleHurt(DamageEventArgs damage) => ApplyKnockback(hurtForceAmount, damage.SourcePosition);
-        private void HandleDeath(DamageEventArgs death) => ApplyKnockback(deathForceAmount, death.SourcePosition);
-        private void HandleRevived(IHealth source) => body.linearVelocity = Vector2.zero;
+        private void HandleHurt(HealthChangeEventArgs damage) =>
+            ApplyKnockback(hurtForceAmount, damage.SourcePosition);
+
+        private void HandleDeath(HealthChangeEventArgs damage) =>
+            ApplyKnockback(deathForceAmount, damage.SourcePosition);
+
+        private void HandleRevived(IHealth reviver) =>
+            body.linearVelocity = Vector2.zero;
 
         private void ApplyKnockback(float forceAmount, Vector3 sourcePosition)
         {

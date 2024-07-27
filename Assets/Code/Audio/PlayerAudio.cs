@@ -19,8 +19,8 @@ namespace Tulip.Audio
         [Header("Item Wielder")]
         [SerializeField] AudioClip swingSound;
 
-        private void HandleHurt(DamageEventArgs damage) => audioSource.PlayOneShot(hurtSound);
-        private void HandleDied(DamageEventArgs damage) => audioSource.PlayOneShot(dieSound);
+        private void HandleHurt(HealthChangeEventArgs damage) => audioSource.PlayOneShot(hurtSound);
+        private void HandleDied(HealthChangeEventArgs damage) => audioSource.PlayOneShot(dieSound);
         private void HandleItemSwing(ItemStack stack, Vector3 _) => audioSource.PlayOneShot(swingSound);
 
         private void OnEnable()

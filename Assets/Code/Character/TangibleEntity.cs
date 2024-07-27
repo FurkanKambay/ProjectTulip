@@ -22,7 +22,7 @@ namespace Tulip.Character
             health.OnRevive -= HandleRevived;
         }
 
-        private void HandleDied(DamageEventArgs death) => body.simulated = false;
-        private void HandleRevived(IHealth source) => body.simulated = true;
+        private void HandleDied(HealthChangeEventArgs damage) => body.simulated = false;
+        private void HandleRevived(IHealth reviver) => body.simulated = true;
     }
 }

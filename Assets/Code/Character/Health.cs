@@ -10,12 +10,12 @@ namespace Tulip.Character
         private void Update() =>
             remainingInvulnerability = Mathf.Max(0, remainingInvulnerability - Time.deltaTime);
 
-        public override void TakeDamage(float damage, IHealth source)
+        public override void Damage(float amount, IHealth source)
         {
             if (IsInvulnerable || IsDead)
                 return;
 
-            CurrentHealth -= damage;
+            CurrentHealth -= amount;
             LatestDamageSource = source;
             remainingInvulnerability = invulnerabilityDuration;
 
@@ -23,7 +23,7 @@ namespace Tulip.Character
                 ? sourceHealth.transform.position
                 : transform.position;
 
-            var damageArgs = new DamageEventArgs(damage, source, this, sourcePosition);
+            var damageArgs = new HealthChangeEventArgs(amount, source, this, sourcePosition);
             RaiseOnHurt(damageArgs);
 
             if (IsAlive)
@@ -34,15 +34,30 @@ namespace Tulip.Character
             enabled = false;
         }
 
-        public override void Revive(IHealth source = null)
+        public override void Heal(float amount, IHealth source)
+        {
+            if (IsDead)
+                return;
+
+            CurrentHealth += amount;
+
+            Vector3 sourcePosition = source is Health sourceHealth
+                ? sourceHealth.transform.position
+                : transform.position;
+
+            var healArgs = new HealthChangeEventArgs(amount, source, this, sourcePosition);
+            RaiseOnHeal(healArgs);
+        }
+
+        public override void Revive(IHealth reviver = null)
         {
             CurrentHealth = maxHealth;
             enabled = true;
-            RaiseOnRevive(source ?? this);
+            RaiseOnRevive(reviver ?? this);
         }
 
         [ContextMenu("Take 10 Damage")]
-        public void TakeDamage() => TakeDamage(10f, this);
+        public void Damage() => Damage(10f, this);
 
         private void OnValidate() => CurrentHealth = currentHealth;
 

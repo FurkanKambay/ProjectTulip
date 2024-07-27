@@ -42,7 +42,7 @@ namespace Tulip.Character
             health.OnRevive -= HandleRevived;
         }
 
-        private async void HandleHurt(DamageEventArgs damage)
+        private async void HandleHurt(HealthChangeEventArgs damage)
         {
             if (hurtVisualDuration <= 0)
                 return;
@@ -56,7 +56,7 @@ namespace Tulip.Character
             sprite.SetPropertyBlock(materialBlock);
         }
 
-        private void HandleRevived(IHealth source)
+        private void HandleRevived(IHealth reviver)
         {
             sprite.sortingOrder = 0;
 
@@ -64,7 +64,7 @@ namespace Tulip.Character
             StartCoroutine(DissolveSprite(dissolveDuration / 2f, 1, 0));
         }
 
-        private void HandleDied(DamageEventArgs damage)
+        private void HandleDied(HealthChangeEventArgs damage)
         {
             sprite.sortingOrder = -1;
 

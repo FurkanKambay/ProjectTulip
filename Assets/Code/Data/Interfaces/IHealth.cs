@@ -4,12 +4,14 @@ namespace Tulip.Data
 {
     public interface IHealth
     {
-        public delegate void DamageEvent(DamageEventArgs damage);
-        public delegate void DeathEvent(DamageEventArgs death);
-        public delegate void ReviveEvent(IHealth source);
+        public delegate void DamageEvent(HealthChangeEventArgs damage);
+        public delegate void DeathEvent(HealthChangeEventArgs damage);
+        public delegate void HealEvent(HealthChangeEventArgs healing);
+        public delegate void ReviveEvent(IHealth reviver);
 
         event DamageEvent OnHurt;
         event DeathEvent OnDie;
+        event HealEvent OnHeal;
         event ReviveEvent OnRevive;
 
         float CurrentHealth { get; }
@@ -25,7 +27,8 @@ namespace Tulip.Data
         IHealth LatestDamageSource { get; }
         IHealth LatestDeathSource { get; }
 
-        void TakeDamage(float damage, IHealth source);
-        void Revive(IHealth source = null);
+        void Damage(float amount, IHealth source);
+        void Heal(float amount, IHealth source);
+        void Revive(IHealth reviver = null);
     }
 }

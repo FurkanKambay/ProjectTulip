@@ -7,6 +7,7 @@ namespace Tulip.Data
     {
         public virtual event IHealth.DamageEvent OnHurt;
         public virtual event IHealth.DeathEvent OnDie;
+        public virtual event IHealth.HealEvent OnHeal;
         public virtual event IHealth.ReviveEvent OnRevive;
 
         [Header("Config")]
@@ -37,11 +38,13 @@ namespace Tulip.Data
         /// Remaining seconds of invulnerability
         protected float remainingInvulnerability;
 
-        public abstract void TakeDamage(float damage, IHealth source);
-        public abstract void Revive(IHealth source = null);
+        public abstract void Damage(float amount, IHealth source);
+        public abstract void Heal(float amount, IHealth source);
+        public abstract void Revive(IHealth reviver = null);
 
-        protected void RaiseOnHurt(DamageEventArgs damage) => OnHurt?.Invoke(damage);
-        protected void RaiseOnDie(DamageEventArgs death) => OnDie?.Invoke(death);
-        protected void RaiseOnRevive(IHealth source) => OnRevive?.Invoke(source);
+        protected void RaiseOnHurt(HealthChangeEventArgs damage) => OnHurt?.Invoke(damage);
+        protected void RaiseOnDie(HealthChangeEventArgs damage) => OnDie?.Invoke(damage);
+        protected void RaiseOnHeal(HealthChangeEventArgs healing) => OnHeal?.Invoke(healing);
+        protected void RaiseOnRevive(IHealth reviver) => OnRevive?.Invoke(reviver);
     }
 }

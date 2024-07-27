@@ -15,9 +15,9 @@ namespace Tulip.Audio
         [SerializeField] AudioClip hurtSound;
         [SerializeField] AudioClip dieSound;
 
-        private void HandleHurt(DamageEventArgs damage) => audioSource.PlayOneShot(hurtSound);
+        private void HandleHurt(HealthChangeEventArgs damage) => audioSource.PlayOneShot(hurtSound);
 
-        private void HandleDied(DamageEventArgs damage) => audioSource.PlayOneShot(dieSound);
+        private void HandleDied(HealthChangeEventArgs damage) => audioSource.PlayOneShot(dieSound);
 
         private void OnEnable()
         {
