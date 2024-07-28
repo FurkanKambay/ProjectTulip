@@ -27,7 +27,7 @@ namespace Tulip.Data
         IHealth LatestDamageSource { get; }
         IHealth LatestDeathSource { get; }
 
-        void Damage(float amount, IHealth source);
+        void Damage(float amount, IHealth source, bool checkInvulnerable);
         void Heal(float amount, IHealth source);
         void Revive(IHealth reviver = null);
     }

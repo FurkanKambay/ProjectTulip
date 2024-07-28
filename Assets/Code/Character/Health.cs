@@ -10,14 +10,19 @@ namespace Tulip.Character
         private void Update() =>
             remainingInvulnerability = Mathf.Max(0, remainingInvulnerability - Time.deltaTime);
 
-        public override void Damage(float amount, IHealth source)
+        public override void Damage(float amount, IHealth source, bool checkInvulnerable = true)
         {
-            if (IsInvulnerable || IsDead)
+            if (IsDead || amount < 0)
+                return;
+
+            if (checkInvulnerable && IsInvulnerable)
                 return;
 
             CurrentHealth -= amount;
             LatestDamageSource = source;
-            remainingInvulnerability = invulnerabilityDuration;
+
+            if (checkInvulnerable)
+                remainingInvulnerability = invulnerabilityDuration;
 
             Vector3 sourcePosition = source is Health sourceHealth
                 ? sourceHealth.transform.position
@@ -36,7 +41,7 @@ namespace Tulip.Character
 
         public override void Heal(float amount, IHealth source)
         {
-            if (IsDead)
+            if (IsDead || amount < 0)
                 return;
 
             CurrentHealth += amount;

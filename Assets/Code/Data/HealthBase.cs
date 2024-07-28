@@ -38,7 +38,7 @@ namespace Tulip.Data
         /// Remaining seconds of invulnerability
         protected float remainingInvulnerability;
 
-        public abstract void Damage(float amount, IHealth source);
+        public abstract void Damage(float amount, IHealth source, bool checkInvulnerable = true);
         public abstract void Heal(float amount, IHealth source);
         public abstract void Revive(IHealth reviver = null);
 
