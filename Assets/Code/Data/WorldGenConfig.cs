@@ -11,11 +11,13 @@ namespace Tulip.Data
         public int Height => height;
         public Vector2 PerlinOffset => perlinOffset;
 
+        public float OreCutoff => oreCutoff;
         public AnimationCurve HeightDensityCurve => heightDensityCurve;
         public int GrassLayerHeight => grassLayerHeight;
 
         public WorldTile Grass => grass;
         public WorldTile Stone => stone;
+        public WorldTile CopperVein => copperVein;
         public WorldTile StoneWall => stoneWall;
 
         [Header("Settings")]
@@ -28,8 +30,9 @@ namespace Tulip.Data
         [SerializeField] Vector2 perlinOffset;
 
         [Header("Density Settings")]
-        [Range(.02f, .25f)] public float densityFactor = .1f;
+        [Range(.02f, .25f)] public float densityFactor = 0.1f;
 
+        [SerializeField, Range(0, 1)] float oreCutoff;
         [SerializeField] AnimationCurve heightDensityCurve;
 
         [Header("Earth Layers")]
@@ -38,8 +41,8 @@ namespace Tulip.Data
 
         [Header("Blocks")]
         [SerializeField] WorldTile grass;
-
         [SerializeField] WorldTile stone;
+        [SerializeField] WorldTile copperVein;
 
         [Header("Walls")]
         [SerializeField] WorldTile stoneWall;

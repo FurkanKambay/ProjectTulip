@@ -67,8 +67,10 @@ namespace Tulip.GameWorld
                 for (int x = 0; x < config.Width; x++)
                 {
                     WorldTile wall = config.StoneWall;
+                    float noise = perlinNoise[x, y];
 
-                    WorldTile block = perlinNoise[x, y] > densityCutoff ? null
+                    WorldTile block = noise < config.OreCutoff ? config.CopperVein
+                        : noise > densityCutoff ? null
                         : config.Height - y < config.GrassLayerHeight ? config.Grass
                         : config.Stone;
 
@@ -104,7 +106,7 @@ namespace Tulip.GameWorld
                         config.PerlinOffset.y + (y / config.Height * (config.Height * config.densityFactor))
                     );
 
-                    perlinNoise[(int)x, (int)y] = sample;
+                    perlinNoise[(int)x, (int)y] = Mathf.Clamp01(sample);
                 }
             }
         }

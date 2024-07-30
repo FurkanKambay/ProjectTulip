@@ -59,7 +59,9 @@ namespace Tulip.GameWorld
             tilemap.SetTile(cell, null);
             damageMap.Remove(cell);
             OnDestroyTile?.Invoke(TileModification.FromDestroyed(cell, worldTile));
-            return InventoryModification.ToAdd(worldTile.Stack(1));
+
+            Item item = worldTile.Ore ? worldTile.Ore : worldTile;
+            return InventoryModification.ToAdd(item.Stack(1));
         }
 
         public InventoryModification PlaceTile(Vector3Int cell, WorldTile worldTile)

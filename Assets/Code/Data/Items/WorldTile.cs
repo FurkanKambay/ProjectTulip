@@ -16,6 +16,7 @@ namespace Tulip.Data.Items
         public bool IsUnsafe => isUnsafe;
         public bool IsUnbreakable => isUnbreakable;
         public int Hardness => hardness;
+        public Ore Ore => ore;
 
         public AudioClip PlaceSound => placeSound;
         public AudioClip HitSound => hitSound;
@@ -30,6 +31,8 @@ namespace Tulip.Data.Items
 
         [Min(1), PlayaDisableIf(nameof(isUnbreakable))]
         [SerializeField] protected int hardness = 50;
+
+        [SerializeField] protected Ore ore;
 
         [Header("Sounds")]
         [SerializeField] protected AudioClip placeSound;

@@ -4,7 +4,7 @@ using UnityEngine.Tilemaps;
 
 namespace Tulip.Data.Tiles
 {
-    [CreateAssetMenu(fileName = "Custom Rule Tile", menuName = "Custom Rule Tile")]
+    [CreateAssetMenu]
     public sealed class CustomRuleTile : RuleTile<CustomRuleTile.Neighbor>
     {
         public WorldTile WorldTile { get; internal set; }
@@ -18,8 +18,11 @@ namespace Tulip.Data.Tiles
 
         public override void GetTileData(Vector3Int location, ITilemap tilemap, ref TileData tileData)
         {
-            tileData.color = this.WorldTile.Color;
             base.GetTileData(location, tilemap, ref tileData);
+            tileData.color = WorldTile.Color;
+
+            if (WorldTile.Ore)
+                tileData.gameObject = WorldTile.Ore.Prefab;
         }
 
         // ReSharper disable once ClassNeverInstantiated.Global

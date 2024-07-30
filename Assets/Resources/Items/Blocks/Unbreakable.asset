@@ -25,6 +25,7 @@ MonoBehaviour:
   isUnsafe: 0
   isUnbreakable: 1
   hardness: 1
+  ore: {fileID: 0}
   placeSound: {fileID: 0}
   hitSound: {fileID: 0}
   destroySound: {fileID: 0}
