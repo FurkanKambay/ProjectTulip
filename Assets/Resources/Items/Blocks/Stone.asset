@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec2778eec103403f8cae777705b279c9, type: 3}
   m_Name: Stone
   m_EditorClassIdentifier: 
-  type: 0
   icon: {fileID: 178573413, guid: 1631614f4ac086d4dab5aab9a349e144, type: 3}
   iconScale: 1
   name: Stone

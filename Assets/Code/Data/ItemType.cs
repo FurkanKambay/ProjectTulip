@@ -1,14 +1,5 @@
 namespace Tulip.Data
 {
-    public enum ItemType
-    {
-        WorldTile,
-        Item,
-        Usable,
-        WorldTool,
-        Weapon
-    }
-
     public enum TileType
     {
         /// <summary>

@@ -1865,9 +1865,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   world: {fileID: 661774619}
   config: {fileID: 11400000, guid: 30e1e234c9d6a5f4a8fef293ef378762, type: 2}
-  onReady:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

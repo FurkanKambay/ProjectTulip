@@ -9,7 +9,6 @@ namespace Tulip.Data.Items
     [CreateAssetMenu(menuName = "Items/Item")]
     public class Item : ScriptableObject
     {
-        public virtual ItemType Type => type;
         public virtual Sprite Icon => icon;
         public virtual float IconScale => iconScale;
         public virtual string Name => name;
@@ -17,8 +16,6 @@ namespace Tulip.Data.Items
         public virtual int MaxAmount => maxAmount;
 
         [Header("Item Data")]
-        [SerializeField] protected ItemType type;
-
         [AssetPreview(width: 64, align: EAlign.FieldStart)]
         [SerializeField] protected Sprite icon;
 
