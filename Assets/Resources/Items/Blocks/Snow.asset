@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec2778eec103403f8cae777705b279c9, type: 3}
+  m_Name: Snow
+  m_EditorClassIdentifier: 
+  icon: {fileID: 178573413, guid: acc140be88bf2b04690f54e70df8d61f, type: 3}
+  iconScale: 1
+  name: Snow
+  description: A bit of snow
+  maxAmount: 999
+  cooldown: 0.3
+  swingType: {fileID: 11400000, guid: 35ff93fda544a594a94ebfe5599470a9, type: 2}
+  color: {r: 1, g: 1, b: 1, a: 1}
+  ruleTile: {fileID: 3226333083751906691, guid: e0813403261359c4a81aa65935359d17, type: 2}
+  tileType: 1
+  isUnsafe: 0
+  isUnbreakable: 0
+  hardness: 50
+  ore: {fileID: 0}
+  placeSound: {fileID: 8300000, guid: 06a72ce793aec6e47acd9cd16493da2c, type: 3}
+  hitSound: {fileID: 8300000, guid: b65b9caeebb3648408ca1136889f421d, type: 3}
+  destroySound: {fileID: 8300000, guid: 21bf617b37a8d484d8f8bf78669d77b9, type: 3}

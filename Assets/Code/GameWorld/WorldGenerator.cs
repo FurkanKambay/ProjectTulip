@@ -60,6 +60,10 @@ namespace Tulip.GameWorld
             blocks = new List<TileChangeData>(tileCount);
             curtains = new List<TileChangeData>(tileCount);
 
+            int center = config.Width / 2;
+            int snowDistance = center - config.SnowDistance;
+            int sandDistance = center + config.SandDistance;
+
             for (int y = 0; y < config.Height; y++)
             {
                 float densityCutoff = config.HeightDensityCurve.Evaluate(y / (float)config.Height);
@@ -69,10 +73,15 @@ namespace Tulip.GameWorld
                     WorldTile wall = config.StoneWall;
                     float noise = perlinNoise[x, y];
 
-                    WorldTile block = noise < config.OreCutoff ? config.CopperVein
-                        : noise > densityCutoff ? null
-                        : config.Height - y < config.GrassLayerHeight ? config.Grass
-                        : config.Stone;
+                    bool isGrassHeight = config.Height - y <= config.GrassLayerHeight;
+
+                    WorldTile block =
+                        isGrassHeight && x < snowDistance ? config.Snow :
+                        isGrassHeight && x >= sandDistance ? config.Sand :
+                        noise > densityCutoff ? null :
+                        noise < config.OreCutoff ? config.CopperVein :
+                        isGrassHeight ? config.Grass :
+                        config.Stone;
 
                     // int index = (config.width * y) + x;
                     var cell = new Vector3Int(x, y, 0);

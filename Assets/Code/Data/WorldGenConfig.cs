@@ -13,10 +13,15 @@ namespace Tulip.Data
 
         public float OreCutoff => oreCutoff;
         public AnimationCurve HeightDensityCurve => heightDensityCurve;
+
         public int GrassLayerHeight => grassLayerHeight;
+        public int SnowDistance => snowDistance;
+        public int SandDistance => sandDistance;
 
         public WorldTile Grass => grass;
         public WorldTile Stone => stone;
+        public WorldTile Snow => snow;
+        public WorldTile Sand => sand;
         public WorldTile CopperVein => copperVein;
         public WorldTile StoneWall => stoneWall;
 
@@ -37,14 +42,30 @@ namespace Tulip.Data
 
         [Header("Earth Layers")]
         [OverlayRichLabel("<color=grey>cells")]
-        [SerializeField] int grassLayerHeight = 10;
+        [SerializeField, Min(0)] int grassLayerHeight = 10;
+
+        [Header("Biomes")]
+        [OverlayRichLabel("<color=grey>cells")]
+        [SerializeField, Min(0)] int snowDistance;
+
+        [OverlayRichLabel("<color=grey>cells")]
+        [SerializeField, Min(0)] int sandDistance;
 
         [Header("Blocks")]
         [SerializeField] WorldTile grass;
         [SerializeField] WorldTile stone;
+        [SerializeField] WorldTile snow;
+        [SerializeField] WorldTile sand;
         [SerializeField] WorldTile copperVein;
 
         [Header("Walls")]
         [SerializeField] WorldTile stoneWall;
+
+        private void OnValidate()
+        {
+            grassLayerHeight = Mathf.Min(grassLayerHeight, height);
+            snowDistance = Mathf.Min(snowDistance, width / 2);
+            sandDistance = Mathf.Min(sandDistance, width / 2);
+        }
     }
 }
