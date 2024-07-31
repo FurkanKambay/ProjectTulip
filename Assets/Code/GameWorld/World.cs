@@ -20,9 +20,9 @@ namespace Tulip.GameWorld
         [Header("Config")]
         public bool isReadonly;
 
-        public event IWorld.WorldTileEvent OnPlaceTile;
-        public event IWorld.WorldTileEvent OnHitTile;
-        public event IWorld.WorldTileEvent OnDestroyTile;
+        public event IWorld.PlaceableEvent OnPlaceTile;
+        public event IWorld.PlaceableEvent OnHitTile;
+        public event IWorld.PlaceableEvent OnDestroyTile;
 
         public Vector2Int Size { get; internal set; }
 
@@ -39,51 +39,51 @@ namespace Tulip.GameWorld
                 return default;
 
             Tilemap tilemap = GetTilemap(tileType);
-            WorldTile worldTile = GetTile(tileType, cell);
+            Placeable placeable = GetTile(tileType, cell);
 
-            if (!tilemap.HasTile(cell) || worldTile.IsUnbreakable)
+            if (!tilemap.HasTile(cell) || placeable.IsUnbreakable)
                 return default;
 
             Dictionary<Vector3Int, int> damageMap = GetDamageMap(tileType);
             damageMap.TryAdd(cell, 0);
 
             int damageTaken = damageMap[cell] += damage;
-            int hardness = worldTile.Hardness;
+            int hardness = placeable.Hardness;
 
             if (damageTaken < hardness)
             {
-                OnHitTile?.Invoke(TileModification.FromDamaged(cell, worldTile));
+                OnHitTile?.Invoke(TileModification.FromDamaged(cell, placeable));
                 return default;
             }
 
             tilemap.SetTile(cell, null);
             damageMap.Remove(cell);
-            OnDestroyTile?.Invoke(TileModification.FromDestroyed(cell, worldTile));
+            OnDestroyTile?.Invoke(TileModification.FromDestroyed(cell, placeable));
 
-            Item item = worldTile.Ore ? worldTile.Ore : worldTile;
+            Item item = placeable.Ore ? placeable.Ore : placeable;
             return InventoryModification.ToAdd(item.Stack(1));
         }
 
-        public InventoryModification PlaceTile(Vector3Int cell, WorldTile worldTile)
+        public InventoryModification PlaceTile(Vector3Int cell, Placeable placeable)
         {
             if (isReadonly)
                 return default;
 
-            Tilemap tilemap = GetTilemap(worldTile.TileType);
+            Tilemap tilemap = GetTilemap(placeable.TileType);
 
             if (tilemap.HasTile(cell))
                 return default;
 
-            SetTile(cell, worldTile.TileType, worldTile);
+            SetTile(cell, placeable.TileType, placeable);
 
-            GetDamageMap(worldTile.TileType).Remove(cell);
-            OnPlaceTile?.Invoke(TileModification.FromPlaced(cell, worldTile));
-            return InventoryModification.ToRemove(worldTile.Stack(1));
+            GetDamageMap(placeable.TileType).Remove(cell);
+            OnPlaceTile?.Invoke(TileModification.FromPlaced(cell, placeable));
+            return InventoryModification.ToRemove(placeable.Stack(1));
         }
 
         public bool HasBlock(Vector3Int cell) => blockTilemap.HasTile(cell);
-        public WorldTile GetBlock(Vector3Int cell) => GetTile(TileType.Block, cell);
-        public WorldTile GetBlock(Vector3 worldPosition) => GetBlock(WorldToCell(worldPosition));
+        public Placeable GetBlock(Vector3Int cell) => GetTile(TileType.Block, cell);
+        public Placeable GetBlock(Vector3 worldPosition) => GetBlock(WorldToCell(worldPosition));
 
         public Vector3 CellCenter(Vector3Int cell) => blockTilemap.GetCellCenterWorld(cell);
         public Bounds CellBoundsWorld(Vector3Int cell) => new(CellCenter(cell), blockTilemap.GetBoundsLocal(cell).size);
@@ -120,21 +120,21 @@ namespace Tulip.GameWorld
             ResetTilemap(curtainTilemap);
         }
 
-        private WorldTile GetTile(TileType tileType, Vector3Int cell) =>
-            GetTilemap(tileType).GetTile<CustomRuleTile>(cell)?.WorldTile;
+        private Placeable GetTile(TileType tileType, Vector3Int cell) =>
+            GetTilemap(tileType).GetTile<CustomRuleTile>(cell)?.Placeable;
 
-        private void SetTile(Vector3Int cell, TileType tileType, WorldTile worldTile)
+        private void SetTile(Vector3Int cell, TileType tileType, Placeable placeable)
         {
             Tilemap tilemap = GetTilemap(tileType);
 
-            if (!worldTile)
+            if (!placeable)
             {
                 tilemap.SetTile(cell, null);
                 return;
             }
 
-            tilemap.SetTile(cell, worldTile.RuleTile);
-            tilemap.SetColor(cell, worldTile.Color);
+            tilemap.SetTile(cell, placeable.RuleTile);
+            tilemap.SetColor(cell, placeable.Color);
             // BUG: color doesn't work
         }
 

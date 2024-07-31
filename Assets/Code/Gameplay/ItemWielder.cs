@@ -271,7 +271,7 @@ namespace Tulip.Gameplay
             float scale = item ? item.IconScale : 1;
             Color tint = Color.white;
 
-            if (item is WorldTile tile)
+            if (item is Placeable tile)
             {
                 scale = item.IconScale * 0.8f;
                 tint = tile.Color;

@@ -17,7 +17,7 @@ namespace Tulip.Data
         [SerializeField] bool needsSafeGround;
 
         [EnableIf(nameof(needsGround))]
-        [SerializeField] WorldTile[] groundTiles;
+        [SerializeField] Placeable[] groundTiles;
 
         [Header("Altitude")]
 
@@ -35,7 +35,7 @@ namespace Tulip.Data
             if (needsGround)
             {
                 var floorCell = new Vector3Int(cell.x, cell.y - 1);
-                WorldTile floorTile = world.GetBlock(floorCell);
+                Placeable floorTile = world.GetBlock(floorCell);
 
                 if (!world.HasBlock(floorCell) || (needsSafeGround && floorTile.IsUnsafe))
                     return false;

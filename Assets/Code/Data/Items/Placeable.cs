@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace Tulip.Data.Items
 {
-    [CreateAssetMenu(menuName = "Items/World Tile")]
-    public class WorldTile : WorldToolBase
+    [CreateAssetMenu(menuName = "Items/Placeable")]
+    public class Placeable : WorldToolBase
     {
         public override Sprite Icon => ruleTile.m_DefaultSprite;
 
@@ -56,13 +56,13 @@ namespace Tulip.Data.Items
         private void OnEnable()
         {
             if (ruleTile)
-                ruleTile.WorldTile = this;
+                ruleTile.Placeable = this;
         }
 
         private void OnValidate()
         {
             if (ruleTile)
-                ruleTile.WorldTile = this;
+                ruleTile.Placeable = this;
         }
 
         private void Reset()

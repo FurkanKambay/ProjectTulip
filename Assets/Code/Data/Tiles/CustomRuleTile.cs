@@ -7,7 +7,7 @@ namespace Tulip.Data.Tiles
     [CreateAssetMenu]
     public sealed class CustomRuleTile : RuleTile<CustomRuleTile.Neighbor>
     {
-        public WorldTile WorldTile { get; internal set; }
+        public Placeable Placeable { get; internal set; }
 
         public override bool RuleMatch(int neighbor, TileBase tile) => neighbor switch
         {
@@ -19,10 +19,10 @@ namespace Tulip.Data.Tiles
         public override void GetTileData(Vector3Int location, ITilemap tilemap, ref TileData tileData)
         {
             base.GetTileData(location, tilemap, ref tileData);
-            tileData.color = WorldTile.Color;
+            tileData.color = Placeable.Color;
 
-            if (WorldTile.Ore)
-                tileData.gameObject = WorldTile.Ore.Prefab;
+            if (Placeable.Ore)
+                tileData.gameObject = Placeable.Ore.Prefab;
         }
 
         // ReSharper disable once ClassNeverInstantiated.Global

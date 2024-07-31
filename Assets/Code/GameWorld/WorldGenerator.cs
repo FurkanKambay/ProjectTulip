@@ -70,12 +70,12 @@ namespace Tulip.GameWorld
 
                 for (int x = 0; x < config.Width; x++)
                 {
-                    WorldTile wall = config.StoneWall;
+                    Placeable wall = config.StoneWall;
                     float noise = perlinNoise[x, y];
 
                     bool isGrassHeight = config.Height - y <= config.GrassLayerHeight;
 
-                    WorldTile block =
+                    Placeable block =
                         isGrassHeight && x < snowDistance ? config.Snow :
                         isGrassHeight && x >= sandDistance ? config.Sand :
                         noise > densityCutoff ? null :

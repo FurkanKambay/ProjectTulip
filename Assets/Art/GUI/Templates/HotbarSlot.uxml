@@ -7,7 +7,7 @@
                 <ui:DataBinding binding-mode="ToTarget" property="style.visibility" data-source-path="ShowIcon" />
                 <ui:DataBinding binding-mode="ToTarget" property="style.height" data-source-path="IconHeight" />
                 <ui:DataBinding binding-mode="ToTarget" property="style.opacity" data-source-path="IconOpacity" />
-                <ui:DataBinding binding-mode="ToTarget" property="tintColor" data-source-path="item.color" data-source-type="Tulip.Data.Items.WorldTile, Tulip.Data" />
+                <ui:DataBinding binding-mode="ToTarget" property="tintColor" data-source-path="item.color" data-source-type="Tulip.Data.Items.Placeable, Tulip.Data" />
             </Bindings>
         </ui:Image>
         <ui:Label name="slot-amount">

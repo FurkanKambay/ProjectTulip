@@ -5,11 +5,11 @@ namespace Tulip.Data
 {
     public interface IWorld
     {
-        public delegate void WorldTileEvent(TileModification modification);
+        public delegate void PlaceableEvent(TileModification modification);
 
-        event WorldTileEvent OnPlaceTile;
-        event WorldTileEvent OnHitTile;
-        event WorldTileEvent OnDestroyTile;
+        event PlaceableEvent OnPlaceTile;
+        event PlaceableEvent OnHitTile;
+        event PlaceableEvent OnDestroyTile;
 
         /// <summary>
         /// Damages a tile of the given type at the given cell coordinates.
@@ -21,11 +21,11 @@ namespace Tulip.Data
         /// Tries to place a tile at the given cell coordinates.
         /// </summary>
         /// <returns>Whether the tile was placed successfully.</returns>
-        InventoryModification PlaceTile(Vector3Int cell, WorldTile worldTile);
+        InventoryModification PlaceTile(Vector3Int cell, Placeable placeable);
 
         bool HasBlock(Vector3Int cell);
-        WorldTile GetBlock(Vector3Int cell);
-        WorldTile GetBlock(Vector3 worldPosition);
+        Placeable GetBlock(Vector3Int cell);
+        Placeable GetBlock(Vector3 worldPosition);
 
         Vector3 CellCenter(Vector3Int cell);
         Bounds CellBoundsWorld(Vector3Int cell);
