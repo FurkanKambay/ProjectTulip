@@ -27,9 +27,9 @@ namespace Tulip.Data
         [EnableIf(nameof(needsAltitude))]
         [SerializeField, Min(1)] int minAltitude;
 
-        public bool CanSpawn(Enemy enemy, IWorld world, Vector3Int cell)
+        public bool CanSpawn(Entity entity, IWorld world, Vector3Int cell)
         {
-            if (!world.CanAccommodate(cell, enemy.Size))
+            if (!world.CanAccommodate(cell, entity.Size))
                 return false;
 
             if (needsGround)

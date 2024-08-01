@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using SaintsField;
 using SaintsField.Playa;
+using Tulip.Character;
 using Tulip.Core;
 using Tulip.Data;
 using Tulip.GameWorld;
@@ -31,7 +32,7 @@ namespace Tulip.Gameplay
         [SerializeField, Min(0)] float gracePeriod;
 
         [LayoutGroup("Config/Enemies", ELayout.TitleOut)]
-        [SerializeField] Enemy[] enemyOptions;
+        [SerializeField] Entity[] enemyOptions;
 
         private IEnumerable<Vector3Int> suitableCells;
 
@@ -82,28 +83,28 @@ namespace Tulip.Gameplay
             if (enemyOptions.Length == 0)
                 return false;
 
-            Enemy enemy = GetRandomEnemy();
-            suitableCells = GetSuitableCells(enemy);
+            Entity entity = GetRandomEnemy();
+            suitableCells = GetSuitableCells(entity);
 
             if (!suitableCells.Any())
                 return false;
 
-            Entity spawnedEnemy = Spawn(enemy.Prefab, world.CellCenter(GetRandomSpawnCell()));
+            TangibleEntity spawnedEnemy = Spawn(entity.Prefab, world.CellCenter(GetRandomSpawnCell()));
             spawnedEnemy.world = world;
 
             return true;
         }
 
-        private Entity Spawn(GameObject prefab, Vector3 position) =>
-            Instantiate(prefab, position, Quaternion.identity, spawnParent).GetComponent<Entity>();
+        private TangibleEntity Spawn(GameObject prefab, Vector3 position) =>
+            Instantiate(prefab, position, Quaternion.identity, spawnParent).GetComponent<TangibleEntity>();
 
-        private Enemy GetRandomEnemy() =>
+        private Entity GetRandomEnemy() =>
             enemyOptions[Random.Range(0, enemyOptions.Length)];
 
         private Vector3Int GetRandomSpawnCell() =>
             suitableCells.ElementAt(Random.Range(0, suitableCells.Count()));
 
-        private IEnumerable<Vector3Int> GetSuitableCells(Enemy enemy)
+        private IEnumerable<Vector3Int> GetSuitableCells(Entity entity)
         {
             Vector3 cameraExtents = new(camera.orthographicSize * camera.aspect, camera.orthographicSize);
             Vector3 spawnExtents = new(cameraExtents.x + radius, cameraExtents.y + radius);
@@ -123,7 +124,7 @@ namespace Tulip.Gameplay
 
                     var cell = new Vector3Int(x, y);
 
-                    if (enemy.CanSpawnAt(world, cell))
+                    if (entity.CanSpawnAt(world, cell))
                         yield return cell;
                 }
             }

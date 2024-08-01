@@ -1,6 +1,5 @@
 using System;
 using SaintsField;
-using Tulip.GameWorld;
 using UnityEngine;
 
 namespace Tulip.Character
@@ -8,7 +7,7 @@ namespace Tulip.Character
     public class AutoStepper : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField, Required] Entity entity;
+        [SerializeField, Required] TangibleEntity entity;
         [SerializeField, Required] Rigidbody2D body;
         [SerializeField, Required] CharacterMovement movement;
         [SerializeField, Required] SurroundsChecker surrounds;
@@ -67,14 +66,14 @@ namespace Tulip.Character
             RaycastHit2D hit = Physics2D.Raycast(hotspot, direction, range, LayerMask.GetMask("World"));
 
             Vector2 hitPoint = hit.point - (hit.normal * 0.1f);
-            Vector3Int cell1 = entity.world.WorldToCell(hitPoint) + Vector3Int.up;
+            Vector3Int cell1 = entity.World.WorldToCell(hitPoint) + Vector3Int.up;
             Vector3Int cell2 = cell1 + Vector3Int.up;
             Vector3Int cell3 = cell2 + (velocity < 0 ? Vector3Int.right : Vector3Int.left);
 
             if (!hit)
                 return AutoStepDirection.None;
 
-            if (entity.world.HasBlock(cell1) || entity.world.HasBlock(cell2) || entity.world.HasBlock(cell3))
+            if (entity.World.HasBlock(cell1) || entity.World.HasBlock(cell2) || entity.World.HasBlock(cell3))
                 return AutoStepDirection.None;
 
             return velocity > 0 ? AutoStepDirection.Right : AutoStepDirection.Left;

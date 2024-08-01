@@ -107,7 +107,6 @@ GameObject:
   - component: {fileID: 1010523397795566493}
   - component: {fileID: 7560684870690709998}
   - component: {fileID: 7261757859140667753}
-  - component: {fileID: 3515439620198549046}
   m_Layer: 7
   m_Name: Skull
   m_TagString: Enemy
@@ -215,18 +214,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   world: {fileID: 0}
---- !u!114 &3515439620198549046
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2859632988072890709}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 549fd809338712040ab1280951a4dac2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   body: {fileID: 7560684870690709998}
   health: {fileID: 1334333901957425893}
 --- !u!1 &2868871275904071882
