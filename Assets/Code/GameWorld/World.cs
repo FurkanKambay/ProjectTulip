@@ -92,15 +92,12 @@ namespace Tulip.GameWorld
 
         public bool CanAccommodate(Vector3Int cell, Vector2Int entitySize)
         {
-            Vector3Int cellToCheck = cell;
+            var entityBounds = new BoundsInt(cell, new Vector3Int(entitySize.x, entitySize.y, 1));
 
-            for (int y = 0; y < entitySize.y; y++, cellToCheck.y++)
+            foreach (Vector3Int position in entityBounds.allPositionsWithin)
             {
-                for (int x = 0; x < entitySize.x; x++, cellToCheck.x++)
-                {
-                    if (HasBlock(cell))
-                        return false;
-                }
+                if (HasBlock(position))
+                    return false;
             }
 
             return true;

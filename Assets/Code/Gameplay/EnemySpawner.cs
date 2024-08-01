@@ -133,6 +133,9 @@ namespace Tulip.Gameplay
 #if UNITY_EDITOR
         private void OnDrawGizmosSelected()
         {
+            if (enemyOptions.Length == 0)
+                return;
+
             Handles.color = Color.yellow;
 
             foreach (Vector3Int cell in GetSuitableCells(enemyOptions[0]))
