@@ -32,6 +32,8 @@ namespace Tulip.Data
         Vector3Int WorldToCell(Vector3 worldPosition);
         bool CellIntersects(Vector3Int cell, Bounds other);
 
-        bool CanAccommodate(Vector3Int cell, Vector2Int entitySize);
+        /// <param name="baseCell">The bottom-left cell, NOT center or pivot</param>
+        /// <param name="entitySize"></param>
+        bool CanAccommodate(Vector3Int baseCell, Vector2Int entitySize);
     }
 }

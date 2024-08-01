@@ -1,3 +1,4 @@
+using SaintsField;
 using Tulip.Data;
 using Tulip.Data.Gameplay;
 using Tulip.GameWorld;
@@ -8,11 +9,14 @@ namespace Tulip.Character
     public class TangibleEntity : MonoBehaviour, ITangibleEntity
     {
         [Header("References")]
-        public World world;
+        [SerializeField, Required] Entity entity;
         [SerializeField] Rigidbody2D body;
         [SerializeField] Health health;
+        public World world;
 
+        public Entity Entity => entity;
         public IWorld World => world;
+        public Vector3Int Cell { get; private set; }
 
         private void OnEnable()
         {
@@ -34,5 +38,11 @@ namespace Tulip.Character
 
         private void HandleDied(HealthChangeEventArgs damage) => body.simulated = false;
         private void HandleRevived(IHealth reviver) => body.simulated = true;
+
+        public void SetResidence(World homeWorld, Vector3Int baseCell)
+        {
+            world = homeWorld;
+            Cell = baseCell;
+        }
     }
 }

@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Red Guy
   m_EditorClassIdentifier: 
   prefab: {fileID: 2859632988072890709, guid: e80f529ddf142384a9f35b19b774a636, type: 3}
-  size: {x: 1, y: 2}
+  isStatic: 0
   spawnCondition: {fileID: 11400000, guid: 457fa30dada22e746a5b16a1234da0b2, type: 2}
+  size: {x: 1, y: 2}

@@ -89,8 +89,14 @@ namespace Tulip.Gameplay
             if (!suitableCells.Any())
                 return false;
 
-            TangibleEntity spawnedEnemy = Spawn(entity.Prefab, world.CellCenter(GetRandomSpawnCell()));
-            spawnedEnemy.world = world;
+            Vector3Int baseCell = GetRandomSpawnCell();
+            Vector3Int centerCell = new(baseCell.x + (entity.Size.x / 2), baseCell.y);
+
+            TangibleEntity spawnedEnemy = Spawn(entity.Prefab, world.CellCenter(centerCell));
+            spawnedEnemy.SetResidence(world, baseCell);
+
+            if (entity.IsStatic)
+                world.TryAddStaticEntity(baseCell, spawnedEnemy);
 
             return true;
         }

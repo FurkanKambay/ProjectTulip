@@ -26,6 +26,8 @@ namespace Tulip.GameWorld
 
         public Vector2Int Size { get; internal set; }
 
+        private readonly Dictionary<Vector3Int, ITangibleEntity> staticEntities = new();
+
         private readonly Dictionary<Vector3Int, int> blockDamageMap = new();
         private readonly Dictionary<Vector3Int, int> wallDamageMap = new();
         private readonly Dictionary<Vector3Int, int> curtainDamageMap = new();
@@ -69,10 +71,21 @@ namespace Tulip.GameWorld
             if (isReadonly)
                 return default;
 
+            if (staticEntities.ContainsKey(cell))
+                return default;
+
             Tilemap tilemap = GetTilemap(placeable.TileType);
 
             if (tilemap.HasTile(cell))
                 return default;
+
+            foreach ((Vector3Int position, ITangibleEntity entity) in staticEntities)
+            {
+                var entityRect = new RectInt((Vector2Int)position, entity.Entity.Size);
+
+                if (entityRect.Contains((Vector2Int)cell))
+                    return default;
+            }
 
             SetTile(cell, placeable.TileType, placeable);
 
@@ -80,6 +93,9 @@ namespace Tulip.GameWorld
             OnPlaceTile?.Invoke(TileModification.FromPlaced(cell, placeable));
             return InventoryModification.ToRemove(placeable.Stack(1));
         }
+
+        public bool TryAddStaticEntity(Vector3Int baseCell, ITangibleEntity entity) =>
+            !isReadonly && staticEntities.TryAdd(baseCell, entity);
 
         public bool HasBlock(Vector3Int cell) => blockTilemap.HasTile(cell);
         public Placeable GetBlock(Vector3Int cell) => GetTile(TileType.Block, cell);
@@ -90,13 +106,24 @@ namespace Tulip.GameWorld
         public Vector3Int WorldToCell(Vector3 worldPosition) => blockTilemap.WorldToCell(worldPosition);
         public bool CellIntersects(Vector3Int cell, Bounds other) => CellBoundsWorld(cell).Intersects(other);
 
-        public bool CanAccommodate(Vector3Int cell, Vector2Int entitySize)
+        public bool CanAccommodate(Vector3Int baseCell, Vector2Int entitySize)
         {
-            var entityRect = new RectInt((Vector2Int)cell, entitySize);
+            if (staticEntities.ContainsKey(baseCell))
+                return false;
+
+            var entityRect = new RectInt((Vector2Int)baseCell, entitySize);
 
             foreach (Vector3Int position in entityRect.allPositionsWithin)
             {
                 if (HasBlock(position))
+                    return false;
+            }
+
+            foreach ((Vector3Int position, ITangibleEntity entity) in staticEntities)
+            {
+                var rect = new RectInt((Vector2Int)position, entity.Entity.Size);
+
+                if (rect.Overlaps(entityRect))
                     return false;
             }
 
@@ -115,6 +142,7 @@ namespace Tulip.GameWorld
             ResetTilemap(wallTilemap);
             ResetTilemap(blockTilemap);
             ResetTilemap(curtainTilemap);
+            staticEntities.Clear();
         }
 
         private Placeable GetTile(TileType tileType, Vector3Int cell) =>

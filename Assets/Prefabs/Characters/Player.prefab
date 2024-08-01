@@ -451,9 +451,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d8751be9d454ae89b969c632e660570, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  world: {fileID: 0}
+  entity: {fileID: 0}
   body: {fileID: 7560684870690709998}
   health: {fileID: 7186377946535505526}
+  world: {fileID: 0}
 --- !u!114 &3860501709181554165
 MonoBehaviour:
   m_ObjectHideFlags: 0

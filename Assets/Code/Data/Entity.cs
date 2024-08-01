@@ -8,12 +8,14 @@ namespace Tulip.Data
     {
         [SerializeField, Required] GameObject prefab;
 
+        [SerializeField] bool isStatic;
+        [SerializeField, Required] SpawnCondition spawnCondition;
+
         [PostFieldRichLabel("<color=gray>tiles")]
         [SerializeField] Vector2Int size;
 
-        [SerializeField, Required] SpawnCondition spawnCondition;
-
         public GameObject Prefab => prefab;
+        public bool IsStatic => isStatic;
         public Vector2Int Size => size;
 
         public bool CanSpawnAt(IWorld world, Vector3Int cell) =>
