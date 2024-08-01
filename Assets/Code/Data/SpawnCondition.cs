@@ -9,8 +9,6 @@ namespace Tulip.Data
     public class SpawnCondition : ScriptableObject
     {
         [Header("Ground")]
-
-        [DisableIf(nameof(needsAltitude))]
         [SerializeField] bool needsGround;
 
         [EnableIf(nameof(needsGround))]
@@ -19,22 +17,46 @@ namespace Tulip.Data
         [EnableIf(nameof(needsGround))]
         [SerializeField] Placeable[] groundTiles;
 
-        [Header("Altitude")]
+        [Header("Clearance")]
+        [SerializeField, Min(0)] int clearanceAbove;
 
         [DisableIf(nameof(needsGround))]
-        [SerializeField] bool needsAltitude;
+        [SerializeField, Min(0)] int clearanceBelow;
 
-        [EnableIf(nameof(needsAltitude))]
-        [SerializeField, Min(1)] int minAltitude;
-
-        public bool CanSpawn(Entity entity, IWorld world, Vector3Int cell)
+        /// <param name="entity"></param>
+        /// <param name="world"></param>
+        /// <param name="baseCell">The bottom-left cell, NOT center or pivot</param>
+        public bool CanSpawn(Entity entity, IWorld world, Vector3Int baseCell)
         {
-            if (!world.CanAccommodate(cell, entity.Size))
+            if (!world.CanAccommodate(baseCell, entity.Size))
                 return false;
 
-            if (needsGround)
+            // Check tiles above
+            for (int y = 0; y < clearanceAbove; y++)
+            for (int x = 0; x < entity.Size.x; x++)
             {
-                var floorCell = new Vector3Int(cell.x, cell.y - 1);
+                if (world.HasBlock(baseCell + new Vector3Int(x, entity.Size.y + y)))
+                    return false;
+            }
+
+            // Check tiles below
+            if (!needsGround)
+            {
+                for (int y = 1; y <= clearanceBelow; y++)
+                for (int x = 0; x < entity.Size.x; x++)
+                {
+                    if (world.HasBlock(baseCell + new Vector3Int(x, -y)))
+                        return false;
+                }
+            }
+
+            if (!needsGround)
+                return true;
+
+            // Check ground only
+            for (int x = 0; x < entity.Size.x; x++)
+            {
+                Vector3Int floorCell = baseCell + new Vector3Int(x, -1);
                 Placeable floorTile = world.GetBlock(floorCell);
 
                 if (!world.HasBlock(floorCell) || (needsSafeGround && floorTile.IsUnsafe))
@@ -42,19 +64,6 @@ namespace Tulip.Data
 
                 if (groundTiles.Length > 0 && !groundTiles.Contains(floorTile))
                     return false;
-            }
-
-            if (needsAltitude)
-            {
-                Vector3Int cellToCheck = cell;
-
-                for (int y = 0; y < minAltitude; y++)
-                {
-                    cellToCheck.y--;
-
-                    if (world.HasBlock(cellToCheck))
-                        return false;
-                }
             }
 
             return true;

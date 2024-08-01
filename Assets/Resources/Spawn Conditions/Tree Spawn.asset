@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f1112e67fd794dcdada82ca241c14b24, type: 3}
-  m_Name: Flighted Spawn
+  m_Name: Tree Spawn
   m_EditorClassIdentifier: 
-  needsGround: 0
-  needsSafeGround: 0
-  groundTiles: []
-  clearanceAbove: 0
-  clearanceBelow: 10
+  needsGround: 1
+  needsSafeGround: 1
+  groundTiles:
+  - {fileID: 11400000, guid: 6b98d82ba77a4344a946251215359108, type: 2}
+  clearanceAbove: 15
+  clearanceBelow: 0

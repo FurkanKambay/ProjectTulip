@@ -15,3 +15,5 @@ MonoBehaviour:
   needsGround: 1
   needsSafeGround: 1
   groundTiles: []
+  clearanceAbove: 0
+  clearanceBelow: 0
