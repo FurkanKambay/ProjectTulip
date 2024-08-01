@@ -7,5 +7,7 @@ namespace Tulip.Data
         public Entity Entity { get; }
         public IWorld World { get; }
         public Vector3Int Cell { get; }
+
+        public void Destroy();
     }
 }

@@ -23,6 +23,8 @@ namespace Tulip.Data
         /// <returns>Whether the tile was placed successfully.</returns>
         InventoryModification PlaceTile(Vector3Int cell, Placeable placeable);
 
+        bool HasEntity(Vector3Int cell);
+
         bool HasBlock(Vector3Int cell);
         Placeable GetBlock(Vector3Int cell);
         Placeable GetBlock(Vector3 worldPosition);

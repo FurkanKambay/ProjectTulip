@@ -40,6 +40,19 @@ namespace Tulip.GameWorld
             if (isReadonly)
                 return default;
 
+            // check entities first
+            if (HasEntity(cell, out ITangibleEntity tangibleEntity))
+            {
+                staticEntities.Remove(tangibleEntity.Cell);
+
+                // TODO: damage health instead
+                tangibleEntity.Destroy();
+
+                Entity entity = tangibleEntity.Entity;
+                return !entity.Loot ? default : InventoryModification.ToAdd(entity.Loot.Stack(entity.LootAmount));
+            }
+
+            // move on to tiles
             Tilemap tilemap = GetTilemap(tileType);
             Placeable placeable = GetTile(tileType, cell);
 
@@ -71,21 +84,10 @@ namespace Tulip.GameWorld
             if (isReadonly)
                 return default;
 
-            if (staticEntities.ContainsKey(cell))
-                return default;
-
             Tilemap tilemap = GetTilemap(placeable.TileType);
 
-            if (tilemap.HasTile(cell))
+            if (tilemap.HasTile(cell) || HasEntity(cell))
                 return default;
-
-            foreach ((Vector3Int position, ITangibleEntity entity) in staticEntities)
-            {
-                var entityRect = new RectInt((Vector2Int)position, entity.Entity.Size);
-
-                if (entityRect.Contains((Vector2Int)cell))
-                    return default;
-            }
 
             SetTile(cell, placeable.TileType, placeable);
 
@@ -96,6 +98,32 @@ namespace Tulip.GameWorld
 
         public bool TryAddStaticEntity(Vector3Int baseCell, ITangibleEntity entity) =>
             !isReadonly && staticEntities.TryAdd(baseCell, entity);
+
+        public bool HasEntity(Vector3Int cell) =>
+            HasEntity(cell, out ITangibleEntity _);
+
+        private bool HasEntity(Vector3Int cell, out ITangibleEntity foundEntity)
+        {
+            if (staticEntities.TryGetValue(cell, out ITangibleEntity entity))
+            {
+                foundEntity = entity;
+                return true;
+            }
+
+            foreach ((Vector3Int position, ITangibleEntity e) in staticEntities)
+            {
+                var entityRect = new RectInt((Vector2Int)position, e.Entity.Size);
+
+                if (!entityRect.Contains((Vector2Int)cell))
+                    continue;
+
+                foundEntity = e;
+                return true;
+            }
+
+            foundEntity = null;
+            return false;
+        }
 
         public bool HasBlock(Vector3Int cell) => blockTilemap.HasTile(cell);
         public Placeable GetBlock(Vector3Int cell) => GetTile(TileType.Block, cell);

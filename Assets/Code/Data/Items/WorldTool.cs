@@ -16,7 +16,7 @@ namespace Tulip.Data.Items
         [SerializeField] protected TileType tileType = TileType.Block;
 
         public override bool IsUsableOn(IWorld world, Vector3Int cell) =>
-            (bool)world.GetBlock(cell);
+            world.HasBlock(cell) || world.HasEntity(cell);
 
         public override InventoryModification UseOn(IWorld world, Vector3Int cell) =>
             world.DamageTile(cell, tileType, power);

@@ -36,6 +36,8 @@ namespace Tulip.Character
             health.OnRevive -= HandleRevived;
         }
 
+        public void Destroy() => Destroy(gameObject);
+
         private void HandleDied(HealthChangeEventArgs damage) => body.simulated = false;
         private void HandleRevived(IHealth reviver) => body.simulated = true;
 

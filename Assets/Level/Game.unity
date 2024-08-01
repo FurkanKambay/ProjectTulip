@@ -1447,6 +1447,7 @@ MonoBehaviour:
   enemyOptions:
   - {fileID: 11400000, guid: 32ab3e30b94083045896d4e30229ea5b, type: 2}
   - {fileID: 11400000, guid: ea8750a0c949971459c7425c97b8a620, type: 2}
+  - {fileID: 11400000, guid: 0ad756e0c79d34a4182b602f36fabe08, type: 2}
 --- !u!1 &1795025818
 GameObject:
   m_ObjectHideFlags: 0
