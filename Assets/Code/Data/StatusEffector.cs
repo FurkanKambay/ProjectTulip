@@ -11,6 +11,7 @@ namespace Tulip.Data
         [Header("Config")]
         [SerializeField] StatusEffectData[] startingEffects;
 
+        // ReSharper disable once FieldCanBeMadeReadOnly.Local
         private List<StatusEffect> effects = new();
 
         private void Awake()
