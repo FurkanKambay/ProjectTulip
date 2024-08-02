@@ -9,7 +9,7 @@
                 <ui:VisualElement name="KeyPromptNext" class="key-prompt key-prompt-next" />
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:TabView name="SettingsPage" data-source="project://database/Assets/Resources/Game%20Options.asset?fileID=11400000&amp;guid=41d61be9e30e9344a8e17121111b86b0&amp;type=2#Game Options">
+        <ui:TabView name="SettingsPage" data-source="project://database/Assets/Data/Game%20Options.asset?fileID=11400000&amp;guid=41d61be9e30e9344a8e17121111b86b0&amp;type=2#Game Options">
             <ui:Tab label="Game" name="TabGame" data-source-path="gameplay" class="tab">
                 <ui:Toggle name="GameSmartCursor" text="Smart Cursor" class="option" focusable="false">
                     <Bindings>
