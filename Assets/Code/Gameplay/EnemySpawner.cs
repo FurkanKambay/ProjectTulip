@@ -40,11 +40,12 @@ namespace Tulip.Gameplay
         private float timeSinceLastSpawn;
 
         [Button]
-        // ReSharper disable once UnusedMember.Local
-        public void DestroyAllSpawns()
+        private void DestroyAllSpawns()
         {
             for (int i = 0; i < spawnParent.childCount; i++)
                 Destroy(spawnParent.GetChild(i).gameObject);
+
+            world.ClearEntities();
         }
 
         private void OnEnable() => GameState.OnGameStateChange += HandleGameStateChange;

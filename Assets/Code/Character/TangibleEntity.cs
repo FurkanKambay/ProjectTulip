@@ -15,12 +15,14 @@ namespace Tulip.Character
         public World world;
 
         public Entity Entity => entity;
+        public HealthBase Health => health;
+
         public IWorld World => world;
         public Vector3Int Cell { get; private set; }
 
         private void OnEnable()
         {
-            if (!health)
+            if (!health || !body)
                 return;
 
             health.OnDie += HandleDied;
@@ -29,14 +31,12 @@ namespace Tulip.Character
 
         private void OnDisable()
         {
-            if (!health)
+            if (!health || !body)
                 return;
 
             health.OnDie -= HandleDied;
             health.OnRevive -= HandleRevived;
         }
-
-        public void Destroy() => Destroy(gameObject);
 
         private void HandleDied(HealthChangeEventArgs damage) => body.simulated = false;
         private void HandleRevived(IHealth reviver) => body.simulated = true;

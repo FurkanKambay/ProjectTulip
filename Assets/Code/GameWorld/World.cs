@@ -43,10 +43,11 @@ namespace Tulip.GameWorld
             // check entities first
             if (HasEntity(cell, out ITangibleEntity tangibleEntity))
             {
-                staticEntities.Remove(tangibleEntity.Cell);
+                // TODO: pass on damage source
+                tangibleEntity.Health.Damage(damage, null);
 
-                // TODO: damage health instead
-                tangibleEntity.Destroy();
+                if (tangibleEntity.Health.IsDead)
+                    staticEntities.Remove(tangibleEntity.Cell);
 
                 Entity entity = tangibleEntity.Entity;
                 return !entity.Loot ? default : InventoryModification.ToAdd(entity.Loot.Stack(entity.LootAmount));
@@ -125,6 +126,8 @@ namespace Tulip.GameWorld
             return false;
         }
 
+        public void ClearEntities() => staticEntities.Clear();
+
         public bool HasBlock(Vector3Int cell) => blockTilemap.HasTile(cell);
         public Placeable GetBlock(Vector3Int cell) => GetTile(TileType.Block, cell);
         public Placeable GetBlock(Vector3 worldPosition) => GetBlock(WorldToCell(worldPosition));
@@ -170,7 +173,7 @@ namespace Tulip.GameWorld
             ResetTilemap(wallTilemap);
             ResetTilemap(blockTilemap);
             ResetTilemap(curtainTilemap);
-            staticEntities.Clear();
+            ClearEntities();
         }
 
         private Placeable GetTile(TileType tileType, Vector3Int cell) =>
