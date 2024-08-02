@@ -27,5 +27,5 @@ MonoBehaviour:
   hardness: 100
   ore: {fileID: 0}
   placeSound: {fileID: 8300000, guid: 06a72ce793aec6e47acd9cd16493da2c, type: 3}
-  hitSound: {fileID: 8300000, guid: b65b9caeebb3648408ca1136889f421d, type: 3}
-  destroySound: {fileID: 8300000, guid: 21bf617b37a8d484d8f8bf78669d77b9, type: 3}
+  hitSound: {fileID: 8300000, guid: 0280f747521ffb149aad577a08ae0ce0, type: 3}
+  destroySound: {fileID: 8300000, guid: 754ff2fe80f08724280aa3e742ed5fad, type: 3}

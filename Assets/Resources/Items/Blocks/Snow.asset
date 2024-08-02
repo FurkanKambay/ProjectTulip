@@ -26,6 +26,6 @@ MonoBehaviour:
   isUnbreakable: 0
   hardness: 50
   ore: {fileID: 0}
-  placeSound: {fileID: 8300000, guid: 06a72ce793aec6e47acd9cd16493da2c, type: 3}
-  hitSound: {fileID: 8300000, guid: b65b9caeebb3648408ca1136889f421d, type: 3}
-  destroySound: {fileID: 8300000, guid: 21bf617b37a8d484d8f8bf78669d77b9, type: 3}
+  placeSound: {fileID: 8300000, guid: 053bbded40d2e4b4bbdaf6702adc77a3, type: 3}
+  hitSound: {fileID: 8300000, guid: 6c5f62e8e374ad147ba4d2b776decd39, type: 3}
+  destroySound: {fileID: 8300000, guid: 048de52dc93bb6643b060e985ec75a8f, type: 3}
