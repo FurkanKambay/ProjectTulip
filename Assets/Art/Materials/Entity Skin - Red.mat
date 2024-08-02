@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Skull Skin
+  m_Name: Entity Skin - Red
   m_Shader: {fileID: -6465566751694194690, guid: dedc44c538a7e094a8020dd9f30fbb1b, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -57,6 +57,6 @@ Material:
     - _DissolveAmount: 0
     - _ReplaceColor: 0
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.9056604, g: 0.18369527, b: 0.18369527, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
