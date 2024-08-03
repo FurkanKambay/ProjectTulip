@@ -34,6 +34,7 @@
         "terraformer",
         "tilemap",
         "tilemaps",
+        "Treant",
         "WEBGL"
     ],
     "conventionalCommits.scopes": [
