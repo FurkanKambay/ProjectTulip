@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5496389505159922575}
   - component: {fileID: 8611038024772751417}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Item sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 263846212713501478}
   - component: {fileID: 8322959334347591257}
   - component: {fileID: 2475441704394811795}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Health Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -369,7 +369,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4204520463958456471}
   - component: {fileID: 7936016944497831700}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Wielder
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
@@ -424,7 +424,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1595575383956483137}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: '- Item Pivot'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -535,7 +535,7 @@ GameObject:
   - component: {fileID: 7554820057982354226}
   - component: {fileID: 7564833111998869751}
   - component: {fileID: 5318881425230006216}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Oak Treant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -611,7 +611,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -638,7 +638,7 @@ GameObject:
   - component: {fileID: 7518906409188854683}
   - component: {fileID: 1973966101817949720}
   - component: {fileID: 2692552757439519124}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Audio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -784,7 +784,7 @@ GameObject:
   m_Component:
   - component: {fileID: 349408914832029838}
   - component: {fileID: 8391095902409526077}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Combat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -894,7 +894,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8651041761564209597}
   - component: {fileID: 9132726976015814750}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Brain
   m_TagString: Untagged
   m_Icon: {fileID: 0}

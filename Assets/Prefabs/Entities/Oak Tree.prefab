@@ -256,7 +256,7 @@ GameObject:
   - component: {fileID: 7554820057982354226}
   - component: {fileID: 7564833111998869751}
   - component: {fileID: 5318881425230006216}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Oak Tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -299,7 +299,6 @@ MonoBehaviour:
   body: {fileID: 0}
   health: {fileID: 5823316243804091760}
   world: {fileID: 0}
-  destroyOnDeath: 0
 --- !u!61 &5318881425230006216
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -330,7 +329,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -357,7 +356,7 @@ GameObject:
   - component: {fileID: 7518906409188854683}
   - component: {fileID: 1973966101817949720}
   - component: {fileID: 2692552757439519124}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Audio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
