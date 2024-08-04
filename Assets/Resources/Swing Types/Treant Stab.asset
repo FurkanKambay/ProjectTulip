@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Treant Stab
   m_EditorClassIdentifier: 
   readyPosition: {x: 0, y: 0}
-  readyAngle: 225
+  readyAngle: -45
   resetMoveDuration: 0.01
   resetTurnDuration: 0.01
   loop: 0

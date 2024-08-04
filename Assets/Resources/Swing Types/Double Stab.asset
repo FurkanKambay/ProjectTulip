@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Double Stab
   m_EditorClassIdentifier: 
   readyPosition: {x: 0, y: 0}
-  readyAngle: 240
+  readyAngle: -30
   resetMoveDuration: 0.1
   resetTurnDuration: 0.1
   loop: 0
