@@ -20,6 +20,9 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 5efcb26fcf7c35443bfebf105a319f3d, type: 2}
     isLocked: 0
     amount: 1
+  - item: {fileID: 11400000, guid: 22ec4c4f083c86443ad2f80233e2466e, type: 2}
+    isLocked: 0
+    amount: 1
   - item: {fileID: 11400000, guid: 6d3857252a8becc409275c487eef4913, type: 2}
     isLocked: 1
     amount: 100
