@@ -38,7 +38,9 @@ namespace Tulip.Character
             RaiseOnDie(damageArgs);
             enabled = false;
 
-            return InventoryModification.ToAdd(Entity.Entity.Loot.Stack(Entity.Entity.LootAmount));
+            // TODO: fix whatever this is later
+            Entity entity = Entity.Entity;
+            return !entity.Loot ? default : InventoryModification.ToAdd(entity.Loot.Stack(entity.LootAmount));
         }
 
         public override void Heal(float amount, IHealth source)
