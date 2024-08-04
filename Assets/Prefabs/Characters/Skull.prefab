@@ -726,6 +726,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 992d83c1bd31b8b41aec2663aa6ead9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  entity:
+    <V>k__BackingField: {fileID: 7261757859140667753}
   maxHealth: 20
   currentHealth: 20
   invulnerabilityDuration: 0.1
@@ -776,6 +778,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: {fileID: 1334333901957425893}
   itemWielder: {fileID: 8169639496971023625}
+  inventory: {fileID: 0}
   hitContactFilter:
     useTriggers: 0
     useLayerMask: 1

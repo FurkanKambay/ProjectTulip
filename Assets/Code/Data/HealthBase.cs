@@ -1,3 +1,4 @@
+using SaintsField;
 using Tulip.Data.Gameplay;
 using UnityEngine;
 
@@ -9,6 +10,9 @@ namespace Tulip.Data
         public virtual event IHealth.DeathEvent OnDie;
         public virtual event IHealth.HealEvent OnHeal;
         public virtual event IHealth.ReviveEvent OnRevive;
+
+        [Header("References")]
+        [SerializeField] SaintsInterface<Component, ITangibleEntity> entity;
 
         [Header("Config")]
         [SerializeField, Min(0)] protected float maxHealth = 100f;
@@ -32,13 +36,14 @@ namespace Tulip.Data
         public virtual bool IsHurt => CurrentHealth < MaxHealth && !IsDead;
         public virtual bool IsInvulnerable => remainingInvulnerability > 0;
 
+        public ITangibleEntity Entity => entity.I;
         public virtual IHealth LatestDamageSource { get; protected set; }
         public virtual IHealth LatestDeathSource { get; protected set; }
 
         /// Remaining seconds of invulnerability
         protected float remainingInvulnerability;
 
-        public abstract void Damage(float amount, IHealth source, bool checkInvulnerable = true);
+        public abstract InventoryModification Damage(float amount, IHealth source, bool checkInvulnerable = true);
         public abstract void Heal(float amount, IHealth source);
         public abstract void Revive(IHealth reviver = null);
 

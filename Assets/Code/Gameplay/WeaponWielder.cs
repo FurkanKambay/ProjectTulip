@@ -4,6 +4,7 @@ using System.Linq;
 using SaintsField;
 using Tulip.Data;
 using Tulip.Data.Items;
+using Tulip.Player;
 using UnityEngine;
 
 namespace Tulip.Gameplay
@@ -13,6 +14,7 @@ namespace Tulip.Gameplay
         [Header("References")]
         [SerializeField, Required] HealthBase health;
         [SerializeField, Required] ItemWielder itemWielder;
+        [SerializeField] Inventory inventory;
 
         [Header("Config")]
         [SerializeField] ContactFilter2D hitContactFilter;
@@ -32,8 +34,13 @@ namespace Tulip.Gameplay
 
             foreach (HealthBase target in GetTargets(transform.position, targetPoint))
             {
-                if (!target.enabled) continue;
-                target.Damage(weapon.Damage, health);
+                if (!target.enabled)
+                    continue;
+
+                InventoryModification loot = target.Damage(weapon.Damage, health);
+
+                if (inventory)
+                    inventory.ApplyModification(loot);
             }
         }
 

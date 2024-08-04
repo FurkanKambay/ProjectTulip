@@ -23,11 +23,12 @@ namespace Tulip.Data
         bool IsHurt { get; }
         bool IsInvulnerable { get; }
 
+        ITangibleEntity Entity { get; }
         string Name { get; }
         IHealth LatestDamageSource { get; }
         IHealth LatestDeathSource { get; }
 
-        void Damage(float amount, IHealth source, bool checkInvulnerable);
+        InventoryModification Damage(float amount, IHealth source, bool checkInvulnerable);
         void Heal(float amount, IHealth source);
         void Revive(IHealth reviver = null);
     }

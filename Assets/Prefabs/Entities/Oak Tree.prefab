@@ -584,6 +584,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 992d83c1bd31b8b41aec2663aa6ead9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  entity:
+    <V>k__BackingField: {fileID: 7564833111998869751}
   maxHealth: 200
   currentHealth: 200
   invulnerabilityDuration: 0

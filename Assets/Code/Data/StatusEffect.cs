@@ -39,6 +39,7 @@ namespace Tulip.Data
 
         private void Proc()
         {
+            // BUG: deaths by statuses don't award loot
             if (Data.Amount < 0)
                 Target.Damage(-Data.Amount, Source, checkInvulnerable: false);
             else

@@ -10,13 +10,13 @@ namespace Tulip.Character
         private void Update() =>
             remainingInvulnerability = Mathf.Max(0, remainingInvulnerability - Time.deltaTime);
 
-        public override void Damage(float amount, IHealth source, bool checkInvulnerable = true)
+        public override InventoryModification Damage(float amount, IHealth source, bool checkInvulnerable = true)
         {
             if (IsDead || amount < 0)
-                return;
+                return default;
 
             if (checkInvulnerable && IsInvulnerable)
-                return;
+                return default;
 
             CurrentHealth -= amount;
             LatestDamageSource = source;
@@ -32,11 +32,13 @@ namespace Tulip.Character
             RaiseOnHurt(damageArgs);
 
             if (IsAlive)
-                return;
+                return default;
 
             LatestDeathSource = source;
             RaiseOnDie(damageArgs);
             enabled = false;
+
+            return InventoryModification.ToAdd(Entity.Entity.Loot.Stack(Entity.Entity.LootAmount));
         }
 
         public override void Heal(float amount, IHealth source)
