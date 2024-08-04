@@ -536,7 +536,7 @@ GameObject:
   - component: {fileID: 7564833111998869751}
   - component: {fileID: 5318881425230006216}
   - component: {fileID: 2726874982140661489}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: Oak Treant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
