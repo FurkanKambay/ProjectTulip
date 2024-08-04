@@ -50,24 +50,25 @@ namespace Tulip.Player
             AssignCells();
         }
 
-        private void HandleItemSwing(ItemStack stack, Vector3 aimPoint)
+        public bool IsCellBlockedByEntity()
         {
-            if (stack.item is not WorldToolBase tool)
-                return;
-
             if (!FocusedCell.HasValue)
-                return;
+                return false;
 
             Bounds bounds = entity.World.CellBoundsWorld(FocusedCell.Value);
             Vector2 topLeft = bounds.center - bounds.extents + (Vector3.one * 0.02f);
             Vector2 bottomRight = bounds.center + bounds.extents - (Vector3.one * 0.02f);
 
             int layerMask = LayerMask.GetMask("Enemy", "Player", "NPC", "Entity");
+            return Physics2D.OverlapArea(topLeft, bottomRight, layerMask);
+        }
 
-            if (Physics2D.OverlapArea(topLeft, bottomRight, layerMask))
+        private void HandleItemSwing(ItemStack stack, Vector3 aimPoint)
+        {
+            if (!FocusedCell.HasValue || stack.item is not WorldToolBase tool)
                 return;
 
-            if (!tool.IsUsableOn(entity.World, FocusedCell.Value))
+            if (IsCellBlockedByEntity() || !tool.IsUsableOn(entity.World, FocusedCell.Value))
                 return;
 
             InventoryModification modification = tool.UseOn(entity.World, FocusedCell.Value);

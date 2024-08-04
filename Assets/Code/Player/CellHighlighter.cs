@@ -16,12 +16,17 @@ namespace Tulip.Player
 
         [Header("Config")]
         [SerializeField] float trackingSpeed = 100;
+        [SerializeField] Color validColor = Color.white;
+        [SerializeField] Color invalidColor = Color.red;
 
         private Vector3 targetPosition;
         private Vector3Int? focusedCell;
+        private Sprite defaultSprite;
 
         private void OnEnable() => terraformer.OnChangeCellFocus += HandleCellFocusChanged;
         private void OnDisable() => terraformer.OnChangeCellFocus -= HandleCellFocusChanged;
+
+        private void Awake() => defaultSprite = renderer.sprite;
 
         private void Update()
         {
@@ -31,8 +36,11 @@ namespace Tulip.Player
                 return;
             }
 
-            renderer.enabled = itemWielder.I.CurrentStack.item is WorldToolBase tool
-                               && tool.IsUsableOn(world, focusedCell.Value);
+            Item item = itemWielder.I.CurrentStack.item;
+
+            renderer.color = terraformer.IsCellBlockedByEntity() ? invalidColor : validColor;
+            renderer.sprite = item is Placeable placeable ? placeable.Icon : defaultSprite;
+            renderer.enabled = item is WorldToolBase worldTool && worldTool.IsUsableOn(world, focusedCell.Value);
 
             if (renderer.enabled)
                 targetPosition = world.CellCenter(focusedCell.Value);
