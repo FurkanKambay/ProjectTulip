@@ -9,5 +9,6 @@ namespace Tulip.Data
 
         public IWorld World { get; }
         public Vector3Int Cell { get; }
+        public RectInt Rect { get; }
     }
 }

@@ -62,7 +62,7 @@ namespace Tulip.Player
             Vector2 topLeft = bounds.center - bounds.extents + (Vector3.one * 0.02f);
             Vector2 bottomRight = bounds.center + bounds.extents - (Vector3.one * 0.02f);
 
-            int layerMask = LayerMask.GetMask("Enemy", "Player", "NPC");
+            int layerMask = LayerMask.GetMask("Enemy", "Player", "NPC", "Entity");
 
             if (Physics2D.OverlapArea(topLeft, bottomRight, layerMask))
                 return;
