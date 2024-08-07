@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{b41fc7ec-f041-4566-9368-f1b99ea86502}">
+		<property name="name">
+			<value>Terraform Type</value>
+		</property>
+		<relationship name="folder">
+			<destination>{6bb44dba-0777-4785-9f65-abcf4448f4be}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{67bf9b89-c8a0-4c07-9f0f-c7785e2e1df4}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{67bf9b89-c8a0-4c07-9f0f-c7785e2e1df4}">
+		<property name="parameterType">
+			<value>2</value>
+		</property>
+		<property name="maximum">
+			<value>3</value>
+		</property>
+		<property name="enumerationLabels">
+			<value>Place</value>
+			<value>Damage</value>
+			<value>Destroy</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

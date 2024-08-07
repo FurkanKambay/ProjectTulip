@@ -12,20 +12,19 @@ namespace Tulip.Data.Items
         public Color Color => color;
         public CustomRuleTile RuleTile => ruleTile;
         public TileType TileType => tileType;
+        public PlaceableMaterial Material => material;
 
         public bool IsUnsafe => isUnsafe;
         public bool IsUnbreakable => isUnbreakable;
         public int Hardness => hardness;
         public Ore Ore => ore;
 
-        public AudioClip PlaceSound => placeSound;
-        public AudioClip HitSound => hitSound;
-        public AudioClip DestroySound => destroySound;
-
         [Header("World Tile Data")]
         [SerializeField] protected Color color;
         [SerializeField] protected CustomRuleTile ruleTile;
         [SerializeField] protected TileType tileType;
+        [SerializeField] protected PlaceableMaterial material;
+
         [SerializeField] protected bool isUnsafe;
         [SerializeField] protected bool isUnbreakable;
 
@@ -33,11 +32,6 @@ namespace Tulip.Data.Items
         [SerializeField] protected int hardness = 50;
 
         [SerializeField] protected Ore ore;
-
-        [Header("Sounds")]
-        [SerializeField] protected AudioClip placeSound;
-        [SerializeField] protected AudioClip hitSound;
-        [SerializeField] protected AudioClip destroySound;
 
         public override InventoryModification UseOn(IWorld world, Vector3Int cell) => tileType switch
         {

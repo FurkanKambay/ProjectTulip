@@ -3,18 +3,21 @@
     "files.exclude": {
         "**/*.meta": true,
         "UIElementsSchema/": true,
-        "Assets/Plugins": true
+        "Assets/Plugins": true,
+        "FMODAssets/": true
     },
     "files.readonlyInclude": {
         // "**/*.asset": true,
         // "**/*.meta": true,
         // "**/*.prefab": true,
         // "**/*.unity": true,
-        "Packages/packages-lock.json": true
+        "Packages/packages-lock.json": true,
+        "FMODAssets/**": true
     },
     "cSpell.words": [
         "borderless",
         "DontDestroyOnLoad",
+        "FMOD",
         "hotbar",
         "hotspot",
         "interactable",

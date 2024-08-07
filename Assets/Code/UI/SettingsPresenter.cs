@@ -1,3 +1,4 @@
+using FMODUnity;
 using SaintsField;
 using Tulip.Core;
 using Tulip.Input;
@@ -13,7 +14,9 @@ namespace Tulip.UI
         [Header("References")]
         [SerializeField, Required] UIDocument document;
         [SerializeField, Required] UserBrain brain;
-        [SerializeField, Required] AudioSource audioSource;
+
+        [Header("FMOD Events")]
+        [SerializeField, Required] StudioEventEmitter toggleSfx;
 
         [Header("Config")]
         public UnityEvent onShow;
@@ -103,7 +106,7 @@ namespace Tulip.UI
             container.visible = change.newValue;
             quitFlyoutButton.value = false;
 
-            audioSource.Play();
+            toggleSfx.Play();
             GameState.SetPaused(change.newValue);
 
             if (change.newValue)

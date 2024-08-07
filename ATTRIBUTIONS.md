@@ -1,6 +1,8 @@
 # Attributions
 
-These assets are used for prototyping purposes only.
+The assets are used for prototyping purposes only for now.
+
+- Audio Engine: FMOD Studio by Firelight Technologies Pty Ltd.
 
 ## Sprites
 

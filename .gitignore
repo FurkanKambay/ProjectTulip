@@ -37,3 +37,31 @@
 !.vscode/launch.json
 !.vscode/extensions.json
 !.vscode/*.code-snippets
+
+# FMOD Studio
+/FMODAssets/.cache/
+/FMODAssets/.user/
+/FMODAssets/.unsaved/
+
+# Optionally ignore bank files
+# *.bank
+
+# FMOD for Unity
+
+# Never ignore DLLs in the FMOD subfolder.
+!/[Aa]ssets/[Pp]lugins/FMOD/**/lib/*
+
+# Ignore the Cache folder since it is updated locally.
+/[Aa]ssets/[Pp]lugins/FMOD/Cache/*
+
+# Don't ignore images and gizmos used by FMOD in the Unity Editor.
+!/[Aa]ssets/Gizmos/FMOD/*
+!/[Aa]ssets/Editor Default Resources/FMOD/*
+
+# Ignore bank files in the StreamingAssets folder.
+# If the source bank files are kept outside of the StreamingAssets folder then these can be ignored.
+/[Aa]ssets/[Ss]treaming[Aa]ssets/**/*.bank
+/[Aa]ssets/[Ss]treaming[Aa]ssets/**/*.bank.meta
+
+# Log files can be ignored.
+fmod_editor.log

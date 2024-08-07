@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{f9cbe9ed-07a3-477c-803d-f40f0cda2dde}">
+		<property name="assetPath">
+			<value>Music/Desert Sirocco (JDSherbert).ogg</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>72.915351473922897</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{87bc46f3-3f86-46eb-83e7-7e47777ee636}</destination>
+		</relationship>
+	</object>
+</objects>

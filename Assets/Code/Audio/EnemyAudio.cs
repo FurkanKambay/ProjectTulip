@@ -1,3 +1,4 @@
+using FMODUnity;
 using SaintsField;
 using Tulip.Data;
 using Tulip.Data.Gameplay;
@@ -8,27 +9,21 @@ namespace Tulip.Audio
     public class EnemyAudio : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField, Required] AudioSource audioSource;
         [SerializeField, Required] SaintsInterface<Component, IHealth> health;
 
-        [Header("Health")]
-        [SerializeField] AudioClip hurtSound;
-        [SerializeField] AudioClip dieSound;
+        [Header("FMOD Events")]
+        [SerializeField, Required] StudioEventEmitter hurtSfx;
 
-        private void HandleHurt(HealthChangeEventArgs damage) => audioSource.PlayOneShot(hurtSound);
+        private const string paramLifeState = "Life State";
 
-        private void HandleDied(HealthChangeEventArgs damage) => audioSource.PlayOneShot(dieSound);
+        private void OnEnable() => health.I.OnHurt += HandleHurt;
+        private void OnDisable() => health.I.OnHurt -= HandleHurt;
 
-        private void OnEnable()
+        private void HandleHurt(HealthChangeEventArgs damage)
         {
-            health.I.OnHurt += HandleHurt;
-            health.I.OnDie += HandleDied;
-        }
-
-        private void OnDisable()
-        {
-            health.I.OnHurt -= HandleHurt;
-            health.I.OnDie -= HandleDied;
+            LifeState lifeState = damage.Target.IsAlive ? LifeState.Alive : LifeState.Dead;
+            hurtSfx.SetParameter(paramLifeState, (float)lifeState);
+            hurtSfx.Play();
         }
     }
 }

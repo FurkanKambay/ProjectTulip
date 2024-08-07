@@ -1,4 +1,5 @@
 using System.Collections;
+using FMODUnity;
 using SaintsField;
 using Tulip.Core;
 using Tulip.Data;
@@ -12,8 +13,10 @@ namespace Tulip.UI
     {
         [Header("References")]
         [SerializeField, Required] UIDocument document;
-        [SerializeField, Required] AudioSource audioSource;
         [SerializeField, Required] SaintsInterface<Component, IPlayerHotbar> hotbar;
+
+        [Header("FMOD Events")]
+        [SerializeField, Required] StudioEventEmitter hotbarSfx;
 
         [Header("Config")]
         [OverlayRichLabel("<color=grey>ms")]
@@ -99,7 +102,7 @@ namespace Tulip.UI
             if (!document.enabled)
                 return;
 
-            audioSource.Play();
+            hotbarSfx.Play();
             SelectSlot(index);
         }
 

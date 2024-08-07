@@ -1,3 +1,5 @@
+using FMODUnity;
+using SaintsField;
 using Tulip.Data;
 using Tulip.GameWorld;
 using UnityEngine;
@@ -8,29 +10,30 @@ namespace Tulip.Audio
     {
         [Header("References")]
         [SerializeField] World world;
-        [SerializeField] AudioSource audioSource;
+        [SerializeField, Required] StudioEventEmitter terraformSfx;
 
-        private void HandleTilePlaced(TileModification modification)
-            => audioSource.PlayOneShot(modification.Placeable.PlaceSound);
+        private const string paramMaterial = "Material";
+        private const string paramTerraformType = "Terraform Type";
 
-        private void HandleTileHit(TileModification modification)
-            => audioSource.PlayOneShot(modification.Placeable.HitSound);
-
-        private void HandleTileDestroyed(TileModification modification)
-            => audioSource.PlayOneShot(modification.Placeable.DestroySound);
+        private void HandleTerraformed(TileModification modification)
+        {
+            terraformSfx.SetParameter(paramMaterial, (float)modification.Placeable.Material);
+            terraformSfx.SetParameter(paramTerraformType, (float)modification.Kind);
+            terraformSfx.Play();
+        }
 
         private void OnEnable()
         {
-            world.OnPlaceTile += HandleTilePlaced;
-            world.OnHitTile += HandleTileHit;
-            world.OnDestroyTile += HandleTileDestroyed;
+            world.OnPlaceTile += HandleTerraformed;
+            world.OnHitTile += HandleTerraformed;
+            world.OnDestroyTile += HandleTerraformed;
         }
 
         private void OnDisable()
         {
-            world.OnPlaceTile -= HandleTilePlaced;
-            world.OnHitTile -= HandleTileHit;
-            world.OnDestroyTile -= HandleTileDestroyed;
+            world.OnPlaceTile -= HandleTerraformed;
+            world.OnHitTile -= HandleTerraformed;
+            world.OnDestroyTile -= HandleTerraformed;
         }
     }
 }

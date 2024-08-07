@@ -22,10 +22,8 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 1}
   ruleTile: {fileID: 3226333083751906691, guid: e0813403261359c4a81aa65935359d17, type: 2}
   tileType: 1
+  material: 2
   isUnsafe: 0
   isUnbreakable: 0
   hardness: 50
   ore: {fileID: 0}
-  placeSound: {fileID: 8300000, guid: 053bbded40d2e4b4bbdaf6702adc77a3, type: 3}
-  hitSound: {fileID: 8300000, guid: 6c5f62e8e374ad147ba4d2b776decd39, type: 3}
-  destroySound: {fileID: 8300000, guid: 048de52dc93bb6643b060e985ec75a8f, type: 3}
