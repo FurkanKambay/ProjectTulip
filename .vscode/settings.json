@@ -12,6 +12,7 @@
         // "**/*.prefab": true,
         // "**/*.unity": true,
         "Packages/packages-lock.json": true,
+        "Packages/com.firelight.fmod-for-unity": true,
         "FMODAssets/**": true
     },
     "cSpell.words": [
