@@ -40,7 +40,11 @@ namespace Tulip.Character
 
             // TODO: fix whatever this is later
             Entity entity = Entity.Entity;
-            return !entity.Loot ? default : InventoryModification.ToAdd(entity.Loot.Stack(entity.LootAmount));
+
+            if (!entity || !entity.Loot)
+                return default;
+
+            return InventoryModification.ToAdd(entity.Loot.Stack(entity.LootAmount));
         }
 
         public override void Heal(float amount, IHealth source)
