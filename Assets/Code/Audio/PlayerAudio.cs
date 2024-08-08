@@ -30,13 +30,13 @@ namespace Tulip.Audio
         private void OnEnable()
         {
             health.I.OnHurt += HandleHurt;
-            itemWielder.I.OnSwing += HandleItemSwing;
+            itemWielder.I.OnSwingPerform += HandleItemSwing;
         }
 
         private void OnDisable()
         {
             health.I.OnHurt -= HandleHurt;
-            itemWielder.I.OnSwing -= HandleItemSwing;
+            itemWielder.I.OnSwingPerform -= HandleItemSwing;
         }
     }
 }

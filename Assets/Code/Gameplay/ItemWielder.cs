@@ -10,8 +10,9 @@ namespace Tulip.Gameplay
 {
     public class ItemWielder : MonoBehaviour, IItemWielder
     {
-        public event Action<ItemStack, Vector3> OnSwing;
-        public event Action<ItemStack> OnReady;
+        public event IItemWielder.ItemReadyEvent OnReady;
+        public event IItemWielder.ItemSwingEvent OnSwingStart;
+        public event IItemWielder.ItemSwingEvent OnSwingPerform;
 
         public ItemStack CurrentStack => HotbarItem.IsValid ? HotbarItem : fallbackStack;
         private ItemStack HotbarItem => hotbar ? hotbar.SelectedStack : default;
@@ -41,6 +42,8 @@ namespace Tulip.Gameplay
         private bool wantsToSwapItems;
         private int phaseIndex;
         private MotionState motion;
+
+        private Vector3 AimPointWorld => itemPivot.position + (Vector3)lastAimDirection;
 
         private void Awake()
         {
@@ -95,19 +98,17 @@ namespace Tulip.Gameplay
 
                     // we reached the target angle. move to next phase or reset after final phase
 
-                    Vector3 aimPointWorld = itemPivot.position + (Vector3)lastAimDirection;
-
                     // if no phases, hit and reset swing
                     if (swingType.Phases.Length == 0)
                     {
-                        OnSwing?.Invoke(handStack, aimPointWorld);
+                        OnSwingPerform?.Invoke(handStack, AimPointWorld);
                         SwitchState(ItemSwingState.Resetting);
                         break;
                     }
 
                     // hit if we need to before checking for final exit
                     if (phase.shouldHit)
-                        OnSwing?.Invoke(handStack, aimPointWorld);
+                        OnSwingPerform?.Invoke(handStack, AimPointWorld);
 
                     bool isFinalPhase = phaseIndex == swingType.Phases.Length - 1;
                     bool shouldReset = !wantsToUse || !swingType.Loop;
@@ -162,6 +163,7 @@ namespace Tulip.Gameplay
                     OnReady?.Invoke(handStack);
                     break;
                 case ItemSwingState.Swinging:
+                    OnSwingStart?.Invoke(handStack, AimPointWorld);
                     phaseIndex = 0;
                     SetMotionToPhase();
                     break;

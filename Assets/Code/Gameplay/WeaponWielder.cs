@@ -61,7 +61,7 @@ namespace Tulip.Gameplay
                 .TakeWhile(hitHealth => (bool)hitHealth);
         }
 
-        private void OnEnable() => itemWielder.OnSwing += Attack;
-        private void OnDisable() => itemWielder.OnSwing -= Attack;
+        private void OnEnable() => itemWielder.OnSwingPerform += Attack;
+        private void OnDisable() => itemWielder.OnSwingPerform -= Attack;
     }
 }

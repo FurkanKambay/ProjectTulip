@@ -39,8 +39,8 @@ namespace Tulip.Player
         private Vector2 rangePath;
         private Vector3 hitPoint;
 
-        private void OnEnable() => itemWielder.I.OnSwing += HandleItemSwing;
-        private void OnDisable() => itemWielder.I.OnSwing -= HandleItemSwing;
+        private void OnEnable() => itemWielder.I.OnSwingPerform += HandleItemSwing;
+        private void OnDisable() => itemWielder.I.OnSwingPerform -= HandleItemSwing;
 
         private void Update()
         {
