@@ -267,7 +267,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{35fe2913-2859-4101-ba73-05c4a9aadb8b}">
 		<property name="name">
-			<value>Damage' Tile</value>
+			<value>Damage Tile</value>
 		</property>
 		<relationship name="automators">
 			<destination>{865525e7-e1c3-4b69-a516-3279a17a5cc8}</destination>
