@@ -17,9 +17,9 @@ namespace Tulip.Audio
 
         private void HandleTerraformed(TileModification modification)
         {
-            terraformSfx.SetParameter(paramMaterial, (float)modification.Placeable.Material);
-            terraformSfx.SetParameter(paramTerraformType, (float)modification.Kind);
             terraformSfx.Play();
+            terraformSfx.SetParameter(paramMaterial, (float)modification.Placeable.Material, ignoreseekspeed: true);
+            terraformSfx.SetParameter(paramTerraformType, (float)modification.Kind, ignoreseekspeed: true);
         }
 
         private void OnEnable()

@@ -99,6 +99,9 @@
 		</relationship>
 	</object>
 	<object class="SingleSound" id="{b961251b-ed3c-4a97-bade-bddd4212b825}">
+		<property name="pitch">
+			<value>3.4000001</value>
+		</property>
 		<relationship name="modulators">
 			<destination>{5c3199cf-dbd5-4f7a-b109-b696d7183c01}</destination>
 		</relationship>

@@ -21,8 +21,8 @@ namespace Tulip.Audio
         private void HandleHurt(HealthChangeEventArgs damage)
         {
             LifeState lifeState = damage.Target.IsAlive ? LifeState.Alive : LifeState.Dead;
-            hurtSfx.SetParameter(paramLifeState, (float)lifeState);
             hurtSfx.Play();
+            hurtSfx.SetParameter(paramLifeState, (float)lifeState);
         }
 
         private void HandleItemSwing(ItemStack stack, Vector3 _) => itemSfx.Play();
