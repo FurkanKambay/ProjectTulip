@@ -1,8 +1,21 @@
+[![Play on itch.io!](https://img.shields.io/badge/play_on_itch.io!-fa5c5c?style=for-the-badge&logo=itchdotio&logoColor=fff)](https://furkankambay.itch.io/tulip)
+
 # Project Tulip
+
+[<img src="https://github.com/user-attachments/assets/c935574b-9c5b-47a4-9bf6-b253b8851572" width=500 alt="house, trees, and enemies in Project Tulip">](https://furkankambay.itch.io/tulip)
+[<img src="https://github.com/user-attachments/assets/57994fb8-ab1a-4677-85b0-0210e9e9fdb9" width=500 alt="house and treant enemy in Project Tulip">](https://furkankambay.itch.io/tulip)
 
 _Project Tulip_ ([play on itch.io](https://furkankambay.itch.io/tulip)) is an open-world 2D platformer game I'm developing in my free time. It's mainly inspired by Terraria, as well as other games I've played. It's very much work-in-progress and only serves as a portfolio piece for now.
 
 In its current state, the game is just a few mechanics put together and doesn't have an actual game loop (yet). I'm working on making it an actual game slowly but surely...
+
+## (Some) Features
+
+- **Systems**: Item swing motions, Entity spawn conditions
+- **Enemies**: Basic red guy, flying skull, mimic treant (static)
+- **Items**: Spear, Pickaxe, Axe, Wood block, Copper ore
+- **Naturally occuring tiles**: Grass, sand, snow, stone, copper vein blocks + default stone walls
+- Audio with FMOD (project source included)
 
 ## Design
 
