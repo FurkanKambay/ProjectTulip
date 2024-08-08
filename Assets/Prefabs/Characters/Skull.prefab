@@ -827,7 +827,6 @@ MonoBehaviour:
     item: {fileID: 11400000, guid: cee049b1282365f41bc068f68b0b9ef2, type: 2}
     isLocked: 0
     amount: 1
-  itemStowDelay: 0
 --- !u!1 &7000550141864648715
 GameObject:
   m_ObjectHideFlags: 0

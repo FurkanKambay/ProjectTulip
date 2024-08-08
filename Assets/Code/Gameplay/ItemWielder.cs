@@ -26,7 +26,6 @@ namespace Tulip.Gameplay
 
         [Header("Config")]
         [SerializeField] ItemStack fallbackStack;
-        [SerializeField] float itemStowDelay = 2f;
 
         private Transform itemPivot;
         private Transform itemVisual;
@@ -72,10 +71,6 @@ namespace Tulip.Gameplay
             switch (swingState)
             {
                 case ItemSwingState.Ready:
-                    // Only update sprite when ready to swing again
-                    bool shouldDisplay = wantsToUse || timeSinceLastUse < itemStowDelay;
-                    itemVisual.localScale = shouldDisplay ? rendererScale : Vector3.zero;
-
                     if (wantsToUse && timeSinceLastUse > usable.Cooldown)
                     {
                         SwitchState(ItemSwingState.Swinging);
@@ -268,7 +263,7 @@ namespace Tulip.Gameplay
         {
             Item item = handStack.item;
 
-            float scale = item ? item.IconScale : 1;
+            float scale = item is Usable usable ? usable.IconScale : 0;
             Color tint = Color.white;
 
             if (item is Placeable tile)
@@ -279,7 +274,7 @@ namespace Tulip.Gameplay
 
             rendererScale = Vector2.one * scale;
 
-            itemRenderer.transform.localScale = rendererScale;
+            itemVisual.localScale = rendererScale;
             itemRenderer.sprite = item ? item.Icon : null;
             itemRenderer.color = tint;
         }
@@ -295,6 +290,7 @@ namespace Tulip.Gameplay
                 return;
             }
 
+            // Only update sprite when ready to swing again
             RefreshItem();
         }
 

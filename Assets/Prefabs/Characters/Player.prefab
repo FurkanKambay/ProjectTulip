@@ -1229,7 +1229,6 @@ MonoBehaviour:
     item: {fileID: 0}
     isLocked: 0
     amount: 0
-  itemStowDelay: 5
 --- !u!1 &6415558275367011905
 GameObject:
   m_ObjectHideFlags: 0
