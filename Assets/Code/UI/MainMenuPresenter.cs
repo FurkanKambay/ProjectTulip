@@ -1,3 +1,4 @@
+using FMODUnity;
 using SaintsField;
 using Tulip.Core;
 using UnityEngine;
@@ -38,7 +39,9 @@ namespace Tulip.UI
             playButton.SetEnabled(false);
             playButton.text = "Loading...";
 
+            RuntimeManager.CoreSystem.mixerSuspend();
             await GameState.SwitchTo(GameState.Playing);
+            RuntimeManager.CoreSystem.mixerResume();
         }
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using FMOD.Studio;
 using FMODUnity;
 using Tulip.Core;
@@ -12,18 +13,35 @@ namespace Tulip.Audio
         private Bus sfxBus;
         private Bus uiBus;
 
-        private void Awake()
+        private void Awake() => StartCoroutine(LoadBuses());
+        private void Start() => HandleOptionsUpdated();
+
+        private void OnEnable() => Options.OnUpdate += HandleOptionsUpdated;
+        private void OnDisable() => Options.OnUpdate -= HandleOptionsUpdated;
+
+        private void OnApplicationFocus(bool hasFocus)
         {
+            if (!RuntimeManager.StudioSystem.isValid())
+                return;
+
+            RuntimeManager.PauseAllEvents(!hasFocus);
+
+            if (!hasFocus)
+                RuntimeManager.CoreSystem.mixerSuspend();
+            else
+                RuntimeManager.CoreSystem.mixerResume();
+        }
+
+        private IEnumerator LoadBuses()
+        {
+            while (!RuntimeManager.HaveAllBanksLoaded)
+                yield return null;
+
             masterBus = RuntimeManager.GetBus("bus:/");
             musicBus = RuntimeManager.GetBus("bus:/Music");
             sfxBus = RuntimeManager.GetBus("bus:/SFX");
             uiBus = RuntimeManager.GetBus("bus:/UI");
         }
-
-        private void Start() => HandleOptionsUpdated();
-
-        private void OnEnable() => Options.OnUpdate += HandleOptionsUpdated;
-        private void OnDisable() => Options.OnUpdate -= HandleOptionsUpdated;
 
         private void HandleOptionsUpdated()
         {
