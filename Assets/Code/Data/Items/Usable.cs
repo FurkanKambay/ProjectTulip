@@ -19,7 +19,7 @@ namespace Tulip.Data.Items
         [BelowRichLabel(nameof(SwingTypeLabel), isCallback: true)]
         [SerializeField] protected ItemSwingType swingType;
 
-        private float GetTimeToFirstHit()
+        public float GetTimeToFirstHit()
         {
             if (!swingType || swingType.Phases.Length == 0)
                 return 0;
