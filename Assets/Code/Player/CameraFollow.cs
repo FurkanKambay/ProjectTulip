@@ -31,8 +31,8 @@ namespace Tulip.Player
             if (GameState.Current == GameState.MainMenu)
             {
                 var clampedScreenPoint = new Vector3(
-                    x: Mathf.Clamp(brain.I.AimPosition.x, 0, camera.pixelWidth),
-                    y: Mathf.Clamp(brain.I.AimPosition.y, 0, camera.pixelHeight));
+                    x: Mathf.Clamp(brain.I.AimPointScreen.x, 0, camera.pixelWidth),
+                    y: Mathf.Clamp(brain.I.AimPointScreen.y, 0, camera.pixelHeight));
 
                 Vector3 mouseWorldPoint = camera.ScreenToWorldPoint(clampedScreenPoint);
                 Vector3 peekAmount = mouseWorldPoint * new Vector2(menuPeekAmountX, menuPeekAmountY);

@@ -27,6 +27,7 @@ namespace Tulip.Input
         [SerializeField, Required] InputActionReference hotbarScroll;
         [SerializeField, Required] InputActionReference hotbar;
 
+        public Vector2 AimPointScreen { get; private set; }
         public Vector2 AimPosition { get; private set; }
         public float HorizontalMovement { get; private set; }
         public bool WantsToDash { get; private set; }
@@ -57,7 +58,8 @@ namespace Tulip.Input
                 return;
             }
 
-            AimPosition = mainCamera.ScreenToWorldPoint(point.action.ReadValue<Vector2>());
+            AimPointScreen = point.action.ReadValue<Vector2>();
+            AimPosition = mainCamera.ScreenToWorldPoint(AimPointScreen);
             HorizontalMovement = move.action.ReadValue<float>();
             WantsToDash = dash.action.inProgress;
             WantsToUse = use.action.inProgress;
