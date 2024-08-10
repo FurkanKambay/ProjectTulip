@@ -28,7 +28,7 @@ namespace Tulip.Input
         [SerializeField, Required] InputActionReference hotbar;
 
         public Vector2 AimPointScreen { get; private set; }
-        public Vector2 AimPosition { get; private set; }
+        public Vector2? AimPosition { get; private set; }
         public float HorizontalMovement { get; private set; }
         public bool WantsToDash { get; private set; }
         public bool WantsToUse { get; private set; }
@@ -46,6 +46,8 @@ namespace Tulip.Input
         {
             if (!health || health.IsDead)
             {
+                AimPosition = default;
+
                 HorizontalMovement = default;
                 WantsToDash = false;
                 WantsToUse = false;

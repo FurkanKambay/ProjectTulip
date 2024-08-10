@@ -18,8 +18,11 @@ namespace Tulip.Character
                 return;
             }
 
-            Vector2 delta = brain.I.AimPosition - (Vector2)transform.position;
-            sprite.flipX = delta.x < 0;
+            if (!brain.I.AimPosition.HasValue)
+                return;
+
+            Vector2 targetVector = brain.I.AimPosition.Value - (Vector2)transform.position;
+            sprite.flipX = targetVector.x < 0;
         }
     }
 }

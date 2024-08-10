@@ -253,7 +253,13 @@ namespace Tulip.Gameplay
 
         private void AimItem()
         {
-            lastAimDirection = brain.I.AimPosition - (Vector2)itemPivot.position;
+            if (!brain.I.AimPosition.HasValue)
+            {
+                itemPivot.localScale = Vector3.zero;
+                return;
+            }
+
+            lastAimDirection = brain.I.AimPosition.Value - (Vector2)itemPivot.position;
             float aimAngle = Mathf.Atan2(lastAimDirection.y, lastAimDirection.x) * Mathf.Rad2Deg;
             bool isLeft = aimAngle is < -90 or > 90;
 

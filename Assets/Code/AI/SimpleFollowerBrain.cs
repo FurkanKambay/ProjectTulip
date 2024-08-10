@@ -21,7 +21,7 @@ namespace Tulip.AI
         [SerializeField] float heightThresholdToJump;
         [SerializeField] float jumpCooldown;
 
-        public Vector2 AimPosition { get; private set; }
+        public Vector2? AimPosition { get; private set; }
         public float HorizontalMovement { get; private set; }
         public bool WantsToUse { get; private set; }
 
@@ -39,6 +39,7 @@ namespace Tulip.AI
         {
             if (!health || health.IsDead || !targetHealth || targetHealth.IsDead)
             {
+                AimPosition = default;
                 HorizontalMovement = default;
                 WantsToUse = false;
 
@@ -49,7 +50,7 @@ namespace Tulip.AI
             timeSinceLastJump += Time.deltaTime;
 
             AimPosition = targetHealth.transform.position;
-            Vector2 distanceToTarget = AimPosition - (Vector2)transform.position;
+            Vector2 distanceToTarget = AimPosition!.Value - (Vector2)transform.position;
             bool withinAttackingRange = distanceToTarget.sqrMagnitude < stopDistance * stopDistance;
 
             WantsToUse = withinAttackingRange;

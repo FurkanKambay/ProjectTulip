@@ -14,7 +14,7 @@ namespace Tulip.AI
         [Header("Movement")]
         [SerializeField] Vector2 attackDistance;
 
-        public Vector2 AimPosition { get; private set; }
+        public Vector2? AimPosition { get; private set; }
         public bool WantsToUse { get; private set; }
 
         private Transform target;
@@ -36,15 +36,16 @@ namespace Tulip.AI
         {
             if (!health || health.IsDead || !targetHealth || targetHealth.IsDead)
             {
+                AimPosition = default;
                 WantsToUse = false;
                 return;
             }
 
-            Vector2 targetVector = AimPosition - (Vector2)transform.position;
+            AimPosition = targetHealth.transform.position;
+            Vector2 targetVector = AimPosition!.Value - (Vector2)transform.position;
+
             bool reachedX = Mathf.Abs(targetVector.x) < attackDistance.x;
             bool reachedY = Mathf.Abs(targetVector.y) < attackDistance.y;
-
-            AimPosition = targetHealth.transform.position;
             WantsToUse = reachedX && reachedY;
         }
     }

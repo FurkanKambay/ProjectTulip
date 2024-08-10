@@ -15,7 +15,7 @@ namespace Tulip.AI
 
         public float HorizontalMovement { get; private set; }
         public float VerticalMovement { get; private set; }
-        public Vector2 AimPosition { get; private set; }
+        public Vector2? AimPosition { get; private set; }
         public bool WantsToUse { get; private set; }
 
         private Transform target;
@@ -31,6 +31,7 @@ namespace Tulip.AI
         {
             if (!health || health.IsDead || !targetHealth || targetHealth.IsDead)
             {
+                AimPosition = default;
                 HorizontalMovement = default;
                 VerticalMovement = default;
                 WantsToUse = false;
@@ -38,7 +39,7 @@ namespace Tulip.AI
             }
 
             AimPosition = targetHealth.transform.position;
-            Vector2 targetVector = AimPosition - (Vector2)transform.position;
+            Vector2 targetVector = AimPosition!.Value - (Vector2)transform.position;
 
             bool reachedX = Mathf.Abs(targetVector.x) < stopDistance.x;
             bool reachedY = Mathf.Abs(targetVector.y) < stopDistance.y;
