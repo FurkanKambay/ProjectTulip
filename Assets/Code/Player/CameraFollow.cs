@@ -63,7 +63,7 @@ namespace Tulip.Player
 
         private void OnValidate()
         {
-            initialPosition = new Vector3(menuOffset.x, menuOffset.y, -10);
+            initialPosition = menuOffset.WithZ(-10);
             camera.transform.position = initialPosition;
         }
 
@@ -75,7 +75,7 @@ namespace Tulip.Player
             public Vector3 Target
             {
                 get => target;
-                set => target = new Vector3(value.x, value.y, -10f);
+                set => target = value.With(z: -10f);
             }
 
             [field: SerializeField] public Vector2 Offset { get; private set; }

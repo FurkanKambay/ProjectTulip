@@ -1,5 +1,6 @@
 using System;
 using SaintsField;
+using Tulip.Core;
 using Tulip.Data;
 using Tulip.Data.Gameplay;
 using Tulip.Data.Items;
@@ -263,7 +264,7 @@ namespace Tulip.Gameplay
             float aimAngle = Mathf.Atan2(lastAimDirection.y, lastAimDirection.x) * Mathf.Rad2Deg;
             bool isLeft = aimAngle is < -90 or > 90;
 
-            itemPivot.localScale = new Vector3(1, isLeft ? -1 : 1, 1);
+            itemPivot.localScale = Vector3.one.With(y: isLeft ? -1 : 1);
             itemPivot.rotation = Quaternion.AngleAxis(aimAngle, Vector3.forward);
         }
 
