@@ -351,7 +351,6 @@ GameObject:
   m_Component:
   - component: {fileID: 474014648}
   - component: {fileID: 474014649}
-  - component: {fileID: 474014650}
   m_Layer: 0
   m_Name: World Audio
   m_TagString: Untagged
@@ -387,38 +386,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   world: {fileID: 661774619}
-  terraformSfx: {fileID: 474014650}
---- !u!114 &474014650
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 474014647}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
+  tilePlacedEvent:
     Guid:
-      Data1: -757739731
-      Data2: 1263642480
-      Data3: 797213827
-      Data4: -1864661666
-    Path: event:/SFX/World Terraform
-  Event: 
-  PlayEvent: 0
-  StopEvent: 0
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  NonRigidbodyVelocity: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
+      Data1: 1062227028
+      Data2: 1298996355
+      Data3: 1158510270
+      Data4: 1343674946
+    Path: event:/SFX/World/Place Tile
+  tileDamagedEvent:
+    Guid:
+      Data1: 59659185
+      Data2: 1271536153
+      Data3: -1180331845
+      Data4: -1373963989
+    Path: event:/SFX/World/Damage Tile
+  tileDestroyedEvent:
+    Guid:
+      Data1: -257171801
+      Data2: 1315248959
+      Data3: -134518142
+      Data4: 821625054
+    Path: event:/SFX/World/Destroy Tile
 --- !u!1 &513751243
 GameObject:
   m_ObjectHideFlags: 0
@@ -1180,7 +1168,7 @@ MonoBehaviour:
       Data2: 1313295393
       Data3: -1466501490
       Data4: -1776651225
-    Path: event:/Music/Plains Theme
+    Path: event:/Music/Biome Music
   Event: 
   PlayEvent: 1
   StopEvent: 0
