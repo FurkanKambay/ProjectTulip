@@ -1,3 +1,4 @@
+using FMOD.Studio;
 using FMODUnity;
 using SaintsField;
 using Tulip.Data;
@@ -14,7 +15,14 @@ namespace Tulip.Audio
         [Header("FMOD Events")]
         [SerializeField, Required] StudioEventEmitter hurtSfx;
 
-        private const string paramLifeState = "Life State";
+        private PARAMETER_ID paramLifeState;
+
+        private void Awake()
+        {
+            EventDescription description = RuntimeManager.GetEventDescription(hurtSfx.EventReference);
+            description.getParameterDescriptionByName("Life State", out PARAMETER_DESCRIPTION paramDesc);
+            paramLifeState = paramDesc.id;
+        }
 
         private void OnEnable() => health.I.OnHurt += HandleHurt;
         private void OnDisable() => health.I.OnHurt -= HandleHurt;
