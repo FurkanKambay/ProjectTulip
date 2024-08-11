@@ -1,3 +1,4 @@
+using System.Collections;
 using FMOD.Studio;
 using FMODUnity;
 using SaintsField;
@@ -19,8 +20,11 @@ namespace Tulip.Audio
 
         private PARAMETER_ID paramLifeState;
 
-        private void Awake()
+        private IEnumerator Start()
         {
+            while (!RuntimeManager.HaveAllBanksLoaded)
+                yield return null;
+
             EventDescription description = RuntimeManager.GetEventDescription(hurtEvent);
             description.getParameterDescriptionByName("Life State", out PARAMETER_DESCRIPTION paramDesc);
             paramLifeState = paramDesc.id;

@@ -1,3 +1,4 @@
+using System.Collections;
 using FMOD.Studio;
 using FMODUnity;
 using Tulip.Data;
@@ -19,8 +20,11 @@ namespace Tulip.Audio
         private PARAMETER_ID paramMaterial;
         private PARAMETER_ID paramTerraformType;
 
-        private void Awake()
+        private IEnumerator Start()
         {
+            while (!RuntimeManager.HaveAllBanksLoaded)
+                yield return null;
+
             EventDescription description = RuntimeManager.GetEventDescription(tilePlacedEvent);
 
             description.getParameterDescriptionByName("Material", out PARAMETER_DESCRIPTION paramDesc);
