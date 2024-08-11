@@ -44,7 +44,7 @@ namespace Tulip.Player
 
         private void Update()
         {
-            if (itemWielder.I.CurrentStack.item is not WorldToolBase)
+            if (itemWielder.I.CurrentStack.item.IsNot(out WorldToolBase _))
                 return;
 
             AssignCells();
@@ -65,10 +65,10 @@ namespace Tulip.Player
 
         private void HandleItemSwing(ItemStack stack, Vector3 aimPoint)
         {
-            if (!FocusedCell.HasValue || stack.item is not WorldToolBase tool)
+            if (!FocusedCell.HasValue || stack.item.IsNot(out WorldToolBase tool))
                 return;
 
-            if (IsCellBlockedByEntity() || !tool.IsUsableOn(entity.World, FocusedCell.Value))
+            if (IsCellBlockedByEntity() || !tool!.IsUsableOn(entity.World, FocusedCell.Value))
                 return;
 
             InventoryModification modification = tool.UseOn(entity.World, FocusedCell.Value);
@@ -97,7 +97,7 @@ namespace Tulip.Player
                 return;
             }
 
-            if (!Options.Instance.Gameplay.UseSmartCursor || itemWielder.I.CurrentStack.item is not WorldTool)
+            if (!Options.Instance.Gameplay.UseSmartCursor || itemWielder.I.CurrentStack.item.IsNot(out WorldTool _))
             {
                 float distance = Vector3.Distance(hotspot, aimPoint);
                 FocusedCell = distance <= range ? MouseCell : null;

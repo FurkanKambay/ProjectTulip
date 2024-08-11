@@ -62,11 +62,11 @@ namespace Tulip.Gameplay
 
         private void TickSwingState()
         {
-            if (!handStack.item || handStack.item is not Usable usable)
+            if (!handStack.IsValid || handStack.item.IsNot(out Usable usable))
                 return;
 
             bool wantsToUse = brain.I.WantsToUse && !wantsToSwapItems;
-            ItemSwingType swingType = usable.SwingType;
+            ItemSwingType swingType = usable!.SwingType;
             UsePhase phase = swingType.Phases.Length > 0 ? swingType.Phases[phaseIndex] : default;
 
             if (!phase.preventAim || swingState == ItemSwingState.Ready)
@@ -146,7 +146,7 @@ namespace Tulip.Gameplay
             if (state == swingState)
                 return;
 
-            if (!handStack.IsValid || handStack.item is not Usable)
+            if (!handStack.IsValid || handStack.item.IsNot(out Usable _))
             {
                 swingState = ItemSwingState.Ready;
                 return;
@@ -183,18 +183,18 @@ namespace Tulip.Gameplay
             phaseIndex = 0;
             ResetMotionStart();
 
-            if (handStack.item is Usable usable)
-                SetSpriteTransformInstant(usable.SwingType.ReadyPosition, usable.SwingType.ReadyAngle);
+            if (handStack.item.Is(out Usable usable))
+                SetSpriteTransformInstant(usable!.SwingType.ReadyPosition, usable.SwingType.ReadyAngle);
         }
 
 #region Motion Helpers
 
         private void SetMotionToPhase()
         {
-            if (handStack.item is not Usable usable)
+            if (handStack.item.IsNot(out Usable usable))
                 return;
 
-            ItemSwingType swingType = usable.SwingType;
+            ItemSwingType swingType = usable!.SwingType;
             UsePhase phase = swingType.Phases.Length > 0 ? swingType.Phases[phaseIndex] : default;
 
             ResetMotionStart();
@@ -206,10 +206,10 @@ namespace Tulip.Gameplay
 
         private void SetMotionToReady()
         {
-            if (handStack.item is not Usable usable)
+            if (!handStack.IsValid || handStack.item.IsNot(out Usable usable))
                 return;
 
-            ItemSwingType swingType = usable.SwingType;
+            ItemSwingType swingType = usable!.SwingType;
 
             ResetMotionStart();
             motion.EndPosition = swingType.ReadyPosition;
@@ -242,7 +242,8 @@ namespace Tulip.Gameplay
             );
         }
 
-        private bool IsMotionDone() => Mathf.Approximately(motion.LerpMove, 1) && Mathf.Approximately(motion.LerpTurn, 1);
+        private bool IsMotionDone() =>
+            Mathf.Approximately(motion.LerpMove, 1) && Mathf.Approximately(motion.LerpTurn, 1);
 
 #endregion
 
@@ -270,21 +271,18 @@ namespace Tulip.Gameplay
 
         private void UpdateItemSprite()
         {
-            Item item = handStack.item;
-
-            float scale = item is Usable usable ? usable.IconScale : 0;
-            Color tint = Color.white;
-
-            if (item is Placeable tile)
+            if (handStack.item.IsNot(out Usable usable))
             {
-                scale = item.IconScale * 0.8f;
-                tint = tile.Color;
+                itemVisual.localScale = Vector3.zero;
+                return;
             }
 
-            rendererScale = Vector2.one * scale;
+            (Color tint, float scale) = usable.Is(out Placeable placeable)
+                ? (placeable!.Color, usable!.IconScale * 0.8f)
+                : (Color.white, usable!.IconScale);
 
-            itemVisual.localScale = rendererScale;
-            itemRenderer.sprite = item ? item.Icon : null;
+            itemVisual.localScale = Vector3.one * scale;
+            itemRenderer.sprite = usable ? usable.Icon : null;
             itemRenderer.color = tint;
         }
 

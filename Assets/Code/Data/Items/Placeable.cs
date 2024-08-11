@@ -43,7 +43,7 @@ namespace Tulip.Data.Items
         {
             // TODO: maybe bring back this constraint (originally for cell highlighting)
             // bool notOccupiedByPlayer = !world.CellIntersects(cell, playerCollider.bounds);
-            TileType.Block => world.GetBlock(cell) is null,
+            TileType.Block => !world.HasBlock(cell),
             _ => false
         };
 

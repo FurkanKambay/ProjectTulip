@@ -2,7 +2,7 @@ using Tulip.Data.Gameplay;
 
 namespace Tulip.Data
 {
-    public interface IHealth
+    public interface IHealth : IUnityComponent
     {
         public delegate void DamageEvent(HealthChangeEventArgs damage);
         public delegate void DeathEvent(HealthChangeEventArgs damage);

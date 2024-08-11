@@ -1,4 +1,5 @@
 using SaintsField;
+using Tulip.Core;
 using Tulip.Data;
 using Tulip.Data.Items;
 using Tulip.GameWorld;
@@ -59,7 +60,7 @@ namespace Tulip.Player
 
             Item item = itemWielder.I.CurrentStack.item;
 
-            if (item is not WorldToolBase worldTool || !worldTool.IsUsableOn(world, focusedCell.Value))
+            if (item.IsNot(out WorldToolBase worldTool) || !worldTool!.IsUsableOn(world, focusedCell.Value))
             {
                 renderer.enabled = false;
                 impactLerp = 0;
@@ -72,7 +73,7 @@ namespace Tulip.Player
             // BUG: doesn't support multi-hit swing types
             impactLerp = Mathf.MoveTowards(impactLerp, 1, Time.deltaTime / worldTool.GetTimeToFirstHit());
 
-            renderer.sprite = item is Placeable placeable ? placeable.Icon : defaultSprite;
+            renderer.sprite = item.Is(out Placeable placeable) ? placeable!.Icon : defaultSprite;
             renderer.color = terraformer.IsCellBlockedByEntity() ? invalidColor : validColor;
         }
 

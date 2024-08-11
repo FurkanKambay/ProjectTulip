@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using SaintsField;
+using Tulip.Core;
 using Tulip.Data;
 using Tulip.Data.Items;
 using Tulip.Player;
@@ -25,12 +26,10 @@ namespace Tulip.Gameplay
 
         private void Attack(ItemStack stack, Vector3 targetPoint)
         {
-            if (stack.item is not Weapon usedWeapon)
+            if (stack.item.IsNot(out weapon))
                 return;
 
-            weapon = usedWeapon;
-
-            Array.Resize(ref hits, weapon.IsMultiTarget ? maxMultiTargetAmount : 1);
+            Array.Resize(ref hits, weapon!.IsMultiTarget ? maxMultiTargetAmount : 1);
 
             foreach (HealthBase target in GetTargets(transform.position, targetPoint))
             {

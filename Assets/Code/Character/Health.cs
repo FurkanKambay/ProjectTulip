@@ -1,3 +1,4 @@
+using Tulip.Core;
 using Tulip.Data;
 using Tulip.Data.Gameplay;
 using UnityEngine;
@@ -24,8 +25,8 @@ namespace Tulip.Character
             if (checkInvulnerable)
                 remainingInvulnerability = invulnerabilityDuration;
 
-            Vector3 sourcePosition = source is Health sourceHealth
-                ? sourceHealth.transform.position
+            Vector3 sourcePosition = source.Is(out Health sourceHealth)
+                ? sourceHealth!.transform.position
                 : transform.position;
 
             var damageArgs = new HealthChangeEventArgs(amount, source, this, sourcePosition);
@@ -54,8 +55,8 @@ namespace Tulip.Character
 
             CurrentHealth += amount;
 
-            Vector3 sourcePosition = source is Health sourceHealth
-                ? sourceHealth.transform.position
+            Vector3 sourcePosition = source.Is(out Health sourceHealth)
+                ? sourceHealth!.transform.position
                 : transform.position;
 
             var healArgs = new HealthChangeEventArgs(amount, source, this, sourcePosition);
