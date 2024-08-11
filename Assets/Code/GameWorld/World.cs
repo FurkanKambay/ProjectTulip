@@ -41,7 +41,6 @@ namespace Tulip.GameWorld
             if (isReadonly)
                 return default;
 
-            // move on to tiles
             Tilemap tilemap = GetTilemap(tileType);
             Placeable placeable = GetTile(tileType, cell);
 

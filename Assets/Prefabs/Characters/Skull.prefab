@@ -391,7 +391,6 @@ GameObject:
   m_Component:
   - component: {fileID: 351480472563880154}
   - component: {fileID: 7947214954686311404}
-  - component: {fileID: 8518578520888892457}
   m_Layer: 7
   m_Name: Audio
   m_TagString: Untagged
@@ -428,38 +427,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health:
     <V>k__BackingField: {fileID: 1334333901957425893}
-  hurtSfx: {fileID: 8518578520888892457}
---- !u!114 &8518578520888892457
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3888340314453382271}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
+  itemWielder:
+    <V>k__BackingField: {fileID: 8169639496971023625}
+  hurtEvent:
     Guid:
       Data1: -1768576580
       Data2: 1151959725
       Data3: -866273913
       Data4: 810694509
     Path: event:/SFX/Hurt
-  Event: 
-  PlayEvent: 0
-  StopEvent: 0
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  NonRigidbodyVelocity: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
+  itemSwingEvent:
+    Guid:
+      Data1: 793295938
+      Data2: 1105161512
+      Data3: -2094091101
+      Data4: 498006989
+    Path: event:/SFX/Melee Attack
 --- !u!1 &4398918780429037188
 GameObject:
   m_ObjectHideFlags: 0

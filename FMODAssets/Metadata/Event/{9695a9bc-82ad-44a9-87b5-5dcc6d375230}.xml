@@ -5,7 +5,7 @@
 			<value>Hurt</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{8d19807d-7860-4cfe-874b-56e35ec6bcfa}</destination>
@@ -60,7 +60,11 @@
 			<destination>{a6c65bc0-bb67-46c3-941b-434b1a582f85}</destination>
 		</relationship>
 	</object>
-	<object class="EventAutomatableProperties" id="{7414a38b-b272-40bc-83bd-a8d2749021a2}" />
+	<object class="EventAutomatableProperties" id="{7414a38b-b272-40bc-83bd-a8d2749021a2}">
+		<property name="minimumDistance">
+			<value>3</value>
+		</property>
+	</object>
 	<object class="MarkerTrack" id="{bfe01213-e275-411b-9a7d-888539f8ad72}" />
 	<object class="Timeline" id="{c0300e68-48de-44bf-ba4f-b0d52daa27c1}">
 		<property name="isProxyEnabled">
@@ -118,6 +122,7 @@
 	<object class="MixerBusEffectChain" id="{bd150124-d163-4447-a56f-07746e22f49d}">
 		<relationship name="effects">
 			<destination>{7f43f730-940b-4dad-8fa9-798b42b51b00}</destination>
+			<destination>{02666aa7-c9a1-4d5a-8d28-b47eafb0a998}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{93f22d10-fe2a-48db-927a-8f7c94b83e37}" />
@@ -139,4 +144,5 @@
 	</object>
 	<object class="MixerBusFader" id="{4cac910e-7f3e-482e-9f71-882dc16c44fc}" />
 	<object class="MixerBusFader" id="{7f43f730-940b-4dad-8fa9-798b42b51b00}" />
+	<object class="SpatialiserEffect" id="{02666aa7-c9a1-4d5a-8d28-b47eafb0a998}" />
 </objects>

@@ -5,7 +5,7 @@
 			<value>Melee Attack</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{8d19807d-7860-4cfe-874b-56e35ec6bcfa}</destination>
@@ -59,7 +59,11 @@
 			<destination>{a6c65bc0-bb67-46c3-941b-434b1a582f85}</destination>
 		</relationship>
 	</object>
-	<object class="EventAutomatableProperties" id="{03b0f6ef-49c8-4e45-8ed1-088534ad49f3}" />
+	<object class="EventAutomatableProperties" id="{03b0f6ef-49c8-4e45-8ed1-088534ad49f3}">
+		<property name="minimumDistance">
+			<value>3</value>
+		</property>
+	</object>
 	<object class="MarkerTrack" id="{1e2fc476-23cc-43eb-8378-7adc4ac65fd4}" />
 	<object class="Timeline" id="{dc54d8c7-ec44-44b4-beea-3496bee03891}">
 		<property name="isProxyEnabled">
@@ -96,6 +100,7 @@
 	<object class="MixerBusEffectChain" id="{c93227f8-af00-4c46-a724-58623f4afe7b}">
 		<relationship name="effects">
 			<destination>{d3f1c2c3-bde0-44fc-b897-87a0be13dc95}</destination>
+			<destination>{5d6dc248-a9f6-4ea1-b4e4-2f150ee2579a}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{8f754c62-a823-4f5f-90ff-ce5d5a8d42f0}" />
@@ -111,6 +116,7 @@
 	</object>
 	<object class="MixerBusFader" id="{d13baa6e-0d31-4dd6-9283-49c1ae308cd7}" />
 	<object class="MixerBusFader" id="{d3f1c2c3-bde0-44fc-b897-87a0be13dc95}" />
+	<object class="SpatialiserEffect" id="{5d6dc248-a9f6-4ea1-b4e4-2f150ee2579a}" />
 	<object class="RandomizerModulator" id="{dd983318-ce34-4a37-a455-7a3c9df228c6}">
 		<property name="nameOfPropertyBeingModulated">
 			<value>pitch</value>
