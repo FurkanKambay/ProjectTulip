@@ -1281,7 +1281,6 @@ GameObject:
   - component: {fileID: 1795025819}
   - component: {fileID: 1795025821}
   - component: {fileID: 1795025822}
-  - component: {fileID: 1795025823}
   m_Layer: 5
   m_Name: Settings Menu
   m_TagString: Untagged
@@ -1337,44 +1336,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   document: {fileID: 1795025821}
   brain: {fileID: 513751246}
-  toggleSfx: {fileID: 1795025823}
-  onShow:
-    m_PersistentCalls:
-      m_Calls: []
-  onHide:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &1795025823
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1795025818}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
+  toggleSfx:
     Guid:
       Data1: -161944796
       Data2: 1078510854
       Data3: -925119596
       Data4: 303886086
     Path: event:/UI/Settings Toggle
-  Event: 
-  PlayEvent: 0
-  StopEvent: 0
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  NonRigidbodyVelocity: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
+  onShow:
+    m_PersistentCalls:
+      m_Calls: []
+  onHide:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1808102680
 GameObject:
   m_ObjectHideFlags: 0

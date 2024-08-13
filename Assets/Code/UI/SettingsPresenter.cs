@@ -1,3 +1,5 @@
+using System.Collections;
+using FMOD.Studio;
 using FMODUnity;
 using SaintsField;
 using Tulip.Core;
@@ -16,7 +18,7 @@ namespace Tulip.UI
         [SerializeField, Required] UserBrain brain;
 
         [Header("FMOD Events")]
-        [SerializeField, Required] StudioEventEmitter toggleSfx;
+        [SerializeField] EventReference toggleSfx;
 
         [Header("Config")]
         public UnityEvent onShow;
@@ -38,6 +40,8 @@ namespace Tulip.UI
         private Toggle quitFlyoutButton;
         private Button menuQuitButton;
         private Button gameExitButton;
+
+        private PARAMETER_DESCRIPTION paramMenuState;
 
         private void Awake()
         {
@@ -61,6 +65,15 @@ namespace Tulip.UI
 #if UNITY_WEBGL
             root.Q<DropdownField>("VideoResolution").RemoveFromHierarchy();
 #endif
+        }
+
+        private IEnumerator Start()
+        {
+            while (!RuntimeManager.HaveAllBanksLoaded)
+                yield return null;
+
+            EventDescription sfxDescription = RuntimeManager.GetEventDescription(toggleSfx);
+            sfxDescription.getParameterDescriptionByName("Menu State", out paramMenuState);
         }
 
         private void OnEnable()
@@ -106,13 +119,21 @@ namespace Tulip.UI
             container.visible = change.newValue;
             quitFlyoutButton.value = false;
 
-            toggleSfx.Play();
+            PlayToggleSfx(change.newValue);
             GameManager.SetPaused(change.newValue);
 
             if (change.newValue)
                 onShow?.Invoke();
             else
                 onHide?.Invoke();
+        }
+
+        private void PlayToggleSfx(bool toggleState)
+        {
+            EventInstance sfx = RuntimeManager.CreateInstance(toggleSfx);
+            sfx.setParameterByID(paramMenuState.id, toggleState.GetHashCode());
+            sfx.start();
+            sfx.release();
         }
 
         private void HandleGameStateChange(GameState oldState, GameState newState)
