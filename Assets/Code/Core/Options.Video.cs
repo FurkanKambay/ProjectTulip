@@ -85,6 +85,10 @@ namespace Tulip.Core
 
             private static Resolution StringToResolution(string value)
             {
+#if UNITY_WEBGL
+                return new Resolution();
+#endif
+
                 string[] resolutionParts = value.Split('\u00d7', 2);
                 int width = int.Parse(resolutionParts[0]);
                 int height = int.Parse(resolutionParts[1]);
