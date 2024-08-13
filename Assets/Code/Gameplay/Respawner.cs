@@ -22,19 +22,19 @@ namespace Tulip.Gameplay
 
         private void OnEnable()
         {
-            GameState.OnGameStateChange += HandleGameStateChange;
+            GameManager.OnGameStateChange += HandleGameStateChange;
             health.OnDie += HandleDeath;
         }
 
         private void OnDisable()
         {
-            GameState.OnGameStateChange -= HandleGameStateChange;
+            GameManager.OnGameStateChange -= HandleGameStateChange;
             health.OnDie -= HandleDeath;
         }
 
         private void HandleGameStateChange(GameState oldState, GameState newState)
         {
-            bool startedPlaying = newState == GameState.Playing && oldState != GameState.Paused;
+            bool startedPlaying = newState is GameState.Playing && oldState is not GameState.Paused;
 
             if (newState == GameState.MainMenu || startedPlaying)
                 TryRespawn();

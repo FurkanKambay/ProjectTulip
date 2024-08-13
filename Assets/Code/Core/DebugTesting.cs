@@ -4,6 +4,6 @@ namespace Tulip.Core
 {
     public class DebugTesting : MonoBehaviour
     {
-        private async void Start() => await GameState.SwitchTo(GameState.Testing);
+        private void Start() => GameManager.SwitchTo(GameState.Testing);
     }
 }

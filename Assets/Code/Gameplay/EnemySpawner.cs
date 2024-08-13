@@ -48,8 +48,8 @@ namespace Tulip.Gameplay
             world.ClearEntities();
         }
 
-        private void OnEnable() => GameState.OnGameStateChange += HandleGameStateChange;
-        private void OnDisable() => GameState.OnGameStateChange -= HandleGameStateChange;
+        private void OnEnable() => GameManager.OnGameStateChange += HandleGameStateChange;
+        private void OnDisable() => GameManager.OnGameStateChange -= HandleGameStateChange;
 
         private void Update()
         {

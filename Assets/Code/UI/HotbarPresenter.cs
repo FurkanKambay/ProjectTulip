@@ -33,8 +33,8 @@ namespace Tulip.UI
         private VisualElement hotbarRoot;
         private VisualElement tooltipRoot;
 
-        private void OnEnable() => GameState.OnGameStateChange += HandleGameStateChange;
-        private void OnDisable() => GameState.OnGameStateChange -= HandleGameStateChange;
+        private void OnEnable() => GameManager.OnGameStateChange += HandleGameStateChange;
+        private void OnDisable() => GameManager.OnGameStateChange -= HandleGameStateChange;
 
         private void Start() => RefreshDocument();
 
@@ -106,9 +106,9 @@ namespace Tulip.UI
             SelectSlot(index);
         }
 
-        private void HandleGameStateChange(GameState from, GameState to)
+        private void HandleGameStateChange(GameState oldState, GameState newState)
         {
-            document.enabled = to == GameState.Playing || to == GameState.Testing;
+            document.enabled = newState is GameState.Playing or GameState.Testing;
 
             if (document.enabled)
             {

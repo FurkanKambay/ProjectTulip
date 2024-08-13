@@ -27,7 +27,7 @@ namespace Tulip.UI
         [CreateProperty] bool IsSaveExitButtonVisible => !IsInMainMenu && ShouldShowQuitButton;
         // ReSharper restore UnusedMember.Local
 
-        private static bool IsInMainMenu => GameState.Current == GameState.MainMenu;
+        private static bool IsInMainMenu => GameManager.CurrentState == GameState.MainMenu;
         private bool ShouldShowQuitButton => container.visible && quitFlyoutButton.value;
 
         private VisualElement root;
@@ -68,7 +68,7 @@ namespace Tulip.UI
             root.visible = true;
             container.visible = false;
 
-            GameState.OnGameStateChange += HandleGameStateChange;
+            GameManager.OnGameStateChange += HandleGameStateChange;
         }
 
         private void OnDisable()
@@ -76,13 +76,13 @@ namespace Tulip.UI
             root.visible = false;
             container.visible = false;
 
-            GameState.OnGameStateChange -= HandleGameStateChange;
+            GameManager.OnGameStateChange -= HandleGameStateChange;
         }
 
         private void Update()
         {
             // TODO: rewrite this in a better way
-            if (GameState.Current == GameState.MainMenu)
+            if (GameManager.CurrentState == GameState.MainMenu)
             {
                 // same as <cancel.action.triggered> in Main Menu
                 if (brain.WantsToMenu)
@@ -107,7 +107,7 @@ namespace Tulip.UI
             quitFlyoutButton.value = false;
 
             toggleSfx.Play();
-            GameState.SetPaused(change.newValue);
+            GameManager.SetPaused(change.newValue);
 
             if (change.newValue)
                 onShow?.Invoke();
@@ -120,15 +120,15 @@ namespace Tulip.UI
             root.visible = newState != GameState.Playing;
         }
 
-        private async void HandleSaveExitClicked(ClickEvent _)
+        private void HandleSaveExitClicked(ClickEvent _)
         {
             SaveGame();
             quitFlyoutButton.value = false;
-            await GameState.SwitchTo(GameState.MainMenu);
+            GameManager.SwitchTo(GameState.MainMenu);
             optionsButton.value = false;
         }
 
-        private void HandleQuitClicked(ClickEvent _) => GameState.QuitGame();
+        private void HandleQuitClicked(ClickEvent _) => GameManager.QuitGame();
 
         // TODO: save game
         private void SaveGame() => Debug.Log("Saving...");

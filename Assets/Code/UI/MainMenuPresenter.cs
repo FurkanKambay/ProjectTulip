@@ -15,15 +15,19 @@ namespace Tulip.UI
         private VisualElement root;
         private Button playButton;
 
-        private void OnEnable() => GameState.OnGameStateChange += HandleGameStateChange;
-        private void OnDisable() => GameState.OnGameStateChange -= HandleGameStateChange;
+        private void Awake() => UpdateCallbacks(GameManager.CurrentState);
 
-        private void HandleGameStateChange(GameState oldState, GameState newState)
+        private void OnEnable() => GameManager.OnGameStateChange += HandleGameStateChange;
+        private void OnDisable() => GameManager.OnGameStateChange -= HandleGameStateChange;
+
+        private void UpdateCallbacks(GameState newState)
         {
-            document.enabled = newState == GameState.MainMenu;
-            playground.gameObject.SetActive(document.enabled);
+            bool inMainMenu = newState == GameState.MainMenu;
 
-            if (!document.enabled)
+            document.enabled = inMainMenu;
+            playground.gameObject.SetActive(inMainMenu);
+
+            if (!inMainMenu)
             {
                 playButton.UnregisterCallback<ClickEvent>(HandlePlayClicked);
                 return;
@@ -34,13 +38,16 @@ namespace Tulip.UI
             playButton.RegisterCallback<ClickEvent>(HandlePlayClicked);
         }
 
-        private async void HandlePlayClicked(ClickEvent _)
+        private void HandleGameStateChange(GameState oldState, GameState newState) =>
+            UpdateCallbacks(newState);
+
+        private void HandlePlayClicked(ClickEvent _)
         {
             playButton.SetEnabled(false);
             playButton.text = "Loading...";
 
             RuntimeManager.CoreSystem.mixerSuspend();
-            await GameState.SwitchTo(GameState.Playing);
+            GameManager.SwitchTo(GameState.Playing);
             RuntimeManager.CoreSystem.mixerResume();
         }
     }

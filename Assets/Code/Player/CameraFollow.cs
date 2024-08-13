@@ -28,7 +28,7 @@ namespace Tulip.Player
 
         private void Update()
         {
-            if (GameState.Current == GameState.MainMenu)
+            if (GameManager.CurrentState == GameState.MainMenu)
             {
                 var clampedScreenPoint = new Vector3(
                     x: Mathf.Clamp(brain.I.AimPointScreen.x, 0, camera.pixelWidth),
@@ -39,7 +39,7 @@ namespace Tulip.Player
 
                 trackingConfig.Target = initialPosition + peekAmount;
             }
-            else if (GameState.Current == GameState.Playing || GameState.Current == GameState.Testing)
+            else if (GameManager.CurrentState == GameState.Playing || GameManager.CurrentState == GameState.Testing)
             {
                 Vector3 targetPoint = (bool)brain.V ? brain.V.transform.position : initialPosition;
                 trackingConfig.Target = targetPoint + (Vector3)trackingConfig.Offset;
