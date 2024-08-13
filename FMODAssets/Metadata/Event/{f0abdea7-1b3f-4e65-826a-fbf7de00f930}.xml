@@ -43,6 +43,7 @@
 	<object class="MasterTrack" id="{7ff647c1-a4a9-4059-b782-793163270805}">
 		<relationship name="automationTracks">
 			<destination>{7b7d33bf-5f25-4d67-9219-36fc6f941396}</destination>
+			<destination>{57d868eb-a8b6-4be5-94b4-3663c5e9a7cb}</destination>
 		</relationship>
 		<relationship name="modules">
 			<destination>{07ffa28c-048f-4fb5-a848-719771fe74a0}</destination>
@@ -109,6 +110,11 @@
 			<destination>{f6c84fc4-84d0-4b1e-a587-ddbf9a067e91}</destination>
 		</relationship>
 	</object>
+	<object class="AutomationTrack" id="{57d868eb-a8b6-4be5-94b4-3663c5e9a7cb}">
+		<relationship name="automator">
+			<destination>{6e644a5c-7e53-4b25-bafc-7c3b3dce9d43}</destination>
+		</relationship>
+	</object>
 	<object class="SingleSound" id="{07ffa28c-048f-4fb5-a848-719771fe74a0}">
 		<property name="start">
 			<value>5</value>
@@ -173,7 +179,7 @@
 			<value>pitch</value>
 		</property>
 		<property name="amount">
-			<value>8.33333397</value>
+			<value>12.5</value>
 		</property>
 	</object>
 	<object class="MixerBusEffectChain" id="{b709bfa1-6332-40e7-9de7-990b7eea37a7}">

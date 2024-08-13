@@ -2,6 +2,7 @@ using System.Collections;
 using FMOD.Studio;
 using FMODUnity;
 using Tulip.Data;
+using Tulip.Data.Items;
 using Tulip.GameWorld;
 using UnityEngine;
 
@@ -17,16 +18,17 @@ namespace Tulip.Audio
         [SerializeField] EventReference tileDamagedEvent;
         [SerializeField] EventReference tileDestroyedEvent;
 
-        private PARAMETER_ID paramMaterial;
+        private PARAMETER_DESCRIPTION paramMaterial;
+        private PARAMETER_DESCRIPTION paramDamage;
 
         private IEnumerator Start()
         {
             while (!RuntimeManager.HaveAllBanksLoaded)
                 yield return null;
 
-            EventDescription description = RuntimeManager.GetEventDescription(tilePlacedEvent);
-            description.getParameterDescriptionByName("Material", out PARAMETER_DESCRIPTION paramDesc);
-            paramMaterial = paramDesc.id;
+            EventDescription description = RuntimeManager.GetEventDescription(tileDamagedEvent);
+            description.getParameterDescriptionByName("Material", out paramMaterial);
+            description.getParameterDescriptionByName("Damage", out paramDamage);
         }
 
         private void OnEnable()
@@ -52,8 +54,17 @@ namespace Tulip.Audio
                 _ => RuntimeManager.CreateInstance(tileDestroyedEvent)
             };
 
+            Placeable placeable = modification.Placeable;
+
+            if (modification.Kind == TileModificationKind.Damaged)
+            {
+                int tileDamage = world.GetTileDamage(modification.Cell, placeable.TileType);
+                float tileHealth = (float)tileDamage / placeable.Hardness;
+                sfx.setParameterByID(paramDamage.id, tileHealth);
+            }
+
             sfx.set3DAttributes(world.CellCenter(modification.Cell).To3DAttributes());
-            sfx.setParameterByID(paramMaterial, (float)modification.Placeable.Material, ignoreseekspeed: true);
+            sfx.setParameterByID(paramMaterial.id, (float)placeable.Material, ignoreseekspeed: true);
 
             sfx.start();
             sfx.release();
