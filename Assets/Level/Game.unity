@@ -315,22 +315,27 @@ PrefabInstance:
   m_Modification:
     serializedVersion: 3
     m_TransformParent: {fileID: 661774618}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 7871052133264414492, guid: f424f79dcd083e14b805387a89e2929f, type: 3}
+      propertyPath: world
+      value: 
+      objectReference: {fileID: 661774619}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f424f79dcd083e14b805387a89e2929f, type: 3}
---- !u!1839735485 &414399566 stripped
-Tilemap:
-  m_CorrespondingSourceObject: {fileID: 7216450001828290536, guid: f424f79dcd083e14b805387a89e2929f, type: 3}
+--- !u!114 &414399566 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7871052133264414492, guid: f424f79dcd083e14b805387a89e2929f, type: 3}
   m_PrefabInstance: {fileID: 414399565}
   m_PrefabAsset: {fileID: 0}
---- !u!1839735485 &414399567 stripped
-Tilemap:
-  m_CorrespondingSourceObject: {fileID: 7173102642003252303, guid: f424f79dcd083e14b805387a89e2929f, type: 3}
-  m_PrefabInstance: {fileID: 414399565}
-  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dc9496ab753459dac872c3b7fab367d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &414399568 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2489349404884572451, guid: f424f79dcd083e14b805387a89e2929f, type: 3}
@@ -670,9 +675,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2578b4d5d1c444c3b7c7c3b109fad6dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wallTilemap: {fileID: 414399567}
-  blockTilemap: {fileID: 414399566}
-  curtainTilemap: {fileID: 1011634099}
+  worldProvider:
+    <V>k__BackingField: {fileID: 2100611437}
+  worldVisual: {fileID: 414399566}
   isReadonly: 1
 --- !u!114 &664534664 stripped
 MonoBehaviour:
@@ -847,11 +852,6 @@ MonoBehaviour:
     <Max>k__BackingField: 20
     <Sensitivity>k__BackingField: 6
     <Speed>k__BackingField: 10
---- !u!1839735485 &1011634099 stripped
-Tilemap:
-  m_CorrespondingSourceObject: {fileID: 6191996856151981255, guid: f424f79dcd083e14b805387a89e2929f, type: 3}
-  m_PrefabInstance: {fileID: 414399565}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1051015082 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7714693470157540598, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}

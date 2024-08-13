@@ -66,9 +66,9 @@ namespace Tulip.Character
             RaycastHit2D hit = Physics2D.Raycast(hotspot, direction, range, LayerMask.GetMask("World"));
 
             Vector2 hitPoint = hit.point - (hit.normal * 0.1f);
-            Vector3Int cell1 = entity.World.WorldToCell(hitPoint) + Vector3Int.up;
-            Vector3Int cell2 = cell1 + Vector3Int.up;
-            Vector3Int cell3 = cell2 + (velocity < 0 ? Vector3Int.right : Vector3Int.left);
+            Vector2Int cell1 = entity.World.WorldToCell(hitPoint) + Vector2Int.up;
+            Vector2Int cell2 = cell1 + Vector2Int.up;
+            Vector2Int cell3 = cell2 + (velocity < 0 ? Vector2Int.right : Vector2Int.left);
 
             if (!hit)
                 return AutoStepDirection.None;

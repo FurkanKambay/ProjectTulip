@@ -26,7 +26,7 @@ namespace Tulip.Data
         /// <param name="entity"></param>
         /// <param name="world"></param>
         /// <param name="baseCell">The bottom-left cell, NOT center or pivot</param>
-        public bool CanSpawn(Entity entity, IWorld world, Vector3Int baseCell)
+        public bool CanSpawn(Entity entity, IWorld world, Vector2Int baseCell)
         {
             if (!world.CanAccommodate(baseCell, entity.Size))
                 return false;
@@ -35,7 +35,7 @@ namespace Tulip.Data
             for (int y = 0; y < clearanceAbove; y++)
             for (int x = 0; x < entity.Size.x; x++)
             {
-                if (world.HasBlock(baseCell + new Vector3Int(x, entity.Size.y + y)))
+                if (world.HasBlock(baseCell + new Vector2Int(x, entity.Size.y + y)))
                     return false;
             }
 
@@ -45,7 +45,7 @@ namespace Tulip.Data
                 for (int y = 1; y <= clearanceBelow; y++)
                 for (int x = 0; x < entity.Size.x; x++)
                 {
-                    if (world.HasBlock(baseCell + new Vector3Int(x, -y)))
+                    if (world.HasBlock(baseCell + new Vector2Int(x, -y)))
                         return false;
                 }
             }
@@ -56,7 +56,7 @@ namespace Tulip.Data
             // Check ground only
             for (int x = 0; x < entity.Size.x; x++)
             {
-                Vector3Int floorCell = baseCell + new Vector3Int(x, -1);
+                Vector2Int floorCell = baseCell + new Vector2Int(x, -1);
                 Placeable floorTile = world.GetBlock(floorCell);
 
                 if (!world.HasBlock(floorCell) || (needsSafeGround && floorTile.IsUnsafe))

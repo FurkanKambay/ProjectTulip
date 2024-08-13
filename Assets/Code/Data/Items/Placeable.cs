@@ -33,13 +33,13 @@ namespace Tulip.Data.Items
 
         [SerializeField] protected Ore ore;
 
-        public override InventoryModification UseOn(IWorld world, Vector3Int cell) => tileType switch
+        public override InventoryModification UseOn(IWorld world, Vector2Int cell) => tileType switch
         {
             TileType.Block when IsUsableOn(world, cell) => world.PlaceTile(cell, this),
             _ => default
         };
 
-        public override bool IsUsableOn(IWorld world, Vector3Int cell) => tileType switch
+        public override bool IsUsableOn(IWorld world, Vector2Int cell) => tileType switch
         {
             // TODO: maybe bring back this constraint (originally for cell highlighting)
             // bool notOccupiedByPlayer = !world.CellIntersects(cell, playerCollider.bounds);

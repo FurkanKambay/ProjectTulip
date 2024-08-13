@@ -5,11 +5,10 @@ using Tulip.Core;
 using Tulip.Data;
 using Tulip.Data.Items;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 namespace Tulip.GameWorld
 {
-    public class WorldGenerator : MonoBehaviour
+    public class WorldGenerator : MonoBehaviour, IWorldProvider
     {
         [Header("References")]
         [SerializeField] World world;
@@ -17,48 +16,38 @@ namespace Tulip.GameWorld
         [Header("Config")]
         [SerializeField, Expandable] WorldGenConfig config;
 
-        private float[,] perlinNoise;
-        private List<TileChangeData> walls;
-        private List<TileChangeData> blocks;
-        private List<TileChangeData> curtains;
-
-        // ReSharper disable once UnusedMember.Local
-        [Button] async void GenerateWorld()
-        {
-            await GenerateData();
-            await SetupWorld();
-        }
+        public event IWorldProvider.ProvideWorldEvent OnProvideWorld;
 
         private void OnEnable() => GameManager.OnGameStateChange += HandleGameStateChange;
         private void OnDisable() => GameManager.OnGameStateChange -= HandleGameStateChange;
 
-        private async void Start() => await GenerateData();
-
-        private async Awaitable SetupWorld()
+        private async void HandleGameStateChange(GameState oldState, GameState newState)
         {
-            world.Size = new Vector2Int(config.Width, config.Height);
-
-            world.ResetTilemaps();
-            world.SetTiles(TileType.Wall, walls.ToArray());
-            world.SetTiles(TileType.Block, blocks.ToArray());
-            world.SetTiles(TileType.Curtain, curtains.ToArray());
-            world.isReadonly = false;
-
-            await Awaitable.NextFrameAsync();
+            if (oldState == GameState.MainMenu && newState == GameState.Playing)
+                await ApplyWorldAsync();
         }
 
-        private async Awaitable GenerateData()
+        [Button]
+        private async Awaitable ApplyWorldAsync()
         {
-            CalculateNoise();
+            WorldData worldData = await GenerateDataAsync();
+            OnProvideWorld?.Invoke(worldData);
+        }
 
+        private async Awaitable<WorldData> GenerateDataAsync()
+        {
 #if !UNITY_WEBGL
             await Awaitable.BackgroundThreadAsync();
 #endif
 
+            float[,] perlinNoise = CalculatePerlinNoise();
+
             int tileCount = config.Width * config.Height;
-            walls = new List<TileChangeData>(tileCount);
-            blocks = new List<TileChangeData>(tileCount);
-            curtains = new List<TileChangeData>(tileCount);
+            var dimensions = new Vector2Int(config.Width, config.Height);
+
+            var walls = new Dictionary<Vector2Int, Placeable>(tileCount);
+            var blocks = new Dictionary<Vector2Int, Placeable>(tileCount);
+            var curtains = new Dictionary<Vector2Int, Placeable>(tileCount);
 
             int center = config.Width / 2;
             int snowDistance = center - config.SnowDistance;
@@ -83,15 +72,18 @@ namespace Tulip.GameWorld
                         isGrassHeight ? config.Grass :
                         config.Stone;
 
-                    // int index = (config.width * y) + x;
-                    var cell = new Vector3Int(x, y, 0);
+                    Placeable curtain = null;
 
-                    walls.Add(new TileChangeData(cell, wall.RuleTile, wall.Color, Matrix4x4.identity));
+                    var cell = new Vector2Int(x, y);
+
+                    if (wall)
+                        walls[cell] = wall;
 
                     if (block)
-                        blocks.Add(new TileChangeData(cell, block.RuleTile, block.Color, Matrix4x4.identity));
+                        blocks[cell] = block;
 
-                    curtains.Add(new TileChangeData(cell, null, Color.white, Matrix4x4.identity));
+                    if (curtain)
+                        curtains[cell] = curtain;
                 }
             }
 
@@ -100,11 +92,13 @@ namespace Tulip.GameWorld
             curtains.TrimExcess();
 
             await Awaitable.MainThreadAsync();
+
+            return new WorldData(dimensions, walls, blocks, curtains);
         }
 
-        private void CalculateNoise()
+        private float[,] CalculatePerlinNoise()
         {
-            perlinNoise = new float[config.Width, config.Height];
+            float[,] perlinNoise = new float[config.Width, config.Height];
 
             for (float y = 0; y < config.Height; y++)
             {
@@ -118,12 +112,8 @@ namespace Tulip.GameWorld
                     perlinNoise[(int)x, (int)y] = Mathf.Clamp01(sample);
                 }
             }
-        }
 
-        private async void HandleGameStateChange(GameState oldState, GameState newState)
-        {
-            if (oldState == GameState.MainMenu && newState == GameState.Playing)
-                await SetupWorld();
+            return perlinNoise;
         }
     }
 }

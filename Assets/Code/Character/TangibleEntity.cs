@@ -18,8 +18,8 @@ namespace Tulip.Character
         public HealthBase Health => health;
 
         public IWorld World => world;
-        public Vector3Int Cell { get; private set; }
-        public RectInt Rect => new ((Vector2Int)Cell, Entity.Size);
+        public Vector2Int Cell { get; private set; }
+        public RectInt Rect => new (Cell, Entity.Size);
 
         private void OnEnable()
         {
@@ -42,7 +42,7 @@ namespace Tulip.Character
         private void HandleDied(HealthChangeEventArgs damage) => body.simulated = false;
         private void HandleRevived(IHealth reviver) => body.simulated = true;
 
-        public void SetResidence(World homeWorld, Vector3Int baseCell)
+        public void SetResidence(World homeWorld, Vector2Int baseCell)
         {
             world = homeWorld;
             Cell = baseCell;

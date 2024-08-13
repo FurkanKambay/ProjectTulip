@@ -8,7 +8,7 @@ namespace Tulip.Data
         public HealthBase Health { get; }
 
         public IWorld World { get; }
-        public Vector3Int Cell { get; }
+        public Vector2Int Cell { get; }
         public RectInt Rect { get; }
     }
 }

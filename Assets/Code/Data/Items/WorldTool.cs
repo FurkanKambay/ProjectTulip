@@ -15,10 +15,10 @@ namespace Tulip.Data.Items
         [SerializeField, Min(0)] protected int power = 50;
         [SerializeField] protected TileType tileType = TileType.Block;
 
-        public override bool IsUsableOn(IWorld world, Vector3Int cell) =>
+        public override bool IsUsableOn(IWorld world, Vector2Int cell) =>
             world.HasBlock(cell);
 
-        public override InventoryModification UseOn(IWorld world, Vector3Int cell) =>
+        public override InventoryModification UseOn(IWorld world, Vector2Int cell) =>
             world.DamageTile(cell, tileType, power);
     }
 }

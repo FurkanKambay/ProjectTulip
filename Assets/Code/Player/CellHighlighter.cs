@@ -29,7 +29,7 @@ namespace Tulip.Player
         [SerializeField] Vector2 impactTargetSize;
 
         private Vector3 targetPosition;
-        private Vector3Int? focusedCell;
+        private Vector2Int? focusedCell;
         private Sprite defaultSprite;
         private float impactLerp;
 
@@ -94,7 +94,7 @@ namespace Tulip.Player
         private void HandleSwingStarted(ItemStack stack, Vector3 aimPoint) => impactLerp = 0;
         private void HandleSwingPerformed(ItemStack stack, Vector3 aimPoint) => impactLerp = 1;
 
-        private void HandleCellFocusChanged(Vector3Int? cell)
+        private void HandleCellFocusChanged(Vector2Int? cell)
         {
             focusedCell = cell;
 

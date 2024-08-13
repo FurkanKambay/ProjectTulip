@@ -18,11 +18,11 @@ namespace Tulip.Player
         [Header("Config")]
         [SerializeField] float range = 5f;
 
-        public event Action<Vector3Int?> OnChangeCellFocus;
+        public event Action<Vector2Int?> OnChangeCellFocus;
 
-        public Vector3Int MouseCell { get; private set; }
+        public Vector2Int MouseCell { get; private set; }
 
-        public Vector3Int? FocusedCell
+        public Vector2Int? FocusedCell
         {
             get => focusedCell;
             private set
@@ -35,7 +35,7 @@ namespace Tulip.Player
             }
         }
 
-        private Vector3Int? focusedCell;
+        private Vector2Int? focusedCell;
         private Vector2 rangePath;
         private Vector3 hitPoint;
 
@@ -91,7 +91,7 @@ namespace Tulip.Player
             MouseCell = entity.World.WorldToCell(aimPoint);
             rangePath = Vector2.ClampMagnitude(itemWielder.I.AimDirection, range);
 
-            if (entity.world.isReadonly)
+            if (entity.world.IsReadonly)
             {
                 FocusedCell = null;
                 return;

@@ -1,111 +1,140 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using SaintsField.Playa;
+using SaintsField;
 using Tulip.Core;
 using Tulip.Data;
 using Tulip.Data.Items;
-using Tulip.Data.Tiles;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 namespace Tulip.GameWorld
 {
     public class World : MonoBehaviour, IWorld
     {
         [Header("References")]
-        [SerializeField] Tilemap wallTilemap;
-        [SerializeField] Tilemap blockTilemap;
-        [SerializeField] Tilemap curtainTilemap;
+        [SerializeField] SaintsInterface<Component, IWorldProvider> worldProvider;
+        [SerializeField] WorldVisual worldVisual;
 
         [Header("Config")]
-        public bool isReadonly;
+        [SerializeField] bool isReadonly;
 
+        public event IWorldProvider.ProvideWorldEvent OnRefresh;
         public event IWorld.PlaceableEvent OnPlaceTile;
         public event IWorld.PlaceableEvent OnHitTile;
         public event IWorld.PlaceableEvent OnDestroyTile;
 
-        public Vector2Int Size { get; internal set; }
+        public Vector2Int Dimensions => WorldData.Dimensions;
+        public bool IsReadonly => isReadonly;
 
-        private readonly Dictionary<Vector3Int, ITangibleEntity> staticEntities = new();
+        internal WorldData WorldData { get; private set; }
 
-        private readonly Dictionary<Vector3Int, int> blockDamageMap = new();
-        private readonly Dictionary<Vector3Int, int> wallDamageMap = new();
-        private readonly Dictionary<Vector3Int, int> curtainDamageMap = new();
+        private readonly Dictionary<Vector2Int, ITangibleEntity> staticEntities = new();
 
-        private void OnEnable() => GameManager.OnGameStateChange += HandleGameStateChange;
-        private void OnDisable() => GameManager.OnGameStateChange -= HandleGameStateChange;
+        private readonly Dictionary<Vector2Int, int> wallDamageMap = new();
+        private readonly Dictionary<Vector2Int, int> blockDamageMap = new();
+        private readonly Dictionary<Vector2Int, int> curtainDamageMap = new();
 
-        public InventoryModification DamageTile(Vector3Int cell, TileType tileType, int damage)
+        private void OnEnable()
+        {
+            GameManager.OnGameStateChange += HandleGameStateChange;
+            worldProvider.I.OnProvideWorld += HandleWorldProvided;
+        }
+
+        private void OnDisable()
+        {
+            GameManager.OnGameStateChange -= HandleGameStateChange;
+            worldProvider.I.OnProvideWorld -= HandleWorldProvided;
+        }
+
+        public InventoryModification DamageTile(Vector2Int cell, TileType tileType, int damage)
         {
             if (isReadonly)
                 return default;
 
-            Tilemap tilemap = GetTilemap(tileType);
-            Placeable placeable = GetTile(tileType, cell);
+            Dictionary<Vector2Int, Placeable> tiles = GetTiles(tileType);
+            Placeable placeable = tiles[cell];
 
-            if (!tilemap.HasTile(cell) || placeable.IsUnbreakable)
+            if (!tiles.ContainsKey(cell))
                 return default;
 
-            Dictionary<Vector3Int, int> damageMap = GetDamageMap(tileType);
-            damageMap.TryAdd(cell, 0);
-
-            int damageTaken = damageMap[cell] += damage;
-            int hardness = placeable.Hardness;
-
-            if (damageTaken < hardness)
+            if (placeable.IsUnbreakable)
             {
+                // TODO: feedback for 'unbreakable'
+                // change return type to account for this
+                return default;
+            }
+
+            Dictionary<Vector2Int, int> damageMap = GetDamageMap(tileType);
+            damageMap.TryAdd(cell, 0);
+            damageMap[cell] += damage;
+
+            if (damageMap[cell] < placeable.Hardness)
+            {
+                // the tile was not destroyed
                 OnHitTile?.Invoke(TileModification.FromDamaged(cell, placeable));
                 return default;
             }
 
-            tilemap.SetTile(cell, null);
+            tiles.Remove(cell);
             damageMap.Remove(cell);
+
             OnDestroyTile?.Invoke(TileModification.FromDestroyed(cell, placeable));
 
-            Item item = placeable.Ore ? placeable.Ore : placeable;
-            return InventoryModification.ToAdd(item.Stack(1));
+            Item loot = placeable.Ore ? placeable.Ore : placeable;
+            return InventoryModification.ToAdd(loot.Stack(1));
         }
 
-        public InventoryModification PlaceTile(Vector3Int cell, Placeable placeable)
+        public InventoryModification PlaceTile(Vector2Int cell, Placeable placeable)
         {
             if (isReadonly)
                 return default;
 
-            Tilemap tilemap = GetTilemap(placeable.TileType);
+            Dictionary<Vector2Int, Placeable> tiles = GetTiles(placeable.TileType);
 
-            if (tilemap.HasTile(cell))
+            if (!tiles.TryAdd(cell, placeable))
                 return default;
-
-            SetTile(cell, placeable.TileType, placeable);
 
             GetDamageMap(placeable.TileType).Remove(cell);
             OnPlaceTile?.Invoke(TileModification.FromPlaced(cell, placeable));
+
             return InventoryModification.ToRemove(placeable.Stack(1));
         }
 
-        public bool TryAddStaticEntity(Vector3Int baseCell, ITangibleEntity entity) =>
+        public bool TryAddStaticEntity(Vector2Int baseCell, ITangibleEntity entity) =>
             !isReadonly && staticEntities.TryAdd(baseCell, entity);
 
         public void ClearEntities() => staticEntities.Clear();
 
-        public bool HasBlock(Vector3Int cell) => blockTilemap.HasTile(cell);
-        public Placeable GetBlock(Vector3Int cell) => GetTile(TileType.Block, cell);
-        public Placeable GetBlock(Vector3 worldPosition) => GetBlock(WorldToCell(worldPosition));
+#region Cell Helpers
 
-        public Vector3 CellCenter(Vector3Int cell) => blockTilemap.GetCellCenterWorld(cell);
-        public Bounds CellBoundsWorld(Vector3Int cell) => new(CellCenter(cell), blockTilemap.GetBoundsLocal(cell).size);
-        public Vector3Int WorldToCell(Vector3 worldPosition) => blockTilemap.WorldToCell(worldPosition);
-        public bool CellIntersects(Vector3Int cell, Bounds other) => CellBoundsWorld(cell).Intersects(other);
+        public bool HasWall(Vector2Int cell) => WorldData.Walls.ContainsKey(cell);
+        public bool HasBlock(Vector2Int cell) => WorldData.Blocks.ContainsKey(cell);
+        public bool HasCurtain(Vector2Int cell) => WorldData.Curtains.ContainsKey(cell);
 
-        public bool CanAccommodate(Vector3Int baseCell, Vector2Int entitySize)
+        public Placeable GetWall(Vector2Int cell) => WorldData.Walls.GetValueOrDefault(cell);
+        public Placeable GetBlock(Vector2Int cell) => WorldData.Blocks.GetValueOrDefault(cell);
+        public Placeable GetCurtain(Vector2Int cell) => WorldData.Curtains.GetValueOrDefault(cell);
+
+        public Placeable GetWallAtWorld(Vector3 worldPosition) => GetWall(WorldToCell(worldPosition));
+        public Placeable GetBlockAtWorld(Vector3 worldPosition) => GetBlock(WorldToCell(worldPosition));
+        public Placeable GetCurtainAtWorld(Vector3 worldPosition) => GetCurtain(WorldToCell(worldPosition));
+
+        public Vector3 CellCenter(Vector2Int cell) => worldVisual.GetCellCenterWorld(cell);
+        public Vector2Int WorldToCell(Vector3 worldPosition) => worldVisual.WorldToCell(worldPosition);
+
+        public Bounds CellBoundsWorld(Vector2Int cell) => worldVisual.CellBoundsWorld(cell);
+        public bool DoesCellIntersect(Vector2Int cell, Bounds other) => CellBoundsWorld(cell).Intersects(other);
+
+#endregion
+
+        public bool CanAccommodate(Vector2Int baseCell, Vector2Int entitySize)
         {
             if (staticEntities.ContainsKey(baseCell))
                 return false;
 
-            var entityRect = new RectInt((Vector2Int)baseCell, entitySize);
+            var entityRect = new RectInt(baseCell, entitySize);
 
-            foreach (Vector3Int position in entityRect.allPositionsWithin)
+            foreach (Vector2Int position in entityRect.allPositionsWithin)
             {
                 if (HasBlock(position))
                     return false;
@@ -114,64 +143,32 @@ namespace Tulip.GameWorld
             return staticEntities.Values.All(entity => !entity.Rect.Overlaps(entityRect));
         }
 
-        public int GetTileDamage(Vector3Int cell, TileType tileType) =>
+        public int GetTileDamage(Vector2Int cell, TileType tileType) =>
             GetDamageMap(tileType).GetValueOrDefault(cell, 0);
 
-        internal void SetTiles(TileType tileType, TileChangeData[] tileChangeData) =>
-            GetTilemap(tileType).SetTiles(tileChangeData, ignoreLockFlags: true);
-
-        [Button]
-        internal void ResetTilemaps()
+        private void HandleWorldProvided(WorldData worldData)
         {
-            ResetTilemap(wallTilemap);
-            ResetTilemap(blockTilemap);
-            ResetTilemap(curtainTilemap);
-            ClearEntities();
+            WorldData = worldData;
+            OnRefresh?.Invoke(worldData);
         }
 
-        private Placeable GetTile(TileType tileType, Vector3Int cell) =>
-            GetTilemap(tileType).GetTile<CustomRuleTile>(cell)?.Placeable;
+        private void HandleGameStateChange(GameState oldState, GameState newState) =>
+            isReadonly = newState == GameState.MainMenu;
 
-        private void SetTile(Vector3Int cell, TileType tileType, Placeable placeable)
+        private Dictionary<Vector2Int, Placeable> GetTiles(TileType tileType) => tileType switch
         {
-            Tilemap tilemap = GetTilemap(tileType);
-
-            if (!placeable)
-            {
-                tilemap.SetTile(cell, null);
-                return;
-            }
-
-            tilemap.SetTile(cell, placeable.RuleTile);
-            tilemap.SetColor(cell, placeable.Color);
-            // BUG: color doesn't work
-        }
-
-        private void ResetTilemap(Tilemap tilemap)
-        {
-            tilemap.ClearAllTiles();
-            tilemap.size = new Vector3Int(Size.x, Size.y, 1);
-            tilemap.CompressBounds();
-            tilemap.transform.position = new Vector3(-Size.x / 2f, -Size.y, 0);
-        }
-
-        private Tilemap GetTilemap(TileType tileType) => tileType switch
-        {
-            TileType.Wall => wallTilemap,
-            TileType.Block => blockTilemap,
-            TileType.Curtain => curtainTilemap,
-            _ => throw new ArgumentOutOfRangeException()
+            TileType.Wall => WorldData.Walls,
+            TileType.Block => WorldData.Blocks,
+            TileType.Curtain => WorldData.Curtains,
+            _ => throw new ArgumentOutOfRangeException(nameof(tileType))
         };
 
-        private Dictionary<Vector3Int, int> GetDamageMap(TileType tileType) => tileType switch
+        private Dictionary<Vector2Int, int> GetDamageMap(TileType tileType) => tileType switch
         {
             TileType.Wall => wallDamageMap,
             TileType.Block => blockDamageMap,
             TileType.Curtain => curtainDamageMap,
-            _ => throw new ArgumentOutOfRangeException()
+            _ => throw new ArgumentOutOfRangeException(nameof(tileType))
         };
-
-        private void HandleGameStateChange(GameState oldState, GameState newState) =>
-            isReadonly = newState == GameState.MainMenu;
     }
 }

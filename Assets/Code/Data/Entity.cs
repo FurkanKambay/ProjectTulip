@@ -28,7 +28,7 @@ namespace Tulip.Data
         public Item Loot => loot;
         public int LootAmount => lootAmount;
 
-        public bool CanSpawnAt(IWorld world, Vector3Int cell) =>
+        public bool CanSpawnAt(IWorld world, Vector2Int cell) =>
             spawnCondition.CanSpawn(this, world, cell);
     }
 }

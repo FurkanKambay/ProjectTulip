@@ -7,7 +7,7 @@ namespace Tulip.Data.Items
     /// </summary>
     public abstract class WorldToolBase : Usable
     {
-        public abstract bool IsUsableOn(IWorld world, Vector3Int cell);
-        public abstract InventoryModification UseOn(IWorld world, Vector3Int cell);
+        public abstract bool IsUsableOn(IWorld world, Vector2Int cell);
+        public abstract InventoryModification UseOn(IWorld world, Vector2Int vector2Int);
     }
 }

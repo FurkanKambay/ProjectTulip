@@ -34,7 +34,7 @@ namespace Tulip.Gameplay
         [LayoutGroup("Config/Enemies", ELayout.TitleOut)]
         [SerializeField] Entity[] enemyOptions;
 
-        private IEnumerable<Vector3Int> suitableCells;
+        private IEnumerable<Vector2Int> suitableCells;
 
         private bool isActive;
         private float timeSinceLastSpawn;
@@ -90,8 +90,8 @@ namespace Tulip.Gameplay
             if (!suitableCells.Any())
                 return false;
 
-            Vector3Int baseCell = GetRandomSpawnCell();
-            Vector3Int centerCell = new(baseCell.x + (entity.Size.x / 2), baseCell.y);
+            Vector2Int baseCell = GetRandomSpawnCell();
+            Vector2Int centerCell = new(baseCell.x + (entity.Size.x / 2), baseCell.y);
 
             TangibleEntity spawnedEnemy = Spawn(entity.Prefab, world.CellCenter(centerCell));
             spawnedEnemy.SetResidence(world, baseCell);
@@ -108,19 +108,19 @@ namespace Tulip.Gameplay
         private Entity GetRandomEnemy() =>
             enemyOptions[Random.Range(0, enemyOptions.Length)];
 
-        private Vector3Int GetRandomSpawnCell() =>
+        private Vector2Int GetRandomSpawnCell() =>
             suitableCells.ElementAt(Random.Range(0, suitableCells.Count()));
 
-        private IEnumerable<Vector3Int> GetSuitableCells(Entity entity)
+        private IEnumerable<Vector2Int> GetSuitableCells(Entity entity)
         {
             Vector3 cameraExtents = new(camera.orthographicSize * camera.aspect, camera.orthographicSize);
             Vector3 spawnExtents = new(cameraExtents.x + radius, cameraExtents.y + radius);
             Vector3 cameraCenter = camera.transform.position;
 
-            Vector3Int camTopRight = world.WorldToCell(cameraCenter + cameraExtents);
-            Vector3Int camBottomLeft = world.WorldToCell(cameraCenter - cameraExtents);
-            Vector3Int spawnTopRight = world.WorldToCell(cameraCenter + spawnExtents);
-            Vector3Int spawnBottomLeft = world.WorldToCell(cameraCenter - spawnExtents);
+            Vector2Int camTopRight = world.WorldToCell(cameraCenter + cameraExtents);
+            Vector2Int camBottomLeft = world.WorldToCell(cameraCenter - cameraExtents);
+            Vector2Int spawnTopRight = world.WorldToCell(cameraCenter + spawnExtents);
+            Vector2Int spawnBottomLeft = world.WorldToCell(cameraCenter - spawnExtents);
 
             for (int y = spawnBottomLeft.y; y <= spawnTopRight.y; y++)
             {
@@ -129,7 +129,7 @@ namespace Tulip.Gameplay
                     if (y <= camTopRight.y && y >= camBottomLeft.y && x <= camTopRight.x && x >= camBottomLeft.x)
                         continue;
 
-                    var cell = new Vector3Int(x, y);
+                    var cell = new Vector2Int(x, y);
 
                     if (entity.CanSpawnAt(world, cell))
                         yield return cell;
@@ -145,7 +145,7 @@ namespace Tulip.Gameplay
 
             Handles.color = Color.yellow;
 
-            foreach (Vector3Int cell in GetSuitableCells(enemyOptions[0]))
+            foreach (Vector2Int cell in GetSuitableCells(enemyOptions[0]))
                 Handles.DrawSolidDisc(world.CellCenter(cell), Vector3.forward, 0.2f);
         }
 #endif
