@@ -1159,7 +1159,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1760523199}
   - component: {fileID: 1760523203}
-  - component: {fileID: 1760523204}
+  - component: {fileID: 1760523205}
   m_Layer: 0
   m_Name: 'Audio: Global'
   m_TagString: Untagged
@@ -1194,7 +1194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d6d1e2a56c648e48c7e5ba48c5941a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1760523204
+--- !u!114 &1760523205
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1203,30 +1203,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1760523198}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Script: {fileID: 11500000, guid: a5e4905103a599f49b955ac3e4d0e124, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
+  biomeMusicEvent:
     Guid:
       Data1: 344978999
       Data2: 1313295393
       Data3: -1466501490
       Data4: -1776651225
     Path: event:/Music/Biome Music
-  Event: 
-  PlayEvent: 1
-  StopEvent: 0
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 1
-  NonRigidbodyVelocity: 0
-  Params:
-  - Name: Biome
-    Value: 0
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
+  startingBiome: 0
 --- !u!1 &1766718189
 GameObject:
   m_ObjectHideFlags: 0
