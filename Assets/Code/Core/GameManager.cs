@@ -22,12 +22,7 @@ namespace Tulip.Core
         public static bool IsUIInputEnabled => CurrentState == GameState.MainMenu || !IsPlayerInputEnabled;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-        private static void Init()
-        {
-            Debug.Log("[Game State] Initializing.");
-            CurrentState = GameState.MainMenu;
-            // no need to invoke the event or to update timeScale
-        }
+        private static void Init() => CurrentState = GameState.MainMenu;
 
         private void OnEnable() => Application.wantsToQuit += IsSafeToQuit;
         private void OnDisable() => Application.wantsToQuit -= IsSafeToQuit;
@@ -38,8 +33,6 @@ namespace Tulip.Core
                 return;
 
             GameState oldState = CurrentState;
-            Debug.Log($"[Game State] Switching from {oldState} to {newState}");
-
             CurrentState = newState;
 
             UpdateTimeScale();
