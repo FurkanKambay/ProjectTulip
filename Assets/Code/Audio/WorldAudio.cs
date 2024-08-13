@@ -18,7 +18,6 @@ namespace Tulip.Audio
         [SerializeField] EventReference tileDestroyedEvent;
 
         private PARAMETER_ID paramMaterial;
-        private PARAMETER_ID paramTerraformType;
 
         private IEnumerator Start()
         {
@@ -26,12 +25,8 @@ namespace Tulip.Audio
                 yield return null;
 
             EventDescription description = RuntimeManager.GetEventDescription(tilePlacedEvent);
-
             description.getParameterDescriptionByName("Material", out PARAMETER_DESCRIPTION paramDesc);
             paramMaterial = paramDesc.id;
-
-            description.getParameterDescriptionByName("Terraform Type", out paramDesc);
-            paramTerraformType = paramDesc.id;
         }
 
         private void OnEnable()
@@ -59,7 +54,6 @@ namespace Tulip.Audio
 
             sfx.set3DAttributes(world.CellCenter(modification.Cell).To3DAttributes());
             sfx.setParameterByID(paramMaterial, (float)modification.Placeable.Material, ignoreseekspeed: true);
-            sfx.setParameterByID(paramTerraformType, (float)modification.Kind, ignoreseekspeed: true);
 
             sfx.start();
             sfx.release();
