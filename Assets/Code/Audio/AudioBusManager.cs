@@ -13,8 +13,14 @@ namespace Tulip.Audio
         private Bus sfxBus;
         private Bus uiBus;
 
-        private void Awake() => StartCoroutine(LoadBuses());
-        private void Start() => HandleOptionsUpdated();
+        private IEnumerator Start()
+        {
+            while (!RuntimeManager.HaveAllBanksLoaded)
+                yield return null;
+
+            LoadBuses();
+            HandleOptionsUpdated();
+        }
 
         private void OnEnable() => Options.OnUpdate += HandleOptionsUpdated;
         private void OnDisable() => Options.OnUpdate -= HandleOptionsUpdated;
@@ -32,11 +38,8 @@ namespace Tulip.Audio
                 RuntimeManager.CoreSystem.mixerResume();
         }
 
-        private IEnumerator LoadBuses()
+        private void LoadBuses()
         {
-            while (!RuntimeManager.HaveAllBanksLoaded)
-                yield return null;
-
             masterBus = RuntimeManager.GetBus("bus:/");
             musicBus = RuntimeManager.GetBus("bus:/Music");
             sfxBus = RuntimeManager.GetBus("bus:/SFX");
