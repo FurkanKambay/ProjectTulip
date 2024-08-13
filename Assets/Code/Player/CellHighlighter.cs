@@ -73,6 +73,10 @@ namespace Tulip.Player
             // BUG: doesn't support multi-hit swing types
             impactLerp = Mathf.MoveTowards(impactLerp, 1, Time.deltaTime / worldTool.GetTimeToFirstHit());
 
+            // I got a random NaN error that I couldn't reproduce so just in case
+            if (!float.IsFinite(impactLerp))
+                impactLerp = 0;
+
             renderer.sprite = item.Is(out Placeable placeable) ? placeable!.Icon : defaultSprite;
             renderer.color = terraformer.IsCellBlockedByEntity() ? invalidColor : validColor;
         }
