@@ -449,6 +449,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 351480472563880154}
+  - component: {fileID: 6084536648910315493}
   - component: {fileID: 7947214954686311404}
   m_Layer: 7
   m_Name: Audio
@@ -472,6 +473,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8291246366843984804}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6084536648910315493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3888340314453382271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5879189f2c9140488ca0ab4d017486e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health:
+    <V>k__BackingField: {fileID: 1334333901957425893}
+  hurtEvent:
+    Guid:
+      Data1: -1768576580
+      Data2: 1151959725
+      Data3: -866273913
+      Data4: 810694509
+    Path: event:/SFX/Entities/Generic Hurt
 --- !u!114 &7947214954686311404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -484,17 +506,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42c4603604fd42608b358258f353d561, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health:
-    <V>k__BackingField: {fileID: 1334333901957425893}
   itemWielder:
     <V>k__BackingField: {fileID: 6883005073613853074}
-  hurtEvent:
-    Guid:
-      Data1: -1768576580
-      Data2: 1151959725
-      Data3: -866273913
-      Data4: 810694509
-    Path: event:/SFX/Hurt
   itemSwingEvent:
     Guid:
       Data1: 793295938

@@ -401,7 +401,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7518906409188854683}
-  - component: {fileID: 1973966101817949720}
+  - component: {fileID: 5365170277464823754}
   m_Layer: 0
   m_Name: Audio
   m_TagString: Untagged
@@ -424,7 +424,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7554820057982354226}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1973966101817949720
+--- !u!114 &5365170277464823754
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -433,27 +433,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 5386390920021047715}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42c4603604fd42608b358258f353d561, type: 3}
+  m_Script: {fileID: 11500000, guid: 5879189f2c9140488ca0ab4d017486e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   health:
     <V>k__BackingField: {fileID: 5823316243804091760}
-  itemWielder:
-    <V>k__BackingField: {fileID: 0}
   hurtEvent:
     Guid:
-      Data1: -1768576580
-      Data2: 1151959725
-      Data3: -866273913
-      Data4: 810694509
-    Path: event:/SFX/Hurt
-  itemSwingEvent:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 804827550
+      Data2: 1267151886
+      Data3: 438764169
+      Data4: 1334927728
+    Path: event:/SFX/Entities/Tree Hurt
 --- !u!1 &6743011125626711753
 GameObject:
   m_ObjectHideFlags: 0

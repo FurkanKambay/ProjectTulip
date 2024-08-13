@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="ParameterPreset" id="{95d5f0f3-02d7-4d25-b51e-12e3a08f2485}">
 		<property name="name">
-			<value>Life State</value>
+			<value>Aliveness</value>
 		</property>
 		<relationship name="folder">
 			<destination>{6bb44dba-0777-4785-9f65-abcf4448f4be}</destination>
@@ -19,11 +19,11 @@
 			<value>2</value>
 		</property>
 		<property name="enumerationLabels">
-			<value>Alive</value>
 			<value>Dead</value>
+			<value>Alive</value>
 		</property>
 		<property name="initialValue">
-			<value>0</value>
+			<value>1</value>
 		</property>
 	</object>
 </objects>
