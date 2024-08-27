@@ -5,23 +5,23 @@ using UnityEngine;
 namespace Tulip.Data.Items
 {
     [CreateAssetMenu(menuName = "Items/Placeable")]
-    public class Placeable : WorldToolBase
+    public class PlaceableData : BaseWorldToolData
     {
-        public override Sprite Icon => ruleTile.m_DefaultSprite;
+        public override Sprite Icon => ruleTileData.m_DefaultSprite;
 
         public Color Color => color;
-        public CustomRuleTile RuleTile => ruleTile;
+        public CustomRuleTileData RuleTileData => ruleTileData;
         public TileType TileType => tileType;
         public PlaceableMaterial Material => material;
 
         public bool IsUnsafe => isUnsafe;
         public bool IsUnbreakable => isUnbreakable;
         public int Hardness => hardness;
-        public Ore Ore => ore;
+        public OreData OreData => oreData;
 
         [Header("World Tile Data")]
         [SerializeField] protected Color color;
-        [SerializeField] protected CustomRuleTile ruleTile;
+        [SerializeField] protected CustomRuleTileData ruleTileData;
         [SerializeField] protected TileType tileType;
         [SerializeField] protected PlaceableMaterial material;
 
@@ -31,7 +31,7 @@ namespace Tulip.Data.Items
         [Min(1), PlayaDisableIf(nameof(isUnbreakable))]
         [SerializeField] protected int hardness = 50;
 
-        [SerializeField] protected Ore ore;
+        [SerializeField] protected OreData oreData;
 
         public override InventoryModification UseOn(IWorld world, Vector2Int cell) => tileType switch
         {
@@ -49,14 +49,14 @@ namespace Tulip.Data.Items
 
         private void OnEnable()
         {
-            if (ruleTile)
-                ruleTile.Placeable = this;
+            if (ruleTileData)
+                ruleTileData.PlaceableData = this;
         }
 
         private void OnValidate()
         {
-            if (ruleTile)
-                ruleTile.Placeable = this;
+            if (ruleTileData)
+                ruleTileData.PlaceableData = this;
         }
 
         private void Reset()

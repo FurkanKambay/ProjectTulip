@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Tulip.Data
 {
     [CreateAssetMenu]
-    public class ItemSwingType : ScriptableObject
+    public class ItemSwingConfig : ScriptableObject
     {
         public Vector2 ReadyPosition => readyPosition;
         public float ReadyAngle => readyAngle;

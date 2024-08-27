@@ -59,14 +59,14 @@ namespace Tulip.GameWorld
                 tilemap.transform.position = new Vector3(-world.Dimensions.x / 2f, -world.Dimensions.y, 0);
             }
 
-            TileChangeData selector(KeyValuePair<Vector2Int, Placeable> kvp)
+            TileChangeData selector(KeyValuePair<Vector2Int, PlaceableData> kvp)
             {
-                (Vector2Int cell, Placeable placeable) = kvp;
+                (Vector2Int cell, PlaceableData placeableData) = kvp;
 
                 return new TileChangeData(
                     (Vector3Int)cell,
-                    (bool)placeable ? placeable.RuleTile : null,
-                    (bool)placeable ? placeable.Color : Color.white,
+                    (bool)placeableData ? placeableData.RuleTileData : null,
+                    (bool)placeableData ? placeableData.Color : Color.white,
                     Matrix4x4.identity
                 );
             }
@@ -75,24 +75,24 @@ namespace Tulip.GameWorld
         private void HandlePlaceTile(TileModification modification)
         {
             var cell = (Vector3Int)modification.Cell;
-            Placeable placeable = modification.Placeable;
+            PlaceableData placeableData = modification.PlaceableData;
 
-            Tilemap tilemap = GetTilemap(placeable.TileType);
-            tilemap.SetTile(cell, placeable.RuleTile);
+            Tilemap tilemap = GetTilemap(placeableData.TileType);
+            tilemap.SetTile(cell, placeableData.RuleTileData);
 
-            if (!placeable)
+            if (!placeableData)
             {
                 tilemap.SetTile(cell, null);
                 return;
             }
 
-            tilemap.SetTile(cell, placeable.RuleTile);
-            tilemap.SetColor(cell, placeable.Color);
+            tilemap.SetTile(cell, placeableData.RuleTileData);
+            tilemap.SetColor(cell, placeableData.Color);
         }
 
         private void HandleDestroyTile(TileModification modification)
         {
-            Tilemap tilemap = GetTilemap(modification.Placeable.TileType);
+            Tilemap tilemap = GetTilemap(modification.PlaceableData.TileType);
             tilemap.SetTile((Vector3Int)modification.Cell, null);
         }
 

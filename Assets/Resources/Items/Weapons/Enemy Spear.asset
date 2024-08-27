@@ -18,7 +18,7 @@ MonoBehaviour:
   description: A spear that belongs to the enemy.
   maxAmount: 1
   cooldown: 1
-  swingType: {fileID: 11400000, guid: 8149a840107b875489f4460afb04d237, type: 2}
+  swingConfig: {fileID: 11400000, guid: 8149a840107b875489f4460afb04d237, type: 2}
   damage: 8
   range: 1.6
   isMultiTarget: 0

@@ -4,7 +4,7 @@ namespace Tulip.Data
 {
     public interface ITangibleEntity
     {
-        public Entity Entity { get; }
+        public EntityData EntityData { get; }
         public HealthBase Health { get; }
 
         public IWorld World { get; }

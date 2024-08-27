@@ -9,17 +9,17 @@ namespace Tulip.Character
     public class TangibleEntity : MonoBehaviour, ITangibleEntity
     {
         [Header("References")]
-        [SerializeField, Required] Entity entity;
+        [SerializeField, Required] EntityData entityData;
         [SerializeField] Rigidbody2D body;
         [SerializeField] Health health;
         public World world;
 
-        public Entity Entity => entity;
+        public EntityData EntityData => entityData;
         public HealthBase Health => health;
 
         public IWorld World => world;
         public Vector2Int Cell { get; private set; }
-        public RectInt Rect => new (Cell, Entity.Size);
+        public RectInt Rect => new (Cell, EntityData.Size);
 
         private void OnEnable()
         {

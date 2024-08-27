@@ -18,6 +18,6 @@ MonoBehaviour:
   description: The name is subject to change.
   maxAmount: 1
   cooldown: 0.3
-  swingType: {fileID: 11400000, guid: 3c33bb5b7a9810e49a8a308014afa4d2, type: 2}
+  swingConfig: {fileID: 11400000, guid: 3c33bb5b7a9810e49a8a308014afa4d2, type: 2}
   power: 50
   tileType: 1

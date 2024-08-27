@@ -18,12 +18,12 @@ namespace Tulip.Data
         public int SnowDistance => snowDistance;
         public int SandDistance => sandDistance;
 
-        public Placeable Grass => grass;
-        public Placeable Stone => stone;
-        public Placeable Snow => snow;
-        public Placeable Sand => sand;
-        public Placeable CopperVein => copperVein;
-        public Placeable StoneWall => stoneWall;
+        public PlaceableData Grass => grass;
+        public PlaceableData Stone => stone;
+        public PlaceableData Snow => snow;
+        public PlaceableData Sand => sand;
+        public PlaceableData CopperVein => copperVein;
+        public PlaceableData StoneWall => stoneWall;
 
         [Header("Settings")]
         [OverlayRichLabel("<color=grey>cells")]
@@ -52,14 +52,14 @@ namespace Tulip.Data
         [SerializeField, Min(0)] int sandDistance;
 
         [Header("Blocks")]
-        [SerializeField] Placeable grass;
-        [SerializeField] Placeable stone;
-        [SerializeField] Placeable snow;
-        [SerializeField] Placeable sand;
-        [SerializeField] Placeable copperVein;
+        [SerializeField] PlaceableData grass;
+        [SerializeField] PlaceableData stone;
+        [SerializeField] PlaceableData snow;
+        [SerializeField] PlaceableData sand;
+        [SerializeField] PlaceableData copperVein;
 
         [Header("Walls")]
-        [SerializeField] Placeable stoneWall;
+        [SerializeField] PlaceableData stoneWall;
 
         private void OnValidate()
         {

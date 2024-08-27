@@ -32,7 +32,7 @@ namespace Tulip.Gameplay
         [SerializeField, Min(0)] float gracePeriod;
 
         [LayoutGroup("Config/Enemies", ELayout.TitleOut)]
-        [SerializeField] Entity[] enemyOptions;
+        [SerializeField] EntityData[] enemyOptions;
 
         private IEnumerable<Vector2Int> suitableCells;
 
@@ -84,19 +84,19 @@ namespace Tulip.Gameplay
             if (enemyOptions.Length == 0)
                 return false;
 
-            Entity entity = GetRandomEnemy();
-            suitableCells = GetSuitableCells(entity);
+            EntityData entityData = GetRandomEnemy();
+            suitableCells = GetSuitableCells(entityData);
 
             if (!suitableCells.Any())
                 return false;
 
             Vector2Int baseCell = GetRandomSpawnCell();
-            Vector2Int centerCell = new(baseCell.x + (entity.Size.x / 2), baseCell.y);
+            Vector2Int centerCell = new(baseCell.x + (entityData.Size.x / 2), baseCell.y);
 
-            TangibleEntity spawnedEnemy = Spawn(entity.Prefab, world.CellCenter(centerCell));
+            TangibleEntity spawnedEnemy = Spawn(entityData.Prefab, world.CellCenter(centerCell));
             spawnedEnemy.SetResidence(world, baseCell);
 
-            if (entity.IsStatic)
+            if (entityData.IsStatic)
                 world.TryAddStaticEntity(baseCell, spawnedEnemy);
 
             return true;
@@ -105,13 +105,13 @@ namespace Tulip.Gameplay
         private TangibleEntity Spawn(GameObject prefab, Vector3 position) =>
             Instantiate(prefab, position, Quaternion.identity, spawnParent).GetComponent<TangibleEntity>();
 
-        private Entity GetRandomEnemy() =>
+        private EntityData GetRandomEnemy() =>
             enemyOptions[Random.Range(0, enemyOptions.Length)];
 
         private Vector2Int GetRandomSpawnCell() =>
             suitableCells.ElementAt(Random.Range(0, suitableCells.Count()));
 
-        private IEnumerable<Vector2Int> GetSuitableCells(Entity entity)
+        private IEnumerable<Vector2Int> GetSuitableCells(EntityData entityData)
         {
             Vector3 cameraExtents = new(camera.orthographicSize * camera.aspect, camera.orthographicSize);
             Vector3 spawnExtents = new(cameraExtents.x + radius, cameraExtents.y + radius);
@@ -131,7 +131,7 @@ namespace Tulip.Gameplay
 
                     var cell = new Vector2Int(x, y);
 
-                    if (entity.CanSpawnAt(world, cell))
+                    if (entityData.CanSpawnAt(world, cell))
                         yield return cell;
                 }
             }

@@ -15,7 +15,7 @@
     <ui:VisualElement name="hotbar-tooltip" data-source-type="Tulip.UI.HotbarPresenter, Tulip.UI">
         <ui:Label name="hotbar-tooltip-label" text="Item name">
             <Bindings>
-                <ui:DataBinding binding-mode="ToTarget" property="text" data-source-path="heldItem.item.name" />
+                <ui:DataBinding binding-mode="ToTarget" property="text" data-source-path="heldItem.itemData.name" />
             </Bindings>
         </ui:Label>
     </ui:VisualElement>

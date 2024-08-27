@@ -62,12 +62,12 @@ namespace Tulip.Gameplay
 
         private void TickSwingState()
         {
-            if (!handStack.IsValid || handStack.item.IsNot(out Usable usable))
+            if (!handStack.IsValid || handStack.itemData.IsNot(out UsableData usableData))
                 return;
 
             bool wantsToUse = brain.I.WantsToUse && !wantsToSwapItems;
-            ItemSwingType swingType = usable!.SwingType;
-            UsePhase phase = swingType.Phases.Length > 0 ? swingType.Phases[phaseIndex] : default;
+            ItemSwingConfig swingConfig = usableData!.SwingConfig;
+            UsePhase phase = swingConfig.Phases.Length > 0 ? swingConfig.Phases[phaseIndex] : default;
 
             if (!phase.preventAim || swingState == ItemSwingState.Ready)
                 AimItem();
@@ -75,7 +75,7 @@ namespace Tulip.Gameplay
             switch (swingState)
             {
                 case ItemSwingState.Ready:
-                    if (wantsToUse && timeSinceLastUse > usable.Cooldown)
+                    if (wantsToUse && timeSinceLastUse > usableData.Cooldown)
                     {
                         SwitchState(ItemSwingState.Swinging);
                         timeSinceLastUse = 0f;
@@ -100,7 +100,7 @@ namespace Tulip.Gameplay
                     // we reached the target angle. move to next phase or reset after final phase
 
                     // if no phases, hit and reset swing
-                    if (swingType.Phases.Length == 0)
+                    if (swingConfig.Phases.Length == 0)
                     {
                         OnSwingPerform?.Invoke(handStack, AimPointWorld);
                         SwitchState(ItemSwingState.Resetting);
@@ -111,8 +111,8 @@ namespace Tulip.Gameplay
                     if (phase.shouldHit)
                         OnSwingPerform?.Invoke(handStack, AimPointWorld);
 
-                    bool isFinalPhase = phaseIndex == swingType.Phases.Length - 1;
-                    bool shouldReset = !wantsToUse || !swingType.Loop;
+                    bool isFinalPhase = phaseIndex == swingConfig.Phases.Length - 1;
+                    bool shouldReset = !wantsToUse || !swingConfig.Loop;
 
                     if (isFinalPhase && shouldReset)
                     {
@@ -146,7 +146,7 @@ namespace Tulip.Gameplay
             if (state == swingState)
                 return;
 
-            if (!handStack.IsValid || handStack.item.IsNot(out Usable _))
+            if (!handStack.IsValid || handStack.itemData.IsNot(out UsableData _))
             {
                 swingState = ItemSwingState.Ready;
                 return;
@@ -183,39 +183,39 @@ namespace Tulip.Gameplay
             phaseIndex = 0;
             ResetMotionStart();
 
-            if (handStack.item.Is(out Usable usable))
-                SetSpriteTransformInstant(usable!.SwingType.ReadyPosition, usable.SwingType.ReadyAngle);
+            if (handStack.itemData.Is(out UsableData usableData))
+                SetSpriteTransformInstant(usableData!.SwingConfig.ReadyPosition, usableData.SwingConfig.ReadyAngle);
         }
 
 #region Motion Helpers
 
         private void SetMotionToPhase()
         {
-            if (handStack.item.IsNot(out Usable usable))
+            if (handStack.itemData.IsNot(out UsableData usableData))
                 return;
 
-            ItemSwingType swingType = usable!.SwingType;
-            UsePhase phase = swingType.Phases.Length > 0 ? swingType.Phases[phaseIndex] : default;
+            ItemSwingConfig swingConfig = usableData!.SwingConfig;
+            UsePhase phase = swingConfig.Phases.Length > 0 ? swingConfig.Phases[phaseIndex] : default;
 
             ResetMotionStart();
-            motion.EndPosition = swingType.ReadyPosition + phase.moveDelta;
-            motion.EndAngle = swingType.ReadyAngle + phase.turnDelta;
+            motion.EndPosition = swingConfig.ReadyPosition + phase.moveDelta;
+            motion.EndAngle = swingConfig.ReadyAngle + phase.turnDelta;
             motion.MoveDuration = phase.moveDuration;
             motion.TurnDuration = phase.turnDuration;
         }
 
         private void SetMotionToReady()
         {
-            if (!handStack.IsValid || handStack.item.IsNot(out Usable usable))
+            if (!handStack.IsValid || handStack.itemData.IsNot(out UsableData usableData))
                 return;
 
-            ItemSwingType swingType = usable!.SwingType;
+            ItemSwingConfig swingConfig = usableData!.SwingConfig;
 
             ResetMotionStart();
-            motion.EndPosition = swingType.ReadyPosition;
-            motion.EndAngle = swingType.ReadyAngle;
-            motion.MoveDuration = swingType.ResetMoveDuration;
-            motion.TurnDuration = swingType.ResetTurnDuration;
+            motion.EndPosition = swingConfig.ReadyPosition;
+            motion.EndAngle = swingConfig.ReadyAngle;
+            motion.MoveDuration = swingConfig.ResetMoveDuration;
+            motion.TurnDuration = swingConfig.ResetTurnDuration;
         }
 
         private void ResetMotionStart()
@@ -271,18 +271,18 @@ namespace Tulip.Gameplay
 
         private void UpdateItemSprite()
         {
-            if (handStack.item.IsNot(out Usable usable))
+            if (handStack.itemData.IsNot(out UsableData usableData))
             {
                 itemVisual.localScale = Vector3.zero;
                 return;
             }
 
-            (Color tint, float scale) = usable.Is(out Placeable placeable)
-                ? (placeable!.Color, usable!.IconScale * 0.8f)
-                : (Color.white, usable!.IconScale);
+            (Color tint, float scale) = usableData.Is(out PlaceableData placeableData)
+                ? (placeableData!.Color, usableData!.IconScale * 0.8f)
+                : (Color.white, usableData!.IconScale);
 
             itemVisual.localScale = Vector3.one * scale;
-            itemRenderer.sprite = usable ? usable.Icon : null;
+            itemRenderer.sprite = usableData ? usableData.Icon : null;
             itemRenderer.color = tint;
         }
 

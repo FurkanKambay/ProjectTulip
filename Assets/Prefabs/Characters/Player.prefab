@@ -450,7 +450,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d8751be9d454ae89b969c632e660570, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entity: {fileID: 0}
+  entityData: {fileID: 0}
   body: {fileID: 7560684870690709998}
   health: {fileID: 7186377946535505526}
   world: {fileID: 0}
@@ -1187,7 +1187,7 @@ MonoBehaviour:
   hotbar: {fileID: 542648804553045035}
   itemRenderer: {fileID: 3639728673497933778}
   fallbackStack:
-    item: {fileID: 0}
+    itemData: {fileID: 0}
     isLocked: 0
     amount: 0
 --- !u!1 &6415558275367011905

@@ -22,20 +22,20 @@ namespace Tulip.Data
         /// Tries to place a tile at the given cell coordinates.
         /// </summary>
         /// <returns>Whether the tile was placed successfully.</returns>
-        InventoryModification PlaceTile(Vector2Int cell, Placeable placeable);
+        InventoryModification PlaceTile(Vector2Int cell, PlaceableData placeableData);
 
 
         bool HasWall(Vector2Int cell);
         bool HasBlock(Vector2Int cell);
         bool HasCurtain(Vector2Int cell);
 
-        Placeable GetWall(Vector2Int cell);
-        Placeable GetBlock(Vector2Int cell);
-        Placeable GetCurtain(Vector2Int cell);
+        PlaceableData GetWall(Vector2Int cell);
+        PlaceableData GetBlock(Vector2Int cell);
+        PlaceableData GetCurtain(Vector2Int cell);
 
-        Placeable GetWallAtWorld(Vector3 worldPosition);
-        Placeable GetBlockAtWorld(Vector3 worldPosition);
-        Placeable GetCurtainAtWorld(Vector3 worldPosition);
+        PlaceableData GetWallAtWorld(Vector3 worldPosition);
+        PlaceableData GetBlockAtWorld(Vector3 worldPosition);
+        PlaceableData GetCurtainAtWorld(Vector3 worldPosition);
 
         Vector3 CellCenter(Vector2Int cell);
         Vector2Int WorldToCell(Vector3 worldPosition);

@@ -18,12 +18,12 @@ MonoBehaviour:
   description: A stone wall.
   maxAmount: 999
   cooldown: 0.1
-  swingType: {fileID: 11400000, guid: 35ff93fda544a594a94ebfe5599470a9, type: 2}
+  swingConfig: {fileID: 11400000, guid: 35ff93fda544a594a94ebfe5599470a9, type: 2}
   color: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 1}
-  ruleTile: {fileID: 11400000, guid: 2fb86c8156c8f9f4d806fdbeb58c8578, type: 2}
+  ruleTileData: {fileID: 11400000, guid: 2fb86c8156c8f9f4d806fdbeb58c8578, type: 2}
   tileType: 0
   material: 4
   isUnsafe: 0
   isUnbreakable: 0
   hardness: 20
-  ore: {fileID: 0}
+  oreData: {fileID: 0}

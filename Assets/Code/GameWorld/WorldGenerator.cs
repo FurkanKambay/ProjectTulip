@@ -45,9 +45,9 @@ namespace Tulip.GameWorld
             int tileCount = config.Width * config.Height;
             var dimensions = new Vector2Int(config.Width, config.Height);
 
-            var walls = new Dictionary<Vector2Int, Placeable>(tileCount);
-            var blocks = new Dictionary<Vector2Int, Placeable>(tileCount);
-            var curtains = new Dictionary<Vector2Int, Placeable>(tileCount);
+            var walls = new Dictionary<Vector2Int, PlaceableData>(tileCount);
+            var blocks = new Dictionary<Vector2Int, PlaceableData>(tileCount);
+            var curtains = new Dictionary<Vector2Int, PlaceableData>(tileCount);
 
             int center = config.Width / 2;
             int snowDistance = center - config.SnowDistance;
@@ -59,12 +59,12 @@ namespace Tulip.GameWorld
 
                 for (int x = 0; x < config.Width; x++)
                 {
-                    Placeable wall = config.StoneWall;
+                    PlaceableData wall = config.StoneWall;
                     float noise = perlinNoise[x, y];
 
                     bool isGrassHeight = config.Height - y <= config.GrassLayerHeight;
 
-                    Placeable block =
+                    PlaceableData block =
                         isGrassHeight && x < snowDistance ? config.Snow :
                         isGrassHeight && x >= sandDistance ? config.Sand :
                         noise > densityCutoff ? null :
@@ -72,7 +72,7 @@ namespace Tulip.GameWorld
                         isGrassHeight ? config.Grass :
                         config.Stone;
 
-                    Placeable curtain = null;
+                    PlaceableData curtain = null;
 
                     var cell = new Vector2Int(x, y);
 

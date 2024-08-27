@@ -5,13 +5,13 @@ using UnityEngine;
 namespace Tulip.Data
 {
     [CreateAssetMenu]
-    public class Entity : ScriptableObject
+    public class EntityData : ScriptableObject
     {
         [SerializeField, Required] GameObject prefab;
 
         [Header("Spawning")]
         [SerializeField] bool isStatic;
-        [SerializeField, Required] SpawnCondition spawnCondition;
+        [SerializeField, Required] SpawnConditionData spawnConditionData;
 
         [PostFieldRichLabel("<color=gray>tiles")]
         [SerializeField] Vector2Int size;
@@ -19,16 +19,16 @@ namespace Tulip.Data
         // BUG: only works with Static Entities in the world
         // TODO: make a separate LootTable class
         [Header("Loot")]
-        [SerializeField] Item loot;
+        [SerializeField] ItemData loot;
         [SerializeField] int lootAmount;
 
         public GameObject Prefab => prefab;
         public bool IsStatic => isStatic;
         public Vector2Int Size => size;
-        public Item Loot => loot;
+        public ItemData Loot => loot;
         public int LootAmount => lootAmount;
 
         public bool CanSpawnAt(IWorld world, Vector2Int cell) =>
-            spawnCondition.CanSpawn(this, world, cell);
+            spawnConditionData.CanSpawn(this, world, cell);
     }
 }

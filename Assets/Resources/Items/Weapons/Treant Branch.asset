@@ -18,7 +18,7 @@ MonoBehaviour:
   description: 
   maxAmount: 1
   cooldown: 0.8
-  swingType: {fileID: 11400000, guid: 13bdc7f0fbc824d4fa90dc9647097440, type: 2}
+  swingConfig: {fileID: 11400000, guid: 13bdc7f0fbc824d4fa90dc9647097440, type: 2}
   damage: 12
   range: 3
   isMultiTarget: 0

@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Tulip.Data.Items
 {
     [CreateAssetMenu(menuName = "Items/Weapon")]
-    public class Weapon : Usable
+    public class WeaponData : UsableData
     {
         public float Damage => damage;
         public float Range => range;

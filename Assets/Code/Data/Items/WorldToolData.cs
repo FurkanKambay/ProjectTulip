@@ -6,7 +6,7 @@ namespace Tulip.Data.Items
     /// A world tool such as a pickaxe.
     /// </summary>
     [CreateAssetMenu(menuName = "Items/World Tool")]
-    public class WorldTool : WorldToolBase
+    public class WorldToolData : BaseWorldToolData
     {
         public int Power => power;
         public TileType TileType => tileType;

@@ -40,7 +40,7 @@ namespace Tulip.Player
                 ? AddItem(modification.Stack)
                 : RemoveItem(modification.Stack);
 
-            ItemStack remainingStack = modification.Stack.item.Stack(remainder);
+            ItemStack remainingStack = modification.Stack.itemData.Stack(remainder);
 
             return modification.WouldAdd
                 ? InventoryModification.ToAdd(remainingStack)
@@ -57,7 +57,7 @@ namespace Tulip.Player
             while (remaining > 0)
             {
                 // TODO: first remove from selected hotbar slot
-                int? foundIndex = GetFirstSlotWith(itemStack.item, intentToRemove: true);
+                int? foundIndex = GetFirstSlotWith(itemStack.itemData, intentToRemove: true);
 
                 if (!foundIndex.HasValue)
                     break;
@@ -84,11 +84,11 @@ namespace Tulip.Player
 
             while (remaining > 0)
             {
-                int? foundIndex = GetFirstSlotWith(itemStack.item, intentToRemove: false);
+                int? foundIndex = GetFirstSlotWith(itemStack.itemData, intentToRemove: false);
 
                 if (!foundIndex.HasValue)
                 {
-                    foundIndex = CreateNewStackWith(itemStack.item);
+                    foundIndex = CreateNewStackWith(itemStack.itemData);
 
                     if (!foundIndex.HasValue)
                     {
@@ -113,36 +113,36 @@ namespace Tulip.Player
 
             Items[stackIndex].Amount += amount;
 
-            bool hasOverflow = wouldTotal > stack.item.MaxAmount;
-            int overflowAmount = wouldTotal - stack.item.MaxAmount;
+            bool hasOverflow = wouldTotal > stack.itemData.MaxAmount;
+            int overflowAmount = wouldTotal - stack.itemData.MaxAmount;
             return hasOverflow ? overflowAmount : 0;
         }
 
-        private int? CreateNewStackWith(Item item)
+        private int? CreateNewStackWith(ItemData itemData)
         {
             int? firstEmptyIndex = GetFirstEmptySlot();
 
             if (!firstEmptyIndex.HasValue)
                 return null;
 
-            Items[firstEmptyIndex.Value] = new ItemStack(item, 0);
+            Items[firstEmptyIndex.Value] = new ItemStack(itemData, 0);
             return firstEmptyIndex;
         }
 
-        private int? GetFirstSlotWith(Item item, bool intentToRemove)
+        private int? GetFirstSlotWith(ItemData itemData, bool intentToRemove)
         {
-            if (!item)
+            if (!itemData)
                 return null;
 
             for (int itemIndex = 0; itemIndex < Items.Length; itemIndex++)
             {
                 ItemStack currentItem = Items[itemIndex];
 
-                if (currentItem.item != item)
+                if (currentItem.itemData != itemData)
                     continue;
 
                 // don't allow full stacks when adding
-                if (!intentToRemove && currentItem.Amount >= item.MaxAmount)
+                if (!intentToRemove && currentItem.Amount >= itemData.MaxAmount)
                     continue;
 
                 // don't allow empty stacks when removing
@@ -159,7 +159,7 @@ namespace Tulip.Player
         {
             for (int i = 0; i < Items.Length; i++)
             {
-                if (!Items[i].item)
+                if (!Items[i].itemData)
                     return i;
             }
 

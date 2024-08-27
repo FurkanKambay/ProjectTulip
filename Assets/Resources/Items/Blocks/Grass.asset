@@ -18,14 +18,12 @@ MonoBehaviour:
   description: A patch of grass.
   maxAmount: 999
   cooldown: 0.1
-  swingType: {fileID: 11400000, guid: 35ff93fda544a594a94ebfe5599470a9, type: 2}
+  swingConfig: {fileID: 11400000, guid: 35ff93fda544a594a94ebfe5599470a9, type: 2}
   color: {r: 1, g: 1, b: 1, a: 1}
-  ruleTile: {fileID: 11400000, guid: ac9ed5d0821cecb458eb05aa0c46c6a5, type: 2}
+  ruleTileData: {fileID: 11400000, guid: ac9ed5d0821cecb458eb05aa0c46c6a5, type: 2}
   tileType: 1
+  material: 0
   isUnsafe: 0
   isUnbreakable: 0
   hardness: 50
-  ore: {fileID: 0}
-  placeSound: {fileID: 8300000, guid: 06a72ce793aec6e47acd9cd16493da2c, type: 3}
-  hitSound: {fileID: 8300000, guid: b65b9caeebb3648408ca1136889f421d, type: 3}
-  destroySound: {fileID: 8300000, guid: 21bf617b37a8d484d8f8bf78669d77b9, type: 3}
+  oreData: {fileID: 0}

@@ -9,7 +9,7 @@ namespace Tulip.Player
 {
     /// <summary>
     /// * Highlight the focused cell with an unlit sprite (smooth Lerp) <br/>
-    /// * If <see cref="Placeable"/>, use its sprite as a preview <br/>
+    /// * If <see cref="PlaceableData"/>, use its sprite as a preview <br/>
     /// * Change color if the item can't be used <br/>
     /// * Visual impact effect on item swing
     /// </summary>
@@ -58,9 +58,9 @@ namespace Tulip.Player
                 return;
             }
 
-            Item item = itemWielder.I.CurrentStack.item;
+            ItemData itemData = itemWielder.I.CurrentStack.itemData;
 
-            if (item.IsNot(out WorldToolBase worldTool) || !worldTool!.IsUsableOn(world, focusedCell.Value))
+            if (itemData.IsNot(out BaseWorldToolData worldTool) || !worldTool!.IsUsableOn(world, focusedCell.Value))
             {
                 renderer.enabled = false;
                 impactLerp = 0;
@@ -77,7 +77,7 @@ namespace Tulip.Player
             if (!float.IsFinite(impactLerp))
                 impactLerp = 0;
 
-            renderer.sprite = item.Is(out Placeable placeable) ? placeable!.Icon : defaultSprite;
+            renderer.sprite = itemData.Is(out PlaceableData placeableData) ? placeableData!.Icon : defaultSprite;
             renderer.color = terraformer.IsCellBlockedByEntity() ? invalidColor : validColor;
         }
 

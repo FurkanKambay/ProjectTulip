@@ -21,22 +21,22 @@ namespace Tulip.Gameplay
         [SerializeField] ContactFilter2D hitContactFilter;
         [SerializeField] int maxMultiTargetAmount = 9;
 
-        private Weapon weapon;
+        private WeaponData weaponData;
         private Collider2D[] hits = Array.Empty<Collider2D>();
 
         private void Attack(ItemStack stack, Vector3 targetPoint)
         {
-            if (stack.item.IsNot(out weapon))
+            if (stack.itemData.IsNot(out weaponData))
                 return;
 
-            Array.Resize(ref hits, weapon!.IsMultiTarget ? maxMultiTargetAmount : 1);
+            Array.Resize(ref hits, weaponData!.IsMultiTarget ? maxMultiTargetAmount : 1);
 
             foreach (HealthBase target in GetTargets(transform.position, targetPoint))
             {
                 if (!target.enabled)
                     continue;
 
-                InventoryModification loot = target.Damage(weapon.Damage, health);
+                InventoryModification loot = target.Damage(weaponData.Damage, health);
 
                 if (inventory)
                     inventory.ApplyModification(loot);
@@ -48,10 +48,10 @@ namespace Tulip.Gameplay
             Vector2 direction = (aimPoint - origin).normalized;
 
             var results = new RaycastHit2D[hits.Length];
-            int hitCount = Physics2D.Raycast(origin, direction, hitContactFilter, results, weapon.Range);
+            int hitCount = Physics2D.Raycast(origin, direction, hitContactFilter, results, weaponData.Range);
             hits = results.Select(hit => hit.collider).ToArray();
 
-            Debug.DrawRay(origin, direction * weapon.Range, Color.green, 1f);
+            Debug.DrawRay(origin, direction * weaponData.Range, Color.green, 1f);
 
             return hits
                 .Take(hitCount)

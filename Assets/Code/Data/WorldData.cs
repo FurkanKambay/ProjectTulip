@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Tulip.Data
 {
-    using TileDictionary = Dictionary<Vector2Int, Placeable>;
+    using TileDictionary = Dictionary<Vector2Int, PlaceableData>;
 
     public class WorldData
     {

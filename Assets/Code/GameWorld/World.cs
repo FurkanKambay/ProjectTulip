@@ -51,13 +51,13 @@ namespace Tulip.GameWorld
             if (isReadonly)
                 return default;
 
-            Dictionary<Vector2Int, Placeable> tiles = GetTiles(tileType);
-            Placeable placeable = tiles[cell];
+            Dictionary<Vector2Int, PlaceableData> tiles = GetTiles(tileType);
+            PlaceableData placeableData = tiles[cell];
 
             if (!tiles.ContainsKey(cell))
                 return default;
 
-            if (placeable.IsUnbreakable)
+            if (placeableData.IsUnbreakable)
             {
                 // TODO: feedback for 'unbreakable'
                 // change return type to account for this
@@ -68,36 +68,36 @@ namespace Tulip.GameWorld
             damageMap.TryAdd(cell, 0);
             damageMap[cell] += damage;
 
-            if (damageMap[cell] < placeable.Hardness)
+            if (damageMap[cell] < placeableData.Hardness)
             {
                 // the tile was not destroyed
-                OnHitTile?.Invoke(TileModification.FromDamaged(cell, placeable));
+                OnHitTile?.Invoke(TileModification.FromDamaged(cell, placeableData));
                 return default;
             }
 
             tiles.Remove(cell);
             damageMap.Remove(cell);
 
-            OnDestroyTile?.Invoke(TileModification.FromDestroyed(cell, placeable));
+            OnDestroyTile?.Invoke(TileModification.FromDestroyed(cell, placeableData));
 
-            Item loot = placeable.Ore ? placeable.Ore : placeable;
+            ItemData loot = placeableData.OreData ? placeableData.OreData : placeableData;
             return InventoryModification.ToAdd(loot.Stack(1));
         }
 
-        public InventoryModification PlaceTile(Vector2Int cell, Placeable placeable)
+        public InventoryModification PlaceTile(Vector2Int cell, PlaceableData placeableData)
         {
             if (isReadonly)
                 return default;
 
-            Dictionary<Vector2Int, Placeable> tiles = GetTiles(placeable.TileType);
+            Dictionary<Vector2Int, PlaceableData> tiles = GetTiles(placeableData.TileType);
 
-            if (!tiles.TryAdd(cell, placeable))
+            if (!tiles.TryAdd(cell, placeableData))
                 return default;
 
-            GetDamageMap(placeable.TileType).Remove(cell);
-            OnPlaceTile?.Invoke(TileModification.FromPlaced(cell, placeable));
+            GetDamageMap(placeableData.TileType).Remove(cell);
+            OnPlaceTile?.Invoke(TileModification.FromPlaced(cell, placeableData));
 
-            return InventoryModification.ToRemove(placeable.Stack(1));
+            return InventoryModification.ToRemove(placeableData.Stack(1));
         }
 
         public bool TryAddStaticEntity(Vector2Int baseCell, ITangibleEntity entity) =>
@@ -111,13 +111,13 @@ namespace Tulip.GameWorld
         public bool HasBlock(Vector2Int cell) => WorldData.Blocks.ContainsKey(cell);
         public bool HasCurtain(Vector2Int cell) => WorldData.Curtains.ContainsKey(cell);
 
-        public Placeable GetWall(Vector2Int cell) => WorldData.Walls.GetValueOrDefault(cell);
-        public Placeable GetBlock(Vector2Int cell) => WorldData.Blocks.GetValueOrDefault(cell);
-        public Placeable GetCurtain(Vector2Int cell) => WorldData.Curtains.GetValueOrDefault(cell);
+        public PlaceableData GetWall(Vector2Int cell) => WorldData.Walls.GetValueOrDefault(cell);
+        public PlaceableData GetBlock(Vector2Int cell) => WorldData.Blocks.GetValueOrDefault(cell);
+        public PlaceableData GetCurtain(Vector2Int cell) => WorldData.Curtains.GetValueOrDefault(cell);
 
-        public Placeable GetWallAtWorld(Vector3 worldPosition) => GetWall(WorldToCell(worldPosition));
-        public Placeable GetBlockAtWorld(Vector3 worldPosition) => GetBlock(WorldToCell(worldPosition));
-        public Placeable GetCurtainAtWorld(Vector3 worldPosition) => GetCurtain(WorldToCell(worldPosition));
+        public PlaceableData GetWallAtWorld(Vector3 worldPosition) => GetWall(WorldToCell(worldPosition));
+        public PlaceableData GetBlockAtWorld(Vector3 worldPosition) => GetBlock(WorldToCell(worldPosition));
+        public PlaceableData GetCurtainAtWorld(Vector3 worldPosition) => GetCurtain(WorldToCell(worldPosition));
 
         public Vector3 CellCenter(Vector2Int cell) => worldVisual.GetCellCenterWorld(cell);
         public Vector2Int WorldToCell(Vector3 worldPosition) => worldVisual.WorldToCell(worldPosition);
@@ -155,7 +155,7 @@ namespace Tulip.GameWorld
         private void HandleGameStateChange(GameState oldState, GameState newState) =>
             isReadonly = newState == GameState.MainMenu;
 
-        private Dictionary<Vector2Int, Placeable> GetTiles(TileType tileType) => tileType switch
+        private Dictionary<Vector2Int, PlaceableData> GetTiles(TileType tileType) => tileType switch
         {
             TileType.Wall => WorldData.Walls,
             TileType.Block => WorldData.Blocks,

@@ -18,12 +18,12 @@ MonoBehaviour:
   description: Stone.
   maxAmount: 999
   cooldown: 0.2
-  swingType: {fileID: 11400000, guid: 35ff93fda544a594a94ebfe5599470a9, type: 2}
+  swingConfig: {fileID: 11400000, guid: 35ff93fda544a594a94ebfe5599470a9, type: 2}
   color: {r: 1, g: 1, b: 1, a: 1}
-  ruleTile: {fileID: 11400000, guid: 02e66ba5c65997f4da5eaed00f83fbc7, type: 2}
+  ruleTileData: {fileID: 11400000, guid: 02e66ba5c65997f4da5eaed00f83fbc7, type: 2}
   tileType: 1
   material: 4
   isUnsafe: 0
   isUnbreakable: 0
   hardness: 100
-  ore: {fileID: 0}
+  oreData: {fileID: 0}

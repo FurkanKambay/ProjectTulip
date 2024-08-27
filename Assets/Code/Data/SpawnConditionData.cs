@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Tulip.Data
 {
     [CreateAssetMenu]
-    public class SpawnCondition : ScriptableObject
+    public class SpawnConditionData : ScriptableObject
     {
         [Header("Ground")]
         [SerializeField] bool needsGround;
@@ -15,7 +15,7 @@ namespace Tulip.Data
         [SerializeField] bool needsSafeGround;
 
         [EnableIf(nameof(needsGround))]
-        [SerializeField] Placeable[] groundTiles;
+        [SerializeField] PlaceableData[] groundTiles;
 
         [Header("Clearance")]
         [SerializeField, Min(0)] int clearanceAbove;
@@ -23,19 +23,19 @@ namespace Tulip.Data
         [DisableIf(nameof(needsGround))]
         [SerializeField, Min(0)] int clearanceBelow;
 
-        /// <param name="entity"></param>
+        /// <param name="entityData"></param>
         /// <param name="world"></param>
         /// <param name="baseCell">The bottom-left cell, NOT center or pivot</param>
-        public bool CanSpawn(Entity entity, IWorld world, Vector2Int baseCell)
+        public bool CanSpawn(EntityData entityData, IWorld world, Vector2Int baseCell)
         {
-            if (!world.CanAccommodate(baseCell, entity.Size))
+            if (!world.CanAccommodate(baseCell, entityData.Size))
                 return false;
 
             // Check tiles above
             for (int y = 0; y < clearanceAbove; y++)
-            for (int x = 0; x < entity.Size.x; x++)
+            for (int x = 0; x < entityData.Size.x; x++)
             {
-                if (world.HasBlock(baseCell + new Vector2Int(x, entity.Size.y + y)))
+                if (world.HasBlock(baseCell + new Vector2Int(x, entityData.Size.y + y)))
                     return false;
             }
 
@@ -43,7 +43,7 @@ namespace Tulip.Data
             if (!needsGround)
             {
                 for (int y = 1; y <= clearanceBelow; y++)
-                for (int x = 0; x < entity.Size.x; x++)
+                for (int x = 0; x < entityData.Size.x; x++)
                 {
                     if (world.HasBlock(baseCell + new Vector2Int(x, -y)))
                         return false;
@@ -54,10 +54,10 @@ namespace Tulip.Data
                 return true;
 
             // Check ground only
-            for (int x = 0; x < entity.Size.x; x++)
+            for (int x = 0; x < entityData.Size.x; x++)
             {
                 Vector2Int floorCell = baseCell + new Vector2Int(x, -1);
-                Placeable floorTile = world.GetBlock(floorCell);
+                PlaceableData floorTile = world.GetBlock(floorCell);
 
                 if (!world.HasBlock(floorCell) || (needsSafeGround && floorTile.IsUnsafe))
                     return false;
