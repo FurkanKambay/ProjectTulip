@@ -1,3 +1,4 @@
+using SaintsField;
 using Tulip.Data.Items;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -7,6 +8,7 @@ namespace Tulip.Data.Tiles
     [CreateAssetMenu]
     public sealed class CustomRuleTileData : RuleTile<CustomRuleTileData.Neighbor>
     {
+        [field: SerializeField, ReadOnly]
         public PlaceableData PlaceableData { get; internal set; }
 
         public override bool RuleMatch(int neighbor, TileBase tile) => neighbor switch
