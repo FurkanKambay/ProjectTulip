@@ -23,7 +23,6 @@ namespace Tulip.GameWorld
         public event IWorld.PlaceableEvent OnHitTile;
         public event IWorld.PlaceableEvent OnDestroyTile;
 
-        public Vector2Int Dimensions => WorldData.Dimensions;
         public bool IsReadonly => isReadonly;
 
         internal WorldData WorldData { get; private set; }

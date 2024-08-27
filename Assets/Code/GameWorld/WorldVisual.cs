@@ -19,6 +19,9 @@ namespace Tulip.GameWorld
 
         private void OnEnable()
         {
+            if (!world)
+                return;
+
             world.OnRefresh += HandleRefreshWorld;
             world.OnPlaceTile += HandlePlaceTile;
             world.OnDestroyTile += HandleDestroyTile;
@@ -26,6 +29,9 @@ namespace Tulip.GameWorld
 
         private void OnDisable()
         {
+            if (!world)
+                return;
+
             world.OnRefresh -= HandleRefreshWorld;
             world.OnPlaceTile -= HandlePlaceTile;
             world.OnDestroyTile -= HandleDestroyTile;
@@ -47,16 +53,16 @@ namespace Tulip.GameWorld
             resetTilemap(curtainTilemap);
 
             // TODO: Improve performance here
-            wallTilemap.SetTiles(world.WorldData.Walls.Select(selector).ToArray(), ignoreLockFlags: true);
-            blockTilemap.SetTiles(world.WorldData.Blocks.Select(selector).ToArray(), ignoreLockFlags: true);
-            curtainTilemap.SetTiles(world.WorldData.Curtains.Select(selector).ToArray(), ignoreLockFlags: true);
+            wallTilemap.SetTiles(worldData.Walls.Select(selector).ToArray(), ignoreLockFlags: true);
+            blockTilemap.SetTiles(worldData.Blocks.Select(selector).ToArray(), ignoreLockFlags: true);
+            curtainTilemap.SetTiles(worldData.Curtains.Select(selector).ToArray(), ignoreLockFlags: true);
             return;
 
             void resetTilemap(Tilemap tilemap)
             {
                 tilemap.ClearAllTiles();
-                tilemap.size = world.Dimensions.WithZ(1);
-                tilemap.transform.position = new Vector3(-world.Dimensions.x / 2f, -world.Dimensions.y, 0);
+                tilemap.size = worldData.Dimensions.WithZ(1);
+                tilemap.transform.position = new Vector3(-worldData.Dimensions.x / 2f, -worldData.Dimensions.y, 0);
             }
 
             TileChangeData selector(KeyValuePair<Vector2Int, PlaceableData> kvp)
