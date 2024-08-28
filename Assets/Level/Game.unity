@@ -147,6 +147,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1852941728}
   - {fileID: 1808102681}
   - {fileID: 1795025819}
   - {fileID: 708079355}
@@ -1416,6 +1417,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   document: {fileID: 1808102682}
   playground: {fileID: 395841230}
+--- !u!1001 &1852941727
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 122205217}
+    m_Modifications: []
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6a7b870777081874386d34a3c2bb36a7, type: 3}
+--- !u!224 &1852941728 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4419332746399972664, guid: 6a7b870777081874386d34a3c2bb36a7, type: 3}
+  m_PrefabInstance: {fileID: 1852941727}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1919041878
 GameObject:
   m_ObjectHideFlags: 0
