@@ -250,13 +250,6 @@
         "com.unity.modules.imgui": "1.0.0"
       }
     },
-    "com.wooshii.hierarchydecorator": {
-      "version": "0.9.1",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://package.openupm.com"
-    },
     "today.comes.saintsfield": {
       "version": "3.2.6",
       "depth": 0,
