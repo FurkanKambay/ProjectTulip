@@ -15,13 +15,15 @@
     "com.unity.modules.particlesystem": "1.0.0",
     "com.unity.modules.physics2d": "1.0.0",
     "com.unity.modules.screencapture": "1.0.0",
-    "com.unity.modules.tilemap": "1.0.0"
+    "com.unity.modules.tilemap": "1.0.0",
+    "com.azixmcaze.unityserializabledictionary": "1.2.0"
   },
   "scopedRegistries": [
     {
       "name": "package.openupm.com",
       "url": "https://package.openupm.com",
       "scopes": [
+        "com.azixmcaze.unityserializabledictionary",
         "com.tayx.graphy",
         "today.comes.saintsfield"
       ]

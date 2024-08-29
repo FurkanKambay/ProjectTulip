@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.azixmcaze.unityserializabledictionary": {
+      "version": "1.2.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://package.openupm.com"
+    },
     "com.firelight.fmod-for-unity": {
       "version": "file:com.firelight.fmod-for-unity",
       "depth": 0,
