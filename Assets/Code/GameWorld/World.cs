@@ -50,10 +50,9 @@ namespace Tulip.GameWorld
             if (isReadonly)
                 return default;
 
-            Dictionary<Vector2Int, PlaceableData> tiles = GetTiles(tileType);
-            PlaceableData placeableData = tiles[cell];
+            TileDictionary tiles = GetTiles(tileType);
 
-            if (!tiles.ContainsKey(cell))
+            if (!tiles.TryGetValue(cell, out PlaceableData placeableData))
                 return default;
 
             if (placeableData.IsUnbreakable)
@@ -88,7 +87,7 @@ namespace Tulip.GameWorld
             if (isReadonly)
                 return default;
 
-            Dictionary<Vector2Int, PlaceableData> tiles = GetTiles(placeableData.TileType);
+            TileDictionary tiles = GetTiles(placeableData.TileType);
 
             if (!tiles.TryAdd(cell, placeableData))
                 return default;
@@ -110,9 +109,14 @@ namespace Tulip.GameWorld
         public bool HasBlock(Vector2Int cell) => WorldData.Blocks.ContainsKey(cell);
         public bool HasCurtain(Vector2Int cell) => WorldData.Curtains.ContainsKey(cell);
 
-        public PlaceableData GetWall(Vector2Int cell) => WorldData.Walls.GetValueOrDefault(cell);
-        public PlaceableData GetBlock(Vector2Int cell) => WorldData.Blocks.GetValueOrDefault(cell);
-        public PlaceableData GetCurtain(Vector2Int cell) => WorldData.Curtains.GetValueOrDefault(cell);
+        public PlaceableData GetWall(Vector2Int cell) =>
+            WorldData.Walls.TryGetValue(cell, out PlaceableData wall) ? wall : null;
+
+        public PlaceableData GetBlock(Vector2Int cell) =>
+            WorldData.Blocks.TryGetValue(cell, out PlaceableData wall) ? wall : null;
+
+        public PlaceableData GetCurtain(Vector2Int cell) =>
+            WorldData.Curtains.TryGetValue(cell, out PlaceableData wall) ? wall : null;
 
         public PlaceableData GetWallAtWorld(Vector3 worldPosition) => GetWall(WorldToCell(worldPosition));
         public PlaceableData GetBlockAtWorld(Vector3 worldPosition) => GetBlock(WorldToCell(worldPosition));
@@ -154,7 +158,7 @@ namespace Tulip.GameWorld
         private void HandleGameStateChange(GameState oldState, GameState newState) =>
             isReadonly = newState == GameState.MainMenu;
 
-        private Dictionary<Vector2Int, PlaceableData> GetTiles(TileType tileType) => tileType switch
+        private TileDictionary GetTiles(TileType tileType) => tileType switch
         {
             TileType.Wall => WorldData.Walls,
             TileType.Block => WorldData.Blocks,

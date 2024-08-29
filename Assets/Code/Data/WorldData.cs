@@ -1,24 +1,34 @@
-using System.Collections.Generic;
+using System;
 using Tulip.Data.Items;
 using UnityEngine;
 
 namespace Tulip.Data
 {
-    using TileDictionary = Dictionary<Vector2Int, PlaceableData>;
+    [Serializable]
+    public class TileDictionary : SerializableDictionary<Vector2Int, PlaceableData>
+    {
+    }
 
+    [Serializable]
     public class WorldData
     {
-        public readonly Vector2Int Dimensions;
-        public readonly TileDictionary Walls;
-        public readonly TileDictionary Blocks;
-        public readonly TileDictionary Curtains;
+        public Vector2Int Dimensions => dimensions;
+
+        public TileDictionary Walls => walls;
+        public TileDictionary Blocks => blocks;
+        public TileDictionary Curtains => curtains;
+
+        [SerializeField, Min(0)] private Vector2Int dimensions;
+        [SerializeField] private TileDictionary walls;
+        [SerializeField] private TileDictionary blocks;
+        [SerializeField] private TileDictionary curtains;
 
         public WorldData(Vector2Int dimensions, TileDictionary walls, TileDictionary blocks, TileDictionary curtains)
         {
-            Dimensions = dimensions;
-            Walls = walls;
-            Blocks = blocks;
-            Curtains = curtains;
+            this.dimensions = dimensions;
+            this.walls = walls;
+            this.blocks = blocks;
+            this.curtains = curtains;
         }
     }
 }

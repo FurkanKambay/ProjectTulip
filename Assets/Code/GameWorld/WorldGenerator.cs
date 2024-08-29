@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using SaintsField;
 using SaintsField.Playa;
 using Tulip.Core;
@@ -42,12 +41,12 @@ namespace Tulip.GameWorld
 
             float[,] perlinNoise = CalculatePerlinNoise();
 
-            int tileCount = config.Width * config.Height;
+            // int tileCount = config.Width * config.Height;
             var dimensions = new Vector2Int(config.Width, config.Height);
 
-            var walls = new Dictionary<Vector2Int, PlaceableData>(tileCount);
-            var blocks = new Dictionary<Vector2Int, PlaceableData>(tileCount);
-            var curtains = new Dictionary<Vector2Int, PlaceableData>(tileCount);
+            var walls = new TileDictionary();
+            var blocks = new TileDictionary();
+            var curtains = new TileDictionary();
 
             int center = config.Width / 2;
             int snowDistance = center - config.SnowDistance;
@@ -87,9 +86,9 @@ namespace Tulip.GameWorld
                 }
             }
 
-            walls.TrimExcess();
-            blocks.TrimExcess();
-            curtains.TrimExcess();
+            // walls.TrimExcess();
+            // blocks.TrimExcess();
+            // curtains.TrimExcess();
 
             await Awaitable.MainThreadAsync();
 

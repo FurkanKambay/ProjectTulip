@@ -3,7 +3,8 @@
     "rootNamespace": "Tulip",
     "references": [
         "GUID:613783dc1674e844b87788ea74ede0f6",
-        "GUID:9b261077c7a2ac34886513ec1345f8e0"
+        "GUID:9b261077c7a2ac34886513ec1345f8e0",
+        "GUID:a2b0e588887412244ba068aa99108de7"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
