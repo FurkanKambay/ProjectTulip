@@ -18,7 +18,7 @@
                     "name": "Jump",
                     "type": "Button",
                     "id": "2107e2a9-0db8-4506-938c-baeaea1a658e",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -27,7 +27,16 @@
                     "name": "Dash",
                     "type": "Button",
                     "id": "d6873f80-64a1-493f-9001-bde5cd625ef8",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Hook",
+                    "type": "Button",
+                    "id": "6cb1392b-f918-4258-89e3-f9bb4a913224",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -45,7 +54,7 @@
                     "name": "Interact",
                     "type": "Button",
                     "id": "8f4a9f01-bc33-48b4-ba2c-67de32c559e0",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -367,6 +376,28 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bd36e59e-638e-4a72-aa17-6dc9c0b2e403",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Hook",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "69044675-9227-4271-81ae-f950316f531f",
+                    "path": "<Mouse>/forwardButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Hook",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

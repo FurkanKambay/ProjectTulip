@@ -6,5 +6,6 @@ namespace Tulip.Data
     {
         public Vector2? AimPosition { get; }
         public bool WantsToUse { get; }
+        public bool WantsToHook { get; }
     }
 }

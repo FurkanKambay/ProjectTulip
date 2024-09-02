@@ -23,7 +23,10 @@ namespace Tulip.AI
 
         public Vector2? AimPosition { get; private set; }
         public float HorizontalMovement { get; private set; }
+
+        public bool WantsToJump { get; private set; }
         public bool WantsToUse { get; private set; }
+        public bool WantsToHook { get; private set; }
 
         private Transform target;
         private Health targetHealth;

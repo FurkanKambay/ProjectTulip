@@ -6,5 +6,7 @@ namespace Tulip.Data
     {
         public event Action OnJump;
         public event Action OnJumpReleased;
+
+        public bool WantsToJump { get; }
     }
 }

@@ -20,6 +20,7 @@ namespace Tulip.Input
         [SerializeField, Required] InputActionReference jump;
         [SerializeField, Required] InputActionReference dash;
         [SerializeField, Required] InputActionReference use;
+        [SerializeField, Required] InputActionReference hook;
 
         [Header("Input - Misc")]
         [SerializeField, Required] InputActionReference zoom;
@@ -30,8 +31,11 @@ namespace Tulip.Input
         public Vector2 AimPointScreen { get; private set; }
         public Vector2? AimPosition { get; private set; }
         public float HorizontalMovement { get; private set; }
+
+        public bool WantsToJump { get; private set; }
         public bool WantsToDash { get; private set; }
         public bool WantsToUse { get; private set; }
+        public bool WantsToHook { get; private set; }
 
         public float ZoomDelta { get; private set; }
         public bool WantsToToggleSmartCursor { get; private set; }
@@ -63,18 +67,21 @@ namespace Tulip.Input
             AimPointScreen = point.action.ReadValue<Vector2>();
             AimPosition = mainCamera.ScreenToWorldPoint(AimPointScreen);
             HorizontalMovement = move.action.ReadValue<float>();
-            WantsToDash = dash.action.inProgress;
-            WantsToUse = use.action.inProgress;
-
-            ZoomDelta = zoom.action.ReadValue<float>();
-            WantsToToggleSmartCursor = smartCursor.action.triggered;
-            HotbarSelectionDelta = Math.Sign(hotbarScroll.action.ReadValue<float>());
-            HotbarSelectionIndex = !hotbar.action.inProgress ? null : (int)hotbar.action.ReadValue<float>();
 
             if (jump.action.triggered)
                 OnJump?.Invoke();
             else if (jump.action.WasReleasedThisFrame())
                 OnJumpReleased?.Invoke();
+
+            WantsToJump = jump.action.inProgress;
+            WantsToDash = dash.action.inProgress;
+            WantsToUse = use.action.inProgress;
+            WantsToHook = hook.action.triggered;
+
+            ZoomDelta = zoom.action.ReadValue<float>();
+            WantsToToggleSmartCursor = smartCursor.action.triggered;
+            HotbarSelectionDelta = Math.Sign(hotbarScroll.action.ReadValue<float>());
+            HotbarSelectionIndex = !hotbar.action.inProgress ? null : (int)hotbar.action.ReadValue<float>();
         }
     }
 }
