@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Tulip.Data
 {
-    [CreateAssetMenu]
+    [CreateAssetMenu(menuName = "Gameplay/Entity")]
     public class EntityData : ScriptableObject
     {
         [SerializeField, Required] GameObject prefab;

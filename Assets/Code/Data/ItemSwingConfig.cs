@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Tulip.Data
 {
-    [CreateAssetMenu]
+    [CreateAssetMenu(menuName = "Gameplay/Item Swing Config")]
     public class ItemSwingConfig : ScriptableObject
     {
         public Vector2 ReadyPosition => readyPosition;

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Tulip.Data
 {
-    [CreateAssetMenu]
+    [CreateAssetMenu(menuName = "Gameplay/Spawn Condition")]
     public class SpawnConditionData : ScriptableObject
     {
         [Header("Ground")]

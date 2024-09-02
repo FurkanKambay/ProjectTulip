@@ -8,7 +8,7 @@ namespace Tulip.Data.Items
     /// <summary>
     /// A basic item that can be used.
     /// </summary>
-    [CreateAssetMenu(menuName = "Items/Usable")]
+    [CreateAssetMenu(menuName = "Items/Usable", order = 2)]
     public class UsableData : ItemData
     {
         public float Cooldown => cooldown;

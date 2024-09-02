@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Tulip.GameWorld
 {
-    [CreateAssetMenu(menuName = "Data/Structure")]
+    [CreateAssetMenu(menuName = "World/Structure")]
     public class StructureData : ScriptableObject
     {
         [SaintsRow(inline: true)]

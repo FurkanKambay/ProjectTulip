@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Tulip.Data
 {
-    [CreateAssetMenu(menuName = "Data/Item Recipe")]
+    [CreateAssetMenu(menuName = "Player/Item Recipe")]
     public class ItemRecipeData : ScriptableObject
     {
         public ItemData ResultItemData => resultItemData;

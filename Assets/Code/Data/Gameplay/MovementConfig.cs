@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Tulip.Data.Gameplay
 {
-    [CreateAssetMenu(menuName = "Data/Movement")]
+    [CreateAssetMenu(menuName = "Gameplay/Character Movement")]
     public class MovementConfig : ScriptableObject
     {
         [Range(0f, 100f)] public float maxSpeed = 10f;

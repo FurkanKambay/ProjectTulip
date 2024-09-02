@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Tulip.Data
 {
-    [CreateAssetMenu]
+    [CreateAssetMenu(menuName = "Gameplay/Status Effect")]
     public class StatusEffectData : ScriptableObject
     {
         public bool IsPermanent => isPermanent;

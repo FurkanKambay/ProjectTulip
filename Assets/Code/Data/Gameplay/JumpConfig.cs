@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Tulip.Data.Gameplay
 {
-    [CreateAssetMenu(menuName = "Data/Jump")]
+    [CreateAssetMenu(menuName = "Gameplay/Character Jump")]
     public class JumpConfig : ScriptableObject
     {
         [Range(0, 10f)] public float jumpHeight = 5f;

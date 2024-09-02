@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Tulip.Data.Items
 {
-    [CreateAssetMenu(menuName = "Items/Placeable")]
+    [CreateAssetMenu(menuName = "Items/Placeable", order = 5)]
     public class PlaceableData : BaseWorldToolData
     {
         public override Sprite Icon => ruleTileData.m_DefaultSprite;

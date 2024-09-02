@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 namespace Tulip.Data.Tiles
 {
-    [CreateAssetMenu]
+    [CreateAssetMenu(menuName = "World/Rule Tile")]
     public sealed class CustomRuleTileData : RuleTile<CustomRuleTileData.Neighbor>
     {
         [field: SerializeField, ReadOnly]

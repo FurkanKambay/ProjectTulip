@@ -6,7 +6,7 @@ namespace Tulip.Data.Items
     /// <summary>
     /// A base item that can be stored in an inventory.
     /// </summary>
-    [CreateAssetMenu(menuName = "Items/Item")]
+    [CreateAssetMenu(menuName = "Items/Item", order = 0)]
     public class ItemData : ScriptableObject
     {
         public virtual Sprite Icon => icon;

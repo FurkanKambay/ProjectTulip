@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Tulip.Data
 {
-    [CreateAssetMenu(fileName = "Inventory Data", menuName = "Data/Starting Inventory")]
+    [CreateAssetMenu(menuName = "Player/Inventory Preset")]
     public class InventoryData : ScriptableObject, IValidate
     {
         public int Capacity => capacity;
