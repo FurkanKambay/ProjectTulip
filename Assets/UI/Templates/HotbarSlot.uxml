@@ -1,5 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
-    <Style src="project://database/Assets/Art/GUI/Styles/HotbarSlot.uss?fileID=7433441132597879392&amp;guid=b91d2fb014259ce46b0052909a5dfc72&amp;type=3#HotbarSlot" />
+    <Style src="project://database/Assets/UI/Styles/HotbarSlot.uss?fileID=7433441132597879392&amp;guid=b91d2fb014259ce46b0052909a5dfc72&amp;type=3#HotbarSlot" />
     <ui:Button name="slot" data-source-type="Tulip.Data.ItemStack, Tulip.Data">
         <ui:Image name="slot-icon">
             <Bindings>

@@ -37,7 +37,7 @@
 }
 
 #slot-lock-icon {
-    background-image: url("project://database/Assets/Art/Sprites/UI/lock.png?fileID=2800000&guid=ac20d2d49bf83f74fb1c151d2c8abbf8&type=3#lock");
+    background-image: url("project://database/Assets/UI/Sprites/lock.png?fileID=2800000&guid=ac20d2d49bf83f74fb1c151d2c8abbf8&type=3#lock");
     width: 16px;
     height: 16px;
     position: absolute;
