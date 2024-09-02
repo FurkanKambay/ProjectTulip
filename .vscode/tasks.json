@@ -1,0 +1,16 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Butler Push",
+            "command": "butler push --if-changed Builds/Tulip_Web.zip furkankambay/tulip:web; butler push --if-changed Builds/Tulip_Win.zip furkankambay/tulip:win",
+            "type": "shell",
+            "args": [],
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always"
+            },
+            "group": "none"
+        }
+    ]
+}
