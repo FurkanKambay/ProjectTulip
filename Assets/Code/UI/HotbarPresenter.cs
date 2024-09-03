@@ -32,6 +32,7 @@ namespace Tulip.UI
 
         private VisualElement hotbarRoot;
         private VisualElement tooltipRoot;
+        private int selectedIndex;
 
         private void OnEnable() => GameManager.OnGameStateChange += HandleGameStateChange;
         private void OnDisable() => GameManager.OnGameStateChange -= HandleGameStateChange;
@@ -54,6 +55,8 @@ namespace Tulip.UI
 
         private void SelectSlot(int index)
         {
+            selectedIndex = index;
+
             for (int i = 0; i < hotbarRoot.childCount; i++)
                 hotbarRoot[i].RemoveFromClassList("selected");
 
@@ -99,7 +102,7 @@ namespace Tulip.UI
 
         private void HandleHotbarChangedSelection(int index)
         {
-            if (!document.enabled)
+            if (selectedIndex == index || !document.enabled)
                 return;
 
             hotbarSfx.Play();
