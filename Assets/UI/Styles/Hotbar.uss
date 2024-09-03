@@ -11,11 +11,23 @@
 }
 
 #hotbar-tooltip {
-    background-color: rgba(45, 99, 153, 0.4);
+    background-color: rgb(45, 99, 153);
     align-self: center;
     margin-top: 4px;
-    padding-right: 4px;
-    padding-left: 4px;
+    padding-right: 8px;
+    padding-left: 8px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-left-color: rgb(25, 25, 112);
+    border-right-color: rgb(25, 25, 112);
+    border-top-color: rgb(25, 25, 112);
+    border-bottom-color: rgb(25, 25, 112);
 }
 
 #hotbar-tooltip-label {
