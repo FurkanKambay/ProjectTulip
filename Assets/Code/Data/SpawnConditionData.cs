@@ -1,5 +1,6 @@
 using System.Linq;
 using SaintsField;
+using SaintsField.Playa;
 using Tulip.Data.Items;
 using UnityEngine;
 
@@ -22,6 +23,11 @@ namespace Tulip.Data
 
         [DisableIf(nameof(needsGround))]
         [SerializeField, Min(0)] int clearanceBelow;
+
+        // ReSharper disable NotAccessedField.Global
+        [LayoutGroup("Referenced By", ELayout.Background | ELayout.TitleOut | ELayout.Foldout, marginTop: 16)]
+        [SerializeField, ReadOnly] protected EntityData[] assignedEntities;
+        // ReSharper restore NotAccessedField.Global
 
         /// <param name="entityData"></param>
         /// <param name="world"></param>
@@ -68,5 +74,10 @@ namespace Tulip.Data
 
             return true;
         }
+
+        private void OnValidate() =>
+            assignedEntities = Resources.FindObjectsOfTypeAll<EntityData>()
+                .Where(entityData => entityData.SpawnConditionData == this)
+                .ToArray();
     }
 }

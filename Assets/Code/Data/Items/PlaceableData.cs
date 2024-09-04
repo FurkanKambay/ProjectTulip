@@ -53,7 +53,7 @@ namespace Tulip.Data.Items
                 ruleTileData.PlaceableData = this;
         }
 
-        private void OnValidate()
+        protected override void OnValidate()
         {
             if (ruleTileData)
                 ruleTileData.PlaceableData = this;

@@ -17,6 +17,9 @@ MonoBehaviour:
   name: Weak Pickaxe
   description: It's pretty bad.
   maxAmount: 1
+  craftedBy:
+  - {fileID: 11400000, guid: be1aec6605558014e98a667e68a8d5d2, type: 2}
+  usedInCrafting: []
   cooldown: 0.6
   swingConfig: {fileID: 11400000, guid: 3c33bb5b7a9810e49a8a308014afa4d2, type: 2}
   power: 20

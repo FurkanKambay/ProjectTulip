@@ -17,6 +17,8 @@ MonoBehaviour:
   name: Copper Vein
   description: 
   maxAmount: 999
+  craftedBy: []
+  usedInCrafting: []
   cooldown: 0.2
   swingConfig: {fileID: 11400000, guid: 35ff93fda544a594a94ebfe5599470a9, type: 2}
   color: {r: 1, g: 1, b: 1, a: 1}

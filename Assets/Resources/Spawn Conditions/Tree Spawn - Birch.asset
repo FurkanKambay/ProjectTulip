@@ -18,3 +18,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 429bc82d732054c4e9a8289b655d161e, type: 2}
   clearanceAbove: 15
   clearanceBelow: 0
+  assignedEntities:
+  - {fileID: 11400000, guid: c9d7b086348a62e40b23d087b7ce48bc, type: 2}

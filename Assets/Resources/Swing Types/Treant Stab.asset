@@ -32,3 +32,5 @@ MonoBehaviour:
     moveDuration: 0.1
     turnDelta: 0
     turnDuration: 0.05
+  usedBy:
+  - {fileID: 11400000, guid: 84ef348f463a7a144b0fbff6c95049c7, type: 2}

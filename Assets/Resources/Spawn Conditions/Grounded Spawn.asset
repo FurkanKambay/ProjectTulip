@@ -17,3 +17,5 @@ MonoBehaviour:
   groundTiles: []
   clearanceAbove: 0
   clearanceBelow: 0
+  assignedEntities:
+  - {fileID: 11400000, guid: ea8750a0c949971459c7425c97b8a620, type: 2}

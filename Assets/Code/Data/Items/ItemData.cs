@@ -1,4 +1,6 @@
+using System.Linq;
 using SaintsField;
+using SaintsField.Playa;
 using UnityEngine;
 
 namespace Tulip.Data.Items
@@ -24,8 +26,25 @@ namespace Tulip.Data.Items
         [SerializeField, Multiline] protected string description;
         [SerializeField, Min(1)] protected int maxAmount = 1;
 
+        // ReSharper disable NotAccessedField.Global
+        [LayoutGroup("Referenced By", ELayout.Background | ELayout.TitleOut | ELayout.Foldout, marginTop: 16)]
+        [SerializeField, ReadOnly] protected ItemRecipeData[] craftedBy;
+        [SerializeField, ReadOnly] protected ItemRecipeData[] usedInCrafting;
+        // ReSharper restore NotAccessedField.Global
+
         public ItemStack Stack(int amount) => new(this, amount);
 
         public override string ToString() => Name;
+
+        protected virtual void OnValidate()
+        {
+            craftedBy = Resources.FindObjectsOfTypeAll<ItemRecipeData>()
+                .Where(recipeData => recipeData.ResultItemData == this)
+                .ToArray();
+
+            usedInCrafting = Resources.FindObjectsOfTypeAll<ItemRecipeData>()
+                .Where(recipeData => recipeData.Ingredients.Any(stack => stack.itemData == this))
+                .ToArray();
+        }
     }
 }

@@ -25,7 +25,10 @@ namespace Tulip.Data
 
         public string Name => name;
         public GameObject Prefab => prefab;
+
         public bool IsStatic => isStatic;
+        public SpawnConditionData SpawnConditionData => spawnConditionData;
+
         public Vector2Int Size => size;
         public ItemData Loot => loot;
         public int LootAmount => lootAmount;
