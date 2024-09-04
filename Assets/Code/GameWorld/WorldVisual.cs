@@ -12,10 +12,22 @@ namespace Tulip.GameWorld
     public class WorldVisual : MonoBehaviour
     {
         [Header("References")]
+        [SerializeField] Transform player;
         [SerializeField] World world;
         [SerializeField] Tilemap wallTilemap;
         [SerializeField] Tilemap blockTilemap;
         [SerializeField] Tilemap curtainTilemap;
+
+        private TilemapRenderer curtainRenderer;
+
+        private MaterialPropertyBlock propertyBlock;
+        private static readonly int shaderPlayerPosition = Shader.PropertyToID("_PlayerPosition");
+
+        private void Awake()
+        {
+            curtainRenderer = curtainTilemap.GetComponent<TilemapRenderer>();
+            propertyBlock = new MaterialPropertyBlock();
+        }
 
         private void OnEnable()
         {
@@ -35,6 +47,12 @@ namespace Tulip.GameWorld
             world.OnRefresh -= HandleRefreshWorld;
             world.OnPlaceTile -= HandlePlaceTile;
             world.OnDestroyTile -= HandleDestroyTile;
+        }
+
+        private void Update()
+        {
+            propertyBlock.SetVector(shaderPlayerPosition, player.position);
+            curtainRenderer.SetPropertyBlock(propertyBlock);
         }
 
         public Vector2Int WorldToCell(Vector3 worldPosition) =>
