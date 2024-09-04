@@ -833,7 +833,6 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 100
   invulnerabilityDuration: 1
-  <Name>k__BackingField: Player
 --- !u!1 &3586279575814117517
 GameObject:
   m_ObjectHideFlags: 0

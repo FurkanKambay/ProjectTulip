@@ -14,6 +14,7 @@ namespace Tulip.Character
         [SerializeField] Health health;
         public World world;
 
+        public string Name => entityData.Name;
         public EntityData EntityData => entityData;
         public HealthBase Health => health;
 
@@ -47,5 +48,7 @@ namespace Tulip.Character
             world = homeWorld;
             Cell = baseCell;
         }
+
+        public override string ToString() => Name;
     }
 }

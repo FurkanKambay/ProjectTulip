@@ -7,6 +7,7 @@ namespace Tulip.Data
     [CreateAssetMenu(menuName = "Gameplay/Entity")]
     public class EntityData : ScriptableObject
     {
+        [SerializeField, Required] new string name;
         [SerializeField, Required] GameObject prefab;
 
         [Header("Spawning")]
@@ -22,6 +23,7 @@ namespace Tulip.Data
         [SerializeField] ItemData loot;
         [SerializeField] int lootAmount;
 
+        public string Name => name;
         public GameObject Prefab => prefab;
         public bool IsStatic => isStatic;
         public Vector2Int Size => size;

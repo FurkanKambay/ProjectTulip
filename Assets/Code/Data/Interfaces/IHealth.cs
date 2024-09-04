@@ -24,7 +24,6 @@ namespace Tulip.Data
         bool IsInvulnerable { get; }
 
         ITangibleEntity Entity { get; }
-        string Name { get; }
         IHealth LatestDamageSource { get; }
         IHealth LatestDeathSource { get; }
 

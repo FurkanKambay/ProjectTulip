@@ -659,7 +659,6 @@ MonoBehaviour:
   maxHealth: 20
   currentHealth: 20
   invulnerabilityDuration: 0.1
-  <Name>k__BackingField: Skull
 --- !u!1 &5774079738696728976
 GameObject:
   m_ObjectHideFlags: 0

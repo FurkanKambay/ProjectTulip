@@ -860,7 +860,6 @@ MonoBehaviour:
   maxHealth: 200
   currentHealth: 200
   invulnerabilityDuration: 0
-  <Name>k__BackingField: Tree
 --- !u!1 &8201638215132641927
 GameObject:
   m_ObjectHideFlags: 0

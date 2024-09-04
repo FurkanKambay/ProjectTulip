@@ -756,7 +756,6 @@ MonoBehaviour:
   maxHealth: 50
   currentHealth: 50
   invulnerabilityDuration: 0
-  <Name>k__BackingField: Enemy
 --- !u!1 &6025555610824796458
 GameObject:
   m_ObjectHideFlags: 0

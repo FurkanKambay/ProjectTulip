@@ -74,7 +74,5 @@ namespace Tulip.Character
         public void Damage() => Damage(10f, this);
 
         private void OnValidate() => CurrentHealth = currentHealth;
-
-        public override string ToString() => Name;
     }
 }

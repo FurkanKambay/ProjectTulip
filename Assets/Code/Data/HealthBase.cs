@@ -12,15 +12,12 @@ namespace Tulip.Data
         public virtual event IHealth.ReviveEvent OnRevive;
 
         [Header("References")]
-        [SerializeField] SaintsInterface<Component, ITangibleEntity> entity;
+        [SerializeField] protected SaintsInterface<Component, ITangibleEntity> entity;
 
         [Header("Config")]
         [SerializeField, Min(0)] protected float maxHealth = 100f;
         [SerializeField, Min(0)] protected float currentHealth = 100f;
         [SerializeField, Min(0)] protected float invulnerabilityDuration;
-
-        [Header("Entity")]
-        [field: SerializeField] public virtual string Name { get; protected set; }
 
         public virtual float CurrentHealth
         {

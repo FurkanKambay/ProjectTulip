@@ -18,7 +18,7 @@ namespace Tulip.UI
         [CreateProperty] bool IsRespawnButtonDisplayed => respawner.I.CanRespawn;
         [CreateProperty] bool IsCountdownDisplayed => !respawner.I.CanRespawn;
 
-        [CreateProperty] string DeathReason => health?.LatestDeathSource?.Name;
+        [CreateProperty] string DeathReason => health?.LatestDeathSource?.Entity.Name;
         [CreateProperty] int SecondsUntilRespawn => Mathf.CeilToInt(respawner.I.SecondsUntilRespawn);
         // ReSharper restore UnusedMember.Local
 

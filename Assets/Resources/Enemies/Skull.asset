@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a2313b891d4493384c143b7bb1501f5, type: 3}
   m_Name: Skull
   m_EditorClassIdentifier: 
+  name: Skull
   prefab: {fileID: 2859632988072890709, guid: 48ac7c0e368ed9e4989d771b5f022f0d, type: 3}
   isStatic: 0
   spawnConditionData: {fileID: 11400000, guid: ed5a7da64365ea34888bebe53806372e, type: 2}
