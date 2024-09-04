@@ -832,7 +832,7 @@ MonoBehaviour:
     <V>k__BackingField: {fileID: 963390074723932652}
   maxHealth: 100
   currentHealth: 100
-  invulnerabilityDuration: 1
+  invulnerabilityDuration: 0.5
 --- !u!1 &3586279575814117517
 GameObject:
   m_ObjectHideFlags: 0
