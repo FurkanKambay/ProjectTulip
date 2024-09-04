@@ -23,7 +23,7 @@ namespace Tulip.GameWorld
         [Header("Structure Asset")]
         [SerializeField] StructureData structureData;
 
-        private WorldData WorldData => structureData.worldData;
+        private WorldData WorldData => structureData.WorldData;
 
         private bool AreTilemapsDirty => EditorUtility.IsDirty(wallTilemap)
                                          && EditorUtility.IsDirty(blockTilemap)
@@ -71,7 +71,7 @@ namespace Tulip.GameWorld
                 }
             }
 
-            structureData.worldData = new WorldData(dimensions, walls, blocks, curtains);
+            structureData.SetWorldData(new WorldData(dimensions, walls, blocks, curtains));
             EditorUtility.SetDirty(structureData);
         }
 

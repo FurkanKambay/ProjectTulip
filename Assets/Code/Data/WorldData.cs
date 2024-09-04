@@ -19,9 +19,11 @@ namespace Tulip.Data
         public TileDictionary Curtains => curtains;
 
         [SerializeField, Min(0)] private Vector2Int dimensions;
-        [SerializeField] private TileDictionary walls;
-        [SerializeField] private TileDictionary blocks;
-        [SerializeField] private TileDictionary curtains;
+        [SerializeField, HideInInspector] internal TileDictionary walls;
+        [SerializeField, HideInInspector] internal TileDictionary blocks;
+        [SerializeField, HideInInspector] internal TileDictionary curtains;
+
+        public WorldData(Vector2Int dimensions) => this.dimensions = dimensions;
 
         public WorldData(Vector2Int dimensions, TileDictionary walls, TileDictionary blocks, TileDictionary curtains)
         {

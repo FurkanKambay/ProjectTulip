@@ -93,9 +93,36 @@ namespace Tulip.GameWorld
             // blocks.TrimExcess();
             // curtains.TrimExcess();
 
+            var worldData = new WorldData(dimensions, walls, blocks, curtains);
+
             await Awaitable.MainThreadAsync();
 
-            return new WorldData(dimensions, walls, blocks, curtains);
+            foreach (WorldGenConfig.StructureGen structureGenConfig in config.Structures)
+            {
+                for (int i = 0; i < structureGenConfig.amount; i++)
+                {
+                    var randomPosition = new Vector2Int(
+                        x: Random.Range(0, dimensions.x),
+                        y: Random.Range(0, dimensions.y)
+                    );
+
+                    PlaceStructure(worldData, structureGenConfig.structureData, randomPosition);
+                }
+            }
+
+            return worldData;
+        }
+
+        private void PlaceStructure(WorldData worldData, StructureData structureData, Vector2Int pivotPosition)
+        {
+            foreach ((Vector2Int cell, PlaceableData placeableData) in structureData.WorldData.Walls)
+                worldData.Walls[pivotPosition + cell] = placeableData;
+
+            foreach ((Vector2Int cell, PlaceableData placeableData) in structureData.WorldData.Blocks)
+                worldData.Blocks[pivotPosition + cell] = placeableData;
+
+            foreach ((Vector2Int cell, PlaceableData placeableData) in structureData.WorldData.Curtains)
+                worldData.Curtains[pivotPosition + cell] = placeableData;
         }
 
         private float[,] CalculatePerlinNoise()

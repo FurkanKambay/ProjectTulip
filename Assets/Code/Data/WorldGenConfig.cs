@@ -1,3 +1,4 @@
+using System;
 using SaintsField;
 using Tulip.Data.Items;
 using UnityEngine;
@@ -24,6 +25,8 @@ namespace Tulip.Data
         public PlaceableData Sand => sand;
         public PlaceableData CopperVein => copperVein;
         public PlaceableData StoneWall => stoneWall;
+
+        public StructureGen[] Structures => structures;
 
         [Header("Settings")]
         [OverlayRichLabel("<color=grey>cells")]
@@ -53,6 +56,7 @@ namespace Tulip.Data
 
         [Header("Blocks")]
         [SerializeField] PlaceableData grass;
+
         [SerializeField] PlaceableData stone;
         [SerializeField] PlaceableData snow;
         [SerializeField] PlaceableData sand;
@@ -61,11 +65,21 @@ namespace Tulip.Data
         [Header("Walls")]
         [SerializeField] PlaceableData stoneWall;
 
+        [Header("Structures")]
+        [SerializeField] StructureGen[] structures;
+
         private void OnValidate()
         {
             grassLayerHeight = Mathf.Min(grassLayerHeight, height);
             snowDistance = Mathf.Min(snowDistance, width / 2);
             sandDistance = Mathf.Min(sandDistance, width / 2);
+        }
+
+        [Serializable]
+        public struct StructureGen
+        {
+            public StructureData structureData;
+            public int amount;
         }
     }
 }
