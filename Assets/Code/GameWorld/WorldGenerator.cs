@@ -58,19 +58,22 @@ namespace Tulip.GameWorld
 
                 for (int x = 0; x < config.Width; x++)
                 {
-                    PlaceableData wall = config.StoneWall;
                     float noise = perlinNoise[x, y];
 
-                    bool isGrassHeight = config.Height - y <= config.GrassLayerHeight;
+                    bool isUnderground = config.Height - y > config.GrassLayerHeight;
+                    bool hasOre = noise < config.OreCutoff;
+
+                    PlaceableData biomeSoil = x < snowDistance ? config.Snow
+                        : x >= sandDistance ? config.Sand
+                        : config.Grass;
 
                     PlaceableData block =
-                        isGrassHeight && x < snowDistance ? config.Snow :
-                        isGrassHeight && x >= sandDistance ? config.Sand :
                         noise > densityCutoff ? null :
-                        noise < config.OreCutoff ? config.CopperVein :
-                        isGrassHeight ? config.Grass :
+                        hasOre ? config.CopperVein :
+                        !isUnderground ? biomeSoil :
                         config.Stone;
 
+                    PlaceableData wall = config.StoneWall;
                     PlaceableData curtain = null;
 
                     var cell = new Vector2Int(x, y);
