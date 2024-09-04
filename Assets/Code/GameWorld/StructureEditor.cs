@@ -23,6 +23,9 @@ namespace Tulip.GameWorld
         [Header("Structure Asset")]
         [SerializeField] StructureData structureData;
 
+        [Header("Config")]
+        [SerializeField] bool serializeNullTiles;
+
         private WorldData WorldData => structureData.WorldData;
 
         private bool AreTilemapsDirty => EditorUtility.IsDirty(wallTilemap)
@@ -62,12 +65,18 @@ namespace Tulip.GameWorld
 
                     if (wallTile)
                         walls[cell] = wallTile.PlaceableData;
+                    else if (serializeNullTiles)
+                        walls[cell] = null;
 
                     if (blockTile)
                         blocks[cell] = blockTile.PlaceableData;
+                    else if (serializeNullTiles)
+                        blocks[cell] = null;
 
                     if (curtainTile)
                         curtains[cell] = curtainTile.PlaceableData;
+                    else if (serializeNullTiles)
+                        curtains[cell] = null;
                 }
             }
 
