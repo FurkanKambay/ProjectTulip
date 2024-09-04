@@ -16,6 +16,7 @@ namespace Tulip.Player
         [SerializeField, Required] SaintsInterface<Component, IItemWielder> itemWielder;
 
         [Header("Config")]
+        [SerializeField] float coyoteTime = 0.15f;
         [SerializeField] float range = 5f;
 
         public event Action<Vector2Int?> OnChangeCellFocus;
@@ -39,15 +40,18 @@ namespace Tulip.Player
         private Vector2 rangePath;
         private Vector3 hitPoint;
 
-        private void OnEnable() => itemWielder.I.OnSwingPerform += HandleItemSwing;
-        private void OnDisable() => itemWielder.I.OnSwingPerform -= HandleItemSwing;
+        private ItemStack latestSwungStack;
+        private float coyoteTimeCounter;
+
+        private void OnEnable() => itemWielder.I.OnSwingPerform += ItemWielder_Swing;
+        private void OnDisable() => itemWielder.I.OnSwingPerform -= ItemWielder_Swing;
 
         private void Update()
         {
-            if (itemWielder.I.CurrentStack.itemData.IsNot(out BaseWorldToolData _))
-                return;
+            coyoteTimeCounter += Time.deltaTime;
 
             AssignCells();
+            AttemptUse();
         }
 
         public bool IsCellBlockedByEntity()
@@ -63,28 +67,43 @@ namespace Tulip.Player
             return Physics2D.OverlapArea(topLeft, bottomRight, layerMask);
         }
 
-        private void HandleItemSwing(ItemStack stack, Vector3 aimPoint)
+        private void ItemWielder_Swing(ItemStack stack, Vector3 aimPoint)
+        {
+            latestSwungStack = stack;
+            coyoteTimeCounter = 0;
+        }
+
+        /// Respects coyote time
+        private void AttemptUse()
+        {
+            if (!latestSwungStack.IsValid || coyoteTimeCounter > coyoteTime)
+                return;
+
+            if (UseTool(latestSwungStack))
+                latestSwungStack = default;
+        }
+
+        private bool UseTool(ItemStack stack)
         {
             if (!FocusedCell.HasValue || stack.itemData.IsNot(out BaseWorldToolData tool))
-                return;
+                return false;
 
             if (IsCellBlockedByEntity() || !tool!.IsUsableOn(entity.World, FocusedCell.Value))
-                return;
+                return false;
 
             InventoryModification modification = tool.UseOn(entity.World, FocusedCell.Value);
-            InventoryModification remaining = inventory.ApplyModification(modification);
 
-            if (!remaining.IsValid)
-                return;
+            // TODO: drop items
+            inventory.ApplyModification(modification);
 
-            Debug.LogWarning(
-                $"[Terraformer] Remaining items: [{remaining.Stack}]"
-                + (remaining.WouldAdd ? "not added" : "not removed")
-            );
+            return true;
         }
 
         private void AssignCells()
         {
+            if (itemWielder.I.CurrentStack.itemData.IsNot(out BaseWorldToolData _))
+                return;
+
             Vector2 hotspot = transform.position;
             Vector2 aimPoint = hotspot + itemWielder.I.AimDirection;
 
