@@ -233,8 +233,8 @@ MonoBehaviour:
   wallTilemap: {fileID: 7173102642643231972}
   blockTilemap: {fileID: 7216450001394265923}
   curtainTilemap: {fileID: 6191996857932663916}
-  structureData: {fileID: 11400000, guid: 439da3e0260377b4aa31ef5bab6b51e2, type: 2}
   serializeNullTiles: 1
+  structureData: {fileID: 11400000, guid: 930d90f0c36ae2042bb56f855443eb0f, type: 2}
 --- !u!4 &4345539762999413369
 Transform:
   m_ObjectHideFlags: 0

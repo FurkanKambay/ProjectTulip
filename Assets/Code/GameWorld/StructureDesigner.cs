@@ -2,7 +2,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using SaintsField.Playa;
 using Tulip.Core;
 using Tulip.Data;
 using Tulip.Data.Items;
@@ -13,35 +12,35 @@ using UnityEngine.Tilemaps;
 
 namespace Tulip.GameWorld
 {
-    public class StructureEditor : MonoBehaviour
+    public class StructureDesigner : MonoBehaviour
     {
         [Header("Tilemaps")]
         [SerializeField] Tilemap wallTilemap;
         [SerializeField] Tilemap blockTilemap;
         [SerializeField] Tilemap curtainTilemap;
 
-        [Header("Structure Asset")]
-        [SerializeField] StructureData structureData;
-
         [Header("Config")]
         [SerializeField] bool serializeNullTiles;
 
+        [Header("Structure Asset")]
+        [SerializeField] StructureData structureData;
+
+        public StructureData StructureData => structureData;
         private WorldData WorldData => structureData.WorldData;
 
         private bool AreTilemapsDirty => EditorUtility.IsDirty(wallTilemap)
                                          && EditorUtility.IsDirty(blockTilemap)
                                          && EditorUtility.IsDirty(curtainTilemap);
 
-        private bool AreTilemapsUsed => wallTilemap.GetUsedTilesCount() > 0
-                                        || blockTilemap.GetUsedTilesCount() > 0
-                                        || curtainTilemap.GetUsedTilesCount() > 0;
+        public bool AreTilemapsUsed => wallTilemap.GetUsedTilesCount() > 0
+                                       || blockTilemap.GetUsedTilesCount() > 0
+                                       || curtainTilemap.GetUsedTilesCount() > 0;
 
-        // ReSharper disable once UnusedMember.Local
-        [Button]
-        private void SaveToAsset()
+        public void SetStructureData(StructureData newStructureData) =>
+            structureData = newStructureData;
+
+        public void SaveToAsset()
         {
-            // TODO: draw hard bounds in scene
-
             ResizeTilemap(wallTilemap);
             ResizeTilemap(blockTilemap);
             ResizeTilemap(curtainTilemap);
@@ -84,9 +83,7 @@ namespace Tulip.GameWorld
             EditorUtility.SetDirty(structureData);
         }
 
-        // ReSharper disable once UnusedMember.Local
-        [Button]
-        private void RevertToAsset()
+        public void RevertToAsset()
         {
             ResetTilemaps();
 
@@ -99,6 +96,7 @@ namespace Tulip.GameWorld
             if (WorldData.Curtains != null)
                 curtainTilemap.SetTiles(WorldData.Curtains.Select(selector).ToArray(), ignoreLockFlags: true);
 
+            UnmarkSceneAsDirty();
             return;
 
             TileChangeData selector(KeyValuePair<Vector2Int, PlaceableData> kvp)
@@ -114,8 +112,7 @@ namespace Tulip.GameWorld
             }
         }
 
-        [Button, PlayaEnableIf(nameof(AreTilemapsUsed))]
-        private void ResetTilemaps()
+        public void ResetTilemaps()
         {
             ResetTilemap(wallTilemap);
             ResetTilemap(blockTilemap);
@@ -151,6 +148,9 @@ namespace Tulip.GameWorld
 
         private void OnDrawGizmos()
         {
+            if (!structureData)
+                return;
+
             Vector2Int dimensions = WorldData.Dimensions;
 
             var center = new Vector3(dimensions.x / 2f, dimensions.y / 2f);
