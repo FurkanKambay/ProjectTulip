@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f1112e67fd794dcdada82ca241c14b24, type: 3}
-  m_Name: Tree Spawn
+  m_Name: Tree Spawn - Birch
   m_EditorClassIdentifier: 
   needsGround: 1
   needsSafeGround: 1
   groundTiles:
-  - {fileID: 11400000, guid: 6b98d82ba77a4344a946251215359108, type: 2}
+  - {fileID: 11400000, guid: 429bc82d732054c4e9a8289b655d161e, type: 2}
   clearanceAbove: 15
   clearanceBelow: 0

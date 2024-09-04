@@ -1,91 +1,7 @@
 fileFormatVersion: 2
 guid: dbc3e8862c3f41448a71ccbe32786a6c
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: 8628728090643739589
-    second: Premium_TreesUpdated_No_Outline_0
-  - first:
-      213: 6476122055754183890
-    second: Premium_TreesUpdated_No_Outline_1
-  - first:
-      213: -3596504589998633293
-    second: Premium_TreesUpdated_No_Outline_2
-  - first:
-      213: -570553117083141423
-    second: Premium_TreesUpdated_No_Outline_3
-  - first:
-      213: 4460393337737860149
-    second: Premium_TreesUpdated_No_Outline_4
-  - first:
-      213: 1994286036554795005
-    second: Premium_TreesUpdated_No_Outline_5
-  - first:
-      213: 6715821119790798482
-    second: Premium_TreesUpdated_No_Outline_6
-  - first:
-      213: -8391492101693821693
-    second: Premium_TreesUpdated_No_Outline_7
-  - first:
-      213: 250725205981387639
-    second: Premium_TreesUpdated_No_Outline_8
-  - first:
-      213: -1139353255321240816
-    second: Premium_TreesUpdated_No_Outline_9
-  - first:
-      213: 1481106426757893089
-    second: Premium_TreesUpdated_No_Outline_10
-  - first:
-      213: -637279174571792665
-    second: Premium_TreesUpdated_No_Outline_11
-  - first:
-      213: -4181380713591652227
-    second: Premium_TreesUpdated_No_Outline_12
-  - first:
-      213: 7007088216064067367
-    second: Premium_TreesUpdated_No_Outline_13
-  - first:
-      213: 970094203280296359
-    second: Premium_TreesUpdated_No_Outline_14
-  - first:
-      213: -1891674883875092351
-    second: Premium_TreesUpdated_No_Outline_15
-  - first:
-      213: 7320121802268647398
-    second: Premium_TreesUpdated_No_Outline_16
-  - first:
-      213: -6287887812510553754
-    second: Premium_TreesUpdated_No_Outline_17
-  - first:
-      213: 4675256026510304460
-    second: Premium_TreesUpdated_No_Outline_18
-  - first:
-      213: 5722454896584504089
-    second: Premium_TreesUpdated_No_Outline_19
-  - first:
-      213: -6016185938617238085
-    second: Premium_TreesUpdated_No_Outline_20
-  - first:
-      213: 7891906821829044404
-    second: Premium_TreesUpdated_No_Outline_21
-  - first:
-      213: -4164587937408993579
-    second: Premium_TreesUpdated_No_Outline_22
-  - first:
-      213: 3066438554829458105
-    second: Premium_TreesUpdated_No_Outline_23
-  - first:
-      213: 7282718966285209648
-    second: Premium_TreesUpdated_No_Outline_24
-  - first:
-      213: 4555909724249430951
-    second: Premium_TreesUpdated_No_Outline_25
-  - first:
-      213: -8159032314858333597
-    second: Premium_TreesUpdated_No_Outline_26
-  - first:
-      213: -7606901016403878979
-    second: Premium_TreesUpdated_No_Outline_27
+  internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -165,7 +81,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: Win64
+    buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -178,7 +94,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: Standalone
+    buildTarget: Server
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -193,9 +109,9 @@ TextureImporter:
   - serializedVersion: 4
     buildTarget: WebGL
     maxTextureSize: 2048
-    resizeAlgorithm: 0
+    resizeAlgorithm: 1
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -206,72 +122,6 @@ TextureImporter:
   spriteSheet:
     serializedVersion: 2
     sprites:
-    - serializedVersion: 2
-      name: Oak_Dead
-      rect:
-        serializedVersion: 2
-        x: 140
-        y: 20
-        width: 39
-        height: 57
-      alignment: 9
-      pivot: {x: 0.5, y: 0.01754386}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 7a90031c987767d00800000000000000
-      internalID: 970094203280296359
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Oak_Dead_Full
-      rect:
-        serializedVersion: 2
-        x: 200
-        y: 20
-        width: 44
-        height: 77
-      alignment: 9
-      pivot: {x: 0.5, y: 0.012987013}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 188c81437bb6fb5e0800000000000000
-      internalID: -1891674883875092351
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Oak_Stump
-      rect:
-        serializedVersion: 2
-        x: 263
-        y: 48
-        width: 18
-        height: 18
-      alignment: 9
-      pivot: {x: 0.5, y: 0.055555556}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 6ef90d8defb469560800000000000000
-      internalID: 7320121802268647398
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     - serializedVersion: 2
       name: Oak
       rect:
@@ -286,7 +136,7 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
       spriteID: cc4a626e598d1e040800000000000000
       internalID: 4675256026510304460
@@ -295,23 +145,23 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Oak_Full
+      name: Birch_Winter
       rect:
         serializedVersion: 2
-        x: 455
-        y: 20
-        width: 48
-        height: 83
+        x: 140
+        y: 131
+        width: 39
+        height: 58
       alignment: 9
-      pivot: {x: 0.5, y: 0.012048192}
+      pivot: {x: 0.5, y: 0.01724138}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 9133d1ad86e3a6f40800000000000000
-      internalID: 5722454896584504089
+      spriteID: 4f0e710ddc8f4e34c946c77693326f72
+      internalID: 1858669388
       vertices: []
       indices: 
       edges: []
@@ -320,7 +170,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 4bf38806656856c4abeba9963079674b
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -330,35 +180,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
+      Birch_Winter: 1858669388
       Oak: 4675256026510304460
-      Oak_Dead: 970094203280296359
-      Oak_Dead_Full: -1891674883875092351
-      Oak_Full: 5722454896584504089
-      Oak_Stump: 7320121802268647398
-      Premium_TreesUpdated_No_Outline_0: 8628728090643739589
-      Premium_TreesUpdated_No_Outline_1: 6476122055754183890
-      Premium_TreesUpdated_No_Outline_10: 1481106426757893089
-      Premium_TreesUpdated_No_Outline_11: -637279174571792665
-      Premium_TreesUpdated_No_Outline_12: -4181380713591652227
-      Premium_TreesUpdated_No_Outline_13: 7007088216064067367
-      Premium_TreesUpdated_No_Outline_17: -6287887812510553754
-      Premium_TreesUpdated_No_Outline_2: -3596504589998633293
-      Premium_TreesUpdated_No_Outline_20: -6016185938617238085
-      Premium_TreesUpdated_No_Outline_21: 7891906821829044404
-      Premium_TreesUpdated_No_Outline_22: -4164587937408993579
-      Premium_TreesUpdated_No_Outline_23: 3066438554829458105
-      Premium_TreesUpdated_No_Outline_24: 7282718966285209648
-      Premium_TreesUpdated_No_Outline_25: 4555909724249430951
-      Premium_TreesUpdated_No_Outline_26: -8159032314858333597
-      Premium_TreesUpdated_No_Outline_27: -7606901016403878979
-      Premium_TreesUpdated_No_Outline_3: -570553117083141423
-      Premium_TreesUpdated_No_Outline_4: 4460393337737860149
-      Premium_TreesUpdated_No_Outline_5: 1994286036554795005
-      Premium_TreesUpdated_No_Outline_6: 6715821119790798482
-      Premium_TreesUpdated_No_Outline_7: -8391492101693821693
-      Premium_TreesUpdated_No_Outline_8: 250725205981387639
-      Premium_TreesUpdated_No_Outline_9: -1139353255321240816
-      Trees_0: -1378952055
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

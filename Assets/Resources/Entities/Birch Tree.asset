@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a2313b891d4493384c143b7bb1501f5, type: 3}
+  m_Name: Birch Tree
+  m_EditorClassIdentifier: 
+  name: Birch Tree
+  prefab: {fileID: 4352453585227860419, guid: 8a490b9bb59befb4986f23bd14642e4c, type: 3}
+  isStatic: 1
+  spawnConditionData: {fileID: 11400000, guid: af6a702da94c5ad4d9823783d4f491f8, type: 2}
+  size: {x: 3, y: 5}
+  loot: {fileID: 11400000, guid: f38d0fc5a331ed44ba37a427dd625605, type: 2}
+  lootAmount: 3
