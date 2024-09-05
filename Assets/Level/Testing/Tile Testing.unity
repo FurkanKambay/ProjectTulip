@@ -134,7 +134,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &356164471
 Transform:
   m_ObjectHideFlags: 0
@@ -162,10 +162,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2578b4d5d1c444c3b7c7c3b109fad6dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wallTilemap: {fileID: 1320527741}
-  blockTilemap: {fileID: 1907150967}
-  curtainTilemap: {fileID: 0}
+  worldProvider:
+    <V>k__BackingField: {fileID: 0}
+  worldVisual: {fileID: 0}
   isReadonly: 0
+  entityLayers:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,11 +374,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34fe02ae195a4934ab403049c6892884, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1839735485 &1320527741 stripped
-Tilemap:
-  m_CorrespondingSourceObject: {fileID: 3298477787207529110, guid: 2716f732d51c76f499f2c4e9096dabb7, type: 3}
-  m_PrefabInstance: {fileID: 1805653503}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1422868160
 GameObject:
   m_ObjectHideFlags: 0
@@ -521,11 +519,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2716f732d51c76f499f2c4e9096dabb7, type: 3}
---- !u!1839735485 &1907150967 stripped
-Tilemap:
-  m_CorrespondingSourceObject: {fileID: 253149860080770689, guid: 2716f732d51c76f499f2c4e9096dabb7, type: 3}
-  m_PrefabInstance: {fileID: 1805653503}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
