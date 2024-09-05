@@ -72,12 +72,8 @@ namespace Tulip.Player
             };
 
             renderer.enabled = color.HasValue;
-
-            if (color.HasValue)
-                renderer.color = color.Value;
-
-            bool isPlaceable = itemData.Is(out PlaceableData placeableData); // TODO: move cell highlight into Usable
-            renderer.sprite = isPlaceable ? placeableData!.Icon : defaultSprite;
+            renderer.sprite = worldToolData.CellHighlightSprite;
+            renderer.color = color.GetValueOrDefault();
 
             // update marker state
             targetPosition = world.CellCenter(focusedCell.Value);
