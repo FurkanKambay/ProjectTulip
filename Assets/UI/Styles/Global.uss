@@ -1,5 +1,5 @@
 :root {
-    -unity-font-definition: url("project://database/Assets/Art/monogram-extended.ttf?fileID=12800000&guid=5ca88aa0ed910a14ab34417b970d76fd&type=3#monogram-extended");
+    -unity-font-definition: url("project://database/Assets/UI/monogram-extended.ttf?fileID=12800000&guid=5ca88aa0ed910a14ab34417b970d76fd&type=3#monogram-extended");
 
     --text-small: 32px;
     --text-medium: 36px;
