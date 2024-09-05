@@ -97,32 +97,35 @@ namespace Tulip.GameWorld
 
             await Awaitable.MainThreadAsync();
 
-            foreach (WorldGenConfig.StructureGen structureGenConfig in config.Structures)
+            foreach (WorldGenConfig.StructureGen structure in config.Structures)
             {
-                for (int i = 0; i < structureGenConfig.amount; i++)
+                for (int i = 0; i < structure.amount; i++)
                 {
+                    // TODO: use seed for random structure position
                     var randomPosition = new Vector2Int(
                         x: Random.Range(0, dimensions.x),
                         y: Random.Range(0, dimensions.y)
                     );
 
-                    PlaceStructure(worldData, structureGenConfig.structureData, randomPosition);
+                    WorldData structureData = structure.structureData.WorldData;
+                    PlaceStructureTiles(structureData.Walls, worldData.Walls, randomPosition);
+                    PlaceStructureTiles(structureData.Blocks, worldData.Blocks, randomPosition);
+                    PlaceStructureTiles(structureData.Curtains, worldData.Curtains, randomPosition);
                 }
             }
 
             return worldData;
         }
 
-        private void PlaceStructure(WorldData worldData, StructureData structureData, Vector2Int pivotPosition)
+        private static void PlaceStructureTiles(TileDictionary source, TileDictionary target, Vector2Int pivotPosition)
         {
-            foreach ((Vector2Int cell, PlaceableData placeableData) in structureData.WorldData.Walls)
-                worldData.Walls[pivotPosition + cell] = placeableData;
-
-            foreach ((Vector2Int cell, PlaceableData placeableData) in structureData.WorldData.Blocks)
-                worldData.Blocks[pivotPosition + cell] = placeableData;
-
-            foreach ((Vector2Int cell, PlaceableData placeableData) in structureData.WorldData.Curtains)
-                worldData.Curtains[pivotPosition + cell] = placeableData;
+            foreach ((Vector2Int cell, PlaceableData placeableData) in source)
+            {
+                if (placeableData)
+                    target[pivotPosition + cell] = placeableData;
+                else
+                    target.Remove(pivotPosition + cell);
+            }
         }
 
         private float[,] CalculatePerlinNoise()
