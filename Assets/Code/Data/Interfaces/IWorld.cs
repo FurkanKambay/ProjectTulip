@@ -24,11 +24,12 @@ namespace Tulip.Data
         /// <returns>Whether the tile was placed successfully.</returns>
         InventoryModification PlaceTile(Vector2Int cell, PlaceableData placeableData);
 
-
+        bool HasTile(Vector2Int cell, TileType tileType);
         bool HasWall(Vector2Int cell);
         bool HasBlock(Vector2Int cell);
         bool HasCurtain(Vector2Int cell);
 
+        PlaceableData GetTile(Vector2Int cell, TileType tileType);
         PlaceableData GetWall(Vector2Int cell);
         PlaceableData GetBlock(Vector2Int cell);
         PlaceableData GetCurtain(Vector2Int cell);
@@ -42,6 +43,7 @@ namespace Tulip.Data
 
         Bounds CellBoundsWorld(Vector2Int cell);
         bool DoesCellIntersect(Vector2Int cell, Bounds other);
+        bool IsCellEntityFree(Vector2Int cell);
 
         /// <param name="baseCell">The bottom-left cell, NOT center or pivot</param>
         /// <param name="entitySize"></param>

@@ -105,9 +105,13 @@ namespace Tulip.GameWorld
 
 #region Cell Helpers
 
+        public bool HasTile(Vector2Int cell, TileType tileType) => GetTiles(tileType).ContainsKey(cell);
         public bool HasWall(Vector2Int cell) => WorldData.Walls.ContainsKey(cell);
         public bool HasBlock(Vector2Int cell) => WorldData.Blocks.ContainsKey(cell);
         public bool HasCurtain(Vector2Int cell) => WorldData.Curtains.ContainsKey(cell);
+
+        public PlaceableData GetTile(Vector2Int cell, TileType tileType) =>
+            GetTiles(tileType).TryGetValue(cell, out PlaceableData placeableData) ? placeableData : null;
 
         public PlaceableData GetWall(Vector2Int cell) =>
             WorldData.Walls.TryGetValue(cell, out PlaceableData wall) ? wall : null;
@@ -127,6 +131,17 @@ namespace Tulip.GameWorld
 
         public Bounds CellBoundsWorld(Vector2Int cell) => worldVisual.CellBoundsWorld(cell);
         public bool DoesCellIntersect(Vector2Int cell, Bounds other) => CellBoundsWorld(cell).Intersects(other);
+
+        /// Checks for entities at the cell. Use <see cref="HasBlock"/> for other purposes.
+        public bool IsCellEntityFree(Vector2Int cell)
+        {
+            Bounds bounds = CellBoundsWorld(cell);
+            Vector2 topLeft = bounds.center - bounds.extents + (Vector3.one * 0.02f);
+            Vector2 bottomRight = bounds.center + bounds.extents - (Vector3.one * 0.02f);
+
+            int layerMask = LayerMask.GetMask("Enemy", "Player", "NPC", "Entity");
+            return !Physics2D.OverlapArea(topLeft, bottomRight, layerMask);
+        }
 
 #endregion
 

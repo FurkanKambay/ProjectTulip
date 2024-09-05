@@ -33,19 +33,28 @@ namespace Tulip.Data.Items
 
         [SerializeField] protected OreData oreData;
 
-        public override InventoryModification UseOn(IWorld world, Vector2Int cell) => tileType switch
+        public override InventoryModification UseOn(IWorld world, Vector2Int cell)
         {
-            TileType.Block when IsUsableOn(world, cell) => world.PlaceTile(cell, this),
-            _ => default
-        };
+            ToolUsability usability = GetUsability(world, cell);
+            return usability == ToolUsability.Available ? world.PlaceTile(cell, this) : default;
+        }
 
-        public override bool IsUsableOn(IWorld world, Vector2Int cell) => tileType switch
+        public override ToolUsability GetUsability(IWorld world, Vector2Int cell)
         {
-            // TODO: maybe bring back this constraint (originally for cell highlighting)
-            // bool notOccupiedByPlayer = !world.CellIntersects(cell, playerCollider.bounds);
-            TileType.Block => !world.HasBlock(cell),
-            _ => false
-        };
+            // TODO: check if cell is out of world bounds
+            // return ToolUsability.Never;
+
+            PlaceableData tile = world.GetTile(cell, tileType);
+            bool blockHasEntity = tileType is TileType.Block && !world.IsCellEntityFree(cell);
+
+            return (bool)tile switch
+            {
+                true when tile == this => ToolUsability.NoEffect,
+                true => ToolUsability.Invalid,
+                false when blockHasEntity => ToolUsability.NotNow,
+                _ => ToolUsability.Available
+            };
+        }
 
         private void OnEnable()
         {

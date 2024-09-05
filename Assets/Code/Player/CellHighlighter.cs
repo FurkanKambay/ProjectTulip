@@ -4,6 +4,7 @@ using Tulip.Data;
 using Tulip.Data.Items;
 using Tulip.GameWorld;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Tulip.Player
 {
@@ -51,34 +52,42 @@ namespace Tulip.Player
 
         private void Update()
         {
-            if (!focusedCell.HasValue)
-            {
-                renderer.enabled = false;
-                impactLerp = 0;
-                return;
-            }
-
             ItemData itemData = itemWielder.I.CurrentStack.itemData;
 
-            if (itemData.IsNot(out BaseWorldToolData worldTool) || !worldTool!.IsUsableOn(world, focusedCell.Value))
+            if (!focusedCell.HasValue || itemData.IsNot(out BaseWorldToolData worldToolData))
             {
                 renderer.enabled = false;
                 impactLerp = 0;
                 return;
             }
 
-            renderer.enabled = true;
+            Assert.IsNotNull(worldToolData);
+
+            Color? color = worldToolData.GetUsability(world, focusedCell.Value) switch
+            {
+                ToolUsability.Available => validColor,
+                ToolUsability.Invalid => invalidColor,
+                ToolUsability.NotNow => invalidColor,
+                _ => null
+            };
+
+            renderer.enabled = color.HasValue;
+
+            if (color.HasValue)
+                renderer.color = color.Value;
+
+            bool isPlaceable = itemData.Is(out PlaceableData placeableData); // TODO: move cell highlight into Usable
+            renderer.sprite = isPlaceable ? placeableData!.Icon : defaultSprite;
+
+            // update marker state
             targetPosition = world.CellCenter(focusedCell.Value);
 
             // BUG: doesn't support multi-hit swing types
-            impactLerp = Mathf.MoveTowards(impactLerp, 1, Time.deltaTime / worldTool.GetTimeToFirstHit());
+            impactLerp = Mathf.MoveTowards(impactLerp, 1, Time.deltaTime / worldToolData.GetTimeToFirstHit());
 
-            // I got a random NaN error that I couldn't reproduce so just in case
+            // I once got a NaN error that I couldn't reproduce so just in case
             if (!float.IsFinite(impactLerp))
                 impactLerp = 0;
-
-            renderer.sprite = itemData.Is(out PlaceableData placeableData) ? placeableData!.Icon : defaultSprite;
-            renderer.color = terraformer.IsCellBlockedByEntity() ? invalidColor : validColor;
         }
 
         private void LateUpdate()

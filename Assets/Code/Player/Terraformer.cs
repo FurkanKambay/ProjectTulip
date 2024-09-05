@@ -5,6 +5,7 @@ using Tulip.Core;
 using Tulip.Data;
 using Tulip.Data.Items;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Tulip.Player
 {
@@ -54,19 +55,6 @@ namespace Tulip.Player
             AttemptUse();
         }
 
-        public bool IsCellBlockedByEntity()
-        {
-            if (!FocusedCell.HasValue)
-                return false;
-
-            Bounds bounds = entity.World.CellBoundsWorld(FocusedCell.Value);
-            Vector2 topLeft = bounds.center - bounds.extents + (Vector3.one * 0.02f);
-            Vector2 bottomRight = bounds.center + bounds.extents - (Vector3.one * 0.02f);
-
-            int layerMask = LayerMask.GetMask("Enemy", "Player", "NPC", "Entity");
-            return Physics2D.OverlapArea(topLeft, bottomRight, layerMask);
-        }
-
         private void ItemWielder_Swing(ItemStack stack, Vector3 aimPoint)
         {
             latestSwungStack = stack;
@@ -88,7 +76,11 @@ namespace Tulip.Player
             if (!FocusedCell.HasValue || stack.itemData.IsNot(out BaseWorldToolData tool))
                 return false;
 
-            if (IsCellBlockedByEntity() || !tool!.IsUsableOn(entity.World, FocusedCell.Value))
+            Assert.IsNotNull(tool);
+
+            ToolUsability usability = tool.GetUsability(entity.World, FocusedCell.Value);
+
+            if (usability != ToolUsability.Available)
                 return false;
 
             InventoryModification modification = tool.UseOn(entity.World, FocusedCell.Value);
