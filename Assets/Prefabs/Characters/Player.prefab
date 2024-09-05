@@ -400,7 +400,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: cdb58ec376675804290da6d98ba24ba1, type: 3}
+  - {fileID: 2100000, guid: 64896898144170145af304ecbdc3e9e2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -881,6 +881,7 @@ MonoBehaviour:
   inventory: {fileID: 4728014676095277497}
   itemWielder:
     <V>k__BackingField: {fileID: 647329674294491017}
+  coyoteTime: 0.15
   range: 5
 --- !u!1 &3988847855271664023
 GameObject:
