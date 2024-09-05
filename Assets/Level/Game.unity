@@ -684,6 +684,9 @@ MonoBehaviour:
     <V>k__BackingField: {fileID: 2100611437}
   worldVisual: {fileID: 414399566}
   isReadonly: 1
+  entityLayers:
+    serializedVersion: 2
+    m_Bits: 1984
 --- !u!114 &664534664 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7186377946535505526, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}

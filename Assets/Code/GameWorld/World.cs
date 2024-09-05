@@ -17,6 +17,7 @@ namespace Tulip.GameWorld
 
         [Header("Config")]
         [SerializeField] bool isReadonly;
+        [SerializeField] LayerMask entityLayers;
 
         public event IWorldProvider.ProvideWorldEvent OnRefresh;
         public event IWorld.PlaceableEvent OnPlaceTile;
@@ -142,8 +143,7 @@ namespace Tulip.GameWorld
             Vector2 topLeft = bounds.center - bounds.extents + (Vector3.one * 0.02f);
             Vector2 bottomRight = bounds.center + bounds.extents - (Vector3.one * 0.02f);
 
-            int layerMask = LayerMask.GetMask("Enemy", "Player", "NPC", "Entity");
-            return !Physics2D.OverlapArea(topLeft, bottomRight, layerMask);
+            return !Physics2D.OverlapArea(topLeft, bottomRight, entityLayers);
         }
 
 #endregion
