@@ -45,13 +45,13 @@ namespace Tulip.Data.Items
             // return ToolUsability.Never;
 
             PlaceableData tile = world.GetTile(cell, tileType);
-            bool blockHasEntity = tileType is TileType.Block && !world.IsCellEntityFree(cell);
+            bool cellHasEntity = tileType is TileType.Block && !world.IsCellEntityFree(cell);
 
             return (bool)tile switch
             {
                 true when tile == this => ToolUsability.NoEffect,
                 true => ToolUsability.Invalid,
-                false when blockHasEntity => ToolUsability.NotNow,
+                false when cellHasEntity => ToolUsability.NotNow,
                 _ => ToolUsability.Available
             };
         }
