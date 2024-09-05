@@ -17,7 +17,7 @@ namespace Tulip.Data.Items
 
         public override ToolUsability GetUsability(IWorld world, Vector2Int cell) =>
             !world.IsCellEntityFree(cell) ? ToolUsability.NotNow
-            : world.HasBlock(cell) ? ToolUsability.Available
+            : world.HasTile(cell, TileType.Block) ? ToolUsability.Available
             : ToolUsability.NoEffect;
 
         public override InventoryModification UseOn(IWorld world, Vector2Int cell) =>

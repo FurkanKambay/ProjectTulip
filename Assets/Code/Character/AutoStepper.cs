@@ -1,5 +1,6 @@
 using System;
 using SaintsField;
+using Tulip.Data;
 using UnityEngine;
 
 namespace Tulip.Character
@@ -65,15 +66,19 @@ namespace Tulip.Character
 
             RaycastHit2D hit = Physics2D.Raycast(hotspot, direction, range, LayerMask.GetMask("World"));
 
+            if (!hit)
+                return AutoStepDirection.None;
+
             Vector2 hitPoint = hit.point - (hit.normal * 0.1f);
             Vector2Int cell1 = entity.World.WorldToCell(hitPoint) + Vector2Int.up;
             Vector2Int cell2 = cell1 + Vector2Int.up;
             Vector2Int cell3 = cell2 + (velocity < 0 ? Vector2Int.right : Vector2Int.left);
 
-            if (!hit)
-                return AutoStepDirection.None;
+            bool isObstructed = entity.World.HasTile(cell1, TileType.Block)
+                                || entity.World.HasTile(cell2, TileType.Block)
+                                || entity.World.HasTile(cell3, TileType.Block);
 
-            if (entity.World.HasBlock(cell1) || entity.World.HasBlock(cell2) || entity.World.HasBlock(cell3))
+            if (isObstructed)
                 return AutoStepDirection.None;
 
             return velocity > 0 ? AutoStepDirection.Right : AutoStepDirection.Left;

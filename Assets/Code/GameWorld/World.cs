@@ -103,28 +103,31 @@ namespace Tulip.GameWorld
 
         public void ClearEntities() => staticEntities.Clear();
 
-#region Cell Helpers
+#region Tile Helpers
 
-        public bool HasTile(Vector2Int cell, TileType tileType) => GetTiles(tileType).ContainsKey(cell);
-        public bool HasWall(Vector2Int cell) => WorldData.Walls.ContainsKey(cell);
-        public bool HasBlock(Vector2Int cell) => WorldData.Blocks.ContainsKey(cell);
-        public bool HasCurtain(Vector2Int cell) => WorldData.Curtains.ContainsKey(cell);
+        public bool HasTile(Vector2Int cell, TileType tileType) =>
+            GetTiles(tileType).ContainsKey(cell);
 
         public PlaceableData GetTile(Vector2Int cell, TileType tileType) =>
             GetTiles(tileType).TryGetValue(cell, out PlaceableData placeableData) ? placeableData : null;
 
-        public PlaceableData GetWall(Vector2Int cell) =>
-            WorldData.Walls.TryGetValue(cell, out PlaceableData wall) ? wall : null;
+        public PlaceableData GetTileAtWorld(Vector3 worldPosition, TileType tileType) =>
+            GetTile(WorldToCell(worldPosition), tileType);
 
-        public PlaceableData GetBlock(Vector2Int cell) =>
-            WorldData.Blocks.TryGetValue(cell, out PlaceableData wall) ? wall : null;
+        public int GetTileDamage(Vector2Int cell, TileType tileType) =>
+            GetDamageMap(tileType).GetValueOrDefault(cell, 0);
 
-        public PlaceableData GetCurtain(Vector2Int cell) =>
-            WorldData.Curtains.TryGetValue(cell, out PlaceableData wall) ? wall : null;
+        private TileDictionary GetTiles(TileType tileType) => tileType switch
+        {
+            TileType.Wall => WorldData.Walls,
+            TileType.Block => WorldData.Blocks,
+            TileType.Curtain => WorldData.Curtains,
+            _ => throw new ArgumentOutOfRangeException(nameof(tileType))
+        };
 
-        public PlaceableData GetWallAtWorld(Vector3 worldPosition) => GetWall(WorldToCell(worldPosition));
-        public PlaceableData GetBlockAtWorld(Vector3 worldPosition) => GetBlock(WorldToCell(worldPosition));
-        public PlaceableData GetCurtainAtWorld(Vector3 worldPosition) => GetCurtain(WorldToCell(worldPosition));
+#endregion
+
+#region Cell Helpers
 
         public Vector3 CellCenter(Vector2Int cell) => worldVisual.GetCellCenterWorld(cell);
         public Vector2Int WorldToCell(Vector3 worldPosition) => worldVisual.WorldToCell(worldPosition);
@@ -132,7 +135,7 @@ namespace Tulip.GameWorld
         public Bounds CellBoundsWorld(Vector2Int cell) => worldVisual.CellBoundsWorld(cell);
         public bool DoesCellIntersect(Vector2Int cell, Bounds other) => CellBoundsWorld(cell).Intersects(other);
 
-        /// Checks for entities at the cell. Use <see cref="HasBlock"/> for other purposes.
+        /// Checks for entities at the cell. Use <see cref="HasTile"/> for other purposes.
         public bool IsCellEntityFree(Vector2Int cell)
         {
             Bounds bounds = CellBoundsWorld(cell);
@@ -154,15 +157,12 @@ namespace Tulip.GameWorld
 
             foreach (Vector2Int position in entityRect.allPositionsWithin)
             {
-                if (HasBlock(position))
+                if (HasTile(position, TileType.Block))
                     return false;
             }
 
             return staticEntities.Values.All(entity => !entity.Rect.Overlaps(entityRect));
         }
-
-        public int GetTileDamage(Vector2Int cell, TileType tileType) =>
-            GetDamageMap(tileType).GetValueOrDefault(cell, 0);
 
         private void HandleWorldProvided(WorldData worldData)
         {
@@ -172,14 +172,6 @@ namespace Tulip.GameWorld
 
         private void HandleGameStateChange(GameState oldState, GameState newState) =>
             isReadonly = newState == GameState.MainMenu;
-
-        private TileDictionary GetTiles(TileType tileType) => tileType switch
-        {
-            TileType.Wall => WorldData.Walls,
-            TileType.Block => WorldData.Blocks,
-            TileType.Curtain => WorldData.Curtains,
-            _ => throw new ArgumentOutOfRangeException(nameof(tileType))
-        };
 
         private Dictionary<Vector2Int, int> GetDamageMap(TileType tileType) => tileType switch
         {

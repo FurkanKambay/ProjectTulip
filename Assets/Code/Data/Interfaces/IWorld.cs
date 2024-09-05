@@ -25,18 +25,8 @@ namespace Tulip.Data
         InventoryModification PlaceTile(Vector2Int cell, PlaceableData placeableData);
 
         bool HasTile(Vector2Int cell, TileType tileType);
-        bool HasWall(Vector2Int cell);
-        bool HasBlock(Vector2Int cell);
-        bool HasCurtain(Vector2Int cell);
-
         PlaceableData GetTile(Vector2Int cell, TileType tileType);
-        PlaceableData GetWall(Vector2Int cell);
-        PlaceableData GetBlock(Vector2Int cell);
-        PlaceableData GetCurtain(Vector2Int cell);
-
-        PlaceableData GetWallAtWorld(Vector3 worldPosition);
-        PlaceableData GetBlockAtWorld(Vector3 worldPosition);
-        PlaceableData GetCurtainAtWorld(Vector3 worldPosition);
+        PlaceableData GetTileAtWorld(Vector3 worldPosition, TileType tileType);
 
         Vector3 CellCenter(Vector2Int cell);
         Vector2Int WorldToCell(Vector3 worldPosition);

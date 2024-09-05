@@ -41,7 +41,7 @@ namespace Tulip.Data
             for (int y = 0; y < clearanceAbove; y++)
             for (int x = 0; x < entityData.Size.x; x++)
             {
-                if (world.HasBlock(baseCell + new Vector2Int(x, entityData.Size.y + y)))
+                if (world.HasTile(baseCell + new Vector2Int(x, entityData.Size.y + y), TileType.Block))
                     return false;
             }
 
@@ -51,7 +51,7 @@ namespace Tulip.Data
                 for (int y = 1; y <= clearanceBelow; y++)
                 for (int x = 0; x < entityData.Size.x; x++)
                 {
-                    if (world.HasBlock(baseCell + new Vector2Int(x, -y)))
+                    if (world.HasTile(baseCell + new Vector2Int(x, -y), TileType.Block))
                         return false;
                 }
             }
@@ -63,9 +63,9 @@ namespace Tulip.Data
             for (int x = 0; x < entityData.Size.x; x++)
             {
                 Vector2Int floorCell = baseCell + new Vector2Int(x, -1);
-                PlaceableData floorTile = world.GetBlock(floorCell);
+                PlaceableData floorTile = world.GetTile(floorCell, TileType.Block);
 
-                if (!world.HasBlock(floorCell) || (needsSafeGround && floorTile.IsUnsafe))
+                if (!floorTile || (needsSafeGround && floorTile.IsUnsafe))
                     return false;
 
                 if (groundTiles.Length > 0 && !groundTiles.Contains(floorTile))
