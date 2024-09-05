@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 91d50cdd3177424c814056577cacd808, type: 3}
-  m_Name: Inventory - Default
+  m_Name: Default Inventory
   m_EditorClassIdentifier: 
   capacity: 9
   inventory:
@@ -30,5 +30,11 @@ MonoBehaviour:
     isLocked: 1
     amount: 5
   - itemData: {fileID: 11400000, guid: f38d0fc5a331ed44ba37a427dd625605, type: 2}
+    isLocked: 0
+    amount: 100
+  - itemData: {fileID: 11400000, guid: 073b2dd8fffaae5488494ef31e821aea, type: 2}
+    isLocked: 0
+    amount: 100
+  - itemData: {fileID: 11400000, guid: 0491a0de59d86f9408b7f2902c563f0e, type: 2}
     isLocked: 0
     amount: 100
