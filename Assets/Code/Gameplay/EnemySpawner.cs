@@ -113,6 +113,9 @@ namespace Tulip.Gameplay
 
         private IEnumerable<Vector2Int> GetSuitableCells(EntityData entityData)
         {
+            if (!isActive)
+                yield break;
+
             Vector3 cameraExtents = new(camera.orthographicSize * camera.aspect, camera.orthographicSize);
             Vector3 spawnExtents = new(cameraExtents.x + radius, cameraExtents.y + radius);
             Vector3 cameraCenter = camera.transform.position;
