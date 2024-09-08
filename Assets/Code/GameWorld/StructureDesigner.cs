@@ -79,7 +79,7 @@ namespace Tulip.GameWorld
                 }
             }
 
-            structureData.SetWorldData(new WorldData(dimensions, walls, blocks, curtains));
+            structureData.SetWorldData(new WorldData(structureData.name, dimensions, walls, blocks, curtains));
             EditorUtility.SetDirty(structureData);
         }
 

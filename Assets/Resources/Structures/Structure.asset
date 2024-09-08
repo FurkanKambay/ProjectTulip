@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Structure
   m_EditorClassIdentifier: 
   worldData:
+    name: Structure
     dimensions: {x: 20, y: 10}
     walls:
       m_keys:

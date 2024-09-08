@@ -5,5 +5,7 @@ namespace Tulip.Data
         public delegate void ProvideWorldEvent(WorldData worldData);
 
         event ProvideWorldEvent OnProvideWorld;
+
+        public WorldData World { get; }
     }
 }

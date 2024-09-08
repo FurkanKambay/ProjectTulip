@@ -26,24 +26,24 @@ namespace Tulip.GameWorld
 
         public bool IsReadonly => isReadonly;
 
-        internal WorldData WorldData { get; private set; }
-
+        private WorldData worldData;
         private readonly Dictionary<Vector2Int, ITangibleEntity> staticEntities = new();
-
         private readonly Dictionary<Vector2Int, int> wallDamageMap = new();
         private readonly Dictionary<Vector2Int, int> blockDamageMap = new();
         private readonly Dictionary<Vector2Int, int> curtainDamageMap = new();
 
+        private void Awake() => SetWorldData(worldProvider.I.World);
+
         private void OnEnable()
         {
             GameManager.OnGameStateChange += HandleGameStateChange;
-            worldProvider.I.OnProvideWorld += HandleWorldProvided;
+            worldProvider.I.OnProvideWorld += SetWorldData;
         }
 
         private void OnDisable()
         {
             GameManager.OnGameStateChange -= HandleGameStateChange;
-            worldProvider.I.OnProvideWorld -= HandleWorldProvided;
+            worldProvider.I.OnProvideWorld -= SetWorldData;
         }
 
         public InventoryModification DamageTile(Vector2Int cell, TileType tileType, int damage)
@@ -120,9 +120,9 @@ namespace Tulip.GameWorld
 
         private TileDictionary GetTiles(TileType tileType) => tileType switch
         {
-            TileType.Wall => WorldData.Walls,
-            TileType.Block => WorldData.Blocks,
-            TileType.Curtain => WorldData.Curtains,
+            TileType.Wall => worldData.Walls,
+            TileType.Block => worldData.Blocks,
+            TileType.Curtain => worldData.Curtains,
             _ => throw new ArgumentOutOfRangeException(nameof(tileType))
         };
 
@@ -164,10 +164,13 @@ namespace Tulip.GameWorld
             return staticEntities.Values.All(entity => !entity.Rect.Overlaps(entityRect));
         }
 
-        private void HandleWorldProvided(WorldData worldData)
+        internal void SetWorldData(WorldData newWorldData)
         {
-            WorldData = worldData;
-            OnRefresh?.Invoke(worldData);
+            if (worldData == newWorldData)
+                return;
+
+            worldData = newWorldData;
+            OnRefresh?.Invoke(newWorldData);
         }
 
         private void HandleGameStateChange(GameState oldState, GameState newState) =>

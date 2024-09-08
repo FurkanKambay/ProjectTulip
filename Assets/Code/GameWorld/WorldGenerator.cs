@@ -1,40 +1,20 @@
 using SaintsField;
-using SaintsField.Playa;
-using Tulip.Core;
 using Tulip.Data;
 using Tulip.Data.Items;
 using UnityEngine;
 
 namespace Tulip.GameWorld
 {
-    public class WorldGenerator : MonoBehaviour, IWorldProvider
+    public class WorldGenerator : MonoBehaviour
     {
-        [Header("References")]
-        [SerializeField] World world;
-
         [Header("Config")]
         [SerializeField, Expandable] WorldGenConfig config;
 
-        public event IWorldProvider.ProvideWorldEvent OnProvideWorld;
-
-        private void OnEnable() => GameManager.OnGameStateChange += HandleGameStateChange;
-        private void OnDisable() => GameManager.OnGameStateChange -= HandleGameStateChange;
-
-        private async void HandleGameStateChange(GameState oldState, GameState newState)
+        public async Awaitable<WorldData> GenerateWorldAsync(string worldName)
         {
-            if (oldState == GameState.MainMenu && newState == GameState.Playing)
-                await ApplyWorldAsync();
-        }
+            if (string.IsNullOrWhiteSpace(worldName))
+                return null;
 
-        [Button]
-        private async Awaitable ApplyWorldAsync()
-        {
-            WorldData worldData = await GenerateDataAsync();
-            OnProvideWorld?.Invoke(worldData);
-        }
-
-        private async Awaitable<WorldData> GenerateDataAsync()
-        {
 #if !UNITY_WEBGL
             await Awaitable.BackgroundThreadAsync();
 #endif
@@ -93,7 +73,7 @@ namespace Tulip.GameWorld
             // blocks.TrimExcess();
             // curtains.TrimExcess();
 
-            var worldData = new WorldData(dimensions, walls, blocks, curtains);
+            var worldData = new WorldData(worldName, dimensions, walls, blocks, curtains);
 
             await Awaitable.MainThreadAsync();
 
