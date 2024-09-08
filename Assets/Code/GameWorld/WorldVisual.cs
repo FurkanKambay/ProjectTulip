@@ -12,7 +12,7 @@ namespace Tulip.GameWorld
     public class WorldVisual : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField] Transform player;
+        [SerializeField] EntityLocationDeterminer playerLocation;
         [SerializeField] World world;
         [SerializeField] Tilemap wallTilemap;
         [SerializeField] Tilemap blockTilemap;
@@ -56,15 +56,12 @@ namespace Tulip.GameWorld
 
         private void Update()
         {
-            Vector3 playerPosition = player.position;
-            Vector2Int playerCell = world.WorldToCell(playerPosition);
-            bool hasCurtain = world.HasTile(playerCell, TileType.Curtain);
-
             float maxDeltaTime = Time.deltaTime * curtainRevealSpeed;
-            curtainRevealProgress = Mathf.MoveTowards(curtainRevealProgress, hasCurtain.GetHashCode(), maxDeltaTime);
+            int location = playerLocation.Location.GetHashCode();
+            curtainRevealProgress = Mathf.MoveTowards(curtainRevealProgress, location, maxDeltaTime);
 
             propertyBlock.SetFloat(shaderRevealProgress, curtainRevealProgress);
-            propertyBlock.SetVector(shaderPlayerPosition, playerPosition);
+            propertyBlock.SetVector(shaderPlayerPosition, playerLocation.Position);
             curtainRenderer.SetPropertyBlock(propertyBlock);
         }
 
