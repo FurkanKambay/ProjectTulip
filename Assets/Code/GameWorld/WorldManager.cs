@@ -21,7 +21,7 @@ namespace Tulip.GameWorld
 
         public WorldData World => loadedWorld ??= playgroundStructure.WorldData;
 
-        private WorldSaveDictionary worldSaves;
+        private readonly WorldSaveDictionary worldSaves = new();
         private WorldData loadedWorld;
 
         private void Awake() => ReturnToMainMenu();
