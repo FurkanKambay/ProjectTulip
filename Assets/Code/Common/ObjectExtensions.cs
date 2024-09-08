@@ -1,9 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
-namespace Tulip.Core
+namespace Furkan.Common
 {
-    public static class UnityExtensions
+    public static class ObjectExtensions
     {
         // TODO: Why does NotNullWhen(true) not work
         /// Safe <c>is</c> operator with Unity lifetime check

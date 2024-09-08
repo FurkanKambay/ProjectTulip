@@ -1,4 +1,4 @@
-using Tulip.Core;
+using Furkan.Common;
 using Tulip.Data;
 using Tulip.Data.Gameplay;
 using UnityEngine;

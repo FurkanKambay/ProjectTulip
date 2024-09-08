@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Tulip.Core;
+using Furkan.Common;
 using Tulip.Data;
 using Tulip.Data.Items;
 using UnityEngine;

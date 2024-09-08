@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace Tulip.Core
+namespace Furkan.Common
 {
-    public static class MathExtensions
+    public static class VectorMathExtensions
     {
         public static Vector3 WithZ(this Vector2 self, float z) =>
             new(self.x, self.y, z);
