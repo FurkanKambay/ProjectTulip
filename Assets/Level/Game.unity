@@ -1396,6 +1396,7 @@ MonoBehaviour:
       Data3: -1466501490
       Data4: -1776651225
     Path: event:/Music/Biome Music
+  playerLocation: {fileID: 1154427129}
   startingBiome: 0
 --- !u!1 &1766718189
 GameObject:
