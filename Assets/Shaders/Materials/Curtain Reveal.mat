@@ -41,8 +41,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _MinAlpha: 0.2
-    - _RevealRadius: 10
+    - _Min_Alpha: 0
+    - _Reveal_Progress: 1
+    - _Reveal_Radius: 10
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1

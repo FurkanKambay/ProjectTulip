@@ -65,6 +65,7 @@ MonoBehaviour:
   wallTilemap: {fileID: 7173102642003252303}
   blockTilemap: {fileID: 7216450001828290536}
   curtainTilemap: {fileID: 6191996856151981255}
+  curtainRevealSpeed: 10
 --- !u!1 &5034274105396919754
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,10 +18,15 @@ namespace Tulip.GameWorld
         [SerializeField] Tilemap blockTilemap;
         [SerializeField] Tilemap curtainTilemap;
 
+        [Header("Config")]
+        [SerializeField] float curtainRevealSpeed;
+
         private TilemapRenderer curtainRenderer;
+        private float curtainRevealProgress;
 
         private MaterialPropertyBlock propertyBlock;
-        private static readonly int shaderPlayerPosition = Shader.PropertyToID("_PlayerPosition");
+        private static readonly int shaderPlayerPosition = Shader.PropertyToID("_Player_Position");
+        private static readonly int shaderRevealProgress = Shader.PropertyToID("_Reveal_Progress");
 
         private void Awake()
         {
@@ -51,7 +56,15 @@ namespace Tulip.GameWorld
 
         private void Update()
         {
-            propertyBlock.SetVector(shaderPlayerPosition, player.position);
+            Vector3 playerPosition = player.position;
+            Vector2Int playerCell = world.WorldToCell(playerPosition);
+            bool hasCurtain = world.HasTile(playerCell, TileType.Curtain);
+
+            float maxDeltaTime = Time.deltaTime * curtainRevealSpeed;
+            curtainRevealProgress = Mathf.MoveTowards(curtainRevealProgress, hasCurtain.GetHashCode(), maxDeltaTime);
+
+            propertyBlock.SetFloat(shaderRevealProgress, curtainRevealProgress);
+            propertyBlock.SetVector(shaderPlayerPosition, playerPosition);
             curtainRenderer.SetPropertyBlock(propertyBlock);
         }
 
