@@ -4,7 +4,7 @@ using Tulip.Data;
 using Tulip.Data.Items;
 using UnityEngine;
 
-namespace Tulip.Player
+namespace Tulip.Character
 {
     public sealed class Inventory : InventoryBase
     {

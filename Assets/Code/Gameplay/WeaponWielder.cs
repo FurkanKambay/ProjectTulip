@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Furkan.Common;
 using SaintsField;
+using Tulip.Character;
 using Tulip.Data;
 using Tulip.Data.Items;
-using Tulip.Player;
 using UnityEngine;
 
 namespace Tulip.Gameplay

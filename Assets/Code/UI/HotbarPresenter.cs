@@ -13,7 +13,7 @@ namespace Tulip.UI
     {
         [Header("References")]
         [SerializeField, Required] UIDocument document;
-        [SerializeField, Required] SaintsInterface<Component, IPlayerHotbar> hotbar;
+        [SerializeField, Required] SaintsInterface<Component, IHotbar> hotbar;
 
         [Header("FMOD Events")]
         [SerializeField, Required] StudioEventEmitter hotbarSfx;

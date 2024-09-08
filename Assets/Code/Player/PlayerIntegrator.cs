@@ -1,4 +1,5 @@
 using SaintsField;
+using Tulip.Character;
 using Tulip.Core;
 using Tulip.Data;
 using UnityEngine;
@@ -9,7 +10,7 @@ namespace Tulip.Player
     {
         [Header("References")]
         [SerializeField, Required] SaintsInterface<Component, IPlayerBrain> brain;
-        [SerializeField] PlayerHotbar hotbar;
+        [SerializeField] Hotbar hotbar;
 
         private void Update()
         {

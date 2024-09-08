@@ -3,9 +3,9 @@ using SaintsField;
 using Tulip.Data;
 using UnityEngine;
 
-namespace Tulip.Player
+namespace Tulip.Character
 {
-    public sealed class PlayerHotbar : MonoBehaviour, IPlayerHotbar
+    public sealed class Hotbar : MonoBehaviour, IHotbar
     {
         public event Action OnModify;
         public event Action<int> OnChangeSelection;
@@ -36,7 +36,7 @@ namespace Tulip.Player
             OnChangeSelection?.Invoke(SelectedIndex);
         }
 
-        internal void Select(int index)
+        public void Select(int index)
         {
             if (index == SelectedIndex)
                 return;

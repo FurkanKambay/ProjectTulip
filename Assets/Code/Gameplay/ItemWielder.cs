@@ -1,10 +1,10 @@
 using System;
 using Furkan.Common;
 using SaintsField;
+using Tulip.Character;
 using Tulip.Data;
 using Tulip.Data.Gameplay;
 using Tulip.Data.Items;
-using Tulip.Player;
 using UnityEngine;
 
 namespace Tulip.Gameplay
@@ -23,7 +23,7 @@ namespace Tulip.Gameplay
         [Header("References")]
         [SerializeField, Required] HealthBase health;
         [SerializeField, Required] SaintsInterface<Component, IWielderBrain> brain;
-        [SerializeField] PlayerHotbar hotbar;
+        [SerializeField] Hotbar hotbar;
         [SerializeField, Required] SpriteRenderer itemRenderer;
 
         [Header("Config")]

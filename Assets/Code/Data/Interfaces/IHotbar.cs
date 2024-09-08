@@ -2,7 +2,7 @@ using System;
 
 namespace Tulip.Data
 {
-    public interface IPlayerHotbar
+    public interface IHotbar
     {
         event Action OnModify;
         event Action<int> OnChangeSelection;
