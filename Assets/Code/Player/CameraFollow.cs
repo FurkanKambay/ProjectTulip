@@ -21,36 +21,33 @@ namespace Tulip.Player
         [SerializeField] TrackingOptions trackingConfig;
         [SerializeField] ZoomOptions zoomConfig;
 
+        private CameraMode cameraMode = CameraMode.MainMenuPlayground;
         private Vector3 initialPosition;
 
-        private void Awake() => initialPosition = transform.position;
+        private void Awake()
+        {
+            initialPosition = transform.position;
+            trackingConfig.Target = initialPosition;
+        }
 
-        private void OnEnable() => trackingConfig.Target = initialPosition;
+        private void OnEnable() => GameManager.OnGameStateChange += GameManager_StateChanged;
+        private void OnDisable() => GameManager.OnGameStateChange -= GameManager_StateChanged;
 
         private void Update()
         {
-            if (GameManager.CurrentState == GameState.MainMenu)
-            {
-                var clampedScreenPoint = new Vector3(
-                    x: Mathf.Clamp(brain.I.AimPointScreen.x, 0, camera.pixelWidth),
-                    y: Mathf.Clamp(brain.I.AimPointScreen.y, 0, camera.pixelHeight));
-
-                Vector3 mouseWorldPoint = camera.ScreenToWorldPoint(clampedScreenPoint);
-                Vector3 peekAmount = mouseWorldPoint * new Vector2(menuPeekAmountX, menuPeekAmountY);
-
-                trackingConfig.Target = initialPosition + peekAmount;
-            }
-            else if (GameManager.CurrentState == GameState.Playing || GameManager.CurrentState == GameState.Testing)
-            {
-                Vector3 targetPoint = (bool)brain.V ? brain.V.transform.position : initialPosition;
-                trackingConfig.Target = targetPoint + (Vector3)trackingConfig.Offset;
-                zoomConfig.Target -= brain.I.ZoomDelta * zoomConfig.Sensitivity * Time.deltaTime;
-            }
+            if (cameraMode == CameraMode.MainMenuPlayground)
+                TickPlaygroundPeeking();
+            else
+                TickPlayerTracking();
         }
 
         private void LateUpdate()
         {
-            camera.orthographicSize = Mathf.Lerp(camera.orthographicSize, zoomConfig.Target, Time.deltaTime * zoomConfig.Speed);
+            camera.orthographicSize = Mathf.Lerp(
+                camera.orthographicSize,
+                zoomConfig.Target,
+                Time.deltaTime * zoomConfig.Speed
+            );
 
             Vector3 position = transform.position;
             float lerpX = Mathf.Lerp(position.x, trackingConfig.Target.x, Time.deltaTime * trackingConfig.Speed.x);
@@ -62,10 +59,42 @@ namespace Tulip.Player
             camera.transform.position = new Vector3(targetX, targetY, trackingConfig.Target.z);
         }
 
+        private void TickPlayerTracking()
+        {
+            Vector3 targetPoint = (bool)brain.V ? brain.V.transform.position : initialPosition;
+            trackingConfig.Target = targetPoint + (Vector3)trackingConfig.Offset;
+            zoomConfig.Target -= brain.I.ZoomDelta * zoomConfig.Sensitivity * Time.deltaTime;
+        }
+
+        private void TickPlaygroundPeeking()
+        {
+            var clampedScreenPoint = new Vector3(
+                x: Mathf.Clamp(brain.I.AimPointScreen.x, 0, camera.pixelWidth),
+                y: Mathf.Clamp(brain.I.AimPointScreen.y, 0, camera.pixelHeight)
+            );
+
+            Vector3 mouseWorldPoint = camera.ScreenToWorldPoint(clampedScreenPoint);
+            Vector3 peekAmount = mouseWorldPoint * new Vector2(menuPeekAmountX, menuPeekAmountY);
+
+            trackingConfig.Target = initialPosition + peekAmount;
+        }
+
+        private void GameManager_StateChanged(GameState _, GameState newState) => cameraMode = newState switch
+        {
+            GameState.MainMenu => CameraMode.MainMenuPlayground,
+            _ => CameraMode.FollowPlayer
+        };
+
         private void OnValidate()
         {
             initialPosition = menuOffset.WithZ(-10);
             camera.transform.position = initialPosition;
+        }
+
+        private enum CameraMode
+        {
+            FollowPlayer,
+            MainMenuPlayground
         }
 
         [Serializable]
