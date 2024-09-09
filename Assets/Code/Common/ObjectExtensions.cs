@@ -6,26 +6,51 @@ namespace Furkan.Common
     public static class ObjectExtensions
     {
         // TODO: Why does NotNullWhen(true) not work
+
+        /// <summary>
         /// Safe <c>is</c> operator with Unity lifetime check
-        public static bool Is<T>(this Object self, [MaybeNull] out T target) where T : Object
+        /// </summary>
+        public static bool Is<TObject>(this Object self, [MaybeNull] out TObject target) where TObject : Object
         {
-            target = (bool)self ? self as T : null;
+            target = (bool)self ? self as TObject : null;
             return (bool)target;
         }
 
+        /// <summary>
         /// Safe <c>is not</c> operator with Unity lifetime check
-        public static bool IsNot<T>(this Object self, [MaybeNull] out T target) where T : Object =>
+        /// </summary>
+        public static bool IsNot<TObject>(this Object self, [MaybeNull] out TObject target) where TObject : Object =>
             !self.Is(out target);
 
+        /// <summary>
         /// Safe <c>is</c> operator with Unity lifetime check
-        public static bool Is<T, TInterface>(this TInterface self, [MaybeNull] out T target) where T : Object
+        /// </summary>
+        public static bool Is<TInterface, TObject>(this TInterface self, [MaybeNull] out TObject target)
+            where TInterface : class
+            where TObject : Object
         {
-            target = (bool)(self as Object) ? self as T : null;
+            target = self.IsAlive() ? self as TObject : null;
             return (bool)target;
         }
 
+        /// <summary>
         /// Safe <c>is not</c> operator with Unity lifetime check
-        public static bool IsNot<T, TInterface>(this TInterface self, [MaybeNull] out T target) where T : Object =>
+        /// </summary>
+        public static bool IsNot<TInterface, TObject>(this TInterface self, [MaybeNull] out TObject target)
+            where TInterface : class
+            where TObject : Object =>
             !self.Is(out target);
+
+        /// <summary>
+        /// Unity lifetime check for interfaces (<c>self != null</c>)
+        /// </summary>
+        public static bool IsAlive<TInterface>(this TInterface self) where TInterface : class =>
+            (bool)(self as Object);
+
+        /// <summary>
+        /// Unity lifetime check for interfaces (<c>self == null</c>)
+        /// </summary>
+        public static bool IsNull<TInterface>(this TInterface self) where TInterface : class =>
+            !IsAlive(self);
     }
 }
