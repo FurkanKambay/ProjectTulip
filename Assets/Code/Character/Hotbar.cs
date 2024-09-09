@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Tulip.Character
 {
-    public sealed class Hotbar : MonoBehaviour, IHotbar
+    public class Hotbar : MonoBehaviour, IHotbar
     {
         public event Action OnModify;
         public event Action<int> OnChangeSelection;
@@ -49,5 +49,8 @@ namespace Tulip.Character
         private void OnDisable() => inventory.OnModify -= HandleInventoryModified;
 
         private void HandleInventoryModified() => OnModify?.Invoke();
+
+        private void OnValidate() =>
+            size = Mathf.Clamp(size, 0, inventory.Capacity);
     }
 }

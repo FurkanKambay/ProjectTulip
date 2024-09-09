@@ -307,7 +307,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4170252602180971364}
-  - component: {fileID: 542648804553045035}
+  - component: {fileID: 3160445657362363712}
   m_Layer: 6
   m_Name: Hotbar
   m_TagString: Untagged
@@ -330,7 +330,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4550549399932287733}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &542648804553045035
+--- !u!114 &3160445657362363712
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -339,11 +339,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2684818297632639724}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8dd693b70f6477e9a4f2fec2b5bf252, type: 3}
+  m_Script: {fileID: 11500000, guid: e7a83657788b4d00b2b3999985303765, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 4728014676095277497}
   size: 9
+  brain:
+    <V>k__BackingField: {fileID: 3825264036527423534}
 --- !u!1 &2788958634118158446
 GameObject:
   m_ObjectHideFlags: 0
@@ -1397,59 +1399,12 @@ MonoBehaviour:
   health: {fileID: 7186377946535505526}
   brain:
     <V>k__BackingField: {fileID: 3825264036527423534}
-  hotbar: {fileID: 542648804553045035}
+  hotbar: {fileID: 3160445657362363712}
   itemRenderer: {fileID: 3639728673497933778}
   fallbackStack:
     itemData: {fileID: 0}
     isLocked: 0
     amount: 0
---- !u!1 &6415558275367011905
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8851944521881486609}
-  - component: {fileID: 4437956386814167104}
-  m_Layer: 6
-  m_Name: Integrator
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8851944521881486609
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6415558275367011905}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1162442150028761475}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4437956386814167104
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6415558275367011905}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7a83657788b4d00b2b3999985303765, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  brain:
-    <V>k__BackingField: {fileID: 3825264036527423534}
-  hotbar: {fileID: 542648804553045035}
 --- !u!1 &6609697852333061365
 GameObject:
   m_ObjectHideFlags: 0
@@ -1526,8 +1481,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 8851944521881486609}
+  m_Children: []
   m_Father: {fileID: 8291246366843984804}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3825264036527423534
