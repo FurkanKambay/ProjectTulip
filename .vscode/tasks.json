@@ -3,7 +3,7 @@
     "tasks": [
         {
             "label": "Butler Push",
-            "command": "butler push --if-changed Builds/Tulip_Web.zip furkankambay/tulip:web; butler push --if-changed Builds/Tulip_Win.zip furkankambay/tulip:win",
+            "command": "butler push --if-changed Builds/Tulip_Web furkankambay/tulip:web; butler push --if-changed Builds/Tulip_Win furkankambay/tulip:win",
             "type": "shell",
             "args": [],
             "problemMatcher": [],
