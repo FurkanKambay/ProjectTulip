@@ -10,7 +10,6 @@ namespace Tulip.UI
     {
         [Header("References")]
         [SerializeField, Required] UIDocument document;
-        [SerializeField] MenuPlayground playground;
 
         private VisualElement root;
         private Button playButton;
@@ -25,7 +24,6 @@ namespace Tulip.UI
             bool inMainMenu = newState == GameState.MainMenu;
 
             document.enabled = inMainMenu;
-            playground.gameObject.SetActive(inMainMenu);
 
             if (!inMainMenu)
             {

@@ -4,6 +4,7 @@ using SaintsField;
 using Tulip.Core;
 using Tulip.Data;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Tulip.Player
 {
@@ -11,21 +12,26 @@ namespace Tulip.Player
     {
         [Header("References")]
         [SerializeField, Required] new Camera camera;
-        [SerializeField, GetComponentInScene] SaintsInterface<Component, IPlayerBrain> brain;
+        [SerializeField, Required] Transform subject;
 
-        [Header("Config")]
+        [Header("Playground Config")]
         [SerializeField, Range(-0.5f, 0.5f)] float menuPeekAmountX;
         [SerializeField, Range(-0.5f, 0.5f)] float menuPeekAmountY;
         [SerializeField] Vector2 menuOffset;
 
+        [Header("Gameplay Config")]
         [SerializeField] TrackingOptions trackingConfig;
         [SerializeField] ZoomOptions zoomConfig;
 
-        private CameraMode cameraMode = CameraMode.MainMenuPlayground;
+        private IPlayerBrain brain;
         private Vector3 initialPosition;
+        private CameraMode cameraMode = CameraMode.MainMenuPlayground;
 
         private void Awake()
         {
+            brain = subject.GetComponentInChildren<IPlayerBrain>();
+            Assert.IsTrue(brain.IsAlive());
+
             initialPosition = transform.position;
             trackingConfig.Target = initialPosition;
         }
@@ -35,10 +41,8 @@ namespace Tulip.Player
 
         private void Update()
         {
-            if (cameraMode == CameraMode.MainMenuPlayground)
-                TickPlaygroundPeeking();
-            else
-                TickPlayerTracking();
+            TickPlayerTracking();
+            TickPlayground();
         }
 
         private void LateUpdate()
@@ -61,22 +65,47 @@ namespace Tulip.Player
 
         private void TickPlayerTracking()
         {
-            Vector3 targetPoint = (bool)brain.V ? brain.V.transform.position : initialPosition;
+            if (cameraMode == CameraMode.MainMenuPlayground)
+                return;
+
+            Vector3 targetPoint = subject ? subject.position : initialPosition;
             trackingConfig.Target = targetPoint + (Vector3)trackingConfig.Offset;
-            zoomConfig.Target -= brain.I.ZoomDelta * zoomConfig.Sensitivity * Time.deltaTime;
+            zoomConfig.Target -= brain.ZoomDelta * zoomConfig.Sensitivity * Time.deltaTime;
         }
 
-        private void TickPlaygroundPeeking()
+        private void TickPlayground()
         {
+            if (cameraMode != CameraMode.MainMenuPlayground)
+                return;
+
             var clampedScreenPoint = new Vector3(
-                x: Mathf.Clamp(brain.I.AimPointScreen.x, 0, camera.pixelWidth),
-                y: Mathf.Clamp(brain.I.AimPointScreen.y, 0, camera.pixelHeight)
+                x: Mathf.Clamp(brain.AimPointScreen.x, 0, camera.pixelWidth),
+                y: Mathf.Clamp(brain.AimPointScreen.y, 0, camera.pixelHeight)
             );
 
             Vector3 mouseWorldPoint = camera.ScreenToWorldPoint(clampedScreenPoint);
             Vector3 peekAmount = mouseWorldPoint * new Vector2(menuPeekAmountX, menuPeekAmountY);
 
             trackingConfig.Target = initialPosition + peekAmount;
+
+            TickPlaygroundWarping();
+        }
+
+        private void TickPlaygroundWarping()
+        {
+            Vector3 cameraCenter = camera.transform.position;
+            float cameraExtent = camera.orthographicSize * camera.aspect;
+            float leftX = cameraCenter.x - cameraExtent;
+            float rightX = cameraCenter.x + cameraExtent;
+
+            Vector3 targetPosition = subject.position;
+
+            if (subject.position.x > rightX)
+                targetPosition.x = leftX;
+            else if (subject.position.x < leftX)
+                targetPosition.x = rightX;
+
+            subject.position = targetPosition;
         }
 
         private void GameManager_StateChanged(GameState _, GameState newState) => cameraMode = newState switch

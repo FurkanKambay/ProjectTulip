@@ -263,52 +263,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 661774618}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &395841228
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 395841229}
-  - component: {fileID: 395841230}
-  m_Layer: 0
-  m_Name: Menu Playground
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &395841229
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 395841228}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1808102681}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &395841230
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 395841228}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1084d8d8b7673954ba3ef7f320623870, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 1986012726}
-  camera: {fileID: 519420031}
 --- !u!1001 &414399565
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -845,8 +799,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 519420031}
-  brain:
-    <V>k__BackingField: {fileID: 2058642785}
+  subject: {fileID: 1986012726}
   menuPeekAmountX: 0.1
   menuPeekAmountY: 0.1
   menuOffset: {x: 0, y: 8}
@@ -1564,8 +1517,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 395841229}
+  m_Children: []
   m_Father: {fileID: 122205217}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1808102682
@@ -1600,7 +1552,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   document: {fileID: 1808102682}
-  playground: {fileID: 395841230}
 --- !u!1001 &1852941727
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1742,17 +1693,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8291246366843984804, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
   m_PrefabInstance: {fileID: 1154427126}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2058642785 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3825264036527423534, guid: 7a303a962b2ef6d4a9d938f3d23a64b4, type: 3}
-  m_PrefabInstance: {fileID: 1154427126}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34fe02ae195a4934ab403049c6892884, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2122878209
 GameObject:
   m_ObjectHideFlags: 0
