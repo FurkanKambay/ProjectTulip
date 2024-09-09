@@ -34,6 +34,8 @@ namespace Tulip.GameWorld
             propertyBlock = new MaterialPropertyBlock();
         }
 
+        private void Start() => HandleRefreshWorld(world.WorldData);
+
         private void OnEnable()
         {
             if (!world)

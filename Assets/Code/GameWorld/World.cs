@@ -24,6 +24,7 @@ namespace Tulip.GameWorld
         public event IWorld.PlaceableEvent OnHitTile;
         public event IWorld.PlaceableEvent OnDestroyTile;
 
+        public WorldData WorldData => worldData;
         public bool IsReadonly => isReadonly;
 
         private WorldData worldData;
@@ -164,7 +165,7 @@ namespace Tulip.GameWorld
             return staticEntities.Values.All(entity => !entity.Rect.Overlaps(entityRect));
         }
 
-        internal void SetWorldData(WorldData newWorldData)
+        private void SetWorldData(WorldData newWorldData)
         {
             if (worldData == newWorldData)
                 return;

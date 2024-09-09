@@ -19,7 +19,7 @@ namespace Tulip.GameWorld
         [SerializeField] WorldGenerator worldGenerator;
         [SerializeField] StructureData playgroundStructure;
 
-        public WorldData World => loadedWorld ??= playgroundStructure.WorldData;
+        public WorldData World => loadedWorld;
 
         private readonly WorldSaveDictionary worldSaves = new();
         private WorldData loadedWorld;
