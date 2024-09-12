@@ -55,8 +55,10 @@ Material:
     m_Ints: []
     m_Floats:
     - _DissolveAmount: 0
+    - _Outline_Thickness: 0
     - _ReplaceColor: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Outline_Color: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
