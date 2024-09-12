@@ -1474,6 +1474,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   document: {fileID: 1795025821}
   brain: {fileID: 513751246}
+  worldManager: {fileID: 2122878211}
   toggleSfx:
     Guid:
       Data1: -161944796
@@ -1552,6 +1553,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   document: {fileID: 1808102682}
+  worldManager: {fileID: 2122878211}
 --- !u!1001 &1852941727
 PrefabInstance:
   m_ObjectHideFlags: 0

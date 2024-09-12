@@ -5,7 +5,8 @@
             <ui:Label text="Project Tulip" name="Title" class="title" />
         </ui:VisualElement>
         <ui:VisualElement name="Body">
-            <ui:Button text="Play" name="PlayButton" class="menu-button" />
+            <ui:Button text="Continue" name="ContinueButton" enabled="false" class="menu-button" />
+            <ui:Button text="New World" name="NewButton" class="menu-button" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

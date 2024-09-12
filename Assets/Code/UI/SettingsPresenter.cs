@@ -3,6 +3,7 @@ using FMOD.Studio;
 using FMODUnity;
 using SaintsField;
 using Tulip.Core;
+using Tulip.GameWorld;
 using Tulip.Input;
 using Unity.Properties;
 using UnityEngine;
@@ -16,6 +17,7 @@ namespace Tulip.UI
         [Header("References")]
         [SerializeField, Required] UIDocument document;
         [SerializeField, Required] UserBrain brain;
+        [SerializeField, Required] WorldManager worldManager;
 
         [Header("FMOD Events")]
         [SerializeField] EventReference toggleSfx;
@@ -58,9 +60,9 @@ namespace Tulip.UI
             gameExitButton = root.Q<Button>("SaveExitButton");
             menuQuitButton = root.Q<Button>("QuitConfirmButton");
 
-            optionsButton.RegisterCallback<ChangeEvent<bool>>(HandleOptionsToggle);
-            gameExitButton.RegisterCallback<ClickEvent>(HandleSaveExitClicked);
-            menuQuitButton.RegisterCallback<ClickEvent>(HandleQuitClicked);
+            optionsButton.RegisterCallback<ChangeEvent<bool>>(OptionsButton_Toggled);
+            gameExitButton.RegisterCallback<ClickEvent>(SaveExitButton_Clicked);
+            menuQuitButton.RegisterCallback<ClickEvent>(QuitButton_Clicked);
 
 #if UNITY_WEBGL
             root.Q<DropdownField>("VideoResolution").RemoveFromHierarchy();
@@ -114,7 +116,7 @@ namespace Tulip.UI
                 tabView.selectedTabIndex += brain.TabSwitchDelta.Value;
         }
 
-        private void HandleOptionsToggle(ChangeEvent<bool> change)
+        private void OptionsButton_Toggled(ChangeEvent<bool> change)
         {
             container.visible = change.newValue;
             quitFlyoutButton.value = false;
@@ -141,15 +143,16 @@ namespace Tulip.UI
             root.visible = newState != GameState.Playing;
         }
 
-        private void HandleSaveExitClicked(ClickEvent _)
+        private void SaveExitButton_Clicked(ClickEvent _)
         {
             SaveGame();
             quitFlyoutButton.value = false;
-            GameManager.SwitchTo(GameState.MainMenu);
             optionsButton.value = false;
+
+            worldManager.ReturnToMainMenu();
         }
 
-        private void HandleQuitClicked(ClickEvent _) => GameManager.QuitGame();
+        private void QuitButton_Clicked(ClickEvent _) => GameManager.QuitGame();
 
         // TODO: save game
         private void SaveGame() => Debug.Log("Saving...");

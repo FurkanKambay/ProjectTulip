@@ -1,6 +1,7 @@
 using FMODUnity;
 using SaintsField;
 using Tulip.Core;
+using Tulip.GameWorld;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -10,14 +11,16 @@ namespace Tulip.UI
     {
         [Header("References")]
         [SerializeField, Required] UIDocument document;
+        [SerializeField, Required] WorldManager worldManager;
 
         private VisualElement root;
-        private Button playButton;
+        private Button newButton;
+        private Button continueButton;
 
         private void Awake() => UpdateCallbacks(GameManager.CurrentState);
 
-        private void OnEnable() => GameManager.OnGameStateChange += HandleGameStateChange;
-        private void OnDisable() => GameManager.OnGameStateChange -= HandleGameStateChange;
+        private void OnEnable() => GameManager.OnGameStateChange += GameManager_StateChanged;
+        private void OnDisable() => GameManager.OnGameStateChange -= GameManager_StateChanged;
 
         private void UpdateCallbacks(GameState newState)
         {
@@ -27,26 +30,52 @@ namespace Tulip.UI
 
             if (!inMainMenu)
             {
-                playButton.UnregisterCallback<ClickEvent>(HandlePlayClicked);
+                newButton.UnregisterCallback<ClickEvent>(NewButton_Clicked);
+                continueButton.UnregisterCallback<ClickEvent>(ContinueButton_Clicked);
                 return;
             }
 
             root = document.rootVisualElement.ElementAt(0);
-            playButton = root.Q<Button>("PlayButton");
-            playButton.RegisterCallback<ClickEvent>(HandlePlayClicked);
+            newButton = root.Q<Button>("NewButton");
+            continueButton = root.Q<Button>("ContinueButton");
+            newButton.RegisterCallback<ClickEvent>(NewButton_Clicked);
+            continueButton.RegisterCallback<ClickEvent>(ContinueButton_Clicked);
+
+            bool worldExists = worldManager.CanLoadWorld();
+            continueButton.SetEnabled(worldExists);
         }
 
-        private void HandleGameStateChange(GameState oldState, GameState newState) =>
-            UpdateCallbacks(newState);
-
-        private void HandlePlayClicked(ClickEvent _)
+        private async void NewButton_Clicked(ClickEvent _)
         {
-            playButton.SetEnabled(false);
-            playButton.text = "Loading...";
+            DisableButtons();
+            newButton.text = "Generating World";
 
             RuntimeManager.CoreSystem.mixerSuspend();
-            GameManager.SwitchTo(GameState.Playing);
+
+            worldManager.DeleteWorld();
+            await worldManager.CreateNewWorld();
+            worldManager.LoadWorld();
+
             RuntimeManager.CoreSystem.mixerResume();
         }
+
+        private void ContinueButton_Clicked(ClickEvent _)
+        {
+            DisableButtons();
+            continueButton.text = "Loading World";
+
+            RuntimeManager.CoreSystem.mixerSuspend();
+            worldManager.LoadWorld();
+            RuntimeManager.CoreSystem.mixerResume();
+        }
+
+        private void DisableButtons()
+        {
+            newButton.SetEnabled(false);
+            continueButton.SetEnabled(false);
+        }
+
+        private void GameManager_StateChanged(GameState oldState, GameState newState) =>
+            UpdateCallbacks(newState);
     }
 }

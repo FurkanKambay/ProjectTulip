@@ -47,11 +47,11 @@ Button {
     -unity-text-align: middle-center;
 }
 
-#PlayButton:hover {
+.menu-button:hover {
     background-color: rgb(94, 125, 79);
 }
 
-#PlayButton:active {
+.menu-button:active {
     background-color: rgb(75, 99, 63);
     border-left-color: rgb(75, 99, 63);
     border-right-color: rgb(75, 99, 63);
@@ -60,6 +60,6 @@ Button {
     -unity-font-style: bold;
 }
 
-#PlayButton:disabled {
-    background-color: rgb(75, 99, 63);
+.menu-button:disabled {
+    background-color: rgb(24, 72, 99);
 }

@@ -19,26 +19,14 @@ namespace Tulip.GameWorld
         [SerializeField] WorldGenerator worldGenerator;
         [SerializeField] StructureData playgroundStructure;
 
+        public const string WorldName = "World";
+
         public WorldData World => loadedWorld;
 
         private readonly WorldSaveDictionary worldSaves = new();
         private WorldData loadedWorld;
 
         private void Awake() => ReturnToMainMenu();
-
-        private void OnEnable() => GameManager.OnGameStateChange += GameManager_StateChanged;
-        private void OnDisable() => GameManager.OnGameStateChange -= GameManager_StateChanged;
-
-        private async void GameManager_StateChanged(GameState oldState, GameState newState)
-        {
-            if (oldState is GameState.MainMenu && newState is GameState.Playing)
-            {
-                await CreateNewWorld("test");
-                LoadWorld("test");
-            }
-            else if (newState is GameState.MainMenu)
-                ReturnToMainMenu();
-        }
 
         [Button]
         public void ReturnToMainMenu()
@@ -53,9 +41,9 @@ namespace Tulip.GameWorld
         }
 
         [Button]
-        public async Awaitable CreateNewWorld(string worldName)
+        public async Awaitable CreateNewWorld(string worldName = WorldName)
         {
-            if (!CanSaveName(worldName))
+            if (!CanSaveWorld(worldName))
                 return;
 
             WorldData generatedWorld = await worldGenerator.GenerateWorldAsync(worldName);
@@ -64,9 +52,9 @@ namespace Tulip.GameWorld
         }
 
         [Button]
-        public void LoadWorld(string worldName)
+        public void LoadWorld(string worldName = WorldName)
         {
-            if (!CanLoadName(worldName))
+            if (!CanLoadWorld(worldName))
                 return;
 
             loadedWorld = worldSaves[worldName];
@@ -75,11 +63,21 @@ namespace Tulip.GameWorld
             GameManager.SwitchTo(GameState.Playing);
         }
 
-        public bool CanSaveName(string worldName) =>
+        [Button]
+        public void DeleteWorld(string worldName = WorldName)
+        {
+            if (!CanLoadWorld(worldName))
+                return;
+
+            loadedWorld = null;
+            worldSaves.Remove(worldName);
+        }
+
+        public bool CanSaveWorld(string worldName = WorldName) =>
             !string.IsNullOrWhiteSpace(worldName)
             && !worldSaves.ContainsKey(worldName);
 
-        public bool CanLoadName(string worldName) =>
+        public bool CanLoadWorld(string worldName = WorldName) =>
             !string.IsNullOrWhiteSpace(worldName)
             && worldSaves.ContainsKey(worldName)
             && loadedWorld?.Name != worldName;
