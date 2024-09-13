@@ -26,6 +26,8 @@ namespace Tulip.Data
         }
 
         public virtual float MaxHealth => maxHealth;
+        public float InvulnerabilityDuration => invulnerabilityDuration;
+
         public virtual float Ratio => CurrentHealth / MaxHealth;
         public virtual bool IsAlive => CurrentHealth > 0;
         public virtual bool IsDead => CurrentHealth <= 0;

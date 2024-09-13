@@ -25,6 +25,7 @@ namespace Tulip.Character
 
         private static readonly int shaderReplaceColor = Shader.PropertyToID("_ReplaceColor");
         private static readonly int shaderDissolveAmount = Shader.PropertyToID("_DissolveAmount");
+        private static readonly int shaderOutlineThickness = Shader.PropertyToID("_Outline_Thickness");
 
         private void OnEnable()
         {
@@ -44,16 +45,16 @@ namespace Tulip.Character
 
         private async void HandleHurt(HealthChangeEventArgs damage)
         {
-            if (hurtVisualDuration <= 0)
-                return;
+            if (hurtVisualDuration > 0)
+            {
+                ApplyShaderProperty(shaderReplaceColor, 1);
+                await Awaitable.WaitForSecondsAsync(hurtVisualDuration);
+                ApplyShaderProperty(shaderReplaceColor, 0);
+            }
 
-            materialBlock.SetInt(shaderReplaceColor, 1);
-            sprite.SetPropertyBlock(materialBlock);
-
-            await Awaitable.WaitForSecondsAsync(hurtVisualDuration);
-
-            materialBlock.SetInt(shaderReplaceColor, 0);
-            sprite.SetPropertyBlock(materialBlock);
+            ApplyShaderProperty(shaderOutlineThickness, 1);
+            await Awaitable.WaitForSecondsAsync(health.InvulnerabilityDuration - hurtVisualDuration);
+            ApplyShaderProperty(shaderOutlineThickness, 0);
         }
 
         private void HandleRevived(IHealth reviver)
@@ -80,14 +81,18 @@ namespace Tulip.Character
             {
                 amount = Mathf.MoveTowards(amount, endAmount, Time.deltaTime / duration);
 
-                materialBlock.SetFloat(shaderDissolveAmount, amount);
-                sprite.SetPropertyBlock(materialBlock);
-
+                ApplyShaderProperty(shaderDissolveAmount, amount);
                 yield return null;
             }
 
             if (destroyAfterDeath)
                 Destroy(health.transform.parent.gameObject);
+        }
+
+        private void ApplyShaderProperty(int shaderProperty, float value)
+        {
+            materialBlock.SetFloat(shaderProperty, value);
+            sprite.SetPropertyBlock(materialBlock);
         }
     }
 }
