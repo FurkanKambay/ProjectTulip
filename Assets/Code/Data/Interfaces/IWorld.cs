@@ -1,6 +1,9 @@
 using Tulip.Data.Items;
 using UnityEngine;
 
+// ReSharper disable EventNeverSubscribedTo.Global
+// ReSharper disable UnusedMember.Global
+// ReSharper disable UnusedMemberInSuper.Global
 namespace Tulip.Data
 {
     public interface IWorld
@@ -11,6 +14,9 @@ namespace Tulip.Data
         event PlaceableEvent OnPlaceTile;
         event PlaceableEvent OnHitTile;
         event PlaceableEvent OnDestroyTile;
+
+        WorldData WorldData { get; }
+        bool IsReadonly { get; }
 
         /// <summary>
         /// Damages a tile of the given type at the given cell coordinates.

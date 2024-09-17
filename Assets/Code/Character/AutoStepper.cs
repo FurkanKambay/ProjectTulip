@@ -1,4 +1,5 @@
 using System;
+using Furkan.Common;
 using SaintsField;
 using Tulip.Data;
 using UnityEngine;
@@ -58,7 +59,7 @@ namespace Tulip.Character
         {
             float velocity = movement.DesiredVelocity.x;
 
-            if (!entity.world || Mathf.Abs(velocity) < velocityThreshold)
+            if (entity.World.IsNull() || Mathf.Abs(velocity) < velocityThreshold)
                 return AutoStepDirection.None;
 
             Vector2 direction = Vector2.right * Math.Sign(velocity);

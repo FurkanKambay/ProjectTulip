@@ -103,7 +103,7 @@ namespace Tulip.Player
             MouseCell = entity.World.WorldToCell(aimPoint);
             rangePath = Vector2.ClampMagnitude(itemWielder.I.AimDirection, range);
 
-            if (entity.world.IsReadonly)
+            if (entity.World.IsReadonly)
             {
                 FocusedCell = null;
                 return;

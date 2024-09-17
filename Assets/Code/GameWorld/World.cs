@@ -11,6 +11,11 @@ namespace Tulip.GameWorld
 {
     public class World : MonoBehaviour, IWorld
     {
+        public event IWorldProvider.ProvideWorldEvent OnRefresh;
+        public event IWorld.PlaceableEvent OnPlaceTile;
+        public event IWorld.PlaceableEvent OnHitTile;
+        public event IWorld.PlaceableEvent OnDestroyTile;
+
         [Header("References")]
         [SerializeField] SaintsInterface<Component, IWorldProvider> worldProvider;
         [SerializeField] WorldVisual worldVisual;
@@ -19,15 +24,9 @@ namespace Tulip.GameWorld
         [SerializeField] bool isReadonly;
         [SerializeField] LayerMask entityLayers;
 
-        public event IWorldProvider.ProvideWorldEvent OnRefresh;
-        public event IWorld.PlaceableEvent OnPlaceTile;
-        public event IWorld.PlaceableEvent OnHitTile;
-        public event IWorld.PlaceableEvent OnDestroyTile;
-
-        public WorldData WorldData => worldData;
+        public WorldData WorldData { get; private set; }
         public bool IsReadonly => isReadonly;
 
-        private WorldData worldData;
         private readonly Dictionary<Vector2Int, ITangibleEntity> staticEntities = new();
         private readonly Dictionary<Vector2Int, int> wallDamageMap = new();
         private readonly Dictionary<Vector2Int, int> blockDamageMap = new();
@@ -121,9 +120,9 @@ namespace Tulip.GameWorld
 
         private TileDictionary GetTiles(TileType tileType) => tileType switch
         {
-            TileType.Wall => worldData.Walls,
-            TileType.Block => worldData.Blocks,
-            TileType.Curtain => worldData.Curtains,
+            TileType.Wall => WorldData.Walls,
+            TileType.Block => WorldData.Blocks,
+            TileType.Curtain => WorldData.Curtains,
             _ => throw new ArgumentOutOfRangeException(nameof(tileType))
         };
 
@@ -167,10 +166,10 @@ namespace Tulip.GameWorld
 
         private void SetWorldData(WorldData newWorldData)
         {
-            if (worldData == newWorldData)
+            if (WorldData == newWorldData)
                 return;
 
-            worldData = newWorldData;
+            WorldData = newWorldData;
             OnRefresh?.Invoke(newWorldData);
         }
 

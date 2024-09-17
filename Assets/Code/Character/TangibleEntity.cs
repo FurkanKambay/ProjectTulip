@@ -12,7 +12,7 @@ namespace Tulip.Character
         [SerializeField, Required] EntityData entityData;
         [SerializeField] Rigidbody2D body;
         [SerializeField] Health health;
-        public World world;
+        [SerializeField] World world;
 
         public string Name => entityData.Name;
         public EntityData EntityData => entityData;
