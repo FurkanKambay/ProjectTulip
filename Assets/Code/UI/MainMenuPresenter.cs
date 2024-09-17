@@ -12,15 +12,29 @@ namespace Tulip.UI
         [Header("References")]
         [SerializeField, Required] UIDocument document;
         [SerializeField, Required] WorldManager worldManager;
+        [SerializeField, Required] SettingsPresenter settingsPresenter;
 
         private VisualElement root;
         private Button newButton;
         private Button continueButton;
 
-        private void Awake() => UpdateCallbacks(GameManager.CurrentState);
+        private void Awake() =>
+            UpdateCallbacks(GameManager.CurrentState);
 
-        private void OnEnable() => GameManager.OnGameStateChange += GameManager_StateChanged;
-        private void OnDisable() => GameManager.OnGameStateChange -= GameManager_StateChanged;
+        private void OnEnable()
+        {
+            GameManager.OnGameStateChange += GameManager_StateChanged;
+            settingsPresenter.OnToggled += Settings_Shown;
+        }
+
+        private void OnDisable()
+        {
+            GameManager.OnGameStateChange -= GameManager_StateChanged;
+            settingsPresenter.OnToggled -= Settings_Shown;
+        }
+
+        private void Settings_Shown(bool visible) =>
+            root.visible = !visible;
 
         private void UpdateCallbacks(GameState newState)
         {

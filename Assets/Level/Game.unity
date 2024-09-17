@@ -1528,12 +1528,6 @@ MonoBehaviour:
       Data3: -925119596
       Data4: 303886086
     Path: event:/UI/Settings Toggle
-  onShow:
-    m_PersistentCalls:
-      m_Calls: []
-  onHide:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &1808102680
 GameObject:
   m_ObjectHideFlags: 0
@@ -1600,6 +1594,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   document: {fileID: 1808102682}
   worldManager: {fileID: 2122878211}
+  settingsPresenter: {fileID: 1795025822}
 --- !u!1001 &1852941727
 PrefabInstance:
   m_ObjectHideFlags: 0

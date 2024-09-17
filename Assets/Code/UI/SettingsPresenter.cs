@@ -1,3 +1,4 @@
+using System;
 using FMOD.Studio;
 using FMODUnity;
 using SaintsField;
@@ -6,14 +7,17 @@ using Tulip.GameWorld;
 using Tulip.Input;
 using Unity.Properties;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UIElements;
 using Settings = Tulip.Core.Settings;
 
 namespace Tulip.UI
 {
+    public delegate void MenuToggleEvent(bool visible);
+
     public class SettingsPresenter : MonoBehaviour
     {
+        public event MenuToggleEvent OnToggled;
+
         [Header("References")]
         [SerializeField, Required] UIDocument document;
         [SerializeField, Required] UserBrain brain;
@@ -21,10 +25,6 @@ namespace Tulip.UI
 
         [Header("FMOD Events")]
         [SerializeField] EventReference toggleSfx;
-
-        [Header("Config")]
-        public UnityEvent onShow;
-        public UnityEvent onHide;
 
         // ReSharper disable UnusedMember.Local
         [CreateProperty] Settings Settings => Settings.Instance;
@@ -125,10 +125,7 @@ namespace Tulip.UI
             PlayToggleSfx(change.newValue);
             GameManager.SetPaused(change.newValue);
 
-            if (change.newValue)
-                onShow?.Invoke();
-            else
-                onHide?.Invoke();
+            OnToggled?.Invoke(change.newValue);
         }
 
         private void PlayToggleSfx(bool toggleState)
