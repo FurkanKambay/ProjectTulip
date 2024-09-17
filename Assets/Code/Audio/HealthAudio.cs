@@ -1,4 +1,3 @@
-using System.Collections;
 using FMOD.Studio;
 using FMODUnity;
 using SaintsField;
@@ -18,10 +17,9 @@ namespace Tulip.Audio
 
         private PARAMETER_DESCRIPTION paramAliveness;
 
-        private IEnumerator Start()
+        private async void Awake()
         {
-            while (!RuntimeManager.HaveAllBanksLoaded)
-                yield return null;
+            await AudioBusManager.WaitForAllBanksToLoad();
 
             EventDescription description = RuntimeManager.GetEventDescription(hurtEvent);
             description.getParameterDescriptionByName("Aliveness", out paramAliveness);

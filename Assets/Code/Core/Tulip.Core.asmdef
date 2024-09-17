@@ -1,7 +1,10 @@
 {
     "name": "Tulip.Core",
     "rootNamespace": "Tulip",
-    "references": [],
+    "references": [
+        "GUID:ade22e0cbd0966a43aa01ef49b183800",
+        "GUID:9b261077c7a2ac34886513ec1345f8e0"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

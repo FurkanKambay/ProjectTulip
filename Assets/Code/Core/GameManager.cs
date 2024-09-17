@@ -62,7 +62,7 @@ namespace Tulip.Core
 
         private static void UpdateTimeScale() => Time.timeScale = CurrentState switch
         {
-            GameState.Paused when Options.Instance.Gameplay.AllowPause => 0,
+            GameState.Paused when Settings.Gameplay.AllowPause => 0,
             _ => 1
         };
 

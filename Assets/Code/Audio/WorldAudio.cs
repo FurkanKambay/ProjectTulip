@@ -1,4 +1,3 @@
-using System.Collections;
 using FMOD.Studio;
 using FMODUnity;
 using Tulip.Data;
@@ -21,10 +20,9 @@ namespace Tulip.Audio
         private PARAMETER_DESCRIPTION paramMaterial;
         private PARAMETER_DESCRIPTION paramDamage;
 
-        private IEnumerator Start()
+        private async void Awake()
         {
-            while (!RuntimeManager.HaveAllBanksLoaded)
-                yield return null;
+            await AudioBusManager.WaitForAllBanksToLoad();
 
             EventDescription description = RuntimeManager.GetEventDescription(tileDamagedEvent);
             description.getParameterDescriptionByName("Material", out paramMaterial);

@@ -1,4 +1,3 @@
-using System.Collections;
 using FMOD.Studio;
 using FMODUnity;
 using SaintsField;
@@ -22,10 +21,9 @@ namespace Tulip.Audio
         private PARAMETER_DESCRIPTION paramBiome;
         private PARAMETER_DESCRIPTION paramPlayerLocation;
 
-        private IEnumerator Start()
+        private async void Awake()
         {
-            while (!RuntimeManager.HaveAllBanksLoaded)
-                yield return null;
+            await AudioBusManager.WaitForAllBanksToLoad();
 
             EventDescription musicDescription = RuntimeManager.GetEventDescription(biomeMusicEvent);
             musicDescription.getParameterDescriptionByName("Biome", out paramBiome);
@@ -36,10 +34,13 @@ namespace Tulip.Audio
             musicInstance.start();
         }
 
-        private void Update() =>
-            musicInstance.setParameterByID(paramPlayerLocation.id, playerLocation.Location.GetHashCode());
+        private void Update()
+        {
+            if (musicInstance.isValid())
+                musicInstance.setParameterByID(paramPlayerLocation.id, playerLocation.Location.GetHashCode());
+        }
 
         private void SetBiome(Biome biome) =>
-            musicInstance.setParameterByID(paramBiome.id, (float)biome);
+            musicInstance.setParameterByID(paramBiome.id, biome.GetHashCode());
     }
 }

@@ -85,7 +85,7 @@ namespace Tulip.Input
             HotbarSelectionIndex = !hotbar.action.inProgress ? null : (int)hotbar.action.ReadValue<float>();
 
             if (WantsToToggleSmartCursor)
-                Options.Instance.Gameplay.UseSmartCursor = !Options.Instance.Gameplay.UseSmartCursor;
+                Settings.Gameplay.UseSmartCursor = !Settings.Gameplay.UseSmartCursor;
         }
     }
 }

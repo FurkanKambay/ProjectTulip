@@ -109,7 +109,7 @@ namespace Tulip.Player
                 return;
             }
 
-            if (!Options.Instance.Gameplay.UseSmartCursor || itemWielder.I.CurrentStack.itemData.IsNot(out WorldToolData _))
+            if (!Settings.Gameplay.UseSmartCursor || itemWielder.I.CurrentStack.itemData.IsNot(out WorldToolData _))
             {
                 float distance = Vector3.Distance(hotspot, aimPoint);
                 FocusedCell = distance <= range ? MouseCell : null;
@@ -123,7 +123,7 @@ namespace Tulip.Player
 
         private void OnDrawGizmosSelected()
         {
-            if (!Options.Instance.Gameplay.UseSmartCursor)
+            if (!Settings.Gameplay.UseSmartCursor)
                 return;
 
             Vector2 hotspot = transform.position;

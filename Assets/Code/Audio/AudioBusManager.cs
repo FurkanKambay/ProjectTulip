@@ -1,8 +1,8 @@
-using System.Collections;
+using System.Threading.Tasks;
 using FMOD.Studio;
 using FMODUnity;
-using Tulip.Core;
 using UnityEngine;
+using Settings = Tulip.Core.Settings;
 
 namespace Tulip.Audio
 {
@@ -13,17 +13,20 @@ namespace Tulip.Audio
         private Bus sfxBus;
         private Bus uiBus;
 
-        private IEnumerator Start()
+        private async void Awake()
         {
-            while (!RuntimeManager.HaveAllBanksLoaded)
-                yield return null;
+            await WaitForAllBanksToLoad();
 
-            LoadBuses();
-            HandleOptionsUpdated();
+            masterBus = RuntimeManager.GetBus("bus:/");
+            musicBus = RuntimeManager.GetBus("bus:/Music");
+            sfxBus = RuntimeManager.GetBus("bus:/SFX");
+            uiBus = RuntimeManager.GetBus("bus:/UI");
         }
 
-        private void OnEnable() => Options.OnUpdate += HandleOptionsUpdated;
-        private void OnDisable() => Options.OnUpdate -= HandleOptionsUpdated;
+        private void OnEnable() => Settings.OnUpdate += Settings_Updated;
+        private void OnDisable() => Settings.OnUpdate -= Settings_Updated;
+
+        private async void Start() => await UpdateVolumes();
 
         private void OnApplicationFocus(bool hasFocus)
         {
@@ -38,22 +41,25 @@ namespace Tulip.Audio
                 RuntimeManager.CoreSystem.mixerResume();
         }
 
-        private void LoadBuses()
+        internal static async Awaitable WaitForAllBanksToLoad()
         {
-            masterBus = RuntimeManager.GetBus("bus:/");
-            musicBus = RuntimeManager.GetBus("bus:/Music");
-            sfxBus = RuntimeManager.GetBus("bus:/SFX");
-            uiBus = RuntimeManager.GetBus("bus:/UI");
+            while (!RuntimeManager.HaveAllBanksLoaded)
+                await Awaitable.NextFrameAsync();
         }
 
-        private void HandleOptionsUpdated()
+        private async void Settings_Updated() => await UpdateVolumes();
+
+        private async Task UpdateVolumes()
         {
-            SetVolume(masterBus, Options.Instance.Sound.MasterVolume);
-            SetVolume(musicBus, Options.Instance.Sound.MusicVolume);
-            SetVolume(sfxBus, Options.Instance.Sound.EffectsVolume);
-            SetVolume(uiBus, Options.Instance.Sound.UIVolume);
+            await WaitForAllBanksToLoad();
+
+            SetVolume(masterBus, Settings.Audio.MasterVolume);
+            SetVolume(musicBus, Settings.Audio.MusicVolume);
+            SetVolume(sfxBus, Settings.Audio.EffectsVolume);
+            SetVolume(uiBus, Settings.Audio.UIVolume);
         }
 
-        private static void SetVolume(Bus bus, int value) => bus.setVolume(Mathf.InverseLerp(0, 100, value));
+        private static void SetVolume(Bus bus, int value) =>
+            bus.setVolume(Mathf.InverseLerp(0, 100, value));
     }
 }

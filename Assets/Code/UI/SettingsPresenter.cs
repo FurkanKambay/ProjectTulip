@@ -1,4 +1,3 @@
-using System.Collections;
 using FMOD.Studio;
 using FMODUnity;
 using SaintsField;
@@ -9,6 +8,7 @@ using Unity.Properties;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
+using Settings = Tulip.Core.Settings;
 
 namespace Tulip.UI
 {
@@ -27,6 +27,7 @@ namespace Tulip.UI
         public UnityEvent onHide;
 
         // ReSharper disable UnusedMember.Local
+        [CreateProperty] Settings Settings => Settings.Instance;
         [CreateProperty] bool IsQuitConfirmButtonVisible => IsInMainMenu && ShouldShowQuitButton;
         [CreateProperty] bool IsSaveExitButtonVisible => !IsInMainMenu && ShouldShowQuitButton;
         // ReSharper restore UnusedMember.Local
@@ -69,10 +70,10 @@ namespace Tulip.UI
 #endif
         }
 
-        private IEnumerator Start()
+        private async void Start()
         {
             while (!RuntimeManager.HaveAllBanksLoaded)
-                yield return null;
+                await Awaitable.NextFrameAsync();
 
             EventDescription sfxDescription = RuntimeManager.GetEventDescription(toggleSfx);
             sfxDescription.getParameterDescriptionByName("Menu State", out paramMenuState);
