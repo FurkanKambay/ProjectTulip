@@ -1,4 +1,5 @@
 using SaintsField;
+using Tulip.Character;
 using Tulip.Core;
 using Tulip.Data;
 using Tulip.Data.Gameplay;
@@ -10,7 +11,6 @@ namespace Tulip.Gameplay
     {
         [Header("References")]
         [SerializeField, Required] HealthBase health;
-        [SerializeField, Required] Transform subject;
 
         [Header("Config")]
         [SerializeField] bool autoRespawn = true;
@@ -20,19 +20,30 @@ namespace Tulip.Gameplay
         public float SecondsUntilRespawn { get; private set; }
         public bool CanRespawn => SecondsUntilRespawn <= 0;
 
+        private TangibleEntity entity;
+        private Transform subject;
+        private IWorld world;
+
+        private void Awake()
+        {
+            entity = health.GetComponentInParent<TangibleEntity>();
+            subject = entity.transform;
+            world = entity.World;
+        }
+
         private void OnEnable()
         {
-            GameManager.OnGameStateChange += HandleGameStateChange;
-            health.OnDie += HandleDeath;
+            GameManager.OnGameStateChange += GameState_Change;
+            health.OnDie += Health_Die;
         }
 
         private void OnDisable()
         {
-            GameManager.OnGameStateChange -= HandleGameStateChange;
-            health.OnDie -= HandleDeath;
+            GameManager.OnGameStateChange -= GameState_Change;
+            health.OnDie -= Health_Die;
         }
 
-        private void HandleGameStateChange(GameState oldState, GameState newState)
+        private void GameState_Change(GameState oldState, GameState newState)
         {
             bool startedPlaying = newState is GameState.Playing && oldState is not GameState.Paused;
 
@@ -58,10 +69,20 @@ namespace Tulip.Gameplay
                 return;
 
             SecondsUntilRespawn = 0;
-            subject.position = respawnPosition;
+            SetPosition();
             health.Revive();
         }
 
-        private void HandleDeath(HealthChangeEventArgs _) => SecondsUntilRespawn = respawnDelay;
+        private void SetPosition()
+        {
+            Vector2Int cell = world.WorldToCell(respawnPosition);
+
+            while (!world.CanAccommodate(cell, entity.EntityData.Size))
+                cell.y++;
+
+            subject.position = world.CellCenter(cell);
+        }
+
+        private void Health_Die(HealthChangeEventArgs _) => SecondsUntilRespawn = respawnDelay;
     }
 }

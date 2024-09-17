@@ -651,7 +651,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d8751be9d454ae89b969c632e660570, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entityData: {fileID: 0}
+  entityData: {fileID: 11400000, guid: 61f78ba64e5ba3c4895af881afac13bc, type: 2}
   body: {fileID: 7560684870690709998}
   health: {fileID: 7186377946535505526}
   world: {fileID: 0}
@@ -1019,7 +1019,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: {fileID: 7186377946535505526}
-  subject: {fileID: 8291246366843984804}
   autoRespawn: 1
   respawnDelay: 3
   respawnPosition: {x: 0, y: 0, z: 0}
