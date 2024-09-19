@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Furkan.Common;
 using SaintsField;
 using Tulip.Core;
 using Tulip.Data;
@@ -79,7 +80,7 @@ namespace Tulip.GameWorld
 
             OnDestroyTile?.Invoke(TileModification.FromDestroyed(cell, placeableData));
 
-            ItemData loot = placeableData.OreData ? placeableData.OreData : placeableData;
+            ItemData loot = placeableData.OreData.Or<ItemData>(placeableData);
             return InventoryModification.ToAdd(loot.Stack(1));
         }
 

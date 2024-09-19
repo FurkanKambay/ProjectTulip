@@ -1,3 +1,4 @@
+using Furkan.Common;
 using SaintsField;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ namespace Tulip.Data.Items
         public abstract ToolUsability GetUsability(IWorld world, Vector2Int cell);
         public abstract InventoryModification UseOn(IWorld world, Vector2Int cell);
 
-        public Sprite CellHighlightSprite => cellHighlightSprite ? cellHighlightSprite : icon;
+        public Sprite CellHighlightSprite => cellHighlightSprite.Or(icon);
 
         [Header("Base World Tool Data")]
         [AssetPreview(width: 64, align: EAlign.FieldStart)]

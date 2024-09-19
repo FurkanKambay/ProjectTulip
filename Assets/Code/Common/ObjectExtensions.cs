@@ -52,5 +52,11 @@ namespace Furkan.Common
         /// </summary>
         public static bool IsNull<TInterface>(this TInterface self) where TInterface : class =>
             !IsAlive(self);
+
+        /// <summary>
+        /// Safe <c>??</c> operator with Unity lifetime check
+        /// </summary>
+        public static T Or<T>(this T self, T alternative) where T : Object =>
+            self ? self : alternative;
     }
 }
