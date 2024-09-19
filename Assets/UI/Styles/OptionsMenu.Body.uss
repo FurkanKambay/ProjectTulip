@@ -57,6 +57,18 @@ Tab > .unity-tab__content-container {
     color: rgb(0, 160, 255);
 }
 
+.option:hover .unity-toggle__text, .unity-base-field__label {
+    color: rgb(255, 255, 255);
+}
+
+.option:hover #unity-checkmark {
+    background-color: rgb(0, 160, 255);
+}
+
+.option .unity-toggle__checkmark {
+    border-width: 0;
+}
+
 .option .unity-toggle__text {
     align-self: center;
     margin-top: 2px;
@@ -80,10 +92,46 @@ Tab > .unity-tab__content-container {
     align-self: flex-end;
     min-width: auto;
     -unity-text-align: upper-right;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 .slider-audio > VisualElement {
     width: 280px;
+}
+
+.slider-audio #unity-tracker {
+    height: 20px;
+    border-width: 0px;
+}
+
+.slider-audio #unity-tracker #unity-fill {
+    background-color: rgb(0, 65, 102);
+}
+
+.slider-audio:hover #unity-tracker {
+    background-color: rgb(255, 255, 255);
+}
+
+.slider-audio:hover #unity-tracker #unity-fill {
+    background-color: rgb(0, 160, 255);
+}
+
+.slider-audio #unity-dragger {
+    display: none;
+}
+
+.slider-audio #unity-text-field {
+    background-color: rgba(0, 0, 0, 0);
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-right: 0;
+    margin-left: 8px;
+    top: 10%;
 }
 
 .slider-audio .unity-text-field__input {
@@ -100,18 +148,6 @@ Tab > .unity-tab__content-container {
     margin-right: 0;
     margin-bottom: 0;
     margin-left: 0;
-}
-
-.slider-audio #unity-text-field {
-    background-color: rgba(0, 0, 0, 0);
-    border-top-width: 0;
-    border-right-width: 0;
-    border-bottom-width: 0;
-    border-left-width: 0;
-    margin-top: 0;
-    margin-bottom: 0;
-    margin-right: 0;
-    margin-left: 8px;
 }
 
 .dropdown > .unity-base-field__input {

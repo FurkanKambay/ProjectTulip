@@ -23,22 +23,22 @@
                 </ui:Toggle>
             </ui:Tab>
             <ui:Tab label="Sound" name="TabSound" data-source-path="audio" class="tab">
-                <ui:SliderInt label="Master" value="100" high-value="100" focusable="false" show-input-field="true" name="SoundMaster" class="slider-audio option">
+                <ui:SliderInt label="Master" value="100" high-value="100" focusable="false" show-input-field="true" name="SoundMaster" fill="true" class="slider-audio option">
                     <Bindings>
                         <ui:DataBinding property="value" binding-mode="TwoWay" data-source-path="MasterVolume" />
                     </Bindings>
                 </ui:SliderInt>
-                <ui:SliderInt label="Music" value="100" high-value="100" focusable="false" show-input-field="true" name="SoundMusic" class="slider-audio option">
+                <ui:SliderInt label="Music" value="100" high-value="100" focusable="false" show-input-field="true" name="SoundMusic" fill="true" class="slider-audio option">
                     <Bindings>
                         <ui:DataBinding property="value" binding-mode="TwoWay" data-source-path="MusicVolume" />
                     </Bindings>
                 </ui:SliderInt>
-                <ui:SliderInt label="Effects" value="100" high-value="100" focusable="false" show-input-field="true" name="SoundEffects" class="slider-audio option">
+                <ui:SliderInt label="Effects" value="100" high-value="100" focusable="false" show-input-field="true" name="SoundEffects" fill="true" class="slider-audio option">
                     <Bindings>
                         <ui:DataBinding property="value" binding-mode="TwoWay" data-source-path="EffectsVolume" />
                     </Bindings>
                 </ui:SliderInt>
-                <ui:SliderInt label="UI" value="100" high-value="100" focusable="false" show-input-field="true" name="SoundUI" class="slider-audio option">
+                <ui:SliderInt label="UI" value="100" high-value="100" focusable="false" show-input-field="true" name="SoundUI" fill="true" class="slider-audio option">
                     <Bindings>
                         <ui:DataBinding property="value" binding-mode="TwoWay" data-source-path="UIVolume" />
                     </Bindings>
