@@ -25,7 +25,6 @@ namespace Tulip.GameWorld
         private float curtainRevealProgress;
 
         private MaterialPropertyBlock propertyBlock;
-        private static readonly int shaderPlayerPosition = Shader.PropertyToID("_Player_Position");
         private static readonly int shaderRevealProgress = Shader.PropertyToID("_Reveal_Progress");
 
         private void Awake()
@@ -63,7 +62,6 @@ namespace Tulip.GameWorld
             curtainRevealProgress = Mathf.MoveTowards(curtainRevealProgress, location, maxDeltaTime);
 
             propertyBlock.SetFloat(shaderRevealProgress, curtainRevealProgress);
-            propertyBlock.SetVector(shaderPlayerPosition, playerLocation.Position);
             curtainRenderer.SetPropertyBlock(propertyBlock);
         }
 

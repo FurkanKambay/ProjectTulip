@@ -31,6 +31,12 @@
     "m_CategoryData": [
         {
             "m_Id": "fbb31f2156444f778daebb2a23f5f6a7"
+        },
+        {
+            "m_Id": "b6b5880eab2149cf992540f0a45f49e7"
+        },
+        {
+            "m_Id": "dc6c4ee72f5c4b428a90b977e4efab34"
         }
     ],
     "m_Nodes": [
@@ -6044,13 +6050,13 @@
     "m_RefNameGeneratedByDisplayName": "Player Position",
     "m_DefaultReferenceName": "_Player_Position",
     "m_OverrideReferenceName": "_Player_Position",
-    "m_GeneratePropertyBlock": true,
+    "m_GeneratePropertyBlock": false,
     "m_UseCustomSlotLabel": false,
     "m_CustomSlotLabel": "",
     "m_DismissedVersion": 0,
     "m_Precision": 0,
     "overrideHLSLDeclaration": true,
-    "hlslDeclarationOverride": 2,
+    "hlslDeclarationOverride": 1,
     "m_Hidden": false,
     "m_Value": {
         "x": 0.0,
@@ -6566,6 +6572,21 @@
         "x": 0.0,
         "y": 1.0
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.CategoryData",
+    "m_ObjectId": "b6b5880eab2149cf992540f0a45f49e7",
+    "m_Name": "Keywords",
+    "m_ChildObjectList": [
+        {
+            "m_Id": "4f6704b5ae984079bc2374c46404ae6d"
+        },
+        {
+            "m_Id": "52e9718571fd4b869f543c6d458d0adb"
+        }
+    ]
 }
 
 {
@@ -7329,6 +7350,27 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.CategoryData",
+    "m_ObjectId": "dc6c4ee72f5c4b428a90b977e4efab34",
+    "m_Name": "Properties",
+    "m_ChildObjectList": [
+        {
+            "m_Id": "a77b7b19eb0e4d61b8b3c7a4f13372d6"
+        },
+        {
+            "m_Id": "3baa9d83865647ec97d0419dc3553774"
+        },
+        {
+            "m_Id": "56c44d0e548a42938aab34f4c9fbaeda"
+        },
+        {
+            "m_Id": "b6808fcf36b54950be627aa3a3fbeb01"
+        }
+    ]
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
     "m_ObjectId": "dcad8a9d99c64043bed0101786e20698",
     "m_Id": 0,
@@ -8030,24 +8072,6 @@
     "m_ChildObjectList": [
         {
             "m_Id": "6b1ccf4587de438185b45d63d1fde8c3"
-        },
-        {
-            "m_Id": "4f6704b5ae984079bc2374c46404ae6d"
-        },
-        {
-            "m_Id": "52e9718571fd4b869f543c6d458d0adb"
-        },
-        {
-            "m_Id": "a77b7b19eb0e4d61b8b3c7a4f13372d6"
-        },
-        {
-            "m_Id": "3baa9d83865647ec97d0419dc3553774"
-        },
-        {
-            "m_Id": "56c44d0e548a42938aab34f4c9fbaeda"
-        },
-        {
-            "m_Id": "b6808fcf36b54950be627aa3a3fbeb01"
         }
     ]
 }

@@ -31,7 +31,6 @@ namespace Tulip.GameWorld
         private LocalKeyword shaderActiveRealm;
 
         private MaterialPropertyBlock realmPropertyBlock;
-        private static readonly int shaderPlayerPosition = Shader.PropertyToID("_Player_Position");
         private static readonly int shaderPortalCeiling = Shader.PropertyToID("_Portal_Ceiling");
         private static readonly int shaderPortalFloor = Shader.PropertyToID("_Portal_Floor");
         private static readonly int shaderInactiveSaturation = Shader.PropertyToID("_Inactive_Saturation");
@@ -86,7 +85,6 @@ namespace Tulip.GameWorld
 
         private void SetProperties()
         {
-            realmPropertyBlock.SetVector(shaderPlayerPosition, playerLocation.Position);
             realmPropertyBlock.SetVector(shaderPortalCeiling, portalTop.position);
             realmPropertyBlock.SetVector(shaderPortalFloor, portalBottom.position);
             realmPropertyBlock.SetFloat(shaderInactiveSaturation, inactiveSaturation);
