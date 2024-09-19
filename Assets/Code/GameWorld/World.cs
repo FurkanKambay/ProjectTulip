@@ -167,7 +167,7 @@ namespace Tulip.GameWorld
 
         private void SetWorldData(WorldData newWorldData)
         {
-            if (WorldData == newWorldData)
+            if (WorldData == newWorldData || newWorldData == null)
                 return;
 
             WorldData = newWorldData;

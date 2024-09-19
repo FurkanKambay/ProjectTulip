@@ -19,19 +19,19 @@ namespace Tulip.GameWorld
         [SerializeField] WorldGenerator worldGenerator;
         [SerializeField] StructureData playgroundStructure;
 
-        public const string WorldName = "World";
-
-        public WorldData World => loadedWorld;
+        public WorldData World => loadedWorld ?? playgroundStructure.WorldData;
 
         private readonly WorldSaveDictionary worldSaves = new();
         private WorldData loadedWorld;
+
+        private const string onlyWorldName = "World";
 
         private void Awake() => ReturnToMainMenu();
 
         [Button]
         public void ReturnToMainMenu()
         {
-            if (loadedWorld == playgroundStructure.WorldData)
+            if (loadedWorld == null || loadedWorld == playgroundStructure.WorldData)
                 return;
 
             loadedWorld = playgroundStructure.WorldData;
@@ -41,7 +41,7 @@ namespace Tulip.GameWorld
         }
 
         [Button]
-        public async Awaitable CreateNewWorld(string worldName = WorldName)
+        public async Awaitable CreateNewWorld(string worldName = onlyWorldName)
         {
             if (!CanSaveWorld(worldName))
                 return;
@@ -52,7 +52,7 @@ namespace Tulip.GameWorld
         }
 
         [Button]
-        public void LoadWorld(string worldName = WorldName)
+        public void LoadWorld(string worldName = onlyWorldName)
         {
             if (!CanLoadWorld(worldName))
                 return;
@@ -64,7 +64,7 @@ namespace Tulip.GameWorld
         }
 
         [Button]
-        public void DeleteWorld(string worldName = WorldName)
+        public void DeleteWorld(string worldName = onlyWorldName)
         {
             if (!CanLoadWorld(worldName))
                 return;
@@ -73,11 +73,11 @@ namespace Tulip.GameWorld
             worldSaves.Remove(worldName);
         }
 
-        public bool CanSaveWorld(string worldName = WorldName) =>
+        public bool CanSaveWorld(string worldName = onlyWorldName) =>
             !string.IsNullOrWhiteSpace(worldName)
             && !worldSaves.ContainsKey(worldName);
 
-        public bool CanLoadWorld(string worldName = WorldName) =>
+        public bool CanLoadWorld(string worldName = onlyWorldName) =>
             !string.IsNullOrWhiteSpace(worldName)
             && worldSaves.ContainsKey(worldName)
             && loadedWorld?.Name != worldName;

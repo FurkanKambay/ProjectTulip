@@ -33,16 +33,16 @@ namespace Tulip.GameWorld
             propertyBlock = new MaterialPropertyBlock();
         }
 
-        private void Start() => HandleRefreshWorld(world.WorldData);
+        private void Start() => World_Refresh(world.WorldData);
 
         private void OnEnable()
         {
             if (!world)
                 return;
 
-            world.OnRefresh += HandleRefreshWorld;
-            world.OnPlaceTile += HandlePlaceTile;
-            world.OnDestroyTile += HandleDestroyTile;
+            world.OnRefresh += World_Refresh;
+            world.OnPlaceTile += World_PlaceTile;
+            world.OnDestroyTile += World_DestroyTile;
         }
 
         private void OnDisable()
@@ -50,9 +50,9 @@ namespace Tulip.GameWorld
             if (!world)
                 return;
 
-            world.OnRefresh -= HandleRefreshWorld;
-            world.OnPlaceTile -= HandlePlaceTile;
-            world.OnDestroyTile -= HandleDestroyTile;
+            world.OnRefresh -= World_Refresh;
+            world.OnPlaceTile -= World_PlaceTile;
+            world.OnDestroyTile -= World_DestroyTile;
         }
 
         private void Update()
@@ -74,8 +74,11 @@ namespace Tulip.GameWorld
         public Bounds CellBoundsWorld(Vector2Int cell) =>
             new(GetCellCenterWorld(cell), blockTilemap.GetBoundsLocal((Vector3Int)cell).size);
 
-        private void HandleRefreshWorld(WorldData worldData)
+        private void World_Refresh(WorldData worldData)
         {
+            if (worldData == null)
+                return;
+
             resetTilemap(wallTilemap);
             resetTilemap(blockTilemap);
             resetTilemap(curtainTilemap);
@@ -106,7 +109,7 @@ namespace Tulip.GameWorld
             }
         }
 
-        private void HandlePlaceTile(TileModification modification)
+        private void World_PlaceTile(TileModification modification)
         {
             var cell = (Vector3Int)modification.Cell;
             PlaceableData placeableData = modification.PlaceableData;
@@ -124,7 +127,7 @@ namespace Tulip.GameWorld
             tilemap.SetColor(cell, placeableData.Color);
         }
 
-        private void HandleDestroyTile(TileModification modification)
+        private void World_DestroyTile(TileModification modification)
         {
             Tilemap tilemap = GetTilemap(modification.PlaceableData.TileType);
             tilemap.SetTile((Vector3Int)modification.Cell, null);
