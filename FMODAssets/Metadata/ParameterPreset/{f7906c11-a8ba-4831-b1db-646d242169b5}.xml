@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="ParameterPreset" id="{f7906c11-a8ba-4831-b1db-646d242169b5}">
 		<property name="name">
-			<value>Material</value>
+			<value>Placeable Material</value>
 		</property>
 		<relationship name="folder">
 			<destination>{6bb44dba-0777-4785-9f65-abcf4448f4be}</destination>
@@ -16,9 +16,10 @@
 			<value>2</value>
 		</property>
 		<property name="maximum">
-			<value>6</value>
+			<value>7</value>
 		</property>
 		<property name="enumerationLabels">
+			<value>Nothing</value>
 			<value>Grass</value>
 			<value>Sand</value>
 			<value>Snow</value>
@@ -28,6 +29,14 @@
 		</property>
 		<property name="initialValue">
 			<value>0</value>
+		</property>
+		<relationship name="automators">
+			<destination>{1ff08be5-c89a-4429-a587-60e70e205de9}</destination>
+		</relationship>
+	</object>
+	<object class="Automator" id="{1ff08be5-c89a-4429-a587-60e70e205de9}">
+		<property name="nameOfPropertyBeingAutomated">
+			<value>cursorPosition</value>
 		</property>
 	</object>
 </objects>

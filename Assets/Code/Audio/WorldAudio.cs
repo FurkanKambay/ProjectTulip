@@ -25,7 +25,7 @@ namespace Tulip.Audio
             await AudioBusManager.WaitForAllBanksToLoad();
 
             EventDescription description = RuntimeManager.GetEventDescription(tileDamagedEvent);
-            description.getParameterDescriptionByName("Material", out paramMaterial);
+            description.getParameterDescriptionByName("Placeable Material", out paramMaterial);
             description.getParameterDescriptionByName("Damage", out paramDamage);
         }
 
