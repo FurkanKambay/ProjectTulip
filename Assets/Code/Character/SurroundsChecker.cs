@@ -1,14 +1,12 @@
 using SaintsField;
+using Tulip.Data;
+using Tulip.Data.Items;
 using UnityEngine;
 
 namespace Tulip.Character
 {
     public class SurroundsChecker : MonoBehaviour
     {
-        public bool IsGrounded { get; private set; }
-        public bool IsLeftBlocked { get; private set; }
-        public bool IsRightBlocked { get; private set; }
-
         [Header("References")]
         [SerializeField, Required] new Collider2D collider;
 
@@ -22,8 +20,13 @@ namespace Tulip.Character
         [SerializeField] float sideRange = .5f;
         [SerializeField] float sideHeight = .5f;
 
-        private static readonly Vector2 safetyLeft = new(-0.001f, 0.5f);
-        private static readonly Vector2 safetyRight = new(0.001f, 0.5f);
+        public bool IsGrounded { get; private set; }
+        public bool IsLeftBlocked { get; private set; }
+        public bool IsRightBlocked { get; private set; }
+        public PlaceableMaterial GroundMaterial { get; private set; }
+
+        private Transform entityTransform;
+        private IWorld world;
 
         private Vector2 MinBounds => collider.bounds.min;
         private Vector2 MaxBounds => collider.bounds.max;
@@ -36,6 +39,19 @@ namespace Tulip.Character
 
         private Vector2 RightTop => new Vector2(MaxBounds.x, MinBounds.y + sideHeight) + safetyRight;
         private Vector2 RightBottom => new Vector2(MaxBounds.x, MinBounds.y) + safetyRight;
+
+        private static readonly Vector2 safetyLeft = new(-0.001f, 0.5f);
+        private static readonly Vector2 safetyRight = new(0.001f, 0.5f);
+
+        private void Awake() => entityTransform = collider.transform;
+        private void Start() => world = entityTransform.GetComponent<ITangibleEntity>().World;
+
+        private void Update()
+        {
+            Vector3 position = entityTransform.position + (Vector3.down * 0.2f);
+            PlaceableData groundTile = world.GetTileAtWorld(position, TileType.Block);
+            GroundMaterial = groundTile ? groundTile.Material : PlaceableMaterial.None;
+        }
 
         private void FixedUpdate()
         {

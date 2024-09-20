@@ -25,7 +25,7 @@ MonoBehaviour:
   color: {r: 0.2735849, g: 0.2735849, b: 0.2735849, a: 1}
   ruleTileData: {fileID: 11400000, guid: 10a5f690be4115c4ab08acf2b123d0cc, type: 2}
   tileType: 1
-  material: 4
+  material: 5
   isUnsafe: 0
   isUnbreakable: 1
   hardness: 1

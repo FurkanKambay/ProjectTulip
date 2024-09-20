@@ -3,11 +3,12 @@ namespace Tulip.Data
     /// FMOD parameter
     public enum PlaceableMaterial
     {
-        Grass = 0,
-        Sand = 1,
-        Snow = 2,
-        Wood = 3,
-        Stone = 4,
-        MetalOre = 5
+        None = 0,
+        Grass = 1,
+        Sand = 2,
+        Snow = 3,
+        Wood = 4,
+        Stone = 5,
+        MetalOre = 6
     }
 }
