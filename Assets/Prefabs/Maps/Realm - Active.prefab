@@ -67,10 +67,13 @@ MonoBehaviour:
   playerLocation: {fileID: 0}
   portalTop: {fileID: 0}
   portalBottom: {fileID: 0}
-  portalInSight: 1
-  activeRealm: 1
-  inactiveSaturation: 0.15
   curtainRevealSpeed: 10
+  inactiveSaturation: 0
+  saturationChangeSpeed: 3
+  activeRealm: 1
+  portalInSight: 1
+  saturation: 1
+  shaderActiveRealm: 0
 --- !u!114 &7871052133264414492
 MonoBehaviour:
   m_ObjectHideFlags: 0
