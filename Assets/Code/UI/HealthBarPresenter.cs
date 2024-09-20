@@ -16,8 +16,6 @@ namespace Tulip.UI
 
         private float targetValue;
 
-        private static readonly int healthShaderValue = Shader.PropertyToID("_Value");
-
         private void Awake()
         {
             healthBarSprite.enabled = false;
@@ -30,7 +28,12 @@ namespace Tulip.UI
             if (!showBar) return;
 
             targetValue = Mathf.Lerp(targetValue, health.Ratio, changeSpeed * Time.deltaTime);
-            healthBarSprite.material.SetFloat(healthShaderValue, targetValue);
+            healthBarSprite.material.SetFloat(ShaderParams.Value, targetValue);
+        }
+
+        private static class ShaderParams
+        {
+            internal static readonly int Value = Shader.PropertyToID("_Value");
         }
     }
 }

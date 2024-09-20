@@ -23,10 +23,6 @@ namespace Tulip.Character
 
         private MaterialPropertyBlock materialBlock;
 
-        private static readonly int shaderReplaceColor = Shader.PropertyToID("_ReplaceColor");
-        private static readonly int shaderDissolveAmount = Shader.PropertyToID("_DissolveAmount");
-        private static readonly int shaderOutlineThickness = Shader.PropertyToID("_Outline_Thickness");
-
         private void OnEnable()
         {
             materialBlock = new MaterialPropertyBlock();
@@ -47,14 +43,14 @@ namespace Tulip.Character
         {
             if (hurtVisualDuration > 0)
             {
-                ApplyShaderProperty(shaderReplaceColor, 1);
+                ApplyShaderProperty(ShaderParams.ReplaceColor, 1);
                 await Awaitable.WaitForSecondsAsync(hurtVisualDuration);
-                ApplyShaderProperty(shaderReplaceColor, 0);
+                ApplyShaderProperty(ShaderParams.ReplaceColor, 0);
             }
 
-            ApplyShaderProperty(shaderOutlineThickness, 1);
+            ApplyShaderProperty(ShaderParams.OutlineThickness, 1);
             await Awaitable.WaitForSecondsAsync(health.InvulnerabilityDuration - hurtVisualDuration);
-            ApplyShaderProperty(shaderOutlineThickness, 0);
+            ApplyShaderProperty(ShaderParams.OutlineThickness, 0);
         }
 
         private void HandleRevived(IHealth reviver)
@@ -81,7 +77,7 @@ namespace Tulip.Character
             {
                 amount = Mathf.MoveTowards(amount, endAmount, Time.deltaTime / duration);
 
-                ApplyShaderProperty(shaderDissolveAmount, amount);
+                ApplyShaderProperty(ShaderParams.DissolveAmount, amount);
                 yield return null;
             }
 
@@ -93,6 +89,13 @@ namespace Tulip.Character
         {
             materialBlock.SetFloat(shaderProperty, value);
             sprite.SetPropertyBlock(materialBlock);
+        }
+
+        private static class ShaderParams
+        {
+            internal static readonly int ReplaceColor = Shader.PropertyToID("_ReplaceColor");
+            internal static readonly int DissolveAmount = Shader.PropertyToID("_DissolveAmount");
+            internal static readonly int OutlineThickness = Shader.PropertyToID("_Outline_Thickness");
         }
     }
 }
