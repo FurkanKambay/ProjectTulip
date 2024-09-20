@@ -12,26 +12,10 @@ namespace Tulip.GameWorld
     public class WorldVisual : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField] EntityLocationDeterminer playerLocation;
         [SerializeField] World world;
         [SerializeField] Tilemap wallTilemap;
         [SerializeField] Tilemap blockTilemap;
         [SerializeField] Tilemap curtainTilemap;
-
-        [Header("Config")]
-        [SerializeField] float curtainRevealSpeed;
-
-        private TilemapRenderer curtainRenderer;
-        private float curtainRevealProgress;
-
-        private MaterialPropertyBlock propertyBlock;
-        private static readonly int shaderRevealProgress = Shader.PropertyToID("_Reveal_Progress");
-
-        private void Awake()
-        {
-            curtainRenderer = curtainTilemap.GetComponent<TilemapRenderer>();
-            propertyBlock = new MaterialPropertyBlock();
-        }
 
         private void Start() => World_Refresh(world.WorldData);
 
@@ -53,16 +37,6 @@ namespace Tulip.GameWorld
             world.OnRefresh -= World_Refresh;
             world.OnPlaceTile -= World_PlaceTile;
             world.OnDestroyTile -= World_DestroyTile;
-        }
-
-        private void Update()
-        {
-            float maxDeltaTime = Time.deltaTime * curtainRevealSpeed;
-            int location = playerLocation.Location.GetHashCode();
-            curtainRevealProgress = Mathf.MoveTowards(curtainRevealProgress, location, maxDeltaTime);
-
-            propertyBlock.SetFloat(shaderRevealProgress, curtainRevealProgress);
-            curtainRenderer.SetPropertyBlock(propertyBlock);
         }
 
         public Vector2Int WorldToCell(Vector3 worldPosition) =>

@@ -70,6 +70,7 @@ MonoBehaviour:
   portalInSight: 1
   activeRealm: 1
   inactiveSaturation: 0.15
+  curtainRevealSpeed: 10
 --- !u!114 &7871052133264414492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,12 +83,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dc9496ab753459dac872c3b7fab367d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerLocation: {fileID: 0}
   world: {fileID: 0}
   wallTilemap: {fileID: 7173102642003252303}
   blockTilemap: {fileID: 7216450001828290536}
   curtainTilemap: {fileID: 6191996856151981255}
-  curtainRevealSpeed: 10
 --- !u!1 &5034274105396919754
 GameObject:
   m_ObjectHideFlags: 0
@@ -623,7 +622,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 30b60074f900e3046ba7355b3820f2b0, type: 2}
+  - {fileID: 2100000, guid: 0604c380372d55147a31959aad2c9126, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

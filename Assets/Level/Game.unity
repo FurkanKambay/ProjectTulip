@@ -275,10 +275,6 @@ PrefabInstance:
       propertyPath: world
       value: 
       objectReference: {fileID: 661774619}
-    - target: {fileID: 7871052133264414492, guid: f424f79dcd083e14b805387a89e2929f, type: 3}
-      propertyPath: playerLocation
-      value: 
-      objectReference: {fileID: 1154427129}
     - target: {fileID: 9033445109699138156, guid: f424f79dcd083e14b805387a89e2929f, type: 3}
       propertyPath: portalTop
       value: 

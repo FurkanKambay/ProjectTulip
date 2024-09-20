@@ -21,6 +21,9 @@ namespace Tulip.GameWorld
         [SerializeField] bool portalInSight;
         [SerializeField] bool activeRealm;
         [SerializeField, Range(0, 1)] float inactiveSaturation;
+        [SerializeField] float curtainRevealSpeed;
+
+        private float curtainRevealProgress;
 
         private TilemapRenderer wallRenderer;
         private TilemapRenderer blockRenderer;
@@ -30,21 +33,26 @@ namespace Tulip.GameWorld
         private LocalKeyword shaderPortalInSight;
         private LocalKeyword shaderActiveRealm;
 
-        private MaterialPropertyBlock realmPropertyBlock;
+        private MaterialPropertyBlock propertyBlock;
         private static readonly int shaderPortalCeiling = Shader.PropertyToID("_Portal_Ceiling");
         private static readonly int shaderPortalFloor = Shader.PropertyToID("_Portal_Floor");
         private static readonly int shaderInactiveSaturation = Shader.PropertyToID("_Inactive_Saturation");
+        private static readonly int shaderRevealProgress = Shader.PropertyToID("_Reveal_Progress");
 
         private void Awake()
         {
             AssignRenderers();
             CacheKeywords();
 
-            realmPropertyBlock = new MaterialPropertyBlock();
+            propertyBlock = new MaterialPropertyBlock();
         }
 
         private void Update()
         {
+            float maxDeltaTime = Time.deltaTime * curtainRevealSpeed;
+            int location = playerLocation.Location.GetHashCode();
+            curtainRevealProgress = Mathf.MoveTowards(curtainRevealProgress, location, maxDeltaTime);
+
             SetKeywords();
             SetProperties();
         }
@@ -65,6 +73,9 @@ namespace Tulip.GameWorld
             realmShader = blockRenderer.sharedMaterial.shader;
             shaderPortalInSight = new LocalKeyword(realmShader, "_PORTAL_IN_SIGHT");
             shaderActiveRealm = new LocalKeyword(realmShader, "_ACTIVE_REALM");
+
+            var shaderIsCurtain = new LocalKeyword(realmShader, "_IS_CURTAIN");
+            curtainRenderer.material.SetKeyword(shaderIsCurtain, true);
         }
 
         private void SetKeywords()
@@ -72,26 +83,24 @@ namespace Tulip.GameWorld
             // Portal In Sight
             wallRenderer.material.SetKeyword(shaderPortalInSight, portalInSight);
             blockRenderer.material.SetKeyword(shaderPortalInSight, portalInSight);
-            // curtainRenderer.material.SetKeyword(shaderPortalInSight, portalInSight);
-
-            // TODO: combine Curtain Reveal and Realm shaders
-            // OR: convert Realm to a fullscreen shader
+            curtainRenderer.material.SetKeyword(shaderPortalInSight, portalInSight);
 
             // Active Realm
             wallRenderer.material.SetKeyword(shaderActiveRealm, activeRealm);
             blockRenderer.material.SetKeyword(shaderActiveRealm, activeRealm);
-            // curtainRenderer.material.SetKeyword(shaderActiveRealm, activeRealm);
+            curtainRenderer.material.SetKeyword(shaderActiveRealm, activeRealm);
         }
 
         private void SetProperties()
         {
-            realmPropertyBlock.SetVector(shaderPortalCeiling, portalTop.position);
-            realmPropertyBlock.SetVector(shaderPortalFloor, portalBottom.position);
-            realmPropertyBlock.SetFloat(shaderInactiveSaturation, inactiveSaturation);
+            propertyBlock.SetVector(shaderPortalCeiling, portalTop.position);
+            propertyBlock.SetVector(shaderPortalFloor, portalBottom.position);
+            propertyBlock.SetFloat(shaderInactiveSaturation, inactiveSaturation);
+            propertyBlock.SetFloat(shaderRevealProgress, curtainRevealProgress);
 
-            wallRenderer.SetPropertyBlock(realmPropertyBlock);
-            blockRenderer.SetPropertyBlock(realmPropertyBlock);
-            curtainRenderer.SetPropertyBlock(realmPropertyBlock);
+            wallRenderer.SetPropertyBlock(propertyBlock);
+            blockRenderer.SetPropertyBlock(propertyBlock);
+            curtainRenderer.SetPropertyBlock(propertyBlock);
         }
     }
 }

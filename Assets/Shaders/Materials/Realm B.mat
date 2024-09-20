@@ -56,8 +56,12 @@ Material:
     m_Ints: []
     m_Floats:
     - _ACTIVE_REALM: 0
+    - _IS_CURTAIN: 0
     - _Inactive_Saturation: 0.3
+    - _Min_Alpha: 0
     - _PORTAL_IN_SIGHT: 1
+    - _Reveal_Progress: 1
+    - _Reveal_Radius: 10
     m_Colors:
     - _Player_Position: {r: 0, g: 1, b: 0, a: 0}
     - _Portal_Ceiling: {r: 3, g: 4, b: 0, a: 0}
