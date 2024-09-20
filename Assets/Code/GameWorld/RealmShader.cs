@@ -53,6 +53,10 @@ namespace Tulip.GameWorld
             int location = playerLocation.Location.GetHashCode();
             curtainRevealProgress = Mathf.MoveTowards(curtainRevealProgress, location, maxDeltaTime);
 
+#if UNITY_EDITOR
+            CacheKeywords();
+#endif
+
             SetKeywords();
             SetProperties();
         }
