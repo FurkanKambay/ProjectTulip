@@ -68,7 +68,7 @@ MonoBehaviour:
   portalTop: {fileID: 0}
   portalBottom: {fileID: 0}
   curtainRevealSpeed: 10
-  inactiveSaturation: 0
+  inactiveSaturation: 0.25
   saturationChangeSpeed: 3
   activeRealm: 1
   portalInSight: 1
