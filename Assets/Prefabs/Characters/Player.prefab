@@ -262,7 +262,7 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: d6bb4516eeb65464686b792397023a80, type: 2}
   hookableLayers:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 1672
   reachDistance: 1.5
   autoPullWhenHooked: 1
   autoUnhookWhenReached: 0

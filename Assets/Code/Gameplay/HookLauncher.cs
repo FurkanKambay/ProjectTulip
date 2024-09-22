@@ -134,8 +134,8 @@ namespace Tulip.Gameplay
             if (!attachPoint.HasValue)
                 return;
 
-            Vector2 vector = attachPoint.Value - (Vector2)transform.position;
-            body.linearVelocity = vector.normalized * data.PullStrength;
+            var vector = Vector2.ClampMagnitude(attachPoint.Value - (Vector2)transform.position, 1f);
+            body.linearVelocity = vector * data.PullStrength;
 
             if (vector.sqrMagnitude < reachDistanceSquared)
                 HookState = HookState.Reached;
