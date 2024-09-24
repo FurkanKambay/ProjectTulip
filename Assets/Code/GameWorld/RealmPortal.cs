@@ -13,6 +13,18 @@ namespace Tulip.GameWorld
         [SerializeField] bool activateRealmA = true;
         [SerializeField] bool activateRealmB;
 
+        private void OnEnable()
+        {
+            realmA.SetPortalInSight(true);
+            realmB.SetPortalInSight(true);
+        }
+
+        private void OnDisable()
+        {
+            realmA.SetPortalInSight(false);
+            realmB.SetPortalInSight(false);
+        }
+
         private void Update()
         {
             realmA.SetActiveRealm(activateRealmA);

@@ -71,7 +71,7 @@ MonoBehaviour:
   inactiveSaturation: 0.25
   saturationChangeSpeed: 3
   activeRealm: 1
-  portalInSight: 1
+  portalInSight: 0
   saturation: 1
   shaderActiveRealm: 0
 --- !u!114 &7871052133264414492

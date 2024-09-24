@@ -51765,6 +51765,6 @@ MonoBehaviour:
   inactiveSaturation: 0.25
   saturationChangeSpeed: 3
   activeRealm: 0
-  portalInSight: 1
+  portalInSight: 0
   saturation: 0.25
   shaderActiveRealm: 0

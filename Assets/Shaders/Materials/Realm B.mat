@@ -24,8 +24,7 @@ Material:
   m_Shader: {fileID: -6465566751694194690, guid: 9d48bbb8143096c4fa6c51ca682b67f1, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _PORTAL_IN_SIGHT
+  m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -57,11 +56,11 @@ Material:
     m_Floats:
     - _ACTIVE_REALM: 0
     - _IS_CURTAIN: 0
-    - _Inactive_Saturation: 0.3
     - _Min_Alpha: 0
-    - _PORTAL_IN_SIGHT: 1
+    - _PORTAL_IN_SIGHT: 0
     - _Reveal_Progress: 1
     - _Reveal_Radius: 10
+    - _Saturation: 0.5
     m_Colors:
     - _Player_Position: {r: 0, g: 1, b: 0, a: 0}
     - _Portal_Ceiling: {r: 3, g: 4, b: 0, a: 0}

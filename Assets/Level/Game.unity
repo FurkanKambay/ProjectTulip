@@ -284,10 +284,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 551881273}
     - target: {fileID: 9033445109699138156, guid: f424f79dcd083e14b805387a89e2929f, type: 3}
-      propertyPath: portalInSight
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9033445109699138156, guid: f424f79dcd083e14b805387a89e2929f, type: 3}
       propertyPath: playerLocation
       value: 
       objectReference: {fileID: 1154427129}
@@ -1950,7 +1946,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1927454131
 Transform:
   m_ObjectHideFlags: 0
@@ -2036,7 +2032,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2083648028
 Transform:
   m_ObjectHideFlags: 0
@@ -2129,10 +2125,6 @@ PrefabInstance:
       propertyPath: portalBottom
       value: 
       objectReference: {fileID: 551881273}
-    - target: {fileID: 4075819614527600273, guid: 30dee12ad288f8149b03020358b2e1f6, type: 3}
-      propertyPath: portalInSight
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4075819614527600273, guid: 30dee12ad288f8149b03020358b2e1f6, type: 3}
       propertyPath: playerLocation
       value: 
