@@ -1,3 +1,4 @@
+using System;
 using Furkan.Common;
 using SaintsField;
 using UnityEngine;
@@ -44,10 +45,9 @@ namespace Tulip.GameWorld
 
         private void Awake()
         {
+            propertyBlock = new MaterialPropertyBlock();
             AssignRenderers();
             CacheKeywords();
-
-            propertyBlock = new MaterialPropertyBlock();
         }
 
         private void Update()
@@ -92,8 +92,15 @@ namespace Tulip.GameWorld
         private void TickCurtainReveal()
         {
             float maxDeltaTime = Time.deltaTime * curtainRevealSpeed;
-            int location = playerLocation.Location.GetHashCode();
-            curtainRevealProgress = Mathf.MoveTowards(curtainRevealProgress, location, maxDeltaTime);
+
+            float targetRevealValue = playerLocation.Location switch
+            {
+                EntityLocation.Outdoors => 0f,
+                EntityLocation.Indoors => 1f,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+
+            curtainRevealProgress = Mathf.MoveTowards(curtainRevealProgress, targetRevealValue, maxDeltaTime);
         }
 
         private void TickSaturationShift()
