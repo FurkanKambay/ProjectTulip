@@ -18,8 +18,9 @@ namespace Tulip.Player
         [SerializeField, Required] SaintsInterface<Component, IItemWielder> itemWielder;
 
         [Header("Config")]
-        [SerializeField] float coyoteTime = 0.15f;
-        [SerializeField] float range = 5f;
+        [SerializeField, Range(0, 1)] float centerOffset = 0.5f;
+        [SerializeField, Min(0)] float coyoteTime = 0.15f;
+        [SerializeField, Min(0)] float range = 5f;
 
         public event Action<Vector2Int?> OnChangeCellFocus;
 
@@ -39,8 +40,9 @@ namespace Tulip.Player
         }
 
         private Vector2Int? focusedCell;
-        private Vector2 rangePath;
         private Vector3 hitPoint;
+        private Vector2 topOrigin;
+        private Vector2 bottomOrigin;
 
         private ItemStack latestSwungStack;
         private float coyoteTimeCounter;
@@ -101,7 +103,6 @@ namespace Tulip.Player
             Vector2 aimPoint = hotspot + itemWielder.I.AimDirection;
 
             MouseCell = entity.World.WorldToCell(aimPoint);
-            rangePath = Vector2.ClampMagnitude(itemWielder.I.AimDirection, range);
 
             if (entity.World.IsReadonly)
             {
@@ -111,14 +112,30 @@ namespace Tulip.Player
 
             if (!Settings.Gameplay.UseSmartCursor || itemWielder.I.CurrentStack.itemData.IsNot(out WorldToolData _))
             {
+                // holding a placeable OR not smart cursor
                 float distance = Vector3.Distance(hotspot, aimPoint);
                 FocusedCell = distance <= range ? MouseCell : null;
                 return;
             }
 
-            RaycastHit2D hit = Physics2D.Raycast(hotspot, rangePath, range, LayerMask.GetMask("World"));
-            hitPoint = hit.point - (hit.normal * 0.1f);
-            FocusedCell = hit.collider ? entity.World.WorldToCell(hitPoint) : null;
+            // holding a tool
+            Vector2 aimDirection = itemWielder.I.AimDirection.normalized;
+            topOrigin = hotspot + (Vector2.up * centerOffset);
+            bottomOrigin = hotspot - (Vector2.up * centerOffset);
+
+            RaycastHit2D topHit = Physics2D.Raycast(topOrigin, aimDirection, range, LayerMask.GetMask("World"));
+            RaycastHit2D bottomHit = Physics2D.Raycast(bottomOrigin, aimDirection, range, LayerMask.GetMask("World"));
+
+            RaycastHit2D activeHit = ((bool)topHit, (bool)bottomHit) switch
+            {
+                (true, true) when bottomHit.distance <= topHit.distance => bottomHit,
+                (true, _) => topHit,
+                (false, true) => bottomHit,
+                (false, false) => default
+            };
+
+            hitPoint = activeHit.point - (activeHit.normal * 0.1f);
+            FocusedCell = activeHit ? entity.World.WorldToCell(hitPoint) : null;
         }
 
         private void OnDrawGizmosSelected()
@@ -126,13 +143,16 @@ namespace Tulip.Player
             if (!Settings.Gameplay.UseSmartCursor)
                 return;
 
-            Vector2 hotspot = transform.position;
+            Vector2 aimVector = itemWielder.I.AimDirection.normalized * range;
 
             Gizmos.color = Color.red;
-            Gizmos.DrawLine(hotspot, hotspot + rangePath);
+            Gizmos.DrawRay(topOrigin, aimVector);
+
+            Gizmos.color = Color.blue;
+            Gizmos.DrawRay(bottomOrigin, aimVector);
 
             Gizmos.color = Color.green;
-            Gizmos.DrawSphere(hitPoint, .1f);
+            Gizmos.DrawSphere(hitPoint, 0.1f);
         }
     }
 }
