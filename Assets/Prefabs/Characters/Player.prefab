@@ -912,6 +912,7 @@ GameObject:
   - component: {fileID: 827991167904795164}
   - component: {fileID: 2259726738235934394}
   - component: {fileID: 6812221389184077815}
+  - component: {fileID: 1769229534505819852}
   m_Layer: 6
   m_Name: Audio
   m_TagString: Untagged
@@ -1000,6 +1001,26 @@ MonoBehaviour:
     Path: event:/SFX/Entities/Footstep
   footStepInterval: 0.28
   velocityThreshold: 1
+--- !u!114 &1769229534505819852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3988847855271664023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 718e717e21744e409af570a066c14d23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dasher: {fileID: 4134643785638296798}
+  dashEvent:
+    Guid:
+      Data1: 1739327884
+      Data2: 1149241975
+      Data3: 1034766488
+      Data4: -321411513
+    Path: event:/SFX/Entities/Dash
 --- !u!1 &4068249101980331751
 GameObject:
   m_ObjectHideFlags: 0
@@ -1728,7 +1749,7 @@ MonoBehaviour:
   body: {fileID: 7560684870690709998}
   brain:
     <V>k__BackingField: {fileID: 3825264036527423534}
-  dashSpeed: 15
+  dashSpeed: 20
   dashCooldown: 1.5
   forceMode: 1
 --- !u!1 &8809969866287856108

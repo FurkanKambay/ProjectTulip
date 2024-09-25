@@ -1,3 +1,4 @@
+using System;
 using SaintsField;
 using Tulip.Data;
 using UnityEngine;
@@ -6,6 +7,8 @@ namespace Tulip.Character
 {
     public class Dasher : MonoBehaviour
     {
+        public event Action OnDash;
+
         [Header("References")]
         [SerializeField, Required] Rigidbody2D body;
         [SerializeField, Required] SaintsInterface<Component, IDasherBrain> brain;
@@ -20,13 +23,21 @@ namespace Tulip.Character
         private void Update()
         {
             timeSinceLastDash += Time.deltaTime;
-            if (!brain.I.WantsToDash || timeSinceLastDash < dashCooldown) return;
 
-            timeSinceLastDash = 0f;
+            if (brain.I.WantsToDash && timeSinceLastDash >= dashCooldown)
+                Dash();
+        }
+
+        private void Dash()
+        {
             float direction = brain.I.HorizontalMovement;
 
-            if (Mathf.Abs(direction) > 0.1f)
-                body.AddForce(Vector2.right * (direction * dashSpeed), forceMode);
+            if (Mathf.Abs(direction) < 0.1f)
+                return;
+
+            timeSinceLastDash = 0f;
+            body.AddForce(Vector2.right * (direction * dashSpeed), forceMode);
+            OnDash?.Invoke();
         }
     }
 }
